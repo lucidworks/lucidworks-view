@@ -16,7 +16,7 @@
   Clone this repository, where `app` is the name of your app.
 
   ```bash
-  git clone https://github.com/zurb/foundation-apps-template.git app
+  git clone https://github.com/LucidWorks/lucidworks-seed-app.git app
   ```
 
   Change into the directory.
