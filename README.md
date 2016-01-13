@@ -11,7 +11,7 @@
   - [Gulp](http://gulpjs.com/) and [Bower](http://bower.io): Run `npm install -g gulp bower`
   - Depending on how Node is configured on your machine, you may need to run `sudo npm install -g gulp bower` instead, if you get an error with the first command.
 
-    ## Get Started
+## Get Started
 
     Clone this repository, where `app` is the name of your app.
 
