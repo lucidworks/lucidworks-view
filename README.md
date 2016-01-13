@@ -13,38 +13,38 @@
 
 ## Get Started
 
-    Clone this repository, where `app` is the name of your app.
+  Clone this repository, where `app` is the name of your app.
 
-    ```bash
-    git clone https://github.com/zurb/foundation-apps-template.git app
-    ```
+  ```bash
+  git clone https://github.com/zurb/foundation-apps-template.git app
+  ```
 
-    Change into the directory.
+  Change into the directory.
 
-    ```bash
-    cd app
-    ```
+  ```bash
+  cd app
+  ```
 
-    Install the dependencies. If you're running Mac OS or Linux, you may need to run `sudo npm install` instead, depending on how your machine is configured.
+  Install the dependencies. If you're running Mac OS or Linux, you may need to run `sudo npm install` instead, depending on how your machine is configured.
 
-    ```bash
-    npm install
-    bower install
-    ```
+  ```bash
+  npm install
+  bower install
+  ```
 
-    While you're working on your project, run:
+  While you're working on your project, run:
 
-    ```bash
-    npm start
-    ```
+  ```bash
+  npm start
+  ```
 
-    This will compile the Sass and assemble your Angular app. **Now go to `localhost:8080` in your browser to see it in action.** When you change any file in the `client` folder, the appropriate Gulp task will run to build new files.
+  This will compile the Sass and assemble your Angular app. **Now go to `localhost:8080` in your browser to see it in action.** When you change any file in the `client` folder, the appropriate Gulp task will run to build new files.
 
-    To run the compiling process once, without watching any files, use the `build` command.
+  To run the compiling process once, without watching any files, use the `build` command.
 
-    ```bash
-    npm start build
-    ```
+  ```bash
+  npm start build
+  ```
 
 ## Configuration
 In order to configure the application you can use the settings in the config.js in this file.
