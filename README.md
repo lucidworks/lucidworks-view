@@ -1,4 +1,4 @@
-### Fusion Seed App
+#Fusion Seed App
 This application will help you get up and running with Fusion.
 
 ## Install & Run
@@ -20,6 +20,10 @@ cd ui/
 npm install; bower install
 npm start
 ```
+
+The visit `http://localhost:3001`.
+
+This uses [`browser-sync`](https://www.browsersync.io/) for instant reload upon change of source files. Visit `http://localhost:3002` for `browser-sync` dashboard.
 
 ### To build for deployment
 ```
