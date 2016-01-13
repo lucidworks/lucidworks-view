@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en" ng-app="application">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foundation for Apps</title>
+    <link href="./assets/css/app.css" rel="stylesheet" type="text/css">
+    <script src="./assets/js/foundation.js"></script>
+    <script src="./assets/js/templates.js"></script>
+    <script src="./assets/js/routes.js"></script>
+    <script src="./assets/js/app.js"></script>
+  </head>
+  <body>
+    <div class="grid-frame vertical">
+      <div class="grid-content shrink" style="padding: 0;">
+        <ul class="primary condense menu-bar">
+          <li><a><strong>Foundation for Apps</strong></a></li>
+        </ul>
+      </div>
+      <div ui-view class="grid-content">
+      </div>
+    </div>
+  </body>
+</html>
