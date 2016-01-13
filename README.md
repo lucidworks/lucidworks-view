@@ -18,7 +18,7 @@ git clone https://github.com/LucidWorks/lucidworks-seed-app
 cd lucidworks-seed-app/
 cd ui/
 npm install; bower install
-npm start # This will serve files on http://localhost:8079
+npm start
 ```
 
 ### To build for deployment

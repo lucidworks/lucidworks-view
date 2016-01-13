@@ -11,6 +11,7 @@ var gulp     = require('gulp');
 var rimraf   = require('rimraf');
 var router   = require('front-router');
 var sequence = require('run-sequence');
+var browserSync = require('browser-sync').create();
 
 // Check for --production flag
 var isProduction = !!(argv.production);
@@ -116,7 +117,7 @@ gulp.task('sass', function () {
 });
 
 // Compiles and copies the Foundation for Apps JavaScript, as well as your app's custom JS
-gulp.task('uglify', ['uglify:foundation', 'uglify:app'])
+gulp.task('uglify', ['uglify:foundation', 'uglify:app']);
 
 gulp.task('uglify:foundation', function(cb) {
   var uglify = $.if(isProduction, $.uglify()
@@ -157,13 +158,41 @@ gulp.task('server', ['build'], function() {
   ;
 });
 
+// Static Server + watching build and live reload accross all the browsers
+gulp.task('browsersync', ['build'], function() {
+
+    browserSync.init({
+        server: "./build"
+    });
+
+    // gulp.watch("app/scss/*.scss", ['sass']);
+    // gulp.watch("app/*.html").on('change', browserSync.reload);
+});
+
+//Reloads all the browsers
+gulp.task('reloadBrowsers', browserSync.reload);
+
 // Builds your entire app once, without starting a server
 gulp.task('build', function(cb) {
   sequence('clean', ['copy', 'copy:foundation', 'sass', 'uglify'], 'copy:templates', cb);
 });
 
 // Default task: builds your app, starts a server, and recompiles assets when they change
-gulp.task('default', ['server'], function () {
+gulp.task('default', ['browsersync'], function () {
+  // Watch Sass
+  gulp.watch(['./client/assets/scss/**/*', './scss/**/*'], ['sass', 'reloadBrowsers']);
+
+  // Watch JavaScript
+  gulp.watch(['./client/assets/js/**/*', './js/**/*'], ['uglify:app', 'reloadBrowsers']);
+
+  // Watch static files
+  gulp.watch(['./client/**/*.*', '!./client/templates/**/*.*', '!./client/assets/{scss,js}/**/*.*'], ['copy', 'reloadBrowsers']);
+
+  // Watch app templates
+  gulp.watch(['./client/templates/**/*.html'], ['copy:templates', 'reloadBrowsers']);
+});
+
+gulp.task('serve', ['server'], function () {
   // Watch Sass
   gulp.watch(['./client/assets/scss/**/*', './scss/**/*'], ['sass']);
 
