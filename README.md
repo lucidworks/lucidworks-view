@@ -3,7 +3,7 @@
 
 ## Requirements
 
-    You'll need the following software installed to get started.
+  You'll need the following software installed to get started.
 
   - [Node.js](http://nodejs.org): Use the installer for your OS.
   - [Git](http://git-scm.com/downloads): Use the installer for your OS.
