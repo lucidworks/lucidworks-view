@@ -24,7 +24,7 @@ npm start # This will serve files on http://localhost:8079
 ### To build for deployment
 ```
 cd lucidworks-seed-app/ui/
-gulp build
+npm build
 ```
 The `ui/build` directory will have all the static files that can be served from a regular file-server.
 
