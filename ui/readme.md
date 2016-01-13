@@ -1,3 +1,5 @@
+;;This need to change in the future, or this directory might be needed to be merged with parent one.
+
 # Foundation for Apps Template
 
 [![devDependency Status](https://david-dm.org/zurb/foundation-apps-template/dev-status.svg)](https://david-dm.org/zurb/foundation-apps-template#info=devDependencies)
