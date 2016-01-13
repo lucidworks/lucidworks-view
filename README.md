@@ -1,7 +1,7 @@
-## Fusion Seed App
+# Lucidworks Fusion Seed App
   This application will help you get up and running with Fusion.
 
-  ## Requirements
+## Requirements
 
     You'll need the following software installed to get started.
 
