@@ -45,7 +45,10 @@ var paths = {
   ],
   // These files are for your app's JavaScript
   appJS: [
-    'client/assets/js/app.js'
+    'client/assets/js/**/*.js',
+  ],
+  configJS: [
+    './config.js'
   ]
 };
 
@@ -75,6 +78,11 @@ gulp.task('copy:templates', function() {
     }))
     .pipe(gulp.dest('./build/templates'))
   ;
+});
+
+// Copies your app's page templates and generates URLs for them
+gulp.task('copy:config', function() {
+  return gulp.src(paths.configJS).pipe(gulp.dest('./build/assets/js/'));
 });
 
 // Compiles the Foundation for Apps directive partials into a single JavaScript file
@@ -174,7 +182,7 @@ gulp.task('reloadBrowsers', browserSync.reload);
 
 // Builds your entire app once, without starting a server
 gulp.task('build', function(cb) {
-  sequence('clean', ['copy', 'copy:foundation', 'sass', 'uglify'], 'copy:templates', cb);
+  sequence('clean', ['copy', 'copy:foundation', 'sass', 'uglify'], 'copy:templates', 'copy:config', cb);
 });
 
 // Default task: builds your app, starts a server, and recompiles assets when they change
@@ -190,6 +198,9 @@ gulp.task('default', ['browsersync'], function () {
 
   // Watch app templates
   gulp.watch(['./client/templates/**/*.html'], ['copy:templates', 'reloadBrowsers']);
+
+  // Watch config
+  gulp.watch(paths.configJS, ['copy:config', 'reloadBrowsers']);
 });
 
 gulp.task('serve', ['server'], function () {
@@ -204,4 +215,7 @@ gulp.task('serve', ['server'], function () {
 
   // Watch app templates
   gulp.watch(['./client/templates/**/*.html'], ['copy:templates']);
+
+  // Watch config
+  gulp.watch(paths.configJS, ['uglify:app', 'reloadBrowsers']);
 });
