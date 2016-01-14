@@ -22,7 +22,7 @@
     Clone this repository, where `app` is the name of your app.
 
     ```bash
-    git clone https://github.com/zurb/foundation-apps-template.git app
+    git clone https://github.com/LucidWorks/lucidworks-seed-app app
     ```
 
     Change into the directory.
@@ -44,17 +44,15 @@
     npm start
     ```
 
-    This will compile the Sass and assemble your Angular app. **Now go to `localhost:8080` in your browser to see it in action.** When you change any file in the `client` folder, the appropriate Gulp task will run to build new files.
+    This will compile the Sass and assemble your Angular app. **Now go to `localhost:3000` in your browser to see it in action.** When you change any file in the `client` folder, the appropriate Gulp task will run to build new files.
 
     To run the compiling process once, without watching any files, use the `build` command.
 
     ```bash
-    npm start build
+    npm build
     ```
 
-    The visit `http://localhost:3000`.
-
-    This uses [`browser-sync`](https://www.browsersync.io/) for instant reload upon change of source files. Visit `http://localhost:3002` for `browser-sync` dashboard.
+    This uses [`browser-sync`](https://www.browsersync.io/) for instant reload upon change of source files. Visit `http://localhost:3001` (or whatever your terminal shows as the browser-sync UI) for `browser-sync` dashboard.
 
 ## Configuration
 In order to configure the application you can use the settings in the config.js in this file.
