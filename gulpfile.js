@@ -62,8 +62,7 @@ gulp.task('copy', function() {
   return gulp.src(paths.assets, {
     base: './client/'
   })
-    .pipe(gulp.dest('./build'))
-  ;
+    .pipe(gulp.dest('./build'));
 });
 
 // Copies your app's page templates and generates URLs for them
@@ -73,8 +72,7 @@ gulp.task('copy:templates', function() {
       path: 'build/assets/js/routes.js',
       root: 'client'
     }))
-    .pipe(gulp.dest('./build/templates'))
-  ;
+    .pipe(gulp.dest('./build/templates'));
 });
 
 // Compiles the Foundation for Apps directive partials into a single JavaScript file
@@ -87,13 +85,11 @@ gulp.task('copy:foundation', function(cb) {
     }))
     .pipe($.uglify())
     .pipe($.concat('templates.js'))
-    .pipe(gulp.dest('./build/assets/js'))
-  ;
+    .pipe(gulp.dest('./build/assets/js'));
 
   // Iconic SVG icons
   gulp.src('./bower_components/foundation-apps/iconic/**/*')
-    .pipe(gulp.dest('./build/assets/img/iconic/'))
-  ;
+    .pipe(gulp.dest('./build/assets/img/iconic/'));
 
   cb();
 });
@@ -112,8 +108,7 @@ gulp.task('sass', function () {
       browsers: ['last 2 versions', 'ie 10']
     }))
     .pipe(minifyCss)
-    .pipe(gulp.dest('./build/assets/css/'))
-  ;
+    .pipe(gulp.dest('./build/assets/css/'));
 });
 
 // Compiles and copies the Foundation for Apps JavaScript, as well as your app's custom JS
@@ -128,8 +123,7 @@ gulp.task('uglify:foundation', function(cb) {
   return gulp.src(paths.foundationJS)
     .pipe(uglify)
     .pipe($.concat('foundation.js'))
-    .pipe(gulp.dest('./build/assets/js/'))
-  ;
+    .pipe(gulp.dest('./build/assets/js/'));
 });
 
 gulp.task('uglify:app', function() {
@@ -141,8 +135,7 @@ gulp.task('uglify:app', function() {
   return gulp.src(paths.appJS)
     .pipe(uglify)
     .pipe($.concat('app.js'))
-    .pipe(gulp.dest('./build/assets/js/'))
-  ;
+    .pipe(gulp.dest('./build/assets/js/'));
 });
 
 // Starts a test server, which you can view at http://localhost:8079
@@ -154,8 +147,7 @@ gulp.task('server', ['build'], function() {
       fallback: 'index.html',
       livereload: true,
       open: true
-    }))
-  ;
+    }));
 });
 
 // Static Server + watching build and live reload accross all the browsers
