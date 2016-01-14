@@ -104,7 +104,7 @@ gulp.task('copy:foundation', function(cb) {
 
 // Compiles Sass
 gulp.task('sass', function () {
-  var minifyCss = $.if(isProduction, $.cssnano());
+  var cssnano = $.if(isProduction, $.cssnano());
 
   return gulp.src('client/assets/scss/app.scss')
     .pipe($.sass({
@@ -115,7 +115,7 @@ gulp.task('sass', function () {
     .pipe($.autoprefixer({
       browsers: ['last 2 versions', 'ie 10']
     }))
-    .pipe(minifyCss)
+    .pipe(cssnano)
     .pipe(gulp.dest('./build/assets/css/'));
 });
 
