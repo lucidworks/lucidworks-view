@@ -1,10 +1,10 @@
 {
-  "name": "foundation-apps-template",
+  "name": "fusion-seed-app",
   "version": "1.2.0",
   "authors": [
-    "ZURB"
+    "Lucidworks"
   ],
-  "description": "Template project for Foundation for Apps by ZURB.",
+  "description": "Seed App for Fusion by Lucidworks.",
   "main": "gulpfile.js",
   "keywords": [
     "framework",

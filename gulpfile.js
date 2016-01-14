@@ -104,7 +104,7 @@ gulp.task('copy:foundation', function(cb) {
 
 // Compiles Sass
 gulp.task('sass', function () {
-  var minifyCss = $.if(isProduction, $.minifyCss());
+  var minifyCss = $.if(isProduction, $.cssnano());
 
   return gulp.src('client/assets/scss/app.scss')
     .pipe($.sass({
