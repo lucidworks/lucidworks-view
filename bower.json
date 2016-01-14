@@ -24,5 +24,6 @@
   ],
   "dependencies": {
     "foundation-apps": "~1.2.0"
-  }
+  },
+  "devDependencies": {}
 }

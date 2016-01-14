@@ -1,4 +1,4 @@
-exports.config = {
+appConfig = {
   //***If you don't know what you want for some configuration items, leave them as-is and see what happens in UI.
   //***You will need to clear browser history/cache before your changes take affect.
 
@@ -13,8 +13,8 @@ exports.config = {
   AllowAnonymousAccess: true,
   // If allow AllowAnonymousAccess is set to true these fields must also be set.
   // WARNING: using this in a production app is not recommended.
-  user: admin,
-  password: password123,
+  user: 'admin',
+  password: 'password123',
 
   // The name of your collection
   collection: 'POI',
