@@ -12,12 +12,9 @@
     "angular",
     "search"
   ],
-  "author": "Joshua Ellinger <joshua.ellinger@lucidworks.com>",
-  "contributors": [
-    {
-      "name": "Arjit Dasgupta",
-      "email": "arjit.dasgupta@lucidworks.com"
-    }
+  "authors": [
+    "Joshua Ellinger <joshua.ellinger@lucidworks.com>",
+    "Arjit Dasgupta <arjit.dasgupta@lucidworks.com>"
   ],
   "private": true,
   "bugs": {
