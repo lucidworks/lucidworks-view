@@ -48,7 +48,7 @@ var paths = {
     'client/assets/js/**/*.js',
   ],
   configJS: [
-    './config.js'
+    './FUSION_CONFIG.js'
   ]
 };
 
