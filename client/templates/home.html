@@ -8,16 +8,39 @@ url: /
   <div class="grid-content shrink" style="padding: 0;">
 
     <!-- Top Bar -->
-    <div class="primary title-bar">
-      <form class="center">
+    <nav class="primary title-bar">
+      <span class="center">
+        <form class="show-for-medium">
+          <span class="inline-label">
+            <input type="text" placeholder="Search...">
+            <a href="#" class="button">Search</a>
+          </span>
+        </form>
+        <span class="show-for-small-only"><a class="title">Fusion seed app</a></span>
+      </span>
+      <ul class="left menu-bar primary condense">
+        <li class="show-for-small-only">
+        <a zf-toggle="sidebar"><</a>
+        </li>
+        <li class="show-for-medium">
+          <a class="title">Fusion seed app</a>
+        </li>
+      </ul>
+      <ul class="right menu-bar primary condense">
+        <li class="show-for-medium">
+          <a href="#">Logout</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="primary title-bar show-for-small-only">
+      <form>
         <span class="inline-label">
           <input type="text" placeholder="Search...">
           <a href="#" class="button">Search</a>
         </span>
       </form>
-      <span class="left"><a zf-toggle="sidebar"><</a> <a class="title">Fusion seed app</a></span>
-      <span class="right"><a href="#">Logout</a></span>
     </div>
+
     <!-- left panel -->
     <div zf-panel id="sidebar" position="left" zf-swipe-close="left" class="medium-grid-block collapse medium-3 large-3 vertical">
       <a zf-close="" class="close-button">×</a>
