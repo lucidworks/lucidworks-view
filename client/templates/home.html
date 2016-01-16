@@ -2,25 +2,44 @@
 name: home
 url: /
 ---
+<zf-offcanvas position="left">
+</zf-offcanvas>
 <div class="grid-frame vertical">
   <div class="grid-content shrink" style="padding: 0;">
 
     <!-- Top Bar -->
-    <ul class="primary menu-bar">
-      <li class="medium-3 grid-block"><a><strong>Fusion seed app</strong></a></li>
-      <li>
-        <form>
-          <span class="inline-label">
-            <input type="text" placeholder="Search...">
-            <a href="#" class="button">Search</a>
-          </span>
-        </form>
-      </li>
-    </ul>
+    <div class="primary title-bar">
+      <form class="center">
+        <span class="inline-label">
+          <input type="text" placeholder="Search...">
+          <a href="#" class="button">Search</a>
+        </span>
+      </form>
+      <span class="title left"><a>Fusion seed app</a></span>
+      <span class="right"><a href="#">Logout</a></span>
+    </div>
+    <!-- left panel -->
+    <div zf-panel id="sidebar" position="left" zf-swipe-close="left" class="medium-grid-block collapse medium-3 large-3 vertical">
+      <a zf-close="" class="close-button">×</a>
+      <p>This is a basic panel.</p>
+      Hello
+    </div>
 
     <!-- Main Content Area -->
     <div class="grid-content">
+      <div class="grid-block">
+      </div>
       <div class="grid-container">
+        <div class="title-bar">
+          <form class="center">
+            <span class="inline-label">
+              <input type="text" placeholder="Search...">
+              <a href="#" class="button">Search</a>
+            </span>
+          </form>
+          <span class="title left"><a>Fusion seed app</a></span>
+          <span class="right"><a href="#">Logout</a></span>
+        </div>
         <h1>Welcome to The Fusion Seed App!</h1>
         <p class="lead">This is version <strong>1.2 Eiger</strong>.</p>
         <strong>This will soon become the seed app</strong>
