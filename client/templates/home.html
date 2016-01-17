@@ -46,9 +46,14 @@ url: /
       <!-- Left Panel -->
       <div class="medium-4 large-3 medium-grid-block">
         <div zf-panel id="sidebar" position="left" zf-swipe-close="left" class="medium-grid-block collapse medium-12 vertical">
+          <div class="title-bar">
+            <span class="left">Filter results for:</span>
+          </div>
           <a zf-close="" class="close-button show-for-small-only">×</a>
-          <p>This is a basic panel.</p>
-          Hello
+          <div class="grid-content">
+            <p>This is a basic panel.</p>
+            Hello
+          </div>
         </div>
       </div>
 
@@ -57,7 +62,12 @@ url: /
         <div class="grid-block vertical">
           <div class="title-bar">
             <span class="left">0 results</span>
-            <span class="right"><spna zf-action-sheet=""><span zf-as-button="" title="Filters"></span><span zf-as-content="" position="bottom">hello</span></span>
+            <span class="right">
+              <span zf-action-sheet="">
+                <zf-as-button><span class="button" style="margin: 0;">Filters</span></zf-as-button>
+                <span zf-as-content="" position="bottom">hello</span>
+              </span>
+            </span>
           </div>
           <div class="grid-content">
             <h1>Welcome to The Fusion Seed App!</h1>
