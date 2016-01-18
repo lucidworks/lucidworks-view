@@ -7,6 +7,8 @@ appConfig = {
   // Fusion port
   port:'8764',
 
+  someproperty: 'someprop',
+
   // Allow anyone to use this search app without logging in.
   //
   //authorizationHeader: {headers: {'Authorization': 'Basic ' + btoa('admin:password123')}},
