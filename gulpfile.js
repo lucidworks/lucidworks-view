@@ -12,7 +12,6 @@ var rimraf   = require('rimraf');
 var router   = require('front-router');
 var sequence = require('run-sequence');
 var browserSync = require('browser-sync').create();
-var directiveReplace = require('gulp-directive-replace');
 
 // Check for --production flag
 var isProduction = !!(argv.production);
