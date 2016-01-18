@@ -32,7 +32,7 @@ var paths = {
   sass: [
     'client/assets/scss',
     'bower_components/foundation-apps/scss',
-    'client/directives/**/*.scss'
+    'client/components/**/*.scss'
   ],
   // These files include Foundation for Apps and its dependencies
   foundationJS: [
@@ -52,7 +52,7 @@ var paths = {
     'client/assets/js/app.js',
     'client/assets/js/services/*.js',
     'client/assets/js/utils/*.js',
-    'client/directives/**/*.js',
+    'client/components/**/*.js',
   ],
   configJS: [
     './FUSION_CONFIG.js'
@@ -197,7 +197,7 @@ gulp.task('default', ['browsersync'], function () {
   gulp.watch(['./client/assets/js/**/*', './js/**/*'], ['uglify:app', 'reloadBrowsers']);
 
   // Watch Directives
-  gulp.watch(['./client/directives/**/*'], ['uglify:app', 'copy', 'reloadBrowsers']);
+  gulp.watch(['./client/components/**/*'], ['uglify:app', 'copy', 'reloadBrowsers']);
 
   // Watch static files
   gulp.watch(['./client/**/*.*', '!./client/templates/**/*.*', '!./client/assets/{scss,js}/**/*.*'], ['copy', 'reloadBrowsers']);
