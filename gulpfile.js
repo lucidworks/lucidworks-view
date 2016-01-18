@@ -14,6 +14,7 @@ var sequence = require('run-sequence');
 var sourcemaps = require('gulp-sourcemaps');
 var browserSync = require('browser-sync').create();
 var ngAnnotate = require('gulp-ng-annotate');
+var directiveReplace = require('gulp-directive-replace');
 
 // Check for --production flag
 var isProduction = !!(argv.production);
@@ -49,6 +50,7 @@ var paths = {
   appJS: [
     'client/assets/js/app.js',
     'client/assets/js/services/*.js',
+    'client/assets/js/utils/*.js',
     'client/directives/**/*.js',
   ],
   configJS: [
@@ -148,6 +150,7 @@ gulp.task('uglify:app', function() {
   return gulp.src(paths.appJS)
     .pipe(uglify)
     .pipe(ngAnnotate())
+    .pipe(directiveReplace({root: 'client'}))
     .pipe(sourcemaps.init())
     .pipe($.concat('app.js'))
     .pipe(gulp.dest('./build/assets/js/'));
@@ -191,6 +194,9 @@ gulp.task('default', ['browsersync'], function () {
 
   // Watch JavaScript
   gulp.watch(['./client/assets/js/**/*', './js/**/*'], ['uglify:app', 'reloadBrowsers']);
+
+  // Watch Directives
+  gulp.watch(['./client/directives/**/*', './js/**/*'], ['uglify:app', 'reloadBrowsers']);
 
   // Watch static files
   gulp.watch(['./client/**/*.*', '!./client/templates/**/*.*', '!./client/assets/{scss,js}/**/*.*'], ['copy', 'reloadBrowsers']);

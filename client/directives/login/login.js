@@ -10,6 +10,6 @@ angular.module('application').directive('lwLogin', function($log,ConfigApiServic
   return {
     controller: controller,
     link: link,
-    template: '<h2>Hello Login</h2>'
+    templateUrl: '/directives/login/login.html'
   };
 });
