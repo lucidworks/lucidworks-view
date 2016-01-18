@@ -31,7 +31,8 @@ var paths = {
   // Sass will check these folders for files when you use @import.
   sass: [
     'client/assets/scss',
-    'bower_components/foundation-apps/scss'
+    'bower_components/foundation-apps/scss',
+    'client/directives/**/*.scss'
   ],
   // These files include Foundation for Apps and its dependencies
   foundationJS: [
@@ -196,10 +197,10 @@ gulp.task('default', ['browsersync'], function () {
   gulp.watch(['./client/assets/js/**/*', './js/**/*'], ['uglify:app', 'reloadBrowsers']);
 
   // Watch Directives
-  gulp.watch(['./client/directives/**/*', './js/**/*'], ['uglify:app', 'reloadBrowsers']);
+  gulp.watch(['./client/directives/**/*'], ['uglify:app', 'copy', 'reloadBrowsers']);
 
   // Watch static files
-  gulp.watch(['./client/**/*.*', '!./client/templates/**/*.*', '!./client/assets/{scss,js}/**/*.*'], ['copy', 'reloadBrowsers']);
+  // gulp.watch(['./client/**/*.*', '!./client/templates/**/*.*', '!./client/assets/{scss,js}/**/*.*'], ['copy', 'reloadBrowsers']);
 
   // Watch app templates
   gulp.watch(['./client/templates/**/*.html'], ['copy:templates', 'reloadBrowsers']);

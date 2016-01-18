@@ -4,7 +4,8 @@ angular.module('application').directive('lwLogin', function($log,ConfigApiServic
   }
 
   function link(){
-    $log.info("Daymn");
+    var self = this;
+
   }
 
   return {
