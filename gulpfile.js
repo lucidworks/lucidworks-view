@@ -11,9 +11,7 @@ var gulp     = require('gulp');
 var rimraf   = require('rimraf');
 var router   = require('front-router');
 var sequence = require('run-sequence');
-var sourcemaps = require('gulp-sourcemaps');
 var browserSync = require('browser-sync').create();
-var ngAnnotate = require('gulp-ng-annotate');
 var directiveReplace = require('gulp-directive-replace');
 
 // Check for --production flag
@@ -26,13 +24,13 @@ var paths = {
   assets: [
     './client/**/*.*',
     '!./client/templates/**/*.*',
-    '!./client/assets/{scss,js}/**/*.*'
+    '!./client/assets/{scss,js,components}/**/*.*'
   ],
   // Sass will check these folders for files when you use @import.
   sass: [
     'client/assets/scss',
     'bower_components/foundation-apps/scss',
-    'client/components/**/*.scss'
+    'client/assets/components/**/*.scss'
   ],
   // These files include Foundation for Apps and its dependencies
   foundationJS: [
@@ -52,7 +50,7 @@ var paths = {
     'client/assets/js/app.js',
     'client/assets/js/services/*.js',
     'client/assets/js/utils/*.js',
-    'client/components/**/*.js',
+    'client/assets/components/**/*.js',
   ],
   configJS: [
     './FUSION_CONFIG.js'
@@ -100,7 +98,7 @@ gulp.task('copy:foundation', function(cb) {
     }))
     .pipe($.uglify())
     .pipe($.concat('templates.js'))
-    .pipe(sourcemaps.write())
+    .pipe($.sourcemaps.write())
     .pipe(gulp.dest('./build/assets/js'));
 
   // Iconic SVG icons
@@ -150,9 +148,9 @@ gulp.task('uglify:app', function() {
 
   return gulp.src(paths.appJS)
     .pipe(uglify)
-    .pipe(ngAnnotate())
-    .pipe(directiveReplace({root: 'client'}))
-    .pipe(sourcemaps.init())
+    .pipe($.ngAnnotate())
+    .pipe($.directiveReplace({root: 'client'}))
+    .pipe($.sourcemaps.init())
     .pipe($.concat('app.js'))
     .pipe(gulp.dest('./build/assets/js/'));
 });
@@ -197,7 +195,7 @@ gulp.task('default', ['browsersync'], function () {
   gulp.watch(['./client/assets/js/**/*', './js/**/*'], ['uglify:app', 'reloadBrowsers']);
 
   // Watch Directives
-  gulp.watch(['./client/components/**/*'], ['uglify:app', 'copy', 'reloadBrowsers']);
+  gulp.watch(['./client/assets/components/**/*'], ['uglify:app', 'copy', 'reloadBrowsers']);
 
   // Watch static files
   gulp.watch(['./client/**/*.*', '!./client/templates/**/*.*', '!./client/assets/{scss,js}/**/*.*'], ['copy', 'reloadBrowsers']);
@@ -217,10 +215,10 @@ gulp.task('serve', ['server'], function () {
   gulp.watch(['./client/assets/js/**/*', './js/**/*'], ['uglify:app']);
 
   // Watch static files
-  gulp.watch(['./client/**/*.*', '!./client/templates/**/*.*', '!./client/assets/{scss,js}/**/*.*'], ['copy']);
+  gulp.watch(['./client/**/*.*', '!./client/templates/**/*.*', '!./client/assets/{scss,js,components}/**/*.*'], ['copy']);
 
   // Watch app templates
-  gulp.watch(['./client/templates/**/*.html'], ['copy:templates']);
+  gulp.watch(['./client/templates/**/*.html', './client/assets/components/**/*.html'], ['copy:templates']);
 
   // Watch config
   gulp.watch(paths.configJS, ['uglify:app', 'reloadBrowsers']);

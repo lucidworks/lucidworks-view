@@ -9,6 +9,9 @@
     'foundation',
     'foundation.dynamicRouting',
     'foundation.dynamicRouting.animations',
+
+    // Fusion Seed App
+    'fusionSeedApp.components'
   ])
     .config(config)
     .run(run)
