@@ -11,7 +11,9 @@ var gulp     = require('gulp');
 var rimraf   = require('rimraf');
 var router   = require('front-router');
 var sequence = require('run-sequence');
+var sourcemaps = require('gulp-sourcemaps');
 var browserSync = require('browser-sync').create();
+var ngAnnotate = require('gulp-ng-annotate');
 
 // Check for --production flag
 var isProduction = !!(argv.production);
@@ -45,7 +47,9 @@ var paths = {
   ],
   // These files are for your app's JavaScript
   appJS: [
-    'client/assets/js/**/*.js',
+    'client/assets/js/app.js',
+    'client/assets/js/services/*.js',
+    'client/directives/**/*.js',
   ],
   configJS: [
     './FUSION_CONFIG.js'
@@ -93,6 +97,7 @@ gulp.task('copy:foundation', function(cb) {
     }))
     .pipe($.uglify())
     .pipe($.concat('templates.js'))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('./build/assets/js'));
 
   // Iconic SVG icons
@@ -142,6 +147,8 @@ gulp.task('uglify:app', function() {
 
   return gulp.src(paths.appJS)
     .pipe(uglify)
+    .pipe(ngAnnotate())
+    .pipe(sourcemaps.init())
     .pipe($.concat('app.js'))
     .pipe(gulp.dest('./build/assets/js/'));
 });

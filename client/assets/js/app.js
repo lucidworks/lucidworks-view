@@ -1,4 +1,4 @@
-(function() {
+(function(){
   'use strict';
 
   angular.module('application', [
@@ -8,7 +8,7 @@
     //foundation
     'foundation',
     'foundation.dynamicRouting',
-    'foundation.dynamicRouting.animations'
+    'foundation.dynamicRouting.animations',
   ])
     .config(config)
     .run(run)
@@ -31,3 +31,6 @@
     FastClick.attach(document.body);
   }
 })();
+
+// angular.module('application.directives',[]).run();
+// angular.module('application.services',[]).run();
