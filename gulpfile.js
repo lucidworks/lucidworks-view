@@ -200,7 +200,7 @@ gulp.task('default', ['browsersync'], function () {
   gulp.watch(['./client/directives/**/*'], ['uglify:app', 'copy', 'reloadBrowsers']);
 
   // Watch static files
-  // gulp.watch(['./client/**/*.*', '!./client/templates/**/*.*', '!./client/assets/{scss,js}/**/*.*'], ['copy', 'reloadBrowsers']);
+  gulp.watch(['./client/**/*.*', '!./client/templates/**/*.*', '!./client/assets/{scss,js}/**/*.*'], ['copy', 'reloadBrowsers']);
 
   // Watch app templates
   gulp.watch(['./client/templates/**/*.html'], ['copy:templates', 'reloadBrowsers']);
