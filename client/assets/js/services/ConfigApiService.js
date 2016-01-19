@@ -1,7 +1,7 @@
 angular.module('fusionSeedApp.services').service('ConfigApiService', function($log){
   var configData = window.appConfig;
 
-  var defaultConfig = {
+  var defaultConfigStatic = {
     host: 'http://' + window.location.hostname,
     port:'8764',
     authorizationHeader: {headers: {'Authorization': 'Basic ' + btoa('admin:password123')}},
@@ -26,12 +26,12 @@ angular.module('fusionSeedApp.services').service('ConfigApiService', function($l
 
   var appConfig;
 
-  init();
+  init(defaultConfigStatic);
 
   /**
    * Extend config with the defaults
    */
-  function init(){
+  function init(defaultConfig){
     appConfig = angular.copy(window.appConfig);
     for(var key in defaultConfig){
       if(defaultConfig.hasOwnProperty(key) && !appConfig.hasOwnProperty(key)){
@@ -98,7 +98,7 @@ angular.module('fusionSeedApp.services').service('ConfigApiService', function($l
   };
 
   return {
-    init: init,
+    init: init, //TODO: Only for test env
     getFusionUrl: getFusionUrl,
     getQueryProfile: getQueryProfile,
     getQueryPipeline: getQueryPipeline,
