@@ -1,8 +1,8 @@
-angular.module('fusionSeedApp.services.query', ['fusionSeedApp.services.configApi'])
-  .service('QueryService', function($q, $http, ConfigApiService){
+angular.module('fusionSeedApp.services.query', ['fusionSeedApp.services.config'])
+  .service('QueryService', function($q, $http, ConfigService){
 
     return {
-      makeQuery: makeQuery
+      getQuery: getQuery
     };
 
     /**
@@ -10,7 +10,7 @@ angular.module('fusionSeedApp.services.query', ['fusionSeedApp.services.configAp
      * @param  {object} query  Should have all the query params
      * @return {Promise}       Promise that resolve with a Fusion response coming from Solr
      */
-    function makeQuery(query){
+    function getQuery(query){
       var deffered = $q.defer();
 
       queryObject = query.q;
@@ -18,11 +18,11 @@ angular.module('fusionSeedApp.services.query', ['fusionSeedApp.services.configAp
       var queryObject = angular.copy(query);
 
       $http.get(
-        ConfigApiService.getFusionUrl() +
+        ConfigService.getFusionUrl() +
         '/api/apollo/collections/' +
-        ConfigApiService.getCollectionName() +
+        ConfigService.getCollectionName() +
         '/query-profiles/' +
-        ConfigApiService.getQueryProfile() +
+        ConfigService.getQueryProfile() +
         '/select?q=' +
         queryObject.q)
         .then(function(response){

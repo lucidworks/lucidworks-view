@@ -1,4 +1,4 @@
-angular.module('fusionSeedApp.services.configApi', [])
+angular.module('fusionSeedApp.services.config', [])
   /** Default config options **/
   .constant('CONFIG_DEFAULT', {
     host: 'http://' + window.location.hostname,
@@ -106,6 +106,7 @@ angular.module('fusionSeedApp.services.configApi', [])
 
     return {
       init: init, //TODO: Only for test env
+      config: appConfig,
       getFusionUrl: getFusionUrl,
       getQueryProfile: getQueryProfile,
       getCollectionName: getCollectionName,

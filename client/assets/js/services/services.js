@@ -2,6 +2,6 @@
 
 angular.module('fusionSeedApp.services', [
   'fusionSeedApp.services.solr',
-  'fusionSeedApp.services.configApi',
+  'fusionSeedApp.services.config',
   'fusionSeedApp.services.query'
 ]);
