@@ -74,7 +74,6 @@ angular.module('fusionSeedApp.services').service('ConfigApiService', function($l
   var getAllFields = function(){
     var fieldsMap = {};
     _.filter(_.keys(appConfig), function(item){
-      console.log(item);
       return item.match(/\_field$/);
     }).filter(function(item){
       var key = item.split('_')[0]+'_enabled';
