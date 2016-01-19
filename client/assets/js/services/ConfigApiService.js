@@ -1,11 +1,6 @@
 angular.module('fusionSeedApp.services.configApi', [])
-  /** a user's config overrides from FUSION_CONFIG.js **/
-  .constant('CONFIG_OVERRIDE', window.appConfig)
-
-  .service('ConfigApiService', function($log, CONFIG_OVERRIDE, _){
-  var configData = window.appConfig;
-
-  var defaultConfigStatic = {
+  /** Default config options **/
+  .constant('CONFIG_DEFAULT', {
     host: 'http://' + window.location.hostname,
     port:'8764',
     authorizationHeader: {headers: {'Authorization': 'Basic ' + btoa('admin:password123')}},
@@ -27,17 +22,22 @@ angular.module('fusionSeedApp.services.configApi', [])
     image_enabled: true,
     labels: {
     }
-  };
+  })
+  /** Config overrides from FUSION_CONFIG.js **/
+  .constant('CONFIG_OVERRIDE', window.appConfig)
+
+  .service('ConfigApiService', function($log, CONFIG_DEFAULT, CONFIG_OVERRIDE, _){
+  var configData = window.appConfig;
 
   var appConfig;
 
-  init(defaultConfigStatic);
+  init();
 
   /**
    * Extend config with the defaults
    */
-  function init(defaultConfig){
-    appConfig = _.assign({}, defaultConfig, CONFIG_OVERRIDE);
+  function init(){
+    appConfig = _.assign({}, CONFIG_DEFAULT, CONFIG_OVERRIDE);
   }
 
   var getFusionUrl = function(){
