@@ -3,6 +3,16 @@ ngDescribe({
   modules: 'fusionSeedApp.services',
   inject: ['ConfigApiService'],
   tests: function(deps){
+    describe('specific little properties getter should be working', function(){
+      it('should make the right fusion url', function(){
+        deps.ConfigApiService.init({
+          host: 'http://localhost',
+          port: '8764'
+        });
+        expect(deps.ConfigApiService.getFusionUrl()).toEqual('http://localhost:8764');
+      });
+    });
+
     describe('getSpecificFields() should be working', function(){
       it('with specific field getters', function(){
         deps.ConfigApiService.init({
