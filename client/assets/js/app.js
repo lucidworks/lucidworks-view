@@ -11,7 +11,9 @@
     'foundation.dynamicRouting.animations',
 
     // Fusion Seed App
-    'fusionSeedApp.components'
+    'fusionSeedApp.components',
+    
+    'ObservableService'
   ])
     .config(config)
     .run(run)
