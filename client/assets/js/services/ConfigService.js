@@ -1,4 +1,5 @@
 angular.module('fusionSeedApp.services.config', [])
+
   /** Default config options **/
   .constant('CONFIG_DEFAULT', {
     host: 'http://' + window.location.hostname,

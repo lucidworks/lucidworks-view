@@ -1,4 +1,5 @@
 angular.module('fusionSeedApp.services.query', ['fusionSeedApp.services.config'])
+
   .service('QueryService', function($q, $http, ConfigService){
 
     return {
