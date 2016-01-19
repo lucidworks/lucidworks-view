@@ -11,7 +11,7 @@ angular.module('fusionSeedApp.services').service('ConfigApiService', function($l
     collection: 'POI',
     queryPipelineIdList: ['POI-default','POI-signals'],
     queryProfilesIdList: ['default'],
-    requestHandlerList: 'select,autofilter',
+    requestHandlerList: ['select','autofilter'],
     addl_params: '', //We might not need this
     searchAppTitle: "Fusion Search Seed App",
     head_field: 'name',
@@ -40,9 +40,6 @@ angular.module('fusionSeedApp.services').service('ConfigApiService', function($l
     }
   }
 
-  /**
-   * returns Fusion URL
-   */
   var getFusionUrl = function(){
     return appConfig.host + ':' + appConfig.port;
   };
