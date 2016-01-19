@@ -3,15 +3,13 @@ appConfig = {
   //***You will need to clear browser history/cache before your changes take affect.
 
   // window.location.hostname is used here if UI on same Jetty as Fusion.  If not, please specify Fusion hostname here.
-  host: 'http://' + window.location.hostname,
+  // host: 'http://' + window.location.hostname,
   // Fusion port
-  port:'8764',
-
-  someproperty: 'someprop',
+  // port:'8764',
 
   // Allow anyone to use this search app without logging in.
   //
-  //authorizationHeader: {headers: {'Authorization': 'Basic ' + btoa('admin:password123')}},
+  // authorizationHeader: {headers: {'Authorization': 'Basic ' + btoa('admin:password123')}},
   AllowAnonymousAccess: true,
   // If allow AllowAnonymousAccess is set to true these fields must also be set.
   // WARNING: using this in a production app is not recommended.
@@ -102,13 +100,13 @@ appConfig = {
   //If you want to display friendly labels for any field name, then add a line for each field name below.
   //For example, for 'cuisine' field name, replace it with 'Cuisine' in the UI
   labels: {
-                          'cuisine': 'Cuisine',
-                          'street': 'Street',
-                          'coord': 'Coordinates',
-                          'city': 'City',
-                          'amenity': 'Amenity',
-                          'likes': 'Likes',
-                          'last_modified_date': 'Last Modified',
-                         },
+    'cuisine': 'Cuisine',
+    'street': 'Street',
+    'coord': 'Coordinates',
+    'city': 'City',
+    'amenity': 'Amenity',
+    'likes': 'Likes',
+    'last_modified_date': 'Last Modified',
+   },
   //***END OF labels
 };
