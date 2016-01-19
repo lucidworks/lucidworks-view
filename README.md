@@ -56,7 +56,7 @@
 
     ## Unit testing
     ```
-    npm start
+    npm build
     npm test
     ```
 
