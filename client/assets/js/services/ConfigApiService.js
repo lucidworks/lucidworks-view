@@ -12,6 +12,7 @@ angular.module('fusionSeedApp.services').service('ConfigApiService', function($l
     queryPipelineIdList: ['POI-default','POI-signals'],
     queryProfilesIdList: ['default'],
     requestHandlerList: ['select','autofilter'],
+    use_query_profiles: true,
     addl_params: '', //We might not need this
     searchAppTitle: "Fusion Search Seed App",
     head_field: 'name',
@@ -101,6 +102,10 @@ angular.module('fusionSeedApp.services').service('ConfigApiService', function($l
     return allFields[fieldType]?allFields[fieldType]:null;
   };
 
+  var getAuthHeader = function(){
+    return appConfig.authorizationHeader;
+  };
+
   return {
     init: init, //TODO: Only for test env
     getFusionUrl: getFusionUrl,
@@ -108,6 +113,7 @@ angular.module('fusionSeedApp.services').service('ConfigApiService', function($l
     getCollectionName: getCollectionName,
     getQueryPipeline: getQueryPipeline,
     getLoginCredentials: getLoginCredentials,
+    getAuthHeader: getAuthHeader,
     getFields: {
       all: getAllFields,
       get: getSpecificField
