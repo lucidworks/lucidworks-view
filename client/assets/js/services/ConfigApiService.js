@@ -9,10 +9,11 @@ angular.module('fusionSeedApp.services')
     AllowAnonymousAccess: true,
     user: 'admin',
     password: 'password123',
-    collection: 'POI',
+    collection: 'Coll',
     queryPipelineIdList: ['POI-default','POI-signals'],
     queryProfilesIdList: ['default'],
     requestHandlerList: ['select','autofilter'],
+    use_query_profiles: true,
     addl_params: '', //We might not need this
     searchAppTitle: "Fusion Search Seed App",
     head_field: 'name',
@@ -50,14 +51,18 @@ angular.module('fusionSeedApp.services')
   };
 
   var getQueryProfile = function(){
-    return appConfig.queryProfileIdList[0];
+    return appConfig.queryProfilesIdList[0];
   };
 
   var getLoginCredentials = function(){
     return {
-      username: appConfig.username,
+      username: appConfig.user,
       passowrd: appConfig.password
     };
+  };
+
+  var getCollectionName = function(){
+    return appConfig.collection;
   };
 
   var getLabels = function(){ //TODO: Decide whether defined labels will be the only ones shown
@@ -98,12 +103,18 @@ angular.module('fusionSeedApp.services')
     return allFields[fieldType]?allFields[fieldType]:null;
   };
 
+  var getAuthHeader = function(){
+    return appConfig.authorizationHeader;
+  };
+
   return {
     init: init, //TODO: Only for test env
     getFusionUrl: getFusionUrl,
     getQueryProfile: getQueryProfile,
+    getCollectionName: getCollectionName,
     getQueryPipeline: getQueryPipeline,
     getLoginCredentials: getLoginCredentials,
+    getAuthHeader: getAuthHeader,
     getFields: {
       all: getAllFields,
       get: getSpecificField
