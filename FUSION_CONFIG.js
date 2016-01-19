@@ -1,3 +1,5 @@
+//TODO: Major cleanuup
+
 appConfig = {
   //***If you don't know what you want for some configuration items, leave them as-is and see what happens in UI.
   //***You will need to clear browser history/cache before your changes take affect.

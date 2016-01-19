@@ -54,7 +54,7 @@ angular.module('fusionSeedApp.services').service('ConfigApiService', function($l
 
   var getLoginCredentials = function(){
     return {
-      username: appConfig.username,
+      username: appConfig.user,
       passowrd: appConfig.password
     };
   };
