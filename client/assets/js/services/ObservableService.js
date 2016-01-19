@@ -1,4 +1,11 @@
-angular.module('ObserverService', [])
+angular.module('ObservableService', [])
+  /**
+   * ObserverService
+   *
+   * This module creates observable prototypes which allows the registration
+   * of observers which are notified everytime the content in the observable
+   * changes.
+   */
   .service('ObservableService', function(){
     var observables = {};
 
@@ -46,7 +53,7 @@ angular.module('ObserverService', [])
      * Add a new observer callback.
      *
      * @param  {Function} callback   The callback to call on change of the observable content.
-     * @return {String}              The handle for the observer which was rendered.
+     * @return {string}              The handle for the observer which was added.
      */
     Observable.prototype.addObserver = function(callback){
       var handle = this.generateRandomString();
@@ -57,8 +64,7 @@ angular.module('ObserverService', [])
     /**
      * Remove an observer from an observable.
      *
-     * @param  {[type]} handle [description]
-     * @return {[type]}        [description]
+     * @param  {string} handle The handle for the observer.
      */
     Observable.prototype.removeObserver = function(handle){
       delete this.observers[handle];
@@ -80,15 +86,34 @@ angular.module('ObserverService', [])
       deleteObservable: deleteObservable
     };
 
+    /**
+     * Create a new observable.
+     *
+     * @param  {string} name    The name of the observable.
+     * @param  {*} content      The content to add to the observable.
+     *
+     * @return {Observable}     An observable prototype;
+     */
     function createObservable(name, content){
       observables[name] = new Observable(content);
       return observables[name];
     }
 
+    /**
+     * Get an observable by name.
+     *
+     * @param  {[type]} name [description]
+     * @return {[type]}      [description]
+     */
     function getObservable(name){
       return observables[name];
     }
 
+    /**
+     * Delete an observable.
+     *
+     * @param  {string} name The name of the observable.
+     */
     function deleteObservable(name){
       delete observables[name];
     }
