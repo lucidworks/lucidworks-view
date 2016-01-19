@@ -10,6 +10,9 @@
     'foundation.dynamicRouting',
     'foundation.dynamicRouting.animations',
 
+    // Libraries
+    'ngOrwell',
+
     // Fusion Seed App
     'fusionSeedApp.components',
     'fusionSeedApp.services',
