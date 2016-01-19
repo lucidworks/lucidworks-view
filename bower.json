@@ -26,5 +26,7 @@
     "foundation-apps": "~1.2.0",
     "lodash": "https://github.com/lodash/lodash.git"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "angular-mocks": "~1.4.8"
+  }
 }
