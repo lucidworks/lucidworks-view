@@ -1,5 +1,5 @@
 angular.module('fusionSeedApp.services').service('ConfigApiService', function($log){
-  var configData = appConfig;
+  var configData = window.appConfig;
 
   var defaultConfig = {
     host: 'http://' + window.location.hostname,
@@ -66,6 +66,11 @@ angular.module('fusionSeedApp.services').service('ConfigApiService', function($l
     return appConfig.labels;
   };
 
+  /**
+   * Returns all the config properties that
+   * ends with a `_field` which is not a blank string
+   * and toggled by explicit enable-ment by `_enabled` of the same type
+   */
   var getAllFields = function(){
     var fieldsMap = {};
     _.filter(_.keys(appConfig), function(item){
