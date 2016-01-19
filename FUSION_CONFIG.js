@@ -3,9 +3,9 @@ appConfig = {
   //***You will need to clear browser history/cache before your changes take affect.
 
   // window.location.hostname is used here if UI on same Jetty as Fusion.  If not, please specify Fusion hostname here.
-  // host: 'http://' + window.location.hostname,
+  host: window.location.hostname,
   // Fusion port
-  // port:'8764',
+  port:'8764',
 
   // Allow anyone to use this search app without logging in.
   //

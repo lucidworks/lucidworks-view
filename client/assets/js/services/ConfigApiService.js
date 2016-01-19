@@ -70,7 +70,7 @@ angular.module('fusionSeedApp.services').service('ConfigApiService', function($l
     return (appConfig.replace(/\s/gi,'') === '' || !appConfig.thumbnail_enabled)?null:appConfig.thumbnail_url;
   };
 
-  var getLabels = function(){ //TODO: Decide whether defined labels will only be shown
+  var getLabels = function(){ //TODO: Decide whether defined labels will be the only ones shown
     return appConfig.labels;
   };
 
