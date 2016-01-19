@@ -1,4 +1,5 @@
-angular.module('fusionSeedApp.services').service('ConfigApiService', function($log){
+angular.module('fusionSeedApp.services')
+  .service('ConfigApiService', function($log){
   var configData = window.appConfig;
 
   var defaultConfigStatic = {
