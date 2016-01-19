@@ -29,6 +29,7 @@ angular.module('fusionSeedApp.services.configApi', [])
   .service('ConfigApiService', function($log, CONFIG_DEFAULT, CONFIG_OVERRIDE, _){
     var appConfig;
 
+    /* initialize on first load */
     init();
 
     /**
