@@ -1,6 +1,8 @@
 angular.module('fusionSeedApp.services.configApi', [])
-  .const('configOverride', window.appConfig)
-  .service('ConfigApiService', function($log){
+  /** a user's config overrides from FUSION_CONFIG.js **/
+  .constant('CONFIG_OVERRIDE', window.appConfig)
+
+  .service('ConfigApiService', function($log, CONFIG_OVERRIDE, _){
   var configData = window.appConfig;
 
   var defaultConfigStatic = {
@@ -35,7 +37,7 @@ angular.module('fusionSeedApp.services.configApi', [])
    * Extend config with the defaults
    */
   function init(defaultConfig){
-    appConfig = _.assign({}, defaultConfig, configOverride);
+    appConfig = _.assign({}, defaultConfig, CONFIG_OVERRIDE);
   }
 
   var getFusionUrl = function(){
