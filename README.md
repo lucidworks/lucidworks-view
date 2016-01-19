@@ -54,5 +54,11 @@
 
     This uses [`browser-sync`](https://www.browsersync.io/) for instant reload upon change of source files. Visit `http://localhost:3001` (or whatever your terminal shows as the browser-sync UI) for `browser-sync` dashboard.
 
+    ## Unit testing
+    ```
+    npm start
+    npm test
+    ```
+
 ## Configuration
-In order to configure the application you can use the settings in the config.js in this file.
+In order to configure the application you can use the settings in the FUSION_CONFIG.js in this file.
