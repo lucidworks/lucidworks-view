@@ -1,4 +1,4 @@
-angular.module('fusionSeedApp.services')
+angular.module('fusionSeedApp.services.configApi', [])
   .service('ConfigApiService', function($log){
   var configData = window.appConfig;
 
