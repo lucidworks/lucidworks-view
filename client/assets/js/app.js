@@ -5,7 +5,7 @@
     'ui.router',
     'ngAnimate',
 
-    //foundation
+    // Foundation
     'foundation',
     'foundation.dynamicRouting',
     'foundation.dynamicRouting.animations',
@@ -17,6 +17,7 @@
     'fusionSeedApp.components',
     'fusionSeedApp.services',
   ])
+    .constant('_', window._)
     .config(config)
     .run(run)
   ;
