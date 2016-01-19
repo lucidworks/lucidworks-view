@@ -18,7 +18,7 @@ angular.module('fusionSeedApp.services').service('ConfigApiService', function($l
     head_url_field: '',
     thumbnail_field: '',
     thumbnail_enabled: true,
-    image_url: '',
+    image_field: '',
     image_enabled: true,
     labels: {
     }
@@ -62,16 +62,29 @@ angular.module('fusionSeedApp.services').service('ConfigApiService', function($l
     };
   };
 
-  var getImageUrl = function(){
-    return (appConfig.replace(/\s/gi,'') === '' || !appConfig.image_enabled)?null:appConfig.image_url;
-  };
-
-  var getThumbnailUrl = function(){
-    return (appConfig.replace(/\s/gi,'') === '' || !appConfig.thumbnail_enabled)?null:appConfig.thumbnail_url;
-  };
-
   var getLabels = function(){ //TODO: Decide whether defined labels will be the only ones shown
     return appConfig.labels;
+  };
+
+  var getAllFields = function(){
+    var fieldsMap = {};
+    _.filter(_.keys(appConfig), function(item){
+      console.log(item);
+      return item.match(/\_field$/);
+    }).filter(function(item){
+      var key = item.split('_')[0]+'_enabled';
+      return _.has(appConfig, key)?appConfig[key]:true;
+    }).filter(function(item){
+      return _.trim(appConfig[item])!=='';
+    }).forEach(function(keyName){
+      fieldsMap[keyName] = appConfig[keyName];
+    });
+    return fieldsMap;
+  };
+
+  var getSpecificField = function(fieldType){
+    var allFields = getAllFields();
+    return allFields[fieldType]?allFields[fieldType]:null;
   };
 
   return {
@@ -79,7 +92,9 @@ angular.module('fusionSeedApp.services').service('ConfigApiService', function($l
     getQueryProfile: getQueryProfile,
     getQueryPipeline: getQueryPipeline,
     getLoginCredentials: getLoginCredentials,
-    getImageUrl: getImageUrl,
-    getThumbnailUrl: getThumbnailUrl
+    getFields: {
+      all: getAllFields,
+      get: getSpecificField
+    }
   };
 });

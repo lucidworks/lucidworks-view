@@ -23,7 +23,8 @@
     "tests"
   ],
   "dependencies": {
-    "foundation-apps": "~1.2.0"
+    "foundation-apps": "~1.2.0",
+    "lodash": "https://github.com/lodash/lodash.git"
   },
   "devDependencies": {}
 }

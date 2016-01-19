@@ -33,6 +33,7 @@ var paths = {
   ],
   // These files include Foundation for Apps and its dependencies
   foundationJS: [
+    'bower_components/lodash/lodash.js',
     'bower_components/fastclick/lib/fastclick.js',
     'bower_components/viewport-units-buggyfill/viewport-units-buggyfill.js',
     'bower_components/tether/tether.js',
