@@ -148,6 +148,7 @@ gulp.task('uglify:app', function() {
 
   return gulp.src(paths.appJS)
     .pipe(uglify)
+    .pipe($.plumber())
     .pipe($.ngAnnotate())
     .pipe($.directiveReplace({root: 'client'}))
     .pipe($.sourcemaps.init())

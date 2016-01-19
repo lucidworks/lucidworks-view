@@ -12,8 +12,8 @@
 
     // Fusion Seed App
     'fusionSeedApp.components',
-    'ObservableService',
-    'fusionSeedApp.services'
+    'fusionSeedApp.services',
+    'ObservableService'
   ])
     .config(config)
     .run(run)
@@ -32,10 +32,8 @@
     $locationProvider.hashPrefix('!');
   }
 
-  function run() {
+  function run($log, ConfigApiService) {
+    $log.info(ConfigApiService.getFusionURL()); //DEBUG
     FastClick.attach(document.body);
   }
 })();
-
-// angular.module('application.directives',[]).run();
-// angular.module('application.services',[]).run();

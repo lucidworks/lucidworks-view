@@ -1,7 +1,5 @@
-
 angular.module('fusionSeedApp.services').service('ConfigApiService', function($log){
   var configData = appConfig;
-  console.log(configData);
 
   var defaultConfig = {
     // window.location.hostname is used here if UI on same Jetty as Fusion.  If not, please specify Fusion hostname here.
@@ -27,9 +25,7 @@ angular.module('fusionSeedApp.services').service('ConfigApiService', function($l
     // 2nd pipeline could be signal-enabled.
     //
     // If you only have 1 query pipeline, that is ok too.
-    pipelineIdList: [
-      'POI-default,POI-signals'
-    ],
+    pipelineIdList: ['POI-default','POI-signals'],
 
     // This specifies list of requestHandler(s)
     requestHandlerList: 'select,autofilter',
@@ -121,10 +117,10 @@ angular.module('fusionSeedApp.services').service('ConfigApiService', function($l
    * Extend config with the defaults
    */
   function init(){
-    appConfig = angluar.copy(window.appConfig);
+    appConfig = angular.copy(window.appConfig);
     for(var key in defaultConfig){
       if(defaultConfig.hasOwnProperty(key) && !appConfig.hasOwnProperty(key)){
-        appConfig[key] = angluar.copy(defaultConfig[key]);
+        appConfig[key] = angular.copy(defaultConfig[key]);
       }
     }
   }
@@ -138,6 +134,6 @@ angular.module('fusionSeedApp.services').service('ConfigApiService', function($l
 
 
   return {
-    getFusionRoot: getFusionRoot
+    getFusionURL: getFusionURL
   };
 });
