@@ -1,4 +1,4 @@
-//Module initialization
+// Module initialization
 
 angular.module('fusionSeedApp.services', [
   'fusionSeedApp.services.solr',

@@ -16,7 +16,6 @@
     // Fusion Seed App
     'fusionSeedApp.components',
     'fusionSeedApp.services',
-    //'ObservableService'
   ])
     .config(config)
     .run(run)
