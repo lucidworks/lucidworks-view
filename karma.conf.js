@@ -18,10 +18,11 @@ module.exports = function(config) {
       'build/assets/js/foundation.js',
       'build/assets/js/templates.js',
       'build/assets/js/routes.js',
-      'build/assets/js/FUSION_CONFIG.js',
+      // 'build/assets/js/FUSION_CONFIG.js',
       'bower_components/angular-mocks/angular-mocks.js',
       'build/assets/js/app.js',
       'node_modules/ng-describe/dist/ng-describe.js',
+      'tests/test_config.js',
       'tests/**/*Test.js'
     ],
 

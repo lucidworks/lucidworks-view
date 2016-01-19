@@ -98,6 +98,7 @@ angular.module('fusionSeedApp.services').service('ConfigApiService', function($l
   };
 
   return {
+    init: init,
     getFusionUrl: getFusionUrl,
     getQueryProfile: getQueryProfile,
     getQueryPipeline: getQueryPipeline,
