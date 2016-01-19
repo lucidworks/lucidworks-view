@@ -69,11 +69,11 @@ angular.module('fusionSeedApp.services').service('ConfigApiService', function($l
   /**
    * Returns all the config properties that
    * ends with a `_field` which is not a blank string
-   * and toggled by explicit enable-ment by `_enabled` of the same type
+   * and is toggled by explicit enable-ment by `_enabled` of the same type
    */
   var getAllFields = function(){
     var fieldsMap = {};
-    _.filter(_.keys(appConfig), function(item){
+    _.keys(appConfig).filter(function(item){
       return item.match(/\_field$/);
     }).filter(function(item){
       var key = item.split('_')[0]+'_enabled';
@@ -86,8 +86,17 @@ angular.module('fusionSeedApp.services').service('ConfigApiService', function($l
     return fieldsMap;
   };
 
+
+  /**
+   * [function Returns specific field of given type]
+   * @param  {[string]} fieldType [the type of field that needs to be fetch from the config]
+   * @return {[type]}           [the value of the said field or null if not found]
+   */
   var getSpecificField = function(fieldType){
     var allFields = getAllFields();
+    if(!fieldType.match(/\_field$/)){
+      fieldType += '_field';
+    }
     return allFields[fieldType]?allFields[fieldType]:null;
   };
 

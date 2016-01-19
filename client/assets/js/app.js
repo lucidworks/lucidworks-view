@@ -33,8 +33,6 @@
   }
 
   function run($log, ConfigApiService) {
-    $log.info(ConfigApiService.getFusionUrl()); //DEBUG
-    $log.info(ConfigApiService.getFields.all());
     FastClick.attach(document.body);
   }
 })();
