@@ -8,7 +8,7 @@ angular.module('fusionSeedApp.services').service('ConfigApiService', function($l
     AllowAnonymousAccess: true,
     user: 'admin',
     password: 'password123',
-    collection: 'POI',
+    collection: 'Coll',
     queryPipelineIdList: ['POI-default','POI-signals'],
     queryProfilesIdList: ['default'],
     requestHandlerList: ['select','autofilter'],
@@ -49,7 +49,7 @@ angular.module('fusionSeedApp.services').service('ConfigApiService', function($l
   };
 
   var getQueryProfile = function(){
-    return appConfig.queryProfileIdList[0];
+    return appConfig.queryProfilesIdList[0];
   };
 
   var getLoginCredentials = function(){
@@ -57,6 +57,10 @@ angular.module('fusionSeedApp.services').service('ConfigApiService', function($l
       username: appConfig.user,
       passowrd: appConfig.password
     };
+  };
+
+  var getCollectionName = function(){
+    return appConfig.collection;
   };
 
   var getLabels = function(){ //TODO: Decide whether defined labels will be the only ones shown
@@ -101,6 +105,7 @@ angular.module('fusionSeedApp.services').service('ConfigApiService', function($l
     init: init, //TODO: Only for test env
     getFusionUrl: getFusionUrl,
     getQueryProfile: getQueryProfile,
+    getCollectionName: getCollectionName,
     getQueryPipeline: getQueryPipeline,
     getLoginCredentials: getLoginCredentials,
     getFields: {
