@@ -5,7 +5,7 @@ angular.module('ObservableService', [])
    * This module creates observable prototypes which allows the registration
    * of observers which are notified everytime the content in the observable
    * changes.
-   */
+   **/
   .service('ObservableService', function(){
     var observables = {};
 
