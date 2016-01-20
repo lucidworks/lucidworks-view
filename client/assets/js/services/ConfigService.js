@@ -30,19 +30,21 @@
       /** Config overrides from FUSION_CONFIG.js **/
       .constant('CONFIG_OVERRIDE', window.appConfig)
 
+      .constant('_', window._)
+
       .provider('ConfigService', ConfigService);
 
-      ConfigService.$inject = ['$log', 'CONFIG_DEFAULT', 'CONFIG_OVERRIDE', '_'];
+      ConfigService.$inject = ['CONFIG_DEFAULT', 'CONFIG_OVERRIDE', '_'];
 
-      function ConfigService($log, CONFIG_DEFAULT, CONFIG_OVERRIDE, _){
+      function ConfigService(CONFIG_DEFAULT, CONFIG_OVERRIDE, _){
         var appConfig;
 
-        this.$get = $get;
+        this.$get = ['$log', $get];
 
         /* initialize on first load */
         init();
 
-        function $get(){
+        function $get($log){
 
           return {
             init: init, //TODO: Only for test env
@@ -68,7 +70,7 @@
           var localOverride = (arguments.length >0)? arguments[0] : {};
 
           appConfig = _.assign({}, CONFIG_DEFAULT, CONFIG_OVERRIDE, localOverride);
-          build();
+          // build();
         }
 
         // function build(){
