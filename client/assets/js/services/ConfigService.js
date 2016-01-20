@@ -47,7 +47,7 @@ angular.module('fusionSeedApp.services.config', [])
         get: getSpecificField
       }
     };
-    
+
     /**
      * Extend config with the defaults
      */
@@ -83,6 +83,8 @@ angular.module('fusionSeedApp.services.config', [])
     }
 
     /**
+     * @return {object}
+     * 
      * Returns all the config properties that
      * ends with a `_field` which is not a blank string
      * and is toggled by explicit enable-ment by `_enabled` of the same type
@@ -104,9 +106,9 @@ angular.module('fusionSeedApp.services.config', [])
 
 
     /**
-     * [function Returns specific field of given type]
-     * @param  {[string]} fieldType [the type of field that needs to be fetch from the config]
-     * @return {[type]}           [the value of the said field or null if not found]
+     * Returns specific field of given type.
+     * @param  {string} fieldType The type of field that needs to be fetch from the config
+     * @return {*|null}           The value of the said field or null if not found.
      */
     function getSpecificField(fieldType){
       var allFields = getAllFields();
