@@ -27,7 +27,7 @@ angular.module('fusionSeedApp.services.config', [])
   /** Config overrides from FUSION_CONFIG.js **/
   .constant('CONFIG_OVERRIDE', window.appConfig)
 
-  .service('ConfigApiService', function($log, CONFIG_DEFAULT, CONFIG_OVERRIDE, _){
+  .service('ConfigService', function($log, CONFIG_DEFAULT, CONFIG_OVERRIDE, _){
     var appConfig;
 
     /* initialize on first load */
@@ -84,7 +84,7 @@ angular.module('fusionSeedApp.services.config', [])
 
     /**
      * @return {object}
-     * 
+     *
      * Returns all the config properties that
      * ends with a `_field` which is not a blank string
      * and is toggled by explicit enable-ment by `_enabled` of the same type

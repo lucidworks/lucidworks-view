@@ -1,7 +1,7 @@
 ngDescribe({
   name: 'QueryService',
   modules: 'fusionSeedApp.services',
-  inject: ['ConfigApiService', 'QueryService', '$httpBackend'],
+  inject: ['ConfigService', 'QueryService', '$httpBackend'],
   tests: function(deps){
     describe('it should make the right call', function(){
       it('with the right query', function(){

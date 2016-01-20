@@ -1,40 +1,40 @@
 ngDescribe({
-  name: 'ConfigApiService',
+  name: 'ConfigService',
   modules: 'fusionSeedApp.services',
-  inject: ['ConfigApiService'],
+  inject: ['ConfigService'],
   tests: function(deps){
     describe('specific little properties getter should be working', function(){
       it('should make the right fusion url', function(){
-        deps.ConfigApiService.init({
+        deps.ConfigService.init({
           host: 'http://localhost',
           port: '8764'
         });
-        expect(deps.ConfigApiService.getFusionUrl()).toEqual('http://localhost:8764');
+        expect(deps.ConfigService.getFusionUrl()).toEqual('http://localhost:8764');
       });
     });
 
     describe('getSpecificFields() should be working', function(){
       it('with specific field getters', function(){
-        deps.ConfigApiService.init({
+        deps.ConfigService.init({
           thumbnails_enabled: true,
           thumbnails_field: 'thumb_url'
         });
-        expect(deps.ConfigApiService.getFields.get('thumbnails_field')).toEqual('thumb_url');
+        expect(deps.ConfigService.getFields.get('thumbnails_field')).toEqual('thumb_url');
       });
 
       it('and null when disabled', function(){
-        deps.ConfigApiService.init({
+        deps.ConfigService.init({
           thumbnails_enabled: false,
           thumbnails_field: 'thumb_url'
         });
-        expect(deps.ConfigApiService.getFields.get('thumbnails_field')).toEqual(null);
+        expect(deps.ConfigService.getFields.get('thumbnails_field')).toEqual(null);
       });
 
       it('and straight thru if not toggle explicitly', function(){
-        deps.ConfigApiService.init({
+        deps.ConfigService.init({
           thumbnails_field: 'thumb_url'
         });
-        expect(deps.ConfigApiService.getFields.get('thumbnails_field')).toEqual('thumb_url');
+        expect(deps.ConfigService.getFields.get('thumbnails_field')).toEqual('thumb_url');
       });
     });
 

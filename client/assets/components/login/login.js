@@ -1,5 +1,5 @@
 angular.module('fusionSeedApp.components.login', [])
-  .directive('login', function($log, ConfigApiService) {
+  .directive('login', function($log, ConfigService) {
     return {
       controller: controller,
       link: link,

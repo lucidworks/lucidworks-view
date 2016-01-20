@@ -35,7 +35,7 @@
     $locationProvider.hashPrefix('!');
   }
 
-  function run($log, ConfigApiService) {
+  function run($log, ConfigService) {
     FastClick.attach(document.body);
   }
 })();

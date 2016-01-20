@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('fusionSeedApp.components.fieldFilter', [])
+        .module('fusionSeedApp.components.fieldFilter', ['fusionSeedApp.services.config'])
         .directive('fieldFilter', fieldFilter);
 
     /* @ngInject */
@@ -20,6 +20,8 @@
 
         }
     }
+
+    Controller.$inject = ['ConfigService'];
 
     /* @ngInject */
     function Controller(ConfigService) {
