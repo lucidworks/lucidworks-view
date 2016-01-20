@@ -10,6 +10,9 @@
         return {
             restrict: 'EA',
             templateUrl: 'assets/components/fieldFilter/fieldFilter.html',
+            scope: {
+              filterName: '@filterName'
+            },
             link: linkFunc,
             controller: Controller,
             controllerAs: 'vm',
@@ -21,10 +24,10 @@
         }
     }
 
-    Controller.$inject = ['ConfigService'];
+    Controller.$inject = ['ConfigService', 'Orwell'];
 
     /* @ngInject */
-    function Controller(ConfigService) {
+    function Controller(ConfigService, Orwell) {
         var vm = this;
 
         activate();
