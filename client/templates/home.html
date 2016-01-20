@@ -6,15 +6,15 @@ animationOut: slideOutLeft
 ---
 <zf-offcanvas position="left">
 </zf-offcanvas>
-<div class="grid-frame vertical">
+<div class="grid-frame vertical" ng-controller="HomeController as hc">
 
     <!-- Top Bar -->
     <nav class="primary title-bar">
       <span class="center">
         <form class="show-for-medium">
           <span class="inline-label" style="margin-bottom: 0;">
-            <input type="text" placeholder="Search...">
-            <a href="#" class="success button"><img zf-iconic="" icon="magnifying-glass" data-direction="top" size="small" class="iconic-color-secondary"></a>
+            <input type="text" placeholder="Search..." ng-model="hc.searchQuery" />
+            <a href="#" class="success button" ng-click="hc.search()"><img zf-iconic="" icon="magnifying-glass" data-direction="top" size="small" class="iconic-color-secondary"></a>
           </span>
         </form>
         <span class="show-for-small-only"><a class="title">Fusion seed app</a></span>

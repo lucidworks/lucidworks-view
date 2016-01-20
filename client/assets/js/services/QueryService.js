@@ -49,10 +49,10 @@
 
         $http.get(fullUrl)
           .then(function(response){
-            deffered.resolve(response);
+            deffered.resolve(response.data);
           })
           .catch(function(err){
-            deffered.reject(err);
+            deffered.reject(err.data);
           });
 
         return deffered.promise;

@@ -16,6 +16,7 @@
     // Fusion Seed App
     'fusionSeedApp.components',
     'fusionSeedApp.services',
+    'fusionSeedApp.controllers'
   ])
     .constant('_', window._)
     .config(config)
@@ -39,7 +40,6 @@
   }
 
   function run($log, ConfigService, ApiBase, QueryService) {
-    QueryService.getQuery({'q':'hello'}); //DEBUG: Remove in production
     FastClick.attach(document.body);
   }
 })();
