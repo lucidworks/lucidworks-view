@@ -23,6 +23,7 @@
   ;
 
   config.$inject = ['$urlRouterProvider', '$locationProvider', 'ApiBaseProvider', 'ConfigServiceProvider'];
+  run.$inject = ['$log', 'ConfigService', 'ApiBase', 'QueryService'];
 
   function config($urlProvider, $locationProvider, ApiBaseProvider, ConfigServiceProvider) {
     $urlProvider.otherwise('/');
@@ -36,7 +37,7 @@
     ApiBaseProvider.setEndpoint(ConfigServiceProvider.getFusionUrl());
   }
 
-  function run($log, ConfigService) {
+  function run($log, ConfigService, ApiBase) {
     FastClick.attach(document.body);
   }
 })();

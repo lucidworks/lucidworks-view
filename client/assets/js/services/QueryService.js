@@ -6,8 +6,6 @@
     QueryService.$inject = ['$q', '$http', 'ConfigService', 'ApiBase'];
 
     function QueryService($q, $http, ConfigService, ApiBase){
-      ApiBase.setEndpoint(ConfigService.getFusionUrl());
-
       return {
         getQuery: getQuery
       };
@@ -19,8 +17,6 @@
        */
       function getQuery(query){
         var deffered = $q.defer();
-
-        queryObject = query.q;
 
         var queryObject = angular.copy(query);
 

@@ -16,7 +16,7 @@
         queryPipelineIdList: ['POI-default','POI-signals'],
         queryProfilesIdList: ['default'],
         requestHandlerList: ['select','autofilter'],
-        use_query_profiles: true,
+        use_query_profile: true,
         addl_params: '', //We might not need this
         searchAppTitle: "Fusion Search Seed App",
         head_field: 'name',
@@ -57,6 +57,7 @@
             getQueryPipeline: getQueryPipeline,
             getLoginCredentials: getLoginCredentials,
             getAuthHeader: getAuthHeader,
+            getIfQueryProfile: getIfQueryProfile,
             getFields: {
               all: getAllFields,
               get: getSpecificField
@@ -80,6 +81,10 @@
         //   appConfig.queryPipline = getQueryPipeline();
         //   appConfig.queryProfile = getQueryProfile();
         // }
+
+        function getIfQueryProfile(){
+          return appConfig.use_query_profile;
+        }
 
         function getFusionUrl(){
           return appConfig.host + ':' + appConfig.port;

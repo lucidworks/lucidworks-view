@@ -8,12 +8,12 @@
     ApiBase.$inject = [];
 
     /* @ngInject */
-    function ApiBase(ConfigService) {
+    function ApiBase() {
       var self = this;
       self.endpoint =  '';
-      this.$get = get;
-      this.setEndpoint = setEndpoint;
-      this.getEndpoint = getEndpoint;
+      self.$get = get;
+      self.setEndpoint = setEndpoint;
+      self.getEndpoint = getEndpoint;
 
       function setEndpoint(endpoint) {
         self.endpoint = endpoint;
