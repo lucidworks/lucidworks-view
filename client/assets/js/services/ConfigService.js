@@ -31,13 +31,13 @@
       /** Config overrides from FUSION_CONFIG.js **/
       .constant('CONFIG_OVERRIDE', window.appConfig)
 
-      .constant('_', window._)
+      // .constant('_', window._)
 
       .provider('ConfigService', ConfigService);
 
-      ConfigService.$inject = ['CONFIG_DEFAULT', 'CONFIG_OVERRIDE', '_'];
+      ConfigService.$inject = ['CONFIG_DEFAULT', 'CONFIG_OVERRIDE'];
 
-      function ConfigService(CONFIG_DEFAULT, CONFIG_OVERRIDE, _){
+      function ConfigService(CONFIG_DEFAULT, CONFIG_OVERRIDE){
         var appConfig;
 
         this.$get = ['$log', $get];
