@@ -12,6 +12,7 @@
         user: 'admin',
         password: 'password123',
         collection: 'Coll',
+        connectionRealm: 'native',
         queryPipelineIdList: ['POI-default','POI-signals'],
         queryProfilesIdList: ['default'],
         requestHandlerList: ['select','autofilter'],

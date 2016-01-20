@@ -15,6 +15,9 @@ appConfig = {
   user: 'admin',
   password: 'password123',
 
+  // Which realm do you want to connect with defaults to native.
+  //connectionRealm: 'native',
+
   // The name of your collection
   collection: 'POI',
 
