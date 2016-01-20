@@ -46,6 +46,8 @@
         /* initialize on first load */
         init();
 
+        /////////////
+
         function $get($log){
 
           return {
