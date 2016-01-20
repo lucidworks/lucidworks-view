@@ -17,14 +17,14 @@
           ConfigService.getCollectionName() +
           '/query-profiles/' +
           ConfigService.getQueryProfile() +
-          '/select?';
+          '/select';
 
         var pipelinesEndpoint = ApiBase.getEndpoint() +
           '/api/apollo/query-pipelines/' +
           ConfigService.getQueryPipeline() +
           '/collection/' +
           ConfigService.getCollectionName() +
-          '/select?';
+          '/select';
 
         return isProfiles?profilesEndpoint:pipelinesEndpoint;
       }
@@ -45,7 +45,7 @@
           return str + ((str!=='')?'&':'') + key + '=' + value;
         },'');
 
-        var fullUrl = getQueryUrl(ConfigService.getIfQueryProfile()) + queryString;
+        var fullUrl = getQueryUrl(ConfigService.getIfQueryProfile()) + '?' + queryString;
 
         $http.get(fullUrl)
           .then(function(response){
