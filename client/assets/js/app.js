@@ -22,11 +22,12 @@
     .run(run)
   ;
 
-  config.$inject = ['$urlRouterProvider', '$locationProvider', 'ApiBaseProvider', 'ConfigServiceProvider'];
+  config.$inject = ['$urlRouterProvider', '$httpProvider','$locationProvider', 'ApiBaseProvider', 'ConfigServiceProvider'];
   run.$inject = ['$log', 'ConfigService', 'ApiBase', 'QueryService'];
 
-  function config($urlProvider, $locationProvider, ApiBaseProvider, ConfigServiceProvider) {
+  function config($urlProvider, $httpProvider, $locationProvider, ApiBaseProvider, ConfigServiceProvider) {
     $urlProvider.otherwise('/');
+    $httpProvider.interceptors.push('SessionInjector');
 
     $locationProvider.html5Mode({
       enabled:false,
@@ -37,7 +38,8 @@
     ApiBaseProvider.setEndpoint(ConfigServiceProvider.getFusionUrl());
   }
 
-  function run($log, ConfigService, ApiBase) {
+  function run($log, ConfigService, ApiBase, QueryService) {
+    QueryService.getQuery({'q':'hello'}); //DEBUG: Remove in production
     FastClick.attach(document.body);
   }
 })();

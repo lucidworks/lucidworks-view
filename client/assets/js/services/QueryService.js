@@ -38,6 +38,7 @@
         var deffered = $q.defer();
 
         var queryObject = angular.copy(query);
+        queryObject.wt='json'; //Force JSON returns
         var queryString = _.reduce(queryObject, function(str, value, key){
           return str + ((str!=='')?'&':'') + key + '=' + value;
         },'');
