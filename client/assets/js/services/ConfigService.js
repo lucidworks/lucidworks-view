@@ -52,7 +52,10 @@ angular.module('fusionSeedApp.services.config', [])
      * Extend config with the defaults
      */
     function init(){
-      appConfig = _.assign({}, CONFIG_DEFAULT, CONFIG_OVERRIDE);
+      // Set local override based on arguements passed in.
+      var localOverride = (arguments.length >0)? arguments[0] : {};
+
+      appConfig = _.assign({}, CONFIG_DEFAULT, CONFIG_OVERRIDE, localOverride);
     }
 
     function getFusionUrl(){
