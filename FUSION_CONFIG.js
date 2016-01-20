@@ -1,17 +1,14 @@
-//TODO: Major cleanuup
-
 appConfig = {
-  //***If you don't know what you want for some configuration items, leave them as-is and see what happens in UI.
-  //***You will need to clear browser history/cache before your changes take affect.
+  // If you don't know what you want for some configuration items, leave them as-is and see what happens in UI.
+  // You will need to clear browser history/cache before your changes take affect.
 
-  // window.location.hostname is used here if UI on same Jetty as Fusion.  If not, please specify Fusion hostname here.
-  host: window.location.hostname,
+  // window.location.hostname is used here if UI on same Jetty as Fusion.
+  // If not, please specify Fusion hostname here.
+  host: 'http://' + window.location.hostname,
   // Fusion port
   port:'8764',
 
   // Allow anyone to use this search app without logging in.
-  //
-  // authorizationHeader: {headers: {'Authorization': 'Basic ' + btoa('admin:password123')}},
   AllowAnonymousAccess: true,
   // If allow AllowAnonymousAccess is set to true these fields must also be set.
   // WARNING: using this in a production app is not recommended.
@@ -65,9 +62,9 @@ appConfig = {
   signalType: 'click', //Default signal type
   signals_pipeline: '_signals_ingest', //This specifies the index pipeline that submitSignals() uses to submit signals (simulated clicks)
 
-  UIOptions_enabled: true, //Set to true to make UIOptions button visible
-  geofield: 'coord', //Specify a location field here if you want to enable geospatial search.  Specify EMPTY value if your collection DOES NOT have geospatial data
-  distance: '10', //Default distance value in km for geospatial search
+  UIOptions_enabled: true, // Set to true to make UIOptions button visible
+  geofield: 'coord', // Specify a location field here if you want to enable geospatial search.  Specify EMPTY value if your collection DOES NOT have geospatial data
+  distance: '10', // Default distance value in km for geospatial search
 
   //***Each '_enabled' value below can be changed on the UI***
   query_info_enabled: false, //Set to true if you want to display query info
@@ -102,13 +99,13 @@ appConfig = {
   //If you want to display friendly labels for any field name, then add a line for each field name below.
   //For example, for 'cuisine' field name, replace it with 'Cuisine' in the UI
   labels: {
-    'cuisine': 'Cuisine',
-    'street': 'Street',
-    'coord': 'Coordinates',
-    'city': 'City',
-    'amenity': 'Amenity',
-    'likes': 'Likes',
-    'last_modified_date': 'Last Modified',
-   },
+                          'cuisine': 'Cuisine',
+                          'street': 'Street',
+                          'coord': 'Coordinates',
+                          'city': 'City',
+                          'amenity': 'Amenity',
+                          'likes': 'Likes',
+                          'last_modified_date': 'Last Modified',
+                         },
   //***END OF labels
 };
