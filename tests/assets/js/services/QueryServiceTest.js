@@ -18,6 +18,17 @@ ngDescribe({
         });
         deps.step();
       });
+
+      it('with the right query with multiple query params', function(){
+        deps.$httpBackend.expectGET('http://localhost:8764/api/apollo/collections/Coll/query-profiles/default/select?q=hello&fq=hello2u2').respond({'key':'value'});
+        deps.QueryService.getQuery({
+          q: 'hello',
+          fq: 'hello2u2'
+        }).then(function(resp){
+          expect(resp.data).toEqual({'key':'value'});
+        });
+        deps.step();
+      });
     });
   }
 });
