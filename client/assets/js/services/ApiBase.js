@@ -4,7 +4,7 @@
     'use strict';
 
     angular
-        .module('fusionSeedApp.services.apiBase', ['fusionSeedApp.services.config'])
+        .module('fusionSeedApp.services.apiBase', [])
         .provider('ApiBase', ApiBase);
 
     //ApiBase.$inject = [];
@@ -17,7 +17,7 @@
       this.setEndpoint = setEndpoint;
       this.getEndpoint = getEndpoint;
 
-      function setEndpoint(endoint) {
+      function setEndpoint(endpoint) {
         self.endpoint = endpoint;
       }
 

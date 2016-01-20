@@ -41,6 +41,7 @@
         var appConfig;
 
         this.$get = ['$log', $get];
+        this.getFusionUrl = getFusionUrl;
 
         /* initialize on first load */
         init();

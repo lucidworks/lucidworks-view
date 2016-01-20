@@ -22,9 +22,9 @@
     .run(run)
   ;
 
-  config.$inject = ['$urlRouterProvider', '$locationProvider'];
+  config.$inject = ['$urlRouterProvider', '$locationProvider', 'ApiBaseProvider', 'ConfigServiceProvider'];
 
-  function config($urlProvider, $locationProvider) {
+  function config($urlProvider, $locationProvider, ApiBaseProvider, ConfigServiceProvider) {
     $urlProvider.otherwise('/');
 
     $locationProvider.html5Mode({
@@ -33,6 +33,7 @@
     });
 
     $locationProvider.hashPrefix('!');
+    ApiBaseProvider.setEndpoint(ConfigServiceProvider.getFusionUrl());
   }
 
   function run($log, ConfigService) {
