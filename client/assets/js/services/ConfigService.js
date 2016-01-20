@@ -31,8 +31,6 @@
       /** Config overrides from FUSION_CONFIG.js **/
       .constant('CONFIG_OVERRIDE', window.appConfig)
 
-      // .constant('_', window._)
-
       .provider('ConfigService', ConfigService);
 
       ConfigService.$inject = ['CONFIG_DEFAULT', 'CONFIG_OVERRIDE'];
@@ -71,7 +69,7 @@
          */
         function init(){
           // Set local override based on arguements passed in.
-          var localOverride = (arguments.length >0)? arguments[0] : {};
+          var localOverride = (arguments.length > 0)? arguments[0] : {};
 
           appConfig = _.assign({}, CONFIG_DEFAULT, CONFIG_OVERRIDE, localOverride);
           // build();
