@@ -26,6 +26,8 @@
         thumbnail_enabled: true,
         image_field: '',
         image_enabled: true,
+        fl:[],
+        fl2display:[],
         labels: {
         }
       })

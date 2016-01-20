@@ -9,11 +9,13 @@ appConfig = {
   port:'8764',
 
   // Allow anyone to use this search app without logging in.
-  AllowAnonymousAccess: true,
+  // AllowAnonymousAccess: true,
   // If allow AllowAnonymousAccess is set to true these fields must also be set.
+
+  authorizationHeader: {'Authorization': 'Basic ' + btoa('admin:password123')},
   // WARNING: using this in a production app is not recommended.
-  user: 'admin',
-  password: 'password123',
+  // user: 'admin',
+  // password: 'password123',
 
   // Which realm do you want to connect with defaults to native.
   //connectionRealm: 'native',
@@ -21,20 +23,19 @@ appConfig = {
   // The name of your collection
   collection: 'Coll',
 
-  //Please specify a list of the pipeline(s) that you want to leverage with this UI.
-  // No Spaces.
+  //Please specify a list of the pipeline(s)/profile(s) that you want to leverage with this UI.
   // 1st pipeline will be default,
   // 2nd pipeline could be signal-enabled.
-  //
-  // If you only have 1 query pipeline, that is ok too.
-  pipelineIdList: [
-    'POI-default,POI-signals'
-  ],
+  queryPipelineIdList: ['default','not-default'],
+  queryProfilesIdList: ['default'],
+  use_query_profile: true,
+  // Force use of query-profile
 
   // This specifies list of requestHandler(s)
   requestHandlerList: 'select,autofilter',
-  // Specify any additional query params you want to include as part of doSearch(),
-  addl_params: '',
+
+  // // Specify any additional query params you want to include as part of doSearch(),
+  // addl_params: '',
 
   //Search UI Title
   searchAppTitle: "Points of Interest Search",
@@ -46,6 +47,10 @@ appConfig = {
   thumbnail_enabled: true,
   //In search results, for each doc, use this field to get thumbnail URL.
   thumbnail_field: 'coord',
+  //In search results, display a image in each doc page
+  image_field: '',
+  //In doc page, display a image with each doc
+  image_enabled: true,
 
   // Image that appears on the left when you initially load searchUI.
   facet_panel_image: "extras/killer-app.png",
@@ -53,12 +58,11 @@ appConfig = {
 
   // IMPORTANT: Make sure this fl list contains id and any fields you set for head_field/head_url_field/thumb_field
   // List of fields to retrieve when querying Fusion. No spaces please.
-  fl: 'name,amenity,cuisine,city,street,description,id,coord,likes,last_modified_date',
-
+  fl: ['name','amenity','cuisine','city','street','description','id','coord','likes','last_modified_date'],
   //List of fields to display in UI, in the order listed.
-  fl2display: 'name,amenity,cuisine,city,street,description,likes,last_modified_date',
+  fl2display:['name','amenity','cuisine','city','street','description','likes','last_modified_date'],
 
-                                                                //This needs to be a subset of fl.  No spaces please.
+  //This needs to be a subset of fl.  No spaces please.
   always_display_field: false, //Set this to true if you want to always display field in the results list even when it has empty value
 
   signalNum: 100, //# of signals for demo signal submit
@@ -78,7 +82,7 @@ appConfig = {
   spellcheck_requesthandler: 'spell', //Please make sure this requestHandler is configured in solrconfig.xml if you plan to use spellcheck
   spellcheck_dictionary: 'default_text', //Please make sure this dictionary is configured in solrconfig.xml if you plan to use spellcheck
 
-  //***typeahead is auto complete feature in UI
+  //typeahead is auto complete feature in UI
   typeahead_retrieve_num: 5, //Number of suggestions to retrieve from any typeahead mechanisms below
 
   typeahead_terms_enabled: true, //Enable terms mechanism to do typeahead
@@ -96,19 +100,16 @@ appConfig = {
   typeahead_logs_collection_enabled: false, //Set to true if you want to enable this by default.  You can always change it in the UI.
 
   typeahead_signals_collection_enabled: false, //Set to true if you want to enable this by default.  You can always change it in the UI.
-  //***END OF typeahead mechanisms
 
-  //***BEGINNING OF $rootScope.lwlabels
   //If you want to display friendly labels for any field name, then add a line for each field name below.
   //For example, for 'cuisine' field name, replace it with 'Cuisine' in the UI
   labels: {
-                          'cuisine': 'Cuisine',
-                          'street': 'Street',
-                          'coord': 'Coordinates',
-                          'city': 'City',
-                          'amenity': 'Amenity',
-                          'likes': 'Likes',
-                          'last_modified_date': 'Last Modified',
-                         },
-  //***END OF labels
+    'cuisine': 'Cuisine',
+    'street': 'Street',
+    'coord': 'Coordinates',
+    'city': 'City',
+    'amenity': 'Amenity',
+    'likes': 'Likes',
+    'last_modified_date': 'Last Modified',
+   },
 };
