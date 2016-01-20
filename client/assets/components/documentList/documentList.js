@@ -21,16 +21,15 @@
         }
     }
 
-    Controller.$inject = ['ConfigService'];
+    Controller.$inject = ['ConfigService','QueryService'];
 
     /* @ngInject */
-    function Controller(ConfigService) {
+    function Controller(ConfigService, QueryService) {
         var vm = this;
 
         activate();
 
         function activate() {
-
         }
     }
 })();

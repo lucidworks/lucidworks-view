@@ -52,7 +52,8 @@ To run the compiling process once, without watching any files, use the `build` c
 npm build
 ```
 
-This uses [`browser-sync`](https://www.browsersync.io/) for instant reload upon change of source files. Visit `http://localhost:3001` (or whatever your terminal shows as the browser-sync UI) for `browser-sync` dashboard.
+[//]: <> (This uses [`browser-sync`](https://www.browsersync.io/) for instant reload upon change of source files. Visit `http://localhost:3001` (or whatever your terminal shows as the browser-sync UI) for `browser-sync` dashboard.)
+
 
 ## Unit testing
 ```

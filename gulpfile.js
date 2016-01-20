@@ -162,7 +162,7 @@ gulp.task('uglify:app', function() {
 gulp.task('server', ['build'], function() {
   gulp.src('./build')
     .pipe($.webserver({
-      port: 8079,
+      port: 3000,
       host: 'localhost',
       fallback: 'index.html',
       livereload: true,
@@ -174,7 +174,10 @@ gulp.task('server', ['build'], function() {
 gulp.task('browsersync', ['build'], function() {
 
     browserSync.init({
-        server: "./build"
+        server: {
+          baseDir: "./build/"
+        }
+
     });
 
     // gulp.watch("app/scss/*.scss", ['sass']);
@@ -190,7 +193,7 @@ gulp.task('build', function(cb) {
 });
 
 // Default task: builds your app, starts a server, and recompiles assets when they change
-gulp.task('default', ['browsersync'], function () {
+gulp.task('serve', ['browsersync'], function () {
   // Watch Sass
   gulp.watch(['./client/assets/scss/**/*', './scss/**/*'], ['sass', 'reloadBrowsers']);
 
@@ -210,19 +213,22 @@ gulp.task('default', ['browsersync'], function () {
   gulp.watch(paths.configJS, ['copy:config', 'reloadBrowsers']);
 });
 
-gulp.task('serve', ['server'], function () {
+gulp.task('default', ['server'], function () {
   // Watch Sass
   gulp.watch(['./client/assets/scss/**/*', './scss/**/*'], ['sass']);
 
   // Watch JavaScript
   gulp.watch(['./client/assets/js/**/*', './js/**/*'], ['uglify:app']);
 
+  // Watch Directives
+  gulp.watch(['./client/assets/components/**/*'], ['uglify:app', 'copy']);
+
   // Watch static files
-  gulp.watch(['./client/**/*.*', '!./client/templates/**/*.*', '!./client/assets/{scss,js,components}/**/*.*'], ['copy']);
+  gulp.watch(['./client/**/*.*', '!./client/templates/**/*.*', '!./client/assets/{scss,js}/**/*.*'], ['copy']);
 
   // Watch app templates
-  gulp.watch(['./client/templates/**/*.html', './client/assets/components/**/*.html'], ['copy:templates']);
+  gulp.watch(['./client/templates/**/*.html'], ['copy:templates']);
 
   // Watch config
-  gulp.watch(paths.configJS, ['uglify:app', 'reloadBrowsers']);
+  gulp.watch(paths.configJS, ['copy:config']);
 });
