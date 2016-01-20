@@ -13,7 +13,7 @@
         password: 'password123',
         collection: 'Coll',
         connectionRealm: 'native',
-        queryPipelineIdList: ['POI-default','POI-signals'],
+        queryPipelineIdList: ['default','not-default'],
         queryProfilesIdList: ['default'],
         requestHandlerList: ['select','autofilter'],
         use_query_profile: true,

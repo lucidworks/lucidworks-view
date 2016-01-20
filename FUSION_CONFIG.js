@@ -19,7 +19,7 @@ appConfig = {
   //connectionRealm: 'native',
 
   // The name of your collection
-  collection: 'POI',
+  collection: 'Coll',
 
   //Please specify a list of the pipeline(s) that you want to leverage with this UI.
   // No Spaces.
