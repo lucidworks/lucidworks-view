@@ -1,6 +1,6 @@
-angular.module('fusionSeedApp.services.query', ['fusionSeedApp.services.config'])
+angular.module('fusionSeedApp.services.query', ['fusionSeedApp.services.config', 'fusionSeedApp.services.apiBase'])
 
-  .service('QueryService', function($q, $http, ConfigService){
+  .service('QueryService', function($q, $http, ConfigService, ApiBase){
 
     return {
       getQuery: getQuery
@@ -19,7 +19,7 @@ angular.module('fusionSeedApp.services.query', ['fusionSeedApp.services.config']
       var queryObject = angular.copy(query);
 
       $http.get(
-        ConfigService.getFusionUrl() +
+        ApiBase.getEndpoint() +
         '/api/apollo/collections/' +
         ConfigService.getCollectionName() +
         '/query-profiles/' +
