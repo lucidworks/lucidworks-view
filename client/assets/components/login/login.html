@@ -1,11 +1,11 @@
-<div class="content-block">
+<form class="content-block" ng-submit="vm.submit()">
   <label>
     Username
-    <input type="text" />
+    <input type="text" ng-model="vm.username" />
   </label>
   <label>
     Password
-    <input type="password" />
+    <input type="password" ng-model="vm.password" />
   </label>
-
-</div>
+  <a class="button" ng-click="vm.submit()">submit</a>
+</form>
