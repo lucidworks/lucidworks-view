@@ -31,7 +31,9 @@
 
       /**
        * Make a query to the query profiles endpoint
-       * @param  {object} query  Should have all the query params
+       * @param  {object} query  Should have all the query params, like
+       * For select?q=query&fq=blah you need to pass in an object
+       * {'q': 'query', 'fq': 'blah'}
        * @return {Promise}       Promise that resolve with a Fusion response coming from Solr
        */
       function getQuery(query){
