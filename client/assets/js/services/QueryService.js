@@ -1,38 +1,45 @@
-angular.module('fusionSeedApp.services.query', ['fusionSeedApp.services.config', 'fusionSeedApp.services.apiBase'])
+(function(){
+  angular.module('fusionSeedApp.services.query',
+    ['fusionSeedApp.services.config', 'fusionSeedApp.services.apiBase'])
+    .service('QueryService', QueryService);
 
-  .service('QueryService', function($q, $http, ConfigService, ApiBase){
+    QueryService.$inject = ['$q', '$http', 'ConfigService', 'ApiBase'];
 
-    return {
-      getQuery: getQuery
-    };
+    function QueryService($q, $http, ConfigService, ApiBase){
+      ApiBase.setEndpoint(ConfigService.getFusionUrl());
 
-    /**
-     * Make a query to the query profiles endpoint
-     * @param  {object} query  Should have all the query params
-     * @return {Promise}       Promise that resolve with a Fusion response coming from Solr
-     */
-    function getQuery(query){
-      var deffered = $q.defer();
+      return {
+        getQuery: getQuery
+      };
 
-      queryObject = query.q;
+      /**
+       * Make a query to the query profiles endpoint
+       * @param  {object} query  Should have all the query params
+       * @return {Promise}       Promise that resolve with a Fusion response coming from Solr
+       */
+      function getQuery(query){
+        var deffered = $q.defer();
 
-      var queryObject = angular.copy(query);
+        queryObject = query.q;
 
-      $http.get(
-        ApiBase.getEndpoint() +
-        '/api/apollo/collections/' +
-        ConfigService.getCollectionName() +
-        '/query-profiles/' +
-        ConfigService.getQueryProfile() +
-        '/select?q=' +
-        queryObject.q)
-        .then(function(response){
-          deffered.resolve(response);
-        })
-        .catch(function(err){
-          deffered.reject(err);
-        });
+        var queryObject = angular.copy(query);
 
-      return deffered.promise;
+        $http.get(
+          ApiBase.getEndpoint() +
+          '/api/apollo/collections/' +
+          ConfigService.getCollectionName() +
+          '/query-profiles/' +
+          ConfigService.getQueryProfile() +
+          '/select?q=' +
+          queryObject.q)
+          .then(function(response){
+            deffered.resolve(response);
+          })
+          .catch(function(err){
+            deffered.reject(err);
+          });
+
+        return deffered.promise;
+      }
     }
-  });
+})();

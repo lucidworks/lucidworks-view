@@ -20,6 +20,7 @@
         addl_params: '', //We might not need this
         searchAppTitle: "Fusion Search Seed App",
         head_field: 'name',
+        profiles_enabled: true,
         head_url_field: '',
         thumbnail_field: '',
         thumbnail_enabled: true,
@@ -47,7 +48,6 @@
         /////////////
 
         function $get($log){
-
           return {
             init: init, //TODO: Only for test env
             config: appConfig,

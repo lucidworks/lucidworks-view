@@ -72,7 +72,8 @@ ngDescribe({
         });
         expect(deps.ConfigService.getFields.all()).toEqual({
           thumbnails_field: 'thumb',
-          image_field: 'image'
+          image_field: 'image',
+          head_field: 'name'
         });
 
         deps.ConfigService.init({
@@ -82,7 +83,8 @@ ngDescribe({
           image_enabled: false
         });
         expect(deps.ConfigService.getFields.all()).toEqual({
-          thumbnails_field: 'thumb'
+          thumbnails_field: 'thumb',
+          head_field: 'name'
         });
       });
     });

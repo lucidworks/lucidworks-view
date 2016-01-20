@@ -5,10 +5,10 @@
         .module('fusionSeedApp.services.apiBase', [])
         .provider('ApiBase', ApiBase);
 
-    //ApiBase.$inject = [];
+    ApiBase.$inject = [];
 
     /* @ngInject */
-    function ApiBase() {
+    function ApiBase(ConfigService) {
       var self = this;
       self.endpoint =  '';
       this.$get = get;
