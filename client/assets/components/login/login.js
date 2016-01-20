@@ -1,17 +1,32 @@
-angular.module('fusionSeedApp.components.login', [])
-  .directive('login', function($log, ConfigService) {
-    return {
-      controller: controller,
-      link: link,
-      templateUrl: 'assets/components/login/login.html'
-    };
+(function() {
+    'use strict';
 
-    function controller(){
+  angular
+    .module('fusionSeedApp.components.login', [])
+    .directive('login', login);
+
+    /* @ngInject */
+    function login($log, ConfigService) {
+      return {
+        controller: Controller,
+        link: linkFunc,
+        templateUrl: 'assets/components/login/login.html',
+        controllerAs: 'vm',
+        bindToController: true
+      };
+
+      function linkFunc(scope, el, attr, ctrl){
+
+      }
+
+    }
+
+    Controller.$inject = ['$log', 'ConfigService', 'Orwell'];
+
+    /* @ngInject */
+    function Controller($log, ConfigService, Orwell){
+      var vm = this;
+
       $log.info("Daymn");
     }
-
-    function link(){
-      var self = this;
-
-    }
-  });
+})();
