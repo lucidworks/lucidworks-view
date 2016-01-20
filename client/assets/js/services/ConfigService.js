@@ -130,7 +130,6 @@
           return fieldsMap;
         }
 
-
         /**
          * Returns specific field of given type.
          * @param  {string} fieldType The type of field that needs to be fetch from the config
