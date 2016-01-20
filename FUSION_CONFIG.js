@@ -21,7 +21,7 @@ appConfig = {
   //connectionRealm: 'native',
 
   // The name of your collection
-  collection: 'Coll',
+  collection: 'Test1',
 
   //Please specify a list of the pipeline(s)/profile(s) that you want to leverage with this UI.
   // 1st pipeline will be default,

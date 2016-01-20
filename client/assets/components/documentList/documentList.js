@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('fusionSeedApp.components.documentList', ['fusionSeedApp.services.config'])
+        .module('fusionSeedApp.components.documentList', ['fusionSeedApp.services.config','ngOrwell'])
         .directive('documentList', documentList);
 
     /* @ngInject */
@@ -13,7 +13,7 @@
             link: linkFunc,
             controller: Controller,
             controllerAs: 'vm',
-            bindToController: true
+            bindToController: true,
         };
 
         function linkFunc(scope, el, attr, ctrl) {
@@ -21,11 +21,13 @@
         }
     }
 
-    Controller.$inject = ['ConfigService','QueryService'];
+    Controller.$inject = ['$log','$scope','ConfigService','QueryService','Orwell'];
 
     /* @ngInject */
-    function Controller(ConfigService, QueryService) {
+    function Controller($scope,ConfigService, QueryService,Orwell) {
         var vm = this;
+
+        //TODO: Get some data in
 
         activate();
 
