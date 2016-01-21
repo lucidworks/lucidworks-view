@@ -28,7 +28,6 @@
       };
 
       QueryService.getQuery(queryObject).then(function(resp){
-        $log.info(resp); //Getting the solr response
         queryObservable.setContent(resp);
         //TODO: Get something to do with the data
       });
