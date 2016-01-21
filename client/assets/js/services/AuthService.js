@@ -9,7 +9,7 @@
 
     /* @ngInject */
     function AuthService($q, $log, $http, ApiBase, ConfigService) {
-      var config = ConfigService.config();
+      var config = ConfigService.config;
       var realmName = config.connectionReam;
 
       return {
