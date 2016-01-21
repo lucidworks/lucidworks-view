@@ -27,19 +27,17 @@
     function Controller($log, $scope, ConfigService, QueryService,Orwell) {
         var vm = this;
 
-        var queryObservable = Orwell.getObservable('query');
-
-        queryObservable.addObserver(function(){
-          //TODO: the callback args aren't working, but getContent is working
-          var data = queryObservable.getContent();
-          vm.docs = data.response.docs;
-        });
-
-        //TODO: Get some data in
-
         activate();
 
         function activate() {
+          var queryObservable = Orwell.getObservable('query');
+
+          queryObservable.addObserver(function(){
+            //TODO: the callback args aren't working, but getContent is working
+            var data = queryObservable.getContent();
+            //TODO: Merge the fields with the config and generate a new list of stuff that is cleaner to the UI
+            vm.docs = data.response.docs;
+          });
         }
     }
 })();
