@@ -17,4 +17,8 @@
       ***{}{} (1 review)
     </div>
   </div>
+  <div class="detail small-8 medium-10 vertical" ng-repeat="doc in vm.docs">
+    <h3 style="display:inline;">{{doc.title[0]}}</h3>
+    <!-- This is not a real doc value thingy, TODO update to use the config for field population -->
+  </div>
 </article>

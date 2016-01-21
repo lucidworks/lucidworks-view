@@ -24,14 +24,20 @@
     Controller.$inject = ['$log','$scope','ConfigService','QueryService','Orwell'];
 
     /* @ngInject */
-    function Controller($scope,ConfigService, QueryService,Orwell) {
+    function Controller($log, $scope, ConfigService, QueryService,Orwell) {
         var vm = this;
-
-        //TODO: Get some data in
 
         activate();
 
         function activate() {
+          var queryObservable = Orwell.getObservable('query');
+
+          queryObservable.addObserver(function(){
+            //TODO: the callback args aren't working, but getContent is working
+            var data = queryObservable.getContent();
+            //TODO: Merge the fields with the config and generate a new list of stuff that is cleaner to the UI
+            vm.docs = data.response.docs;
+          });
         }
     }
 })();
