@@ -16,7 +16,8 @@
     // Fusion Seed App
     'fusionSeedApp.components',
     'fusionSeedApp.services',
-    'fusionSeedApp.controllers'
+    'fusionSeedApp.controllers',
+    'ngOrwell'
   ])
     .constant('_', window._)
     .config(config)
@@ -24,7 +25,7 @@
   ;
 
   config.$inject = ['$urlRouterProvider', '$httpProvider','$locationProvider', 'ApiBaseProvider', 'ConfigServiceProvider'];
-  run.$inject = ['$log', 'ConfigService', 'ApiBase', 'QueryService'];
+  run.$inject = ['$log', 'ConfigService', 'ApiBase', 'QueryService','Orwell'];
 
   function config($urlProvider, $httpProvider, $locationProvider, ApiBaseProvider, ConfigServiceProvider) {
     $urlProvider.otherwise('/');
@@ -36,10 +37,12 @@
     });
 
     $locationProvider.hashPrefix('!');
-    ApiBaseProvider.setEndpoint('http://'+window.location.hostname+':'+window.location.port+'/');
+    ApiBaseProvider.setEndpoint('http://'+window.location.hostname+':'+window.location.port);
+    // ApiBaseProvider.setEndpoint(ConfigServiceProvider.getFusionUrl());
   }
 
-  function run($log, ConfigService, ApiBase, QueryService) {
+  function run($log, ConfigService, ApiBase, QueryService, Orwell) {
+    Orwell.createObservable('query',{});
     FastClick.attach(document.body);
   }
 })();

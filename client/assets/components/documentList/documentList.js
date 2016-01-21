@@ -24,8 +24,16 @@
     Controller.$inject = ['$log','$scope','ConfigService','QueryService','Orwell'];
 
     /* @ngInject */
-    function Controller($scope,ConfigService, QueryService,Orwell) {
+    function Controller($log, $scope, ConfigService, QueryService,Orwell) {
         var vm = this;
+
+        var queryObservable = Orwell.getObservable('query');
+
+        queryObservable.addObserver(function(){
+          //TODO: the callback args aren't working, but getContent is working
+          var data = queryObservable.getContent();
+          vm.docs = data.response.docs;
+        });
 
         //TODO: Get some data in
 

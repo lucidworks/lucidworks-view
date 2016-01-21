@@ -7,24 +7,29 @@
 
   function HomeController($log, $scope, ConfigService, QueryService, Orwell){
     var self = this;
+    var queryObservable;
 
     var init = function(){
       self.searchQuery = '*:*';
       self.search = doSearch;
 
-      Orwell.createObservable('query',{});
+      queryObservable = Orwell.getObservable('query');
     };
 
     init();
+    doSearch();
 
     function doSearch(){
       $log.info("Searching...");
       var queryObject = {
-        q: self.searchQuery
+        q: self.searchQuery,
+        start: 0,
+        rows: 20
       };
 
       QueryService.getQuery(queryObject).then(function(resp){
         $log.info(resp); //Getting the solr response
+        queryObservable.setContent(resp);
         //TODO: Get something to do with the data
       });
     }
