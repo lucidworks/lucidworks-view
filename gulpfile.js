@@ -5,13 +5,17 @@
 // 1. LIBRARIES
 // - - - - - - - - - - - - - - -
 
-var $        = require('gulp-load-plugins')();
-var argv     = require('yargs').argv;
-var gulp     = require('gulp');
-var rimraf   = require('rimraf');
-var router   = require('front-router');
-var sequence = require('run-sequence');
-var browserSync = require('browser-sync').create();
+var $               = require('gulp-load-plugins')();
+var log             = require('connect-logger');
+var argv            = require('yargs').argv;
+var gulp            = require('gulp');
+var rimraf          = require('rimraf');
+var router          = require('front-router');
+var sequence        = require('run-sequence');
+var browserSync     = require('browser-sync').create();
+var fusionConfig    = require('./FUSION_CONFIG');
+var historyFallback = require('connect-history-api-fallback');
+var proxyMiddleware = require('http-proxy-middleware');
 
 // Check for --production flag
 var isProduction = !!(argv.production);
@@ -172,12 +176,26 @@ gulp.task('server', ['build'], function() {
 
 // Static Server + watching build and live reload accross all the browsers
 gulp.task('browsersync', ['build'], function() {
+  var openPath = getOpenPath();
+  // build middleware.
+  var middleware = [
+    log(),
+    proxyMiddleware('/api', {
+        target: fusionConfig.host+':'+fusionConfig.port
+    }),
+    historyFallback({ index: '/'+openPath+'/index.html' })
+  ];
 
     browserSync.init({
         server: {
-          baseDir: "./build/"
-        }
-
+          baseDir: "./build/",
+          middleware: middleware
+        },
+        files: [
+          openPath + '/**/*.html',
+          openPath + '/**/*.css',
+          openPath + '/**/*.js'
+        ]
     });
 
     // gulp.watch("app/scss/*.scss", ['sass']);
@@ -232,3 +250,11 @@ gulp.task('default', ['server'], function () {
   // Watch config
   gulp.watch(paths.configJS, ['copy:config']);
 });
+
+function getOpenPath() {
+  var src = argv.open || '';
+  if (!src) {
+    return '.';
+  }
+  return src;
+}

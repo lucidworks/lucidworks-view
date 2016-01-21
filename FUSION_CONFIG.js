@@ -4,7 +4,7 @@ appConfig = {
 
   // window.location.hostname is used here if UI on same Jetty as Fusion.
   // If not, please specify Fusion hostname here.
-  host: 'http://' + window.location.hostname,
+  host: 'http://localhost',
   // Fusion port
   port:'8764',
 
@@ -12,8 +12,13 @@ appConfig = {
   // AllowAnonymousAccess: true,
   // If allow AllowAnonymousAccess is set to true these fields must also be set.
 
-  authorizationHeader: {'Authorization': 'Basic ' + btoa('admin:password123')},
+  authorizationHeader: {'Authorization': 'Basic YWRtaW46cGFzc3dvcmQxMjM='},
   // WARNING: using this in a production app is not recommended.
+  // The text after 'Basic' is a base64 encoded username and password
+  // in the format of admin:password123.
+  //
+  // To use this you will have to base64 encode your default password.
+  //
   // user: 'admin',
   // password: 'password123',
 
@@ -69,7 +74,6 @@ appConfig = {
   signalType: 'click', //Default signal type
   signals_pipeline: '_signals_ingest', //This specifies the index pipeline that submitSignals() uses to submit signals (simulated clicks)
 
-  UIOptions_enabled: true, // Set to true to make UIOptions button visible
   geofield: 'coord', // Specify a location field here if you want to enable geospatial search.  Specify EMPTY value if your collection DOES NOT have geospatial data
   distance: '10', // Default distance value in km for geospatial search
 
