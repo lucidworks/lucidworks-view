@@ -13,7 +13,6 @@ var rimraf          = require('rimraf');
 var router          = require('front-router');
 var sequence        = require('run-sequence');
 var browserSync     = require('browser-sync').create();
-var fusionConfig    = require('./FUSION_CONFIG');
 var historyFallback = require('connect-history-api-fallback');
 var proxyMiddleware = require('http-proxy-middleware');
 
@@ -176,6 +175,7 @@ gulp.task('server', ['build'], function() {
 
 // Static Server + watching build and live reload accross all the browsers
 gulp.task('browsersync', ['build'], function() {
+  var fusionConfig    = require('./tmp/fusion_config');
   var openPath = getOpenPath();
   // build middleware.
   var middleware = [
@@ -202,12 +202,38 @@ gulp.task('browsersync', ['build'], function() {
     // gulp.watch("app/*.html").on('change', browserSync.reload);
 });
 
+// gulp.task('writeBuildConfig', function(){
+//   var fs = require('fs');
+//   fs.readFile('./FUSION_CONFIG.js', 'utf8', function(err, data){
+//     if (err) {
+//       return console.log(err);
+//     }
+//     var file = 'var appConfig = (function(){\n var ' + data + 'return appConfig;})();';
+//     fs.writeFile('./build/assets/js/fusion_config.js',file);
+//   });
+// });
+
+gulp.task('writeDevConfig', function(){
+  var fs = require('fs');
+  fs.readFile('./FUSION_CONFIG.js', 'utf8', function(err, data){
+    if (err) {
+      return console.log(err);
+    }
+    var file = 'var ' + data + 'module.exports = appConfig;';
+    var dir = './tmp';
+    if (!fs.existsSync(dir)){
+      fs.mkdirSync(dir);
+    }
+    fs.writeFile('./tmp/fusion_config.js',file);
+  });
+});
+
 //Reloads all the browsers
 gulp.task('reloadBrowsers', browserSync.reload);
 
 // Builds your entire app once, without starting a server
 gulp.task('build', function(cb) {
-  sequence('clean', ['copy', 'copy:foundation', 'sass', 'uglify'], 'copy:templates', 'copy:config', cb);
+  sequence('clean', 'writeDevConfig', ['copy', 'copy:foundation', 'sass', 'uglify'], 'copy:templates', 'copy:config', cb);
 });
 
 // Default task: builds your app, starts a server, and recompiles assets when they change
