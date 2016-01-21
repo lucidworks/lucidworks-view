@@ -16,7 +16,7 @@
       self.getEndpoint = getEndpoint;
 
       function setEndpoint(endpoint) {
-        self.endpoint = endpoint+'/';
+        self.endpoint = endpoint;
       }
 
       function getEndpoint(){

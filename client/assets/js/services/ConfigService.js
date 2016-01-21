@@ -5,7 +5,7 @@
 
       /** Default config options **/
       .constant('CONFIG_DEFAULT', {
-        host: 'http://' + window.location.hostname,
+        host: 'http://localhost',
         port:'8764',
         authorizationHeader: {'Authorization': 'Basic ' + btoa('admin:password123')},
         AllowAnonymousAccess: true,

@@ -24,7 +24,7 @@
       function createSession(username, password){
         var deferred = $q.defer();
         $http
-          .post(ApiBase.getEndpoint()+'session?realmName='+realmName, {username: username, password: password})
+          .post(ApiBase.getEndpoint()+'api/session?realmName='+realmName, {username: username, password: password})
           .then(function(resp) {
             deferred.resolve(resp);
           }, function(err) {

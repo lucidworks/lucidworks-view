@@ -36,7 +36,7 @@
     });
 
     $locationProvider.hashPrefix('!');
-    ApiBaseProvider.setEndpoint(ConfigServiceProvider.getFusionUrl());
+    ApiBaseProvider.setEndpoint('http://'+window.location.hostname+':'+window.location.port+'/');
   }
 
   function run($log, ConfigService, ApiBase, QueryService) {

@@ -2,10 +2,10 @@ appConfig = {
   // If you don't know what you want for some configuration items, leave them as-is and see what happens in UI.
   // You will need to clear browser history/cache before your changes take affect.
 
-  // window.location.hostname is used here if UI on same Jetty as Fusion.
-  // If not, please specify Fusion hostname here.
+  // localhost is used here for same computer use only.
+  // You will need to put a hostname or ip address here if you want to go to
+  // view this app from another machine.
   host: 'http://localhost',
-  // Fusion port
   port:'8764',
 
   // Allow anyone to use this search app without logging in.
