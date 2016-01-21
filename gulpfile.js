@@ -127,6 +127,7 @@ gulp.task('sass', function () {
       browsers: ['last 2 versions', 'ie 10']
     }))
     .pipe(cssnano)
+    .pipe(browserSync.stream())
     .pipe(gulp.dest('./build/assets/css/'));
 });
 
