@@ -37,12 +37,13 @@ appConfig = {
   // Force use of query-profile
 
   // This specifies list of requestHandler(s)
-  requestHandlerList: 'select,autofilter',
+  requestHandlerList: 'select,autofilter', //remove
 
   // // Specify any additional query params you want to include as part of doSearch(),
   // addl_params: '',
 
   //Search UI Title
+  // remove put in html
   searchAppTitle: "Points of Interest Search",
   //In search results, for each doc, display this field as the head field
   head_field: 'name',
