@@ -32,11 +32,13 @@
         function activate() {
           var queryObservable = Orwell.getObservable('query');
 
-          queryObservable.addObserver(function(){
-            //TODO: the callback args aren't working, but getContent is working
-            var data = queryObservable.getContent();
+          queryObservable.addObserver(function(data){
             //TODO: Merge the fields with the config and generate a new list of stuff that is cleaner to the UI
-            vm.docs = data.response.docs;
+            if(data.hasOwnProperty('response')){
+              vm.docs = data.response.docs;
+            } else {
+              vm.docs = [];
+            }
           });
         }
     }
