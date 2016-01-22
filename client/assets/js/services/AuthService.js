@@ -37,7 +37,7 @@
       function getSession(){
         var deferred = $q.defer();
         $http
-          .get(ApiBase.getEndpoint()+'session?realmName='+realmName)
+          .get(ApiBase.getEndpoint()+'api/session?realmName='+realmName)
           .then(function(resp){
             deferred.resolve(resp);
           }, function(err){
