@@ -65,9 +65,9 @@ appConfig = {
 
   // IMPORTANT: Make sure this fl list contains id and any fields you set for head_field/head_url_field/thumb_field
   // List of fields to retrieve when querying Fusion. No spaces please.
-  fl: ['name','amenity','cuisine','city','street','description','id','coord','likes','last_modified_date'],
+  fl: ['title','amenity','cuisine','city','street','description','id','coord','likes','last_modified_date'],
   //List of fields to display in UI, in the order listed.
-  fl2display:['name','amenity','cuisine','city','street','description','likes','last_modified_date'],
+  fl2display:['title','id','name'],
 
   //This needs to be a subset of fl.  No spaces please.
   always_display_field: false, //Set this to true if you want to always display field in the results list even when it has empty value

@@ -60,6 +60,7 @@
             getAuthHeader: getAuthHeader,
             getIfQueryProfile: getIfQueryProfile,
             getFieldLabels: getFieldLabels,
+            getFieldsToDisplay: getFieldsToDisplay,
             getFields: {
               all: getAllFields,
               get: getSpecificField
@@ -148,6 +149,10 @@
             fieldType += '_field';
           }
           return allFields[fieldType]?allFields[fieldType]:null;
+        }
+
+        function getFieldsToDisplay(){
+          return appConfig.fl2display;
         }
 
         function getAuthHeader(){

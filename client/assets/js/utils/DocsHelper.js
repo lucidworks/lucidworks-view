@@ -6,8 +6,13 @@
   function DocsHelper($log, _){
     return {
       populateFieldLabels: populateFieldLabels,
-      concatMultivaluedFields: concatMultivaluedFields
+      concatMultivaluedFields: concatMultivaluedFields,
+      selectFields: selectFields
     };
+
+    function selectFields(document, fieldArray){
+      return _.pick(document, fieldArray);
+    }
 
     /**
      * Returns human readable field names for a document
@@ -16,7 +21,7 @@
       //TODO: populate the field names from the map
 
       var unzippedDocuments = _.chain(document)
-      .map(function(key, value){
+      .map(function(value, key){
         return fieldMap.hasOwnProperty(key)?{key: fieldMap[key], value: value}:{key: key, value: value};
       })
       .value();
@@ -33,12 +38,10 @@
      * @return {[Object]}          [the document with joined mulitvalued fields]
      */
     function concatMultivaluedFields(document){
-      // $log.info(document);
       var blankDocument = {};
       _.forEach(document, function(value, key){
         blankDocument[key] = (value instanceof Array)?value.join(' '):value;
       });
-      // $log.info(blankDocument);
       return blankDocument;
     }
   }

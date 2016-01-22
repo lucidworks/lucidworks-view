@@ -104,7 +104,9 @@ gulp.task('copy:config', function() {
 
 // Copies your app's page templates and generates URLs for them
 gulp.task('copy:configSample', function() {
-  return gulp.src(paths.configJSSample).pipe($.rename('FUSION_CONFIG.js')).pipe(gulp.dest('./'));
+  if(fs.existsSync(paths.configJS[0])){ 
+    return gulp.src(paths.configJSSample).pipe($.rename('FUSION_CONFIG.js')).pipe(gulp.dest('./'));
+  }
 });
 
 // Compiles the Foundation for Apps directive partials into a single JavaScript file
