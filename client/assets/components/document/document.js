@@ -29,7 +29,7 @@
         DocsHelper.populateFieldLabels(document, ConfigService.getFieldLabels()),
         ConfigService.getFieldsToDisplay());
       doc.lw_title = document.hasOwnProperty(ConfigService.getFields.get('head'))?
-        document[ConfigService.getFields.get('head')]:'Title Not Found';
+        document[ConfigService.getFields.get('head')]:'Title Field Not Found';
       doc.lw_title2 = document.hasOwnProperty(ConfigService.getFields.get('subhead'))?
         document[ConfigService.getFields.get('subhead')]:null;
       doc.lw_thumbnail = document.hasOwnProperty(ConfigService.getFields.get('thumbnail'))?
