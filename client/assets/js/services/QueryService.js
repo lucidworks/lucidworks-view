@@ -34,7 +34,7 @@
          * @return {Promise}       Promise that resolve with a Fusion response coming from Solr
          */
         function getQuery(query){
-          var deffered = $q.defer();
+          var deferred = $q.defer();
 
           var queryObject = _.assign({}, QUERY_OBJECT_DEFAULT, query);
 
@@ -49,14 +49,14 @@
           function success(response){
             // Set the content to populate the rest of the ui.
             queryObservable.setContent(response.data);
-            deffered.resolve(response.data);
+            deferred.resolve(response.data);
           }
 
           function failure(err){
-            deffered.reject(err.data);
+            deferred.reject(err.data);
           }
 
-          return deffered.promise;
+          return deferred.promise;
         }
 
         /**
