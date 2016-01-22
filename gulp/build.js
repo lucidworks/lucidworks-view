@@ -1,15 +1,9 @@
 /* globals require, global, console */
 
 var $               = require('gulp-load-plugins')();
-var log             = require('connect-logger');
-var argv            = require('yargs').argv;
 var gulp            = require('gulp');
 var router          = require('front-router');
 var sequence        = require('run-sequence');
-var browserSync     = require('browser-sync').create();
-var historyFallback = require('connect-history-api-fallback');
-var proxyMiddleware = require('http-proxy-middleware');
-var fs              = require('fs');
 
 // Builds your entire app once, without starting a server
 gulp.task('build', function(cb) {

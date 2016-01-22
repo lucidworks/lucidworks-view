@@ -8,7 +8,7 @@ var proxyMiddleware = require('http-proxy-middleware');
 
 // Static Server + watching build and live reload accross all the browsers
 gulp.task('browsersync', ['build'], function() {
-  var fusionConfig    = require('./tmp/fusion_config');
+  var fusionConfig    = require('../tmp/fusion_config');
   var openPath = getOpenPath();
   // build middleware.
   var middleware = [
