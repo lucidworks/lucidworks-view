@@ -24,7 +24,7 @@
     Controller.$inject = ['$log','$scope','ConfigService','QueryService','Orwell'];
 
     /* @ngInject */
-    function Controller($log, $scope, ConfigService, QueryService,Orwell) {
+    function Controller($log, $scope, ConfigService, QueryService, Orwell) {
         var vm = this;
 
         activate();
