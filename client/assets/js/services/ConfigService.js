@@ -7,7 +7,7 @@
       .constant('CONFIG_DEFAULT', {
         host: 'http://localhost',
         port:'8764',
-        authorizationHeader: {'Authorization': 'Basic ' + btoa('admin:password123')},
+        authorizationHeader: {'Authorization': 'Basic YWRtaW46cGFzc3dvcmQxMjM='},
         AllowAnonymousAccess: true,
         user: 'admin',
         password: 'password123',
