@@ -1,61 +1,73 @@
 (function(){
   angular.module('fusionSeedApp.services.query',
     ['fusionSeedApp.services.config', 'fusionSeedApp.services.apiBase'])
-    .service('QueryService', QueryService);
+    .config(Config)
+    .provider('QueryService', QueryService);
 
-    QueryService.$inject = ['$q', '$http', 'ConfigService', 'ApiBase'];
+    Config.$inject = ['OrwellProvider'];
 
-    function QueryService($q, $http, ConfigService, ApiBase){
-      return {
-        getQuery: getQuery
-      };
+    function Config(OrwellProvider){
+      OrwellProvider.createObservable('query',{});
+    }
 
-      // Internal functions
-      function getQueryUrl(isProfiles){
-        var profilesEndpoint = ApiBase.getEndpoint() +
-          '/api/apollo/collections/' +
-          ConfigService.getCollectionName() +
-          '/query-profiles/' +
-          ConfigService.getQueryProfile() +
-          '/select';
+    function QueryService(){
 
-        var pipelinesEndpoint = ApiBase.getEndpoint() +
-          '/api/apollo/query-pipelines/' +
-          ConfigService.getQueryPipeline() +
-          '/collection/' +
-          ConfigService.getCollectionName() +
-          '/select';
+      this.$get = ['$q', '$http', 'ConfigService', 'ApiBase', $get];
 
-        return isProfiles?profilesEndpoint:pipelinesEndpoint;
-      }
+      /////////////
 
-      /**
-       * Make a query to the query profiles endpoint
-       * @param  {object} query  Should have all the query params, like
-       * For select?q=query&fq=blah you need to pass in an object
-       * {'q': 'query', 'fq': 'blah'}
-       * @return {Promise}       Promise that resolve with a Fusion response coming from Solr
-       */
-      function getQuery(query){
-        var deffered = $q.defer();
+      function $get($q, $http, ConfigService, ApiBase){
+        return {
+          getQuery: getQuery
+        };
 
-        var queryObject = angular.copy(query);
-        queryObject.wt='json'; //Force JSON returns
-        var queryString = _.reduce(queryObject, function(str, value, key){
-          return str + ((str!=='')?'&':'') + key + '=' + value;
-        },'');
+        // Internal functions
+        function getQueryUrl(isProfiles){
+          var profilesEndpoint = ApiBase.getEndpoint() +
+            '/api/apollo/collections/' +
+            ConfigService.getCollectionName() +
+            '/query-profiles/' +
+            ConfigService.getQueryProfile() +
+            '/select';
 
-        var fullUrl = getQueryUrl(ConfigService.getIfQueryProfile()) + '?' + queryString;
+          var pipelinesEndpoint = ApiBase.getEndpoint() +
+            '/api/apollo/query-pipelines/' +
+            ConfigService.getQueryPipeline() +
+            '/collection/' +
+            ConfigService.getCollectionName() +
+            '/select';
 
-        $http.get(fullUrl)
-          .then(function(response){
-            deffered.resolve(response.data);
-          })
-          .catch(function(err){
-            deffered.reject(err.data);
-          });
+          return isProfiles?profilesEndpoint:pipelinesEndpoint;
+        }
 
-        return deffered.promise;
+        /**
+         * Make a query to the query profiles endpoint
+         * @param  {object} query  Should have all the query params, like
+         * For select?q=query&fq=blah you need to pass in an object
+         * {'q': 'query', 'fq': 'blah'}
+         * @return {Promise}       Promise that resolve with a Fusion response coming from Solr
+         */
+        function getQuery(query){
+          var deffered = $q.defer();
+
+          var queryObject = angular.copy(query);
+          queryObject.wt='json'; //Force JSON returns
+          var queryString = _.reduce(queryObject, function(str, value, key){
+            return str + ((str!=='')?'&':'') + key + '=' + value;
+          },'');
+
+          var fullUrl = getQueryUrl(ConfigService.getIfQueryProfile()) + '?' + queryString;
+
+          $http.get(fullUrl)
+            .then(function(response){
+              deffered.resolve(response.data);
+            })
+            .catch(function(err){
+              deffered.reject(err.data);
+            });
+
+          return deffered.promise;
+        }
       }
     }
 })();
