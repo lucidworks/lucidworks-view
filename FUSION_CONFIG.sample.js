@@ -46,7 +46,8 @@ appConfig = {
   // remove put in html
   searchAppTitle: "Points of Interest Search",
   //In search results, for each doc, display this field as the head field
-  head_field: 'name',
+  head_field: 'title',
+  subhead_field: 'id',
   //In search results, for each doc, use this field to generate link value when a user clicks on head field
   head_url_field: 'coord',
   //In search results, display a thumbnail with each doc

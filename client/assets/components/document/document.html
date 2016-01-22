@@ -1,4 +1,4 @@
-<div class="doc">
+<!-- <div class="doc">
   <h2>{{doc.doc.id}}</h2>
 </div>
 
@@ -8,7 +8,7 @@
   </div>
 </div>
 <div class="detail small-8 medium-10 vertical">
-  <h3 style="display:inline;">{{doc.doc.name[0]}}</h3>
+  <h3 style="display:inline;">{{doc.doc.lw_title}}</h3>
   <h4 class="subheader">By <span ng-if="!doc.doc.artistName[0]">{{doc.doc.studio[0]}}</span><span ng-if="doc.doc.artistName[0]">{{doc.doc.artistName[0]}}</span><span ng-if="!doc.doc.artistName[0]">{{doc.doc.manufacturer[0]}}</span></h4>
   <p class="large-8 xlarge-7 xx-large-6">
     {{doc.doc.plot[0]}}
@@ -17,4 +17,12 @@
     <strong style="text-decoration: line-through" ng-if="doc.doc.regularPrice[0] !== doc.doc.salePrice[0]">${{doc.doc.regularPrice[0]}}</strong>
     <strong>${{doc.doc.salePrice[0]}}</strong>
   </div>
+</div> -->
+
+<div class="detail small-8 medium-10 vertical">
+  <h3 style="display:inline;">{{dc.document.lw_title}}</h3>
+  <h4 class="subheader"><span ng-if="dc.document.lw_title2">{{dc.document.lw_title2}}</span></h4>
+  <p ng-repeat = "(value, field) in dc.document.actualDocument">
+    <span><strong>{{field}}</strong>:{{value}}</span>
+  </p>
 </div>

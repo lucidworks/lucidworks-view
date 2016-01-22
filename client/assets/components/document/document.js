@@ -5,14 +5,13 @@
   documentListItem.$inject = [];
   function documentListItem(){
     return {
-        restrict: 'EA',
         templateUrl: 'assets/components/document/document.html',
         link: linkFunc,
         scope: {
-          document: '='
+          doc: '='
         },
         controller: Controller,
-        controllerAs: 'doc',
+        controllerAs: 'dc',
         bindToController: true,
     };
   }
@@ -23,8 +22,18 @@
 
     init();
 
+    function processDocument(document){
+      //Populate the labels
+      var doc = {};
+      doc.actualDocument = DocsHelper.populateFieldLabels(document, ConfigService.getFieldLabels());
+      doc.lw_title = document.hasOwnProperty(ConfigService.getFields.get('head'))?document[ConfigService.getFields.get('head')]:null;
+      doc.lw_title2 = document.hasOwnProperty(ConfigService.getFields.get('subhead'))?document[ConfigService.getFields.get('subhead')]:null;
+      doc.lw_thumbnail = document.hasOwnProperty(ConfigService.getFields.get('thumbnail'))?document[ConfigService.getFields.get('thumbnail')]:null;
+      return doc;
+    }
+
     function init(){
-      self.doc = DocsHelper.populateFieldLabels($scope.document, ConfigService.getFieldLabels());
+      self.document = processDocument(DocsHelper.concatMultivaluedFields(self.doc));
     }
     // $log.info(DocsHelper);
   }

@@ -15,13 +15,13 @@
     function populateFieldLabels(document, fieldMap){
       //TODO: populate the field names from the map
 
-      var unzippedDocument = _.chain(document)
+      var unzippedDocuments = _.chain(document)
       .map(function(key, value){
         return fieldMap.hasOwnProperty(key)?{key: fieldMap[key], value: value}:{key: key, value: value};
       })
       .value();
       var blankDocument = {};
-      _.forEach(unzippedDocument, function(pair){
+      _.forEach(unzippedDocuments, function(pair){
         blankDocument[pair.key] = pair.value;
       });
       return blankDocument;
@@ -33,10 +33,12 @@
      * @return {[Object]}          [the document with joined mulitvalued fields]
      */
     function concatMultivaluedFields(document){
+      // $log.info(document);
       var blankDocument = {};
-      _.forEach(document, function(key){
-        blankDocument[key] = (document[key] instanceof Array)?document[key].join(' '):document[key];
+      _.forEach(document, function(value, key){
+        blankDocument[key] = (value instanceof Array)?value.join(' '):value;
       });
+      // $log.info(blankDocument);
       return blankDocument;
     }
   }
