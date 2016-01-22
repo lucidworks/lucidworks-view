@@ -88,7 +88,7 @@
         }
 
         function getFusionUrl(){
-          return appConfig.host + ':' + appConfig.port;
+          return appConfig.host + ':' + appConfig.port + '/';
         }
 
         function getQueryPipeline(){
