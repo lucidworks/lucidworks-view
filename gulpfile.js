@@ -61,7 +61,9 @@ var paths = {
   configJS: [
     './FUSION_CONFIG.js'
   ],
-  configJSSample: './FUSION_CONFIG.sample.js'
+  configJSSample: [
+    './FUSION_CONFIG.sample.js'
+  ]
 };
 
 // 3. TASKS
@@ -92,11 +94,11 @@ gulp.task('copy:templates', function() {
 
 // Copies your app's page templates and generates URLs for them
 gulp.task('copy:config', function() {
-  if(fs.existsSync(paths.configJSSample)){ //If the file exists use that, or copy from the sample
+  if(fs.existsSync(paths.configJS[0])){ //If the file exists use that, or copy from the sample
     return gulp.src(paths.configJS).pipe(gulp.dest('./build/assets/js/'));
   }
   else {
-    return gulp.src(paths.configJSSample).pipe(gulp.dest(paths.configJS[0])).pipe(gulp.dest('./build/assets/js/'));
+    return gulp.src(paths.configJSSample).pipe($.rename('FUSION_CONFIG.js')).pipe(gulp.dest('./')).pipe(gulp.dest('./build/assets/js/'));
   }
 });
 
