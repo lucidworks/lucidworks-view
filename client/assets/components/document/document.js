@@ -1,12 +1,12 @@
 (function(){
-  angular.module('fusionSeedApp.components.documentListItem', ['fusionSeedApp.services.config', 'fusionSeedApp.utils.docs'])
-    .directive('documentListItem', documentListItem);
+  angular.module('fusionSeedApp.components.document', ['fusionSeedApp.services.config', 'fusionSeedApp.utils.docs'])
+    .directive('document', documentListItem);
 
   documentListItem.$inject = [];
   function documentListItem(){
     return {
         restrict: 'EA',
-        templateUrl: 'assets/components/documentListItem/documentListItem.html',
+        templateUrl: 'assets/components/document/document.html',
         link: linkFunc,
         scope: {
           doc: '='
@@ -17,10 +17,15 @@
     };
   }
 
-  Controller.$inject = ['$log', '$scope', 'DocsHelper'];
-  function Controller($log, $scope, DocsHelper){
+  Controller.$inject = ['$log', '$scope', 'DocsHelper', 'ConfigService'];
+  function Controller($log, $scope, DocsHelper, ConfigService){
     var self = this;
 
+    init();
+
+    function init(){
+
+    }
     // $log.info(DocsHelper);
   }
 
