@@ -1,6 +1,7 @@
 appConfig = {
-  // If you don't know what you want for some configuration items, leave them as-is and see what happens in UI.
-  // You will need to clear browser history/cache before your changes take affect.
+  // If you don't know what you want for some configuration items,
+  // leave them as-is and see what happens in UI.
+  // You may need to clear browser history/cache before your changes take affect.
 
   // localhost is used here for same computer use only.
   // You will need to put a hostname or ip address here if you want to go to
@@ -12,7 +13,9 @@ appConfig = {
   // AllowAnonymousAccess: true,
   // If allow AllowAnonymousAccess is set to true these fields must also be set.
 
-  authorizationHeader: {'Authorization': 'Basic YWRtaW46cGFzc3dvcmQxMjM='},
+  authorizationHeader: {
+    'Authorization': 'Basic YWRtaW46cGFzc3dvcmQxMjM='
+  },
   // WARNING: using this in a production app is not recommended.
   // The text after 'Basic' is a base64 encoded username and password
   // in the format of admin:password123.
@@ -36,13 +39,11 @@ appConfig = {
   use_query_profile: true,
   // Force use of query-profile
 
-  // This specifies list of requestHandler(s)
-  requestHandlerList: 'select,autofilter',
-
-  // // Specify any additional query params you want to include as part of doSearch(),
+  // Specify any additional query params you want to include as part of doSearch(),
   // addl_params: '',
 
   //Search UI Title
+  // remove put in html
   searchAppTitle: "Points of Interest Search",
   //In search results, for each doc, display this field as the head field
   head_field: 'name',

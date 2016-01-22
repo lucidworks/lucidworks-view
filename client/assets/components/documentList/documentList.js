@@ -24,7 +24,7 @@
     Controller.$inject = ['$log','$scope','ConfigService','QueryService','Orwell'];
 
     /* @ngInject */
-    function Controller($log, $scope, ConfigService, QueryService,Orwell) {
+    function Controller($log, $scope, ConfigService, QueryService, Orwell) {
         var vm = this;
 
         activate();
@@ -33,7 +33,11 @@
           var queryObservable = Orwell.getObservable('query');
 
           queryObservable.addObserver(function(data){
-            vm.docs = data.response.docs;
+            if(data.hasOwnProperty('response')){ 
+              vm.docs = data.response.docs;
+            } else {
+              vm.docs = [];
+            }
           });
         }
     }

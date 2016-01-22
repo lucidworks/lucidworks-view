@@ -37,12 +37,10 @@
     });
 
     $locationProvider.hashPrefix('!');
-    ApiBaseProvider.setEndpoint('http://'+window.location.hostname+':'+window.location.port);
-    // ApiBaseProvider.setEndpoint(ConfigServiceProvider.getFusionUrl());
+    ApiBaseProvider.setEndpoint(ConfigServiceProvider.getFusionUrl());
   }
 
-  function run($log, ConfigService, ApiBase, QueryService, Orwell) {
-    Orwell.createObservable('query',{});
+  function run($log, ConfigService, ApiBase, QueryService) {
     FastClick.attach(document.body);
   }
 })();

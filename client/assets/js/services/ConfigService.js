@@ -7,7 +7,7 @@
       .constant('CONFIG_DEFAULT', {
         host: 'http://localhost',
         port:'8764',
-        authorizationHeader: {'Authorization': 'Basic ' + btoa('admin:password123')},
+        authorizationHeader: {'Authorization': 'Basic YWRtaW46cGFzc3dvcmQxMjM='},
         AllowAnonymousAccess: true,
         user: 'admin',
         password: 'password123',
@@ -15,7 +15,6 @@
         connectionRealm: 'native',
         queryPipelineIdList: ['default','not-default'],
         queryProfilesIdList: ['default'],
-        requestHandlerList: ['select','autofilter'],
         use_query_profile: true,
         addl_params: '', //We might not need this
         searchAppTitle: "Fusion Search Seed App",
@@ -89,7 +88,7 @@
         }
 
         function getFusionUrl(){
-          return appConfig.host + ':' + appConfig.port;
+          return appConfig.host + ':' + appConfig.port + '/';
         }
 
         function getQueryPipeline(){

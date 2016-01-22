@@ -1,24 +1,30 @@
-<article class="grid-block">
+<article class="grid-block" ng-repeat="doc in vm.docs">
   <div class="image small-4 medium-2 grid-content">
     <div zf-interchange="">
-      <img media="small" src="http://lorempixel.com/g/160/160/cats">
+      <img media="small" ng-src="{{doc.image[0]}}">
     </div>
   </div>
   <div class="detail small-8 medium-10 vertical">
-    <h3 style="display:inline;">SanDisk - Extreme 4GB Secure Digital (SD) Class 10 Memory Card</h3>
-    <h4 class="subheader">By Sandisk</h4>
+    <h3 style="display:inline;">{{doc.name[0]}}</h3>
+    <h4 class="subheader">By <span ng-if="!doc.artistName[0]">{{doc.studio[0]}}</span><span ng-if="doc.artistName[0]">{{doc.artistName[0]}}</span><span ng-if="!doc.artistName[0]">{{doc.manufacturer[0]}}</span></h4>
     <p class="large-8 xlarge-7 xx-large-6">
-      For use with Secure Digital-compatible devices; stores images and video; 30MB/sec. read and write speeds; tempterature tested
+      {{doc.plot[0]}}
     </p>
     <div>
-      <strong>$24.99</strong>
+      <strong style="text-decoration: line-through" ng-if="doc.regularPrice[0] !== doc.salePrice[0]">${{doc.regularPrice[0]}}</strong>
+      <strong>${{doc.salePrice[0]}}</strong>
     </div>
-    <div>
+    <!-- <div>
       ***{}{} (1 review)
+<<<<<<< HEAD
     </div>
   </div>
   <div class="detail small-8 medium-10 vertical" ng-repeat="doc in vm.docs">
     <h3 style="display:inline;">{{doc.id}}</h3>
     <!-- This is not a real doc value thingy, TODO update to use the config for field population -->
+=======
+    </div> -->
+>>>>>>> 3510ca6a6fc4588975ceae9b6e48a8a4627f8148
   </div>
+  <!-- {{doc}} -->
 </article>
