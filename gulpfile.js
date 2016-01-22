@@ -104,8 +104,11 @@ gulp.task('copy:config', function() {
 
 // Copies your app's page templates and generates URLs for them
 gulp.task('copy:configSample', function() {
-  if(fs.existsSync(paths.configJS[0])){ 
+  if(!fs.existsSync(paths.configJS[0])){
     return gulp.src(paths.configJSSample).pipe($.rename('FUSION_CONFIG.js')).pipe(gulp.dest('./'));
+  }
+  else{
+    return false;
   }
 });
 
