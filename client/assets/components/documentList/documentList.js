@@ -32,11 +32,15 @@
         function activate() {
           var queryObservable = Orwell.getObservable('query');
 
-          queryObservable.addObserver(function(data){
-            if(data.hasOwnProperty('response')){ 
+          queryObservable.addObserver(function(){
+            var data = queryObservable.getContent();
+            $log.info('data',data);
+            if(data.hasOwnProperty('response')){
               vm.docs = data.response.docs;
+              $log.info(vm.docs);
             } else {
               vm.docs = [];
+              $log.info(vm.docs);
             }
           });
         }

@@ -27,6 +27,7 @@
     "ng-orwell": "~1.1.0"
   },
   "devDependencies": {
-    "angular-mocks": "~1.4.8"
+    "angular-mocks": "~1.4.8",
+    "ng-orwell": "~1.1.2"
   }
 }

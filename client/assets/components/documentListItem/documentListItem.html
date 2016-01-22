@@ -1,0 +1,20 @@
+<div class="doc">
+  <h2>{{doc.doc.id}}</h2>
+</div>
+
+<div class="image small-4 medium-2 grid-content">
+  <div zf-interchange="">
+    <img media="small" ng-src="{{doc.doc.image[0]}}">
+  </div>
+</div>
+<div class="detail small-8 medium-10 vertical">
+  <h3 style="display:inline;">{{doc.doc.name[0]}}</h3>
+  <h4 class="subheader">By <span ng-if="!doc.doc.artistName[0]">{{doc.doc.studio[0]}}</span><span ng-if="doc.doc.artistName[0]">{{doc.doc.artistName[0]}}</span><span ng-if="!doc.doc.artistName[0]">{{doc.doc.manufacturer[0]}}</span></h4>
+  <p class="large-8 xlarge-7 xx-large-6">
+    {{doc.doc.plot[0]}}
+  </p>
+  <div>
+    <strong style="text-decoration: line-through" ng-if="doc.doc.regularPrice[0] !== doc.doc.salePrice[0]">${{doc.doc.regularPrice[0]}}</strong>
+    <strong>${{doc.doc.salePrice[0]}}</strong>
+  </div>
+</div>
