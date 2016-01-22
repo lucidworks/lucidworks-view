@@ -110,12 +110,6 @@ appConfig = {
   //If you want to display friendly labels for any field name, then add a line for each field name below.
   //For example, for 'cuisine' field name, replace it with 'Cuisine' in the UI
   labels: {
-    'cuisine': 'Cuisine',
-    'street': 'Street',
-    'coord': 'Coordinates',
-    'city': 'City',
-    'amenity': 'Amenity',
-    'likes': 'Likes',
-    'last_modified_date': 'Last Modified',
+    'title': 'Title of the page'
    },
 };
