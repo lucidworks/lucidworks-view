@@ -14,6 +14,13 @@
       self.search = doSearch;
 
       queryObservable = Orwell.getObservable('query');
+      queryObservable.addObserver(function(data){
+        if(data.hasOwnProperty('response')){
+          self.numFound = data.response.numFound;
+        } else {
+          self.numFound = 0;
+        }
+      });
     };
 
     init();
@@ -27,9 +34,8 @@
         rows: 20
       };
 
-      QueryService.getQuery(queryObject).then(function(resp){
-        $log.info(resp); //Getting the solr response
-        queryObservable.setContent(resp);
+      QueryService.getQuery(queryObject)
+        .then(function(resp){
         //TODO: Get something to do with the data
       });
     }
