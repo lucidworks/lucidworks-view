@@ -67,14 +67,14 @@
          */
         function getQueryUrl(isProfiles){
           var profilesEndpoint = ApiBase.getEndpoint() +
-            '/api/apollo/collections/' +
+            'api/apollo/collections/' +
             ConfigService.getCollectionName() +
             '/query-profiles/' +
             ConfigService.getQueryProfile() +
             '/select';
 
           var pipelinesEndpoint = ApiBase.getEndpoint() +
-            '/api/apollo/query-pipelines/' +
+            'api/apollo/query-pipelines/' +
             ConfigService.getQueryPipeline() +
             '/collection/' +
             ConfigService.getCollectionName() +
