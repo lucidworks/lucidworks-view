@@ -25,9 +25,9 @@
     function processDocument(document){
       //Populate the labels
       var doc = {};
-      doc.actualDocument = DocsHelper.selectFields(
-        DocsHelper.populateFieldLabels(document, ConfigService.getFieldLabels()),
-        ConfigService.getFieldsToDisplay());
+      doc.actualDocument = DocsHelper.populateFieldLabels(
+        DocsHelper.selectFields(document,ConfigService.getFieldsToDisplay()),
+        ConfigService.getFieldLabels());
       doc.lw_title = document.hasOwnProperty(ConfigService.getFields.get('head'))?
         document[ConfigService.getFields.get('head')]:'Title Field Not Found';
       doc.lw_title2 = document.hasOwnProperty(ConfigService.getFields.get('subhead'))?
