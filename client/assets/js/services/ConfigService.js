@@ -59,6 +59,7 @@
             getLoginCredentials: getLoginCredentials,
             getAuthHeader: getAuthHeader,
             getIfQueryProfile: getIfQueryProfile,
+            getFieldLabels: getFieldLabels,
             getFields: {
               all: getAllFields,
               get: getSpecificField
@@ -151,6 +152,10 @@
 
         function getAuthHeader(){
           return appConfig.authorizationHeader;
+        }
+
+        function getFieldLabels(){
+          return appConfig.labels;
         }
       }
 })();

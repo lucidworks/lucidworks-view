@@ -9,7 +9,7 @@
         templateUrl: 'assets/components/document/document.html',
         link: linkFunc,
         scope: {
-          doc: '='
+          document: '='
         },
         controller: Controller,
         controllerAs: 'doc',
@@ -24,7 +24,7 @@
     init();
 
     function init(){
-
+      self.doc = DocsHelper.populateFieldLabels($scope.document, ConfigService.getFieldLabels());
     }
     // $log.info(DocsHelper);
   }
