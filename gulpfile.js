@@ -295,7 +295,7 @@ gulp.task('default', ['server'], function () {
   gulp.watch(paths.configJS, ['copy:config']);
 
   // Watch config sample
-  gulp.watch(paths.configJSSample, ['copy:configSample', 'reloadBrowsers']);
+  gulp.watch(paths.configJSSample, ['copy:configSample']);
 });
 
 function getOpenPath() {
