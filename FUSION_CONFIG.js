@@ -36,9 +36,6 @@ appConfig = {
   use_query_profile: true,
   // Force use of query-profile
 
-  // This specifies list of requestHandler(s)
-  requestHandlerList: 'select,autofilter', //remove
-
   // // Specify any additional query params you want to include as part of doSearch(),
   // addl_params: '',
 

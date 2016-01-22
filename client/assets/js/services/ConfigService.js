@@ -15,7 +15,6 @@
         connectionRealm: 'native',
         queryPipelineIdList: ['default','not-default'],
         queryProfilesIdList: ['default'],
-        requestHandlerList: ['select','autofilter'],
         use_query_profile: true,
         addl_params: '', //We might not need this
         searchAppTitle: "Fusion Search Seed App",
