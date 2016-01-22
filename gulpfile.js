@@ -15,6 +15,7 @@ var sequence        = require('run-sequence');
 var browserSync     = require('browser-sync').create();
 var historyFallback = require('connect-history-api-fallback');
 var proxyMiddleware = require('http-proxy-middleware');
+var fs              = require('fs');
 
 // Check for --production flag
 var isProduction = !!(argv.production);
@@ -59,7 +60,8 @@ var paths = {
   ],
   configJS: [
     './FUSION_CONFIG.js'
-  ]
+  ],
+  configJSSample: './FUSION_CONFIG.sample.js'
 };
 
 // 3. TASKS
@@ -90,7 +92,12 @@ gulp.task('copy:templates', function() {
 
 // Copies your app's page templates and generates URLs for them
 gulp.task('copy:config', function() {
-  return gulp.src(paths.configJS).pipe(gulp.dest('./build/assets/js/'));
+  if(fs.existsSync(paths.configJSSample)){ //If the file exists use that, or copy from the sample
+    return gulp.src(paths.configJS).pipe(gulp.dest('./build/assets/js/'));
+  }
+  else {
+    return gulp.src(paths.configJSSample).pipe(gulp.dest(paths.configJS[0])).pipe(gulp.dest('./build/assets/js/'));
+  }
 });
 
 // Compiles the Foundation for Apps directive partials into a single JavaScript file
