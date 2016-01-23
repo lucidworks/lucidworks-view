@@ -16,17 +16,18 @@
         use_query_profile: true,
         addl_params: '', //We might not need this
         searchAppTitle: "Fusion Seed App",
-        head_field: 'name',
-        profiles_enabled: true,
-        head_url_field: '',
-        thumbnail_field: '',
-        thumbnail_enabled: true,
-        image_field: '',
+        head_field: 'title',
+        subhead_field: 'subtitle',
+        head_url_field: 'url',
+        image_field: 'image',
         image_enabled: true,
+        profiles_enabled: true, // do we use
         fl:[],
         fl2display:[],
         labels: {
-        }
+        },
+        signalType: 'click',
+        signalsPipeline: '_signals_ingest'
       })
       /** Config overrides from FUSION_CONFIG.js **/
       .constant('CONFIG_OVERRIDE', window.appConfig)
