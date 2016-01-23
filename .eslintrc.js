@@ -2,7 +2,7 @@ module.exports = {
     "rules": {
         "indent": [
             2,
-            4
+            2
         ],
         "quotes": [
             2,
@@ -20,5 +20,5 @@ module.exports = {
     "env": {
         "browser": true
     },
-    "extends": "eslint:recommended"
+    "extends": "angular"
 };

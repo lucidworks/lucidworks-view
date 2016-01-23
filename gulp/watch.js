@@ -17,8 +17,8 @@ gulp.task('watch', function(){
   gulp.watch(['./client/templates/**/*.html'], ['copy:templates', 'reloadBrowsers']);
 
   // Watch config
-  gulp.watch(paths.configJS, ['jslint:config','copy:config', 'reloadBrowsers']);
+  gulp.watch(global.paths.configJS, ['jslint:config','copy:config', 'reloadBrowsers']);
 
   // Watch config sample
-  gulp.watch(paths.configJSSample, ['copy:configSample', 'reloadBrowsers']);
+  gulp.watch(global.paths.configJSSample, ['copy:configSample', 'reloadBrowsers']);
 });
