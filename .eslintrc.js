@@ -1,3 +1,4 @@
+/*eslint-disable */
 module.exports = {
     "rules": {
         "indent": [
@@ -15,10 +16,16 @@ module.exports = {
         "semi": [
             2,
             "always"
-        ]
+        ],
+        "no-extra-semi": 1,            // disallow unnecessary semicolons
+        "no-inner-declarations": 2,    // disallow function or variable declarations in nested blocks
     },
     "env": {
         "browser": true
     },
-    "extends": "angular"
+    "extends": [
+      "angular",
+      "eslint:recommended"
+    ]
 };
+/*eslint-enable */
