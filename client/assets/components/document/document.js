@@ -5,14 +5,14 @@
   documentListItem.$inject = [];
   function documentListItem(){
     return {
-        templateUrl: 'assets/components/document/document.html',
-        link: linkFunc,
-        scope: {
-          doc: '='
-        },
-        controller: Controller,
-        controllerAs: 'dc',
-        bindToController: true,
+      templateUrl: 'assets/components/document/document.html',
+      link: linkFunc,
+      scope: {
+        doc: '='
+      },
+      controller: Controller,
+      controllerAs: 'dc',
+      bindToController: true,
     };
   }
 
@@ -22,23 +22,23 @@
 
     init();
 
-    function processDocument(document){
+    function processDocument(doc){
       //Populate the labels
-      var doc = {};
-      doc.actualDocument = DocsHelper.populateFieldLabels(
-        DocsHelper.selectFields(document,ConfigService.getFieldsToDisplay()),
+      var returnDoc = {};
+      returnDoc.actualDocument = DocsHelper.populateFieldLabels(
+        DocsHelper.selectFields(doc,ConfigService.getFieldsToDisplay()),
         ConfigService.getFieldLabels());
-      doc.lw_title = document.hasOwnProperty(ConfigService.getFields.get('head'))?
-        document[ConfigService.getFields.get('head')]:'Title Field Not Found';
-      doc.lw_title2 = document.hasOwnProperty(ConfigService.getFields.get('subhead'))?
-        document[ConfigService.getFields.get('subhead')]:null;
-      doc.lw_thumbnail = document.hasOwnProperty(ConfigService.getFields.get('thumbnail'))?
-        document[ConfigService.getFields.get('thumbnail')]:null;
-      return doc;
+      returnDoc.lw_title = doc.hasOwnProperty(ConfigService.getFields.get('title'))?
+        doc[ConfigService.getFields.get('head')]:'Title Field Not Found';
+      returnDoc.lw_subtitle = doc.hasOwnProperty(ConfigService.getFields.get('subtitle'))?
+        doc[ConfigService.getFields.get('subhead')]:null;
+      returnDoc.lw_thumbnail = doc.hasOwnProperty(ConfigService.getFields.get('thumbnail'))?
+        doc[ConfigService.getFields.get('thumbnail')]:null;
+      return returnDoc;
     }
 
     function init(){
-      self.document = processDocument(DocsHelper.concatMultivaluedFields(self.doc));
+      self.doc = processDocument(DocsHelper.concatMultivaluedFields(self.doc));
     }
     // $log.info(DocsHelper);
   }
