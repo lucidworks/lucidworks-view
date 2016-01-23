@@ -19,13 +19,12 @@
     'fusionSeedApp.controllers',
     'ngOrwell'
   ])
-    .constant('_', window._)
+    .constant('_', window._)//eslint-disable-line
     .config(config)
-    .run(run)
-  ;
+    .run(run);
 
   config.$inject = ['$urlRouterProvider', '$httpProvider','$locationProvider', 'ApiBaseProvider', 'ConfigServiceProvider'];
-  run.$inject = ['$log', 'ConfigService', 'ApiBase', 'QueryService','Orwell'];
+  run.$inject = ['$document', '$log', 'ConfigService', 'ApiBase', 'QueryService'];
 
   function config($urlProvider, $httpProvider, $locationProvider, ApiBaseProvider, ConfigServiceProvider) {
     $urlProvider.otherwise('/');
@@ -40,7 +39,7 @@
     ApiBaseProvider.setEndpoint(ConfigServiceProvider.getFusionUrl());
   }
 
-  function run($log, ConfigService, ApiBase, QueryService) {
-    FastClick.attach(document.body);
+  function run($document, $log, ConfigService, ApiBase, QueryService) {
+    FastClick.attach($document.body);
   }
 })();
