@@ -1,4 +1,4 @@
-appConfig = {
+appConfig = { //eslint-disable-line
   // If you don't know what you want for some configuration items,
   // leave them as-is and see what happens in UI.
   // You may need to clear browser history/cache before your changes take affect.
@@ -44,7 +44,7 @@ appConfig = {
 
   // Search UI Title
   // This title appears in a number of places in the app, including page title, and header.
-  searchAppTitle: "Fusion Seed App",
+  searchAppTitle: 'Fusion Seed App',
 
   /**
    * Document display
@@ -106,7 +106,7 @@ appConfig = {
   spellcheck_requesthandler: 'spell',
   // Must be configured in solrconfig.xml
   spellcheck_dictionary: 'default_text',
-  
+
   /**
    * Typeahead
    *

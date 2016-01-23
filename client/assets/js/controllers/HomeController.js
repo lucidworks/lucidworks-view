@@ -6,7 +6,7 @@
   HomeController.$inject = ['$log', '$scope', 'ConfigService', 'QueryService', 'Orwell'];
 
   function HomeController($log, $scope, ConfigService, QueryService, Orwell){
-    var self = this;
+    var self = this;//eslint-disable-line
     var queryObservable;
 
     var init = function(){
@@ -27,7 +27,7 @@
     doSearch();
 
     function doSearch(){
-      $log.info("Searching...");
+      $log.info('Searching...');
       var queryObject = {
         q: self.searchQuery,
         start: 0,
