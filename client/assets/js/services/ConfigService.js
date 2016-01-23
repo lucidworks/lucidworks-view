@@ -23,9 +23,9 @@
       head_url_field: 'url',
       image_field: 'image',
       image_enabled: true,
+      fields_to_display:[],
       profiles_enabled: true, // do we use
       fl:[],
-      fl2display:[],
       labels: {
       },
       signalType: 'click',
@@ -162,7 +162,7 @@
     }
 
     function getFieldsToDisplay(){
-      return appConfig.fl2display;
+      return appConfig.fields_to_display;
     }
 
     function getAuthHeader(){

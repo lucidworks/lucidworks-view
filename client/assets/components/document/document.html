@@ -10,7 +10,7 @@
     <p class="large-8 xlarge-7 xx-large-6">
       {{dc.doc.lw_description}}
     </p>
-    <p ng-repeat = "(field, value) in dc.doc.actualDocument">
+    <p ng-repeat = "(field, value) in dc.doc.fieldsToDisplay">
       <span><strong>{{field}}</strong>:{{value}}</span>
     </p>
   </div>

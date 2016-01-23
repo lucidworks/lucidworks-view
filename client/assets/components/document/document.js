@@ -29,7 +29,7 @@
       //Populate the labels
       var returnDoc = {};
 
-      returnDoc.actualDocument = DocsHelper.populateFieldLabels(
+      returnDoc.fieldsToDisplay = DocsHelper.populateFieldLabels(
         DocsHelper.selectFields(doc, ConfigService.getFieldsToDisplay()),
         ConfigService.getFieldLabels()
       );

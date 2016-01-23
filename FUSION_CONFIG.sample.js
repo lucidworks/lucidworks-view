@@ -52,23 +52,27 @@ appConfig = { //eslint-disable-line
    * These parameters change the field that is displayed in the document.
    * You can also add additional fields by editing the document template.
    * Document template is located at:
-   *   your_project_directory/client/assets/components/document.html
+   *   your_project_directory/client/assets/components/document/document.html
    */
   //In search results, for each doc, display this field as the head field
   head_field: 'title',
   subhead_field: 'subtitle',
+  description_field: 'description',
   //In search results, for each doc, use this field to generate link value when a user clicks on head_field
   head_url_field: 'url',
   //In search results, display a image in each doc page
   image_field: 'image',
   //In doc page, display a image with each doc
   image_enabled: true,
+  // This displays the fields as text in a simple list.
+  // For more advanced layouts edit the document template at
+  //    your_project_directory/client/assets/components/document/document.html
+  fields_to_display:['title','id','name'],
 
-  // IMPORTANT: Make sure this fl list contains id and any fields you set for head_field/head_url_field/thumb_field
+  // IMPORTANT: Make sure this fl list contains id and any fields you set for head_field/head_url_field/image_field
   // List of fields to retrieve when querying Fusion.
   fl: ['title','amenity','cuisine','city','street','description','id','coord','likes','last_modified_date'],
-  //List of fields to display in UI, in the order listed.
-  fl2display:['title','id','name'],
+
 
   /**
    * Signals
