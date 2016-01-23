@@ -13,15 +13,11 @@
       scope: {
         filterName: '@filterName'
       },
-      link: linkFunc,
       controller: Controller,
       controllerAs: 'vm',
       bindToController: true
     };
 
-    function linkFunc(scope, el, attr, ctrl) {
-
-    }
   }
 
   Controller.$inject = ['ConfigService', 'Orwell'];
