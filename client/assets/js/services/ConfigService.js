@@ -36,6 +36,12 @@
 
   ConfigService.$inject = ['CONFIG_DEFAULT', 'CONFIG_OVERRIDE'];
 
+  /**
+   * ConfigService
+   *
+   * @param {object} CONFIG_DEFAULT  [description]
+   * @param {object} CONFIG_OVERRIDE [description]
+   */
   function ConfigService(CONFIG_DEFAULT, CONFIG_OVERRIDE){
     var appConfig;
 
@@ -47,6 +53,12 @@
 
     /////////////
 
+    /**
+     * Main Service function.
+     *
+     * @param  {[type]} $log [description]
+     * @return {[type]}      [description]
+     */
     function $get($log){
       return {
         init: init, //TODO: Only for test env
@@ -75,14 +87,7 @@
       var localOverride = (arguments.length > 0)? arguments[0] : {};
 
       appConfig = _.assign({}, CONFIG_DEFAULT, CONFIG_OVERRIDE, localOverride);
-      // build();
     }
-
-    // function build(){
-    //   appConfig.fusionUrl = getFusionUrl();
-    //   appConfig.queryPipline = getQueryPipeline();
-    //   appConfig.queryProfile = getQueryProfile();
-    // }
 
     function getIfQueryProfile(){
       return appConfig.use_query_profile;
