@@ -1,3 +1,4 @@
+/*global FastClick*/
 (function(){
   'use strict';
 
@@ -24,8 +25,17 @@
     .run(run);
 
   config.$inject = ['$urlRouterProvider', '$httpProvider','$locationProvider', 'ApiBaseProvider', 'ConfigServiceProvider'];
-  run.$inject = ['$document', '$log', 'ConfigService', 'ApiBase', 'QueryService'];
+  run.$inject = ['$document'];
 
+  /**
+   * Main app config
+   *
+   * @param  {Provider} $urlProvider          Provider for url
+   * @param  {Provider} $httpProvider         Provider for http
+   * @param  {Provider} $locationProvider     Provider for location
+   * @param  {Provider} ApiBaseProvider       Provider for ApiBase
+   * @param  {Provider} ConfigServiceProvider Provider for ConfigService
+   */
   function config($urlProvider, $httpProvider, $locationProvider, ApiBaseProvider, ConfigServiceProvider) {
     $urlProvider.otherwise('/');
     $httpProvider.interceptors.push('SessionInjector');
@@ -39,7 +49,12 @@
     ApiBaseProvider.setEndpoint(ConfigServiceProvider.getFusionUrl());
   }
 
-  function run($document, $log, ConfigService, ApiBase, QueryService) {
+  /**
+   * Main app run time
+   *
+   * @param  {Service} $document     Document service
+   */
+  function run($document) {
     FastClick.attach($document.body);
   }
 })();
