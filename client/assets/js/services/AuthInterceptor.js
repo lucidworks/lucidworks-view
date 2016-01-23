@@ -1,3 +1,4 @@
+/*global _*/
 (function() {
   'use strict';
 
@@ -26,7 +27,7 @@
   function AuthInterceptor($q, $log, $injector) {
 
     return {
-      responseError:  responseError,
+      responseError:  responseError
     };
 
     //////////////
