@@ -162,11 +162,6 @@ appConfig = { //eslint-disable-line
 
   typeahead_logs_collection_enabled: false, //Set to true if you want to enable.
 
-  typeahead_signals_collection_enabled: false, //Set to true if you want to enable.
+  typeahead_signals_collection_enabled: false //Set to true if you want to enable.
 
-  //If you want to display friendly labels for any field name, then add a line for each field name below.
-  //For example, for 'cuisine' field name, replace it with 'Cuisine' in the UI
-  labels: {
-    'title': 'Title of the page'
-  },
 };
