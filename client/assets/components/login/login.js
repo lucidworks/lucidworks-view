@@ -9,15 +9,10 @@
   function login($log, ConfigService) {
     return {
       controller: Controller,
-      link: linkFunc,
       templateUrl: 'assets/components/login/login.html',
       controllerAs: 'vm',
       bindToController: true
     };
-
-    function linkFunc(scope, el, attr, ctrl){
-
-    }
 
   }
 

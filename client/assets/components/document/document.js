@@ -6,13 +6,12 @@
   function documentListItem(){
     return {
       templateUrl: 'assets/components/document/document.html',
-      link: linkFunc,
       scope: {
         doc: '='
       },
       controller: Controller,
       controllerAs: 'dc',
-      bindToController: true,
+      bindToController: true
     };
   }
 
@@ -40,10 +39,6 @@
     function init(){
       self.doc = processDocument(DocsHelper.concatMultivaluedFields(self.doc));
     }
-    // $log.info(DocsHelper);
-  }
-
-  function linkFunc(scope, elem){
     // $log.info(DocsHelper);
   }
 })();

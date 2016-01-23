@@ -12,7 +12,7 @@
       templateUrl: 'assets/components/documentList/documentList.html',
       controller: Controller,
       controllerAs: 'vm',
-      bindToController: true,
+      bindToController: true
     };
 
   }

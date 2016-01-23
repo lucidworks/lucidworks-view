@@ -1,3 +1,4 @@
+/*global _*/
 (function(){
   angular.module('fusionSeedApp.services.query',
     ['fusionSeedApp.services.config', 'fusionSeedApp.services.apiBase'])
