@@ -6,32 +6,32 @@ appConfig = {
   // localhost is used here for same computer use only.
   // You will need to put a hostname or ip address here if you want to go to
   // view this app from another machine.
+  // @type string
   host: 'http://localhost',
   port:'8764',
 
-  // Allow anyone to use this search app without logging in.
-  // AllowAnonymousAccess: true,
-  // If allow AllowAnonymousAccess is set to true these fields must also be set.
+  /**
+   * The name of the realm to connect with
+   *   default: 'native'
+   * @type {String}
+   */
+  connectionRealm: 'native',
 
-  authorizationHeader: {
-    'Authorization': 'Basic YWRtaW46cGFzc3dvcmQxMjM='
-  },
-  // WARNING: using this in a production app is not recommended.
+  // Allow anyone to use this search app without logging in.
+  AllowAnonymousAccess: true,
+  // If allow AllowAnonymousAccess is set to true the authorizationHeader field must also be set.
+
   // The text after 'Basic' is a base64 encoded username and password
   // in the format of admin:password123.
-  //
-  // To use this you will have to base64 encode your default password.
-  //
-  // user: 'admin',
-  // password: 'password123',
-
-  // Which realm do you want to connect with defaults to native.
-  //connectionRealm: 'native',
+  authorizationHeader: {
+    'Authorization': 'Basic YWRtaW46cGFzc3dvcmQxMjM='
+    // WARNING: using this default setting in a production app is not recommended.
+  },
 
   // The name of your collection
-  collection: 'Coll',
+  collection: 'MyCollection',
 
-  //Please specify a list of the pipeline(s)/profile(s) that you want to leverage with this UI.
+  // Please specify a list of the pipeline(s)/profile(s) that you want to leverage with this UI.
   // 1st pipeline will be default,
   // 2nd pipeline could be signal-enabled.
   queryPipelineIdList: ['default','not-default'],
@@ -39,56 +39,79 @@ appConfig = {
   use_query_profile: true,
   // Force use of query-profile
 
-  // Specify any additional query params you want to include as part of doSearch(),
+  // Specify any additional query params you want to include as part of your search query,
   // addl_params: '',
 
-  //Search UI Title
-  // remove put in html
-  searchAppTitle: "Points of Interest Search",
+  // Search UI Title
+  // This title appears in a number of places in the app, including page title, and header.
+  searchAppTitle: "Fusion Seed App",
+
+  /**
+   * Document display
+   *
+   * These parameters change the field that is displayed in the document.
+   * You can also add additional fields by editing the document template.
+   * Document template is located at:
+   *   your_project_directory/client/assets/components/document.html
+   */
   //In search results, for each doc, display this field as the head field
   head_field: 'title',
-  subhead_field: 'id',
-  //In search results, for each doc, use this field to generate link value when a user clicks on head field
-  head_url_field: 'coord',
-  //In search results, display a thumbnail with each doc
-  thumbnail_enabled: true,
-  //In search results, for each doc, use this field to get thumbnail URL.
-  thumbnail_field: 'coord',
+  subhead_field: 'subtitle',
+  //In search results, for each doc, use this field to generate link value when a user clicks on head_field
+  head_url_field: 'url',
   //In search results, display a image in each doc page
-  image_field: '',
+  image_field: 'image',
   //In doc page, display a image with each doc
   image_enabled: true,
 
-  // Image that appears on the left when you initially load searchUI.
-  facet_panel_image: "extras/killer-app.png",
-  //Put image file in extras subfolder.  Suggest image 300px wide or greater.
-
   // IMPORTANT: Make sure this fl list contains id and any fields you set for head_field/head_url_field/thumb_field
-  // List of fields to retrieve when querying Fusion. No spaces please.
+  // List of fields to retrieve when querying Fusion.
   fl: ['title','amenity','cuisine','city','street','description','id','coord','likes','last_modified_date'],
   //List of fields to display in UI, in the order listed.
   fl2display:['title','id','name'],
 
-  //This needs to be a subset of fl.  No spaces please.
-  always_display_field: false, //Set this to true if you want to always display field in the results list even when it has empty value
+  /**
+   * Signals
+   *
+   * Allow the collection of data regaurding search results. The most typical use
+   * case is to track click signals for a collection.
+   */
+  // Signal type for title click.
+  signalType: 'click',
+  // This specifies the index pipeline that submitSignals() uses to submit signals (simulated clicks)
+  signals_pipeline: '_signals_ingest',
 
-  signalNum: 100, //# of signals for demo signal submit
-  signalType: 'click', //Default signal type
-  signals_pipeline: '_signals_ingest', //This specifies the index pipeline that submitSignals() uses to submit signals (simulated clicks)
+  // NOT IMPLEMENTED IN CURRENT UI
+  // geo_field: 'coord', // Specify a location field here if you want to enable geospatial search.  Specify EMPTY value if your collection DOES NOT have geospatial data
+  // distance: '10', // Default distance value in km for geospatial search
 
-  geofield: 'coord', // Specify a location field here if you want to enable geospatial search.  Specify EMPTY value if your collection DOES NOT have geospatial data
-  distance: '10', // Default distance value in km for geospatial search
+  /**
+   * Search within results
+   *
+   * This allows you to do a subquery within your results.
+   */
+  search_within_results_enabled: false, //Set to true if you want search with results enabled
 
-  //***Each '_enabled' value below can be changed on the UI***
-  query_info_enabled: false, //Set to true if you want to display query info
-  search_within_results_enabled: false, //Set to true if you want search with results enabled by default
-  stats_enabled: false, //Set to true if you want stats enabled by default
-
-  spellcheck_enabled: false, //Set to true if you want spellcheck enabled by default
-  spellcheck_requesthandler: 'spell', //Please make sure this requestHandler is configured in solrconfig.xml if you plan to use spellcheck
-  spellcheck_dictionary: 'default_text', //Please make sure this dictionary is configured in solrconfig.xml if you plan to use spellcheck
-
-  //typeahead is auto complete feature in UI
+  /**
+   * Spellcheck
+   *
+   * Allow the interface to inform users when it is possible they made a mistake.
+   * In the interface this looks like "Did you mean y?" when you do a query for x.
+   *
+   * NOTE: Spellcheck will not work unless the requestHandler and dictionary are
+   * configured in solrconfig.xml
+   */
+  spellcheck_enabled: false,
+  // Must be configured in solrconfig.xml
+  spellcheck_requesthandler: 'spell',
+  // Must be configured in solrconfig.xml
+  spellcheck_dictionary: 'default_text',
+  
+  /**
+   * Typeahead
+   *
+   * Typeahead or autocomplete shows you a number of suggested queries as you type in the search box.
+   */
   typeahead_retrieve_num: 5, //Number of suggestions to retrieve from any typeahead mechanisms below
 
   typeahead_terms_enabled: true, //Enable terms mechanism to do typeahead
@@ -96,16 +119,16 @@ appConfig = {
   typeahead_terms_requesthandler: 'terms',
   typeahead_terms_fl: 'suggestions',
 
-  typeahead_suggester1_enabled: false, //Set to true if you want to enable this by default.  You can always change it in the UI.
+  typeahead_suggester1_enabled: false, //Set to true if you want to enable.
   typeahead_suggester1_dictionary: 'Suggester_name', //Please make sure this dictionary is configured in solrconfig.xml if you plan to use this suggester
   typeahead_suggester_requesthandler: 'suggest', //Please make sure this requestHandler is configured in solrconfig.xml if you plan to use suggester
 
-  typeahead_suggester2_enabled: false, //Set to true if you want to enable this by default.  You can always change it in the UI.
+  typeahead_suggester2_enabled: false, //Set to true if you want to enable.
   typeahead_suggester2_dictionary: 'Suggester_city', //Please make sure this dictionary is configured in solrconfig.xml if you plan to use this suggester
 
-  typeahead_logs_collection_enabled: false, //Set to true if you want to enable this by default.  You can always change it in the UI.
+  typeahead_logs_collection_enabled: false, //Set to true if you want to enable.
 
-  typeahead_signals_collection_enabled: false, //Set to true if you want to enable this by default.  You can always change it in the UI.
+  typeahead_signals_collection_enabled: false, //Set to true if you want to enable.
 
   //If you want to display friendly labels for any field name, then add a line for each field name below.
   //For example, for 'cuisine' field name, replace it with 'Cuisine' in the UI
