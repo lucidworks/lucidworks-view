@@ -11,7 +11,8 @@
       },
       controller: Controller,
       controllerAs: 'dc',
-      bindToController: true
+      bindToController: true,
+      replace: true
     };
   }
 
@@ -22,17 +23,29 @@
     init();
 
     function processDocument(doc){
+      $log.debug('processDocument');
+      $log.debug(doc);
+      $log.debug(ConfigService.getFields.get('title'));
       //Populate the labels
       var returnDoc = {};
+
       returnDoc.actualDocument = DocsHelper.populateFieldLabels(
-        DocsHelper.selectFields(doc,ConfigService.getFieldsToDisplay()),
-        ConfigService.getFieldLabels());
-      returnDoc.lw_title = doc.hasOwnProperty(ConfigService.getFields.get('title'))?
+        DocsHelper.selectFields(doc, ConfigService.getFieldsToDisplay()),
+        ConfigService.getFieldLabels()
+      );
+
+      returnDoc.lw_head = doc.hasOwnProperty(ConfigService.getFields.get('head'))?
         doc[ConfigService.getFields.get('head')]:'Title Field Not Found';
-      returnDoc.lw_subtitle = doc.hasOwnProperty(ConfigService.getFields.get('subtitle'))?
+
+      returnDoc.lw_subhead = doc.hasOwnProperty(ConfigService.getFields.get('subhead'))?
         doc[ConfigService.getFields.get('subhead')]:null;
-      returnDoc.lw_thumbnail = doc.hasOwnProperty(ConfigService.getFields.get('thumbnail'))?
-        doc[ConfigService.getFields.get('thumbnail')]:null;
+
+      returnDoc.lw_description = doc.hasOwnProperty(ConfigService.getFields.get('description'))?
+        doc[ConfigService.getFields.get('description')]:null;
+
+      returnDoc.lw_image = doc.hasOwnProperty(ConfigService.getFields.get('image'))?
+        doc[ConfigService.getFields.get('image')]:null;
+
       return returnDoc;
     }
 
