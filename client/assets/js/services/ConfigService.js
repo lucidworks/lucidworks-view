@@ -19,6 +19,7 @@
       searchAppTitle: 'Fusion Seed App',
       head_field: 'title',
       subhead_field: 'subtitle',
+      description_field: 'description',
       head_url_field: 'url',
       image_field: 'image',
       image_enabled: true,
