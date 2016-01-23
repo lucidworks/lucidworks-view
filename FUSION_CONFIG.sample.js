@@ -64,10 +64,40 @@ appConfig = { //eslint-disable-line
   image_field: 'image',
   //In doc page, display a image with each doc
   image_enabled: true,
-  // This displays the fields as text in a simple list.
-  // For more advanced layouts edit the document template at
+
+  // ADDING ADDITIONAL FIELDS TO DOCUMENTS
+  //
+  // There are 2 ways to add additional fields to the ui.
+  // You can either use settings to create a simple list of values with field
+  // names or you can edit the html/css, which is far more robust and allows
+  // for more customization.
+  //
+  // SIMPLE CONFIG BASED FIELD DISPLAY
+  //
+  // This is the simpler option, but wont look as good.
+  // It creates a list of field names next to field results
+  // in the format of:
+  // field label: field result
+  //
+  // In order to add items to the list you must add the fields to
+  // fields_to_display. You can change the label of any field by adding a
+  // field mapping in field_display_labels
+  //
+  // FLEXIBLE HTML FIELD DISPLAY
+  //
+  // For more advanced layouts edit the document template this provides a great
+  // deal of flexibility and allows you to add more complex logic to your results.
+  // You are able to use basic javascript to show hide, or alter the display of
+  // any or multiple results.
+  //
+  // The HTML/Angular template is located in the following directory:
   //    your_project_directory/client/assets/components/document/document.html
   fields_to_display:['title','id','name'],
+  field_display_labels: {
+    'name': 'Document Name',
+    //'id': 'Identification Number'
+    // you can add as many lines of labels as you want
+  },
 
   // IMPORTANT: Make sure this fl list contains id and any fields you set for head_field/head_url_field/image_field
   // List of fields to retrieve when querying Fusion.

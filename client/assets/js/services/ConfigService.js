@@ -26,7 +26,7 @@
       fields_to_display:[],
       profiles_enabled: true, // do we use
       fl:[],
-      labels: {
+      field_display_labels: {
       },
       signalType: 'click',
       signalsPipeline: '_signals_ingest'
@@ -123,7 +123,7 @@
     }
 
     function getLabels(){ //TODO: Decide whether defined labels will be the only ones shown
-      return appConfig.labels;
+      return appConfig.field_display_labels;
     }
 
     /**
@@ -170,7 +170,7 @@
     }
 
     function getFieldLabels(){
-      return appConfig.labels;
+      return appConfig.field_display_labels;
     }
   }
 })();
