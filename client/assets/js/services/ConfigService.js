@@ -1,3 +1,4 @@
+/*global _*/
 (function() {
   'use strict';
   angular
@@ -45,7 +46,7 @@
   function ConfigService(CONFIG_DEFAULT, CONFIG_OVERRIDE){
     var appConfig;
 
-    this.$get = ['$log', $get];
+    this.$get = [$get];
     this.getFusionUrl = getFusionUrl;
 
     /* initialize on first load */
@@ -56,10 +57,9 @@
     /**
      * Main Service function.
      *
-     * @param  {[type]} $log [description]
      * @return {[type]}      [description]
      */
-    function $get($log){
+    function $get(){
       return {
         init: init, //TODO: Only for test env
         config: appConfig,
@@ -93,6 +93,11 @@
       return appConfig.use_query_profile;
     }
 
+    /**
+     * Returns a fusion URL complete w/ endslash.
+     *
+     * @return {[type]} [description]
+     */
     function getFusionUrl(){
       return appConfig.host + ':' + appConfig.port + '/';
     }
