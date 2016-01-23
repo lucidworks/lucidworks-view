@@ -3,6 +3,14 @@
   .factory('DocsHelper', DocsHelper);
 
   DocsHelper.$inject = ['$log','_'];
+
+  /**
+   * DocsHelper
+   *
+   * @param {Service} $log log
+   * @param {Service} _    lodash
+   * @return {Object}      The properties
+   */
   function DocsHelper($log, _){
     return {
       populateFieldLabels: populateFieldLabels,
@@ -10,12 +18,22 @@
       selectFields: selectFields
     };
 
+    /**
+     * Select Fields given a document and fieldArray
+     * @param  {object} document   [description]
+     * @param  {array} fieldArray  [description]
+     * @return {object}            The selected fields
+     */
     function selectFields(document, fieldArray){
       return _.pick(document, fieldArray);
     }
 
     /**
      * Returns human readable field names for a document
+     *
+     * @param  {object} document [description]
+     * @param  {object} fieldMap [description]
+     * @return {[type]}          [description]
      */
     function populateFieldLabels(document, fieldMap){
       //TODO: populate the field names from the map
@@ -33,9 +51,9 @@
     }
 
     /**
-     * [concatMultivaluedFields Concats all multi-value Solr fields]
-     * @param  {[Object]} document [the document]
-     * @return {[Object]}          [the document with joined mulitvalued fields]
+     * concatMultivaluedFields Concats all multi-value Solr fields
+     * @param  {Object} document The document
+     * @return {Object}          the document with joined mulitvalued fields
      */
     function concatMultivaluedFields(document){
       var blankDocument = {};
