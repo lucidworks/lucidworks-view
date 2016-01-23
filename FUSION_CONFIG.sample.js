@@ -134,5 +134,5 @@ appConfig = { //eslint-disable-line
   //For example, for 'cuisine' field name, replace it with 'Cuisine' in the UI
   labels: {
     'title': 'Title of the page'
-   },
+  },
 };
