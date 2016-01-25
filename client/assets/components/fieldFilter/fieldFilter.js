@@ -1,9 +1,9 @@
-(function() {
+(function () {
   'use strict';
 
   angular
-      .module('fusionSeedApp.components.fieldFilter', ['fusionSeedApp.services.config'])
-      .directive('fieldFilter', fieldFilter);
+    .module('fusionSeedApp.components.fieldFilter', ['fusionSeedApp.services.config'])
+    .directive('fieldFilter', fieldFilter);
 
   /* @ngInject */
   function fieldFilter() {

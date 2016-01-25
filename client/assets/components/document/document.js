@@ -1,9 +1,12 @@
-(function(){
-  angular.module('fusionSeedApp.components.document', ['fusionSeedApp.services.config', 'fusionSeedApp.utils.docs'])
+(function () {
+  angular.module('fusionSeedApp.components.document', ['fusionSeedApp.services.config',
+      'fusionSeedApp.utils.docs'
+    ])
     .directive('document', documentListItem);
 
   documentListItem.$inject = [];
-  function documentListItem(){
+
+  function documentListItem() {
     return {
       templateUrl: 'assets/components/document/document.html',
       scope: {
@@ -17,12 +20,13 @@
   }
 
   Controller.$inject = ['$log', '$scope', 'DocsHelper', 'ConfigService'];
-  function Controller($log, $scope, DocsHelper, ConfigService){
+
+  function Controller($log, $scope, DocsHelper, ConfigService) {
     var self = this;
 
     init();
 
-    function processDocument(doc){
+    function processDocument(doc) {
       //Populate the labels
       var returnDoc = {};
 
@@ -31,22 +35,23 @@
         ConfigService.getFieldLabels()
       );
 
-      returnDoc.lw_head = doc.hasOwnProperty(ConfigService.getFields.get('head'))?
-        doc[ConfigService.getFields.get('head')]:'Title Field Not Found';
+      returnDoc.lw_head = doc.hasOwnProperty(ConfigService.getFields.get('head')) ?
+        doc[ConfigService.getFields.get('head')] : 'Title Field Not Found';
 
-      returnDoc.lw_subhead = doc.hasOwnProperty(ConfigService.getFields.get('subhead'))?
-        doc[ConfigService.getFields.get('subhead')]:null;
+      returnDoc.lw_subhead = doc.hasOwnProperty(ConfigService.getFields.get('subhead')) ?
+        doc[ConfigService.getFields.get('subhead')] : null;
 
-      returnDoc.lw_description = doc.hasOwnProperty(ConfigService.getFields.get('description'))?
-        doc[ConfigService.getFields.get('description')]:null;
+      returnDoc.lw_description = doc.hasOwnProperty(ConfigService.getFields.get(
+          'description')) ?
+        doc[ConfigService.getFields.get('description')] : null;
 
-      returnDoc.lw_image = doc.hasOwnProperty(ConfigService.getFields.get('image'))?
-        doc[ConfigService.getFields.get('image')]:null;
+      returnDoc.lw_image = doc.hasOwnProperty(ConfigService.getFields.get('image')) ?
+        doc[ConfigService.getFields.get('image')] : null;
 
       return returnDoc;
     }
 
-    function init(){
+    function init() {
       self.doc = processDocument(DocsHelper.concatMultivaluedFields(self.doc));
     }
     // $log.info(DocsHelper);
