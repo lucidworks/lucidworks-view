@@ -14,7 +14,8 @@
       templateUrl: 'assets/components/documentList/documentList.html',
       controller: Controller,
       controllerAs: 'vm',
-      bindToController: true
+      bindToController: true,
+      scope: true
     };
 
   }
@@ -24,14 +25,16 @@
   /* @ngInject */
   function Controller($log, $scope, ConfigService, QueryService, Orwell) {
     var vm = this;
+    vm.docs = [];
 
     activate();
 
     function activate() {
       var resultsObservable = Orwell.getObservable('queryResults');
 
-      resultsObservable.addObserver(function () {
-        var data = resultsObservable.getContent();
+      resultsObservable.addObserver(function (data) {
+        $log.debug('documentList');
+        $log.debug(data);
         if (data.hasOwnProperty('response')) {
           vm.docs = data.response.docs;
         } else {

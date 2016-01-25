@@ -12,7 +12,8 @@
       templateUrl: 'assets/components/paginate/paginate.html',
       controller: Controller,
       controllerAs: 'vm',
-      bindToController: true
+      bindToController: true,
+      scope: true
     };
 
     return directive;
@@ -35,8 +36,7 @@
     function activate() {
       var queryObservable = Orwell.getObservable('query');
 
-      queryObservable.addObserver(function(){
-        var data = queryObservable.getContent();
+      queryObservable.addObserver(function(data){
         if(data.hasOwnProperty('response')){
           vm.docs = data.response.docs;
         } else {

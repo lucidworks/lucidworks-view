@@ -9,12 +9,12 @@
   function documentListItem() {
     return {
       templateUrl: 'assets/components/document/document.html',
-      scope: {
-        doc: '='
-      },
+      scope: true,
       controller: Controller,
       controllerAs: 'dc',
-      bindToController: true,
+      bindToController: {
+        doc: '='
+      },
       replace: true
     };
   }
