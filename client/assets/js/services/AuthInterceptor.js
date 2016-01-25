@@ -27,15 +27,15 @@
   function AuthInterceptor($q, $log, $injector) {
 
     return {
-      responseError:  responseError
+      responseError: responseError
     };
 
     //////////////
 
-    function responseError(resp){
+    function responseError(resp) {
       var deferred = $q.defer();
       var $state = $injector.get('$state');
-      if(!$state.is('login') && (resp.status === 401 || resp.status === 403)) {
+      if (!$state.is('login') && (resp.status === 401 || resp.status === 403)) {
         deferred.reject(resp);
         $state.go('login');
       }

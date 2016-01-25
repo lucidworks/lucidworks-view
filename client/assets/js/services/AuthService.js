@@ -2,8 +2,10 @@
   'use strict';
 
   angular
-      .module('fusionSeedApp.services.auth', ['fusionSeedApp.services.apiBase', 'fusionSeedApp.services.config'])
-      .factory('AuthService', AuthService);
+    .module('fusionSeedApp.services.auth', ['fusionSeedApp.services.apiBase',
+      'fusionSeedApp.services.config'
+    ])
+    .factory('AuthService', AuthService);
 
   AuthService.$inject = ['$q', '$log', '$http', 'ApiBase', 'ConfigService'];
 
@@ -21,10 +23,13 @@
     //////////////
 
 
-    function createSession(username, password){
+    function createSession(username, password) {
       var deferred = $q.defer();
       $http
-         .post(ApiBase.getEndpoint()+'api/session?realmName='+realmName, {username: username, password: password})
+        .post(ApiBase.getEndpoint() + 'api/session?realmName=' + realmName, {
+          username: username,
+          password: password
+        })
         .then(function(resp) {
           deferred.resolve(resp);
         }, function(err) {
@@ -34,23 +39,23 @@
       return deferred.promise;
     }
 
-    function getSession(){
+    function getSession() {
       var deferred = $q.defer();
       $http
-        .get(ApiBase.getEndpoint()+'api/session?realmName='+realmName)
-        .then(function(resp){
+        .get(ApiBase.getEndpoint() + 'api/session?realmName=' + realmName)
+        .then(function(resp) {
           deferred.resolve(resp);
-        }, function(err){
+        }, function(err) {
           deferred.reject(err);
         });
       return deferred.promise;
     }
 
-    function destroySession(){
+    function destroySession() {
       var deferred = $q.defer();
       $http
-        .delete(ApiBase.getEndpoint()+'session?realmName='+realmName)
-        .then(function(resp){
+        .delete(ApiBase.getEndpoint() + 'session?realmName=' + realmName)
+        .then(function(resp) {
           deferred.resolve(resp);
         });
 

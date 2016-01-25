@@ -10,7 +10,7 @@
   /* @ngInject */
   function ApiBase() {
     var self = this;
-    self.endpoint =  '';
+    self.endpoint = '';
     self.$get = get;
     self.setEndpoint = setEndpoint;
     self.getEndpoint = getEndpoint;
@@ -19,7 +19,7 @@
       self.endpoint = endpoint;
     }
 
-    function getEndpoint(){
+    function getEndpoint() {
       return self.endpoint;
     }
 

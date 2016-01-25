@@ -1,9 +1,11 @@
-(function() {
+(function () {
   'use strict';
 
   angular
-      .module('fusionSeedApp.components.documentList', ['fusionSeedApp.services.config','ngOrwell'])
-      .directive('documentList', documentList);
+    .module('fusionSeedApp.components.documentList', ['fusionSeedApp.services.config',
+      'ngOrwell'
+    ])
+    .directive('documentList', documentList);
 
   /* @ngInject */
   function documentList() {
@@ -17,7 +19,7 @@
 
   }
 
-  Controller.$inject = ['$log','$scope','ConfigService','QueryService','Orwell'];
+  Controller.$inject = ['$log', '$scope', 'ConfigService', 'QueryService', 'Orwell'];
 
   /* @ngInject */
   function Controller($log, $scope, ConfigService, QueryService, Orwell) {
@@ -28,15 +30,12 @@
     function activate() {
       var queryObservable = Orwell.getObservable('query');
 
-      queryObservable.addObserver(function(){
+      queryObservable.addObserver(function () {
         var data = queryObservable.getContent();
-        $log.info('data',data);
-        if(data.hasOwnProperty('response')){
+        if (data.hasOwnProperty('response')) {
           vm.docs = data.response.docs;
-          $log.info(vm.docs);
         } else {
           vm.docs = [];
-          $log.info(vm.docs);
         }
       });
     }

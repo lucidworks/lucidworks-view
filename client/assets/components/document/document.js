@@ -23,9 +23,6 @@
     init();
 
     function processDocument(doc){
-      $log.debug('processDocument');
-      $log.debug(doc);
-      $log.debug(ConfigService.getFields.get('title'));
       //Populate the labels
       var returnDoc = {};
 
