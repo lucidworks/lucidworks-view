@@ -28,10 +28,10 @@
     activate();
 
     function activate() {
-      var queryObservable = Orwell.getObservable('query');
+      var resultsObservable = Orwell.getObservable('queryResults');
 
-      queryObservable.addObserver(function () {
-        var data = queryObservable.getContent();
+      resultsObservable.addObserver(function () {
+        var data = resultsObservable.getContent();
         if (data.hasOwnProperty('response')) {
           vm.docs = data.response.docs;
         } else {
