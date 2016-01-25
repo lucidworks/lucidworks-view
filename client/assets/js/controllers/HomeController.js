@@ -29,9 +29,7 @@
     function doSearch(){
       $log.info('Searching...');
       var queryObject = {
-        q: self.searchQuery,
-        start: 0,
-        rows: 20
+        q: self.searchQuery
       };
 
       QueryService.getQuery(queryObject).then(function(resp){
