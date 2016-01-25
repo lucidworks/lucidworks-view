@@ -1,8 +1,8 @@
 <div>
-  <a ng-show="vm.page === 0">
+  <a ng-show="vm.page === 0 && vm.lastPage > 1">
     Next &gt;
   </a>
-  <a ng-show="vm.page === vm.lastPage">
+  <a ng-show="vm.page === vm.lastPage && vm.page > 0">
     &lt; Previous
   </a>
   <a ng-show="vm.page !== (vm.lastPage || 0)">

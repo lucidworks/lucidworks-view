@@ -14,6 +14,7 @@
     var service = {
       pageToStartRow: pageToStartRow,
       getRowsPerPage: getRowsPerPage,
+      getCurrentPage: getCurrentPage,
       getTotalPages: getTotalPages
     };
 
@@ -39,6 +40,11 @@
       return query.rows;
     }
 
+    function getStartRow() {
+      var query = queryObservable.getContent();
+      return query.start;
+    }
+
     /**
      * Get the total rows for a searchQuery
      * @return {integer} [description]
@@ -50,6 +56,25 @@
       }
       return 0;
     }
+
+    /**
+     * Get the current page
+     * @return {integer} The page number
+     */
+    function getCurrentPage() {
+      getPage(getStartRow());
+    }
+
+    /**
+     * Get a page given a start row.
+     * @param  {integer} startRow The row to start the page from
+     * @return {integer}          The page number
+     */
+    function getPage(startRow){
+      if (getRowsPerPage() === 0) return 0;
+      return Math.ceil(startRow / getRowsPerPage);
+    }
+
 
     /**
      * Get the total number of pages for the query.
