@@ -1,11 +1,11 @@
 <div>
-  <div ng-show="vm.page === 0">
-    Next >
-  </div>
-  <div ng-show="vm.page === vm.lastPage">
-    < Previous
-  </div>
-  <div ng-show="vm.page !== (vm.lastPage || 0)">
+  <a ng-show="vm.page === 0">
+    Next &gt;
+  </a>
+  <a ng-show="vm.page === vm.lastPage">
+    &lt; Previous
+  </a>
+  <a ng-show="vm.page !== (vm.lastPage || 0)">
     <div>&lt;</div><div>Page {{vm.getNormalizedPage()}}<span class="show-for-medium"> of {{vm.totalPages}}</span></div><div>&gt;</div>
-  </div>
+  </a>
 </div>
