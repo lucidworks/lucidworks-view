@@ -38,7 +38,6 @@ gulp.task('copy:foundation', function(cb) {
     }))
     .pipe($.uglify())
     .pipe($.concat('templates.js'))
-    .pipe($.sourcemaps.write())
     .pipe(gulp.dest('./build/assets/js'));
 
   // Iconic SVG icons
@@ -67,14 +66,17 @@ gulp.task('uglify:app', function() {
   var uglify = $.if(global.isProduction, $.uglify()
     .on('error', function (e) {
       console.log(e);
-    }));
+    })),
+    sourcemapsInit = $.if(!global.isProduction, $.sourcemaps.init()),
+    sourcemapsWrite = $.if(!global.isProduction, $.sourcemaps.write('.'));
 
-  return gulp.src(global.paths.appJS)
+  return gulp.src(global.paths.appJS, { base: 'client' })
+    .pipe(sourcemapsInit)
     .pipe(uglify)
     .pipe($.plumber())
     .pipe($.ngAnnotate())
     .pipe($.directiveReplace({root: 'client'}))
-    .pipe($.sourcemaps.init())
     .pipe($.concat('app.js'))
+    .pipe(sourcemapsWrite)
     .pipe(gulp.dest('./build/assets/js/'));
 });
