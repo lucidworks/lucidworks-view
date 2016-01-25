@@ -1,18 +1,20 @@
 /*global _*/
-(function() {
+(function () {
   'use strict';
   angular
-     .module('fusionSeedApp.services.config', [])
+    .module('fusionSeedApp.services.config', [])
 
     /** Default config options **/
     .constant('CONFIG_DEFAULT', {
       host: 'http://localhost',
-      port:'8764',
+      port: '8764',
       connectionRealm: 'native',
       AllowAnonymousAccess: true,
-      authorizationHeader: {'Authorization': 'Basic YWRtaW46cGFzc3dvcmQxMjM='},
+      authorizationHeader: {
+        'Authorization': 'Basic YWRtaW46cGFzc3dvcmQxMjM='
+      },
       collection: 'MyCollection',
-      queryPipelineIdList: ['default','not-default'],
+      queryPipelineIdList: ['default', 'not-default'],
       queryProfilesIdList: ['default'],
       use_query_profile: true,
       addl_params: '', //We might not need this
@@ -23,11 +25,10 @@
       head_url_field: 'url',
       image_field: 'image',
       image_enabled: true,
-      fields_to_display:[],
+      fields_to_display: [],
       profiles_enabled: true, // do we use
-      fl:[],
-      field_display_labels: {
-      },
+      fl: [],
+      field_display_labels: {},
       signalType: 'click',
       signalsPipeline: '_signals_ingest'
     })
@@ -44,7 +45,7 @@
    * @param {object} CONFIG_DEFAULT  [description]
    * @param {object} CONFIG_OVERRIDE [description]
    */
-  function ConfigService(CONFIG_DEFAULT, CONFIG_OVERRIDE){
+  function ConfigService(CONFIG_DEFAULT, CONFIG_OVERRIDE) {
     var appConfig;
 
     this.$get = [$get];
@@ -60,7 +61,7 @@
      *
      * @return {[type]}      [description]
      */
-    function $get(){
+    function $get() {
       return {
         init: init, //TODO: Only for test env
         config: appConfig,
@@ -83,14 +84,14 @@
     /**
      * Extend config with the defaults
      */
-    function init(){
+    function init() {
       // Set local override based on arguements passed in.
-      var localOverride = (arguments.length > 0)? arguments[0] : {};
+      var localOverride = (arguments.length > 0) ? arguments[0] : {};
 
       appConfig = _.assign({}, CONFIG_DEFAULT, CONFIG_OVERRIDE, localOverride);
     }
 
-    function getIfQueryProfile(){
+    function getIfQueryProfile() {
       return appConfig.use_query_profile;
     }
 
@@ -99,30 +100,30 @@
      *
      * @return {[type]} [description]
      */
-    function getFusionUrl(){
+    function getFusionUrl() {
       return appConfig.host + ':' + appConfig.port + '/';
     }
 
-    function getQueryPipeline(){
+    function getQueryPipeline() {
       return appConfig.queryPipelineIdList[0];
     }
 
-    function getQueryProfile(){
+    function getQueryProfile() {
       return appConfig.queryProfilesIdList[0];
     }
 
-    function getLoginCredentials(){
+    function getLoginCredentials() {
       return {
         username: appConfig.user,
         passowrd: appConfig.password
       };
     }
 
-    function getCollectionName(){
+    function getCollectionName() {
       return appConfig.collection;
     }
 
-    function getLabels(){ //TODO: Decide whether defined labels will be the only ones shown
+    function getLabels() { //TODO: Decide whether defined labels will be the only ones shown
       return appConfig.field_display_labels;
     }
 
@@ -133,18 +134,22 @@
      * ends with a `_field` which is not a blank string
      * and is toggled by explicit enable-ment by `_enabled` of the same type
      */
-    function getAllFields(){
+    function getAllFields() {
       var fieldsMap = {};
-      _.keys(appConfig).filter(function(item){
-        return item.match(/\_field$/);
-      }).filter(function(item){
-        var key = item.split('_')[0]+'_enabled';
-        return _.has(appConfig, key)?appConfig[key]:true;
-      }).filter(function(item){
-        return _.trim(appConfig[item])!=='';
-      }).forEach(function(keyName){
-        fieldsMap[keyName] = appConfig[keyName];
-      });
+      _.keys(appConfig)
+        .filter(function (item) {
+          return item.match(/\_field$/);
+        })
+        .filter(function (item) {
+          var key = item.split('_')[0] + '_enabled';
+          return _.has(appConfig, key) ? appConfig[key] : true;
+        })
+        .filter(function (item) {
+          return _.trim(appConfig[item]) !== '';
+        })
+        .forEach(function (keyName) {
+          fieldsMap[keyName] = appConfig[keyName];
+        });
       return fieldsMap;
     }
 
@@ -153,23 +158,23 @@
      * @param  {string} fieldType The type of field that needs to be fetch from the config
      * @return {*|null}           The value of the said field or null if not found.
      */
-    function getSpecificField(fieldType){
+    function getSpecificField(fieldType) {
       var allFields = getAllFields();
-      if(!fieldType.match(/\_field$/)){
+      if (!fieldType.match(/\_field$/)) {
         fieldType += '_field';
       }
-      return allFields[fieldType]?allFields[fieldType]:null;
+      return allFields[fieldType] ? allFields[fieldType] : null;
     }
 
-    function getFieldsToDisplay(){
+    function getFieldsToDisplay() {
       return appConfig.fields_to_display;
     }
 
-    function getAuthHeader(){
+    function getAuthHeader() {
       return appConfig.authorizationHeader;
     }
 
-    function getFieldLabels(){
+    function getFieldLabels() {
       return appConfig.field_display_labels;
     }
   }
