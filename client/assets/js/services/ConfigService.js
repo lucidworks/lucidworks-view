@@ -123,9 +123,9 @@
       return appConfig.collection;
     }
 
-    function getLabels() { //TODO: Decide whether defined labels will be the only ones shown
-      return appConfig.field_display_labels;
-    }
+    // function getLabels() { //TODO: Decide whether defined labels will be the only ones shown
+    //   return appConfig.field_display_labels;
+    // }
 
     /**
      * @return {object}
