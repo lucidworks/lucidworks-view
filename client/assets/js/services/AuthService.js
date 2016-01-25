@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -15,8 +15,8 @@
     var realmName = config.connectionRealm;
 
     return {
-      createSession:  createSession,
-      getSession:     getSession,
+      createSession: createSession,
+      getSession: getSession,
       destroySession: destroySession
     };
 
@@ -30,9 +30,9 @@
           username: username,
           password: password
         })
-        .then(function(resp) {
+        .then(function (resp) {
           deferred.resolve(resp);
-        }, function(err) {
+        }, function (err) {
           deferred.reject(err);
         });
 
@@ -43,9 +43,9 @@
       var deferred = $q.defer();
       $http
         .get(ApiBase.getEndpoint() + 'api/session?realmName=' + realmName)
-        .then(function(resp) {
+        .then(function (resp) {
           deferred.resolve(resp);
-        }, function(err) {
+        }, function (err) {
           deferred.reject(err);
         });
       return deferred.promise;
@@ -55,7 +55,7 @@
       var deferred = $q.defer();
       $http
         .delete(ApiBase.getEndpoint() + 'session?realmName=' + realmName)
-        .then(function(resp) {
+        .then(function (resp) {
           deferred.resolve(resp);
         });
 
