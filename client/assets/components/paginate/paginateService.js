@@ -1,16 +1,20 @@
-(function() {
+(function () {
   'use strict';
 
   angular
     .module('fusionSeedApp.components.paginate')
-    .factory('PaginationService', PaginationService);
+    .factory('PaginateService', PaginateService);
 
-  PaginationService.$inject = [];
+  PaginateService.$inject = ['Orwell'];
 
   /* @ngInject */
-  function PaginationService() {
+  function PaginateService(Orwell) {
+    var queryObservable = Orwell.getObservable('query');
+    var resultsObservable = Orwell.getObservable('queryResults');
     var service = {
-      pageToStartRow: pageToStartRow
+      pageToStartRow: pageToStartRow,
+      getRowsPerPage: getRowsPerPage,
+      getTotalPages: getTotalPages
     };
 
     return service;
@@ -21,8 +25,40 @@
      * @param  {integer} rowsPerPage The number of rows on each page.
      * @return {integer}             The start row
      */
-    function pageToStartRow(page, rowsPerPage){
-      return (page-1) * rowsPerPage;
+    function pageToStartRow(page, rowsPerPage) {
+      return (page - 1) * rowsPerPage;
+    }
+
+    /**
+     * Get the number of Rows Per Page
+     *
+     * @return {integer} Rows per page
+     */
+    function getRowsPerPage() {
+      var query = queryObservable.getContent();
+      return query.rows;
+    }
+
+    /**
+     * Get the total rows for a searchQuery
+     * @return {integer} [description]
+     */
+    function getTotalResultRows() {
+      var results = resultsObservable.getContent();
+      if (results.hasOwnProperty('response')) {
+        return results.response.numFound;
+      }
+      return 0;
+    }
+
+    /**
+     * Get the total number of pages for the query.
+     * @return {integer} The number of pages
+     */
+    function getTotalPages() {
+      if (getRowsPerPage() === 0) return 0;
+      return (getTotalResultRows() > 0) ? (Math.ceil(getTotalResultRows() /
+        getRowsPerPage())) : 0;
     }
   }
 })();
