@@ -37,7 +37,8 @@
 
         var fullUrl = getQueryUrl(ConfigService.getIfQueryProfile()) + '?' + queryString;
 
-        $http.get(fullUrl)
+        $http
+          .get(fullUrl)
           .then(success)
           .catch(failure);
 
