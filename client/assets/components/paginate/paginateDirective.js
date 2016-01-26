@@ -67,7 +67,6 @@
     }
 
     function gotoPage(page) {
-      $log.debug('Going to page' + page);
       if (page < 0) return;
       if (page > PaginateService.getTotalPages()) return;
       if (page === PaginateService.getCurrentPage()) return;

@@ -9,16 +9,24 @@
 
   /* @ngInject */
   function PaginateService(Orwell) {
-    var queryObservable = Orwell.getObservable('query');
-    var resultsObservable = Orwell.getObservable('queryResults');
-    var service = {
-      pageToStartRow: pageToStartRow,
-      getRowsPerPage: getRowsPerPage,
-      getCurrentPage: getCurrentPage,
-      getTotalPages: getTotalPages
-    };
+    var queryObservable, resultsObservable,
+      service = {
+        pageToStartRow: pageToStartRow,
+        getRowsPerPage: getRowsPerPage,
+        getCurrentPage: getCurrentPage,
+        getTotalPages: getTotalPages
+      };
+
+      activate();
 
     return service;
+
+    ////////////////
+
+    function activate(){
+      queryObservable = Orwell.getObservable('query');
+      resultsObservable = Orwell.getObservable('queryResults');
+    }
 
     /**
      * Return the number of pages per row
