@@ -23,13 +23,16 @@
 
     ////////////////
 
+    /**
+     * Activate the service.
+     */
     function activate(){
       queryObservable = Orwell.getObservable('query');
       resultsObservable = Orwell.getObservable('queryResults');
     }
 
     /**
-     * Return the number of pages per row
+     * Turn a page into a start row.
      * @param  {integer} page        The page index
      * @return {integer}             The start row
      */
@@ -47,14 +50,41 @@
       return query.rows;
     }
 
-    function getStartRow() {
+    /**
+     * Get the current page
+     * @return {integer} The page number
+     */
+    function getCurrentPage() {
+      return getPage(getCurrentStartRow());
+    }
+
+    /**
+     * Get the total number of pages for the query.
+     * @return {integer} The number of pages
+     */
+    function getTotalPages() {
+      if (getRowsPerPage() === 0) return 0;
+      // total pages = CEIL(ALL ROWS / ROWS PER PAGE)
+      return (getTotalResultRows() > 0) ? (Math.ceil(getTotalResultRows() /
+        getRowsPerPage())) : 0;
+    }
+
+    /////////////////////
+    // Private Methods //
+    /////////////////////
+
+    /**
+     * Get the current start row.
+     * @return {integer} The start row
+     */
+    function getCurrentStartRow() {
       var query = queryObservable.getContent();
       return query.start;
     }
 
     /**
-     * Get the total rows for a searchQuery
-     * @return {integer} [description]
+     * Get the total number of results rows for the current query.
+     * @return {integer} Number of result rows.
      */
     function getTotalResultRows() {
       var results = resultsObservable.getContent();
@@ -62,14 +92,6 @@
         return results.response.numFound;
       }
       return 0;
-    }
-
-    /**
-     * Get the current page
-     * @return {integer} The page number
-     */
-    function getCurrentPage() {
-      return getPage(getStartRow());
     }
 
     /**
@@ -82,15 +104,5 @@
       return Math.ceil(startRow / getRowsPerPage());
     }
 
-
-    /**
-     * Get the total number of pages for the query.
-     * @return {integer} The number of pages
-     */
-    function getTotalPages() {
-      if (getRowsPerPage() === 0) return 0;
-      return (getTotalResultRows() > 0) ? (Math.ceil(getTotalResultRows() /
-        getRowsPerPage())) : 0;
-    }
   }
 })();
