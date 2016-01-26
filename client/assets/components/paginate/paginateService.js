@@ -26,7 +26,7 @@
      * @return {integer}             The start row
      */
     function pageToStartRow(page) {
-      return (page - 1) * getRowsPerPage();
+      return page * getRowsPerPage();
     }
 
     /**

@@ -20,14 +20,17 @@
 
   }
 
-  Controller.$inject = ['Orwell', 'PaginateService'];
+  Controller.$inject = ['Orwell', 'PaginateService', 'QueryService', '$log'];
 
   /* @ngInject */
-  function Controller(Orwell, PaginateService, QueryService) {
+  function Controller(Orwell, PaginateService, QueryService, $log) {
     var vm = this;
     vm.page = 0;
     vm.totalPages = 0;
     vm.getNormalizedPage = getNormalizedPage;
+    vm.getLastPage = getLastPage;
+    vm.gotoNextPage = gotoNextPage;
+    vm.gotoPreviousPage = gotoPreviousPage;
 
 
 
@@ -49,6 +52,27 @@
 
     function getNormalizedPage() {
       return vm.page + 1;
+    }
+
+    function getLastPage() {
+      return vm.totalPages - 1;
+    }
+
+    function gotoNextPage(){
+      $log.debug('Going to next page');
+      gotoPage(PaginateService.getCurrentPage() + 1);
+    }
+
+    function gotoPreviousPage(){
+      gotoPage(PaginateService.getCurrentPage() - 1);
+    }
+
+    function gotoPage(page){
+      $log.debug('Going to page'+page);
+      if(page < 0) return;
+      if(page > PaginateService.getTotalPages()) return;
+      if(page === PaginateService.getCurrentPage()) return;
+      QueryService.setQuery({start: PaginateService.pageToStartRow(page)});
     }
 
   }
