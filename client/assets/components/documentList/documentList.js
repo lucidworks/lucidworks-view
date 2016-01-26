@@ -33,8 +33,6 @@
       var resultsObservable = Orwell.getObservable('queryResults');
 
       resultsObservable.addObserver(function (data) {
-        $log.debug('documentList');
-        $log.debug(data);
         if (data.hasOwnProperty('response')) {
           vm.docs = data.response.docs;
         } else {

@@ -22,21 +22,18 @@
   function QueryService() {
 
     this.$get = ['ConfigService', 'Orwell', 'QUERY_OBJECT_DEFAULT', 'QueryDataService',
-      '$log', $get
+      $get
     ];
 
     /////////////
 
-    function $get(ConfigService, Orwell, QUERY_OBJECT_DEFAULT, QueryDataService, $log) {
+    function $get(ConfigService, Orwell, QUERY_OBJECT_DEFAULT, QueryDataService) {
       var queryObservable = Orwell.getObservable('query'),
         queryObject = QUERY_OBJECT_DEFAULT;
 
-      $log.log(queryObject);
-
-      init();
+      activate();
 
       queryObservable.addObserver(function (query) {
-        $log.debug(query);
         QueryDataService.getQueryResults(query);
       });
 
@@ -46,7 +43,7 @@
         getQueryObject: getQueryObject
       };
 
-      function init() {
+      function activate() {
         queryObservable.setContent(queryObject);
       }
 

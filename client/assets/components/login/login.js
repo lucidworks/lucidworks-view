@@ -30,8 +30,6 @@
 
     vm.submit = submit;
 
-    $log.info('Daymn');
-
     function submit() {
       vm.error = null;
       vm.submitting = true;
