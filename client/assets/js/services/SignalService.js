@@ -17,16 +17,17 @@
 
     return service;
 
-    function postSignal(documentId) {
+    function postSignal(doc) {
       var deferred = $q.defer(),
         date = new Date(),
         data = [{
           params: {
             query: QueryService.getQueryObject().q,
-            docId: documentId //
+            docId: getSignalsDocumentId(doc)
           },
           type: ConfigService.config.signalType,
-          timestamp: date.toISOString()
+          timestamp: date.toISOString(),
+          pipeline: ConfigService.config.signalsPipeline
         }];
 
       $http
@@ -44,6 +45,19 @@
       }
 
       return deferred.promise;
+    }
+
+    /**
+     * Given a document return a signals document ID value.
+     * @param  {object} doc The document
+     * @return {string|Number}     The document ID value
+     */
+    function getSignalsDocumentId(doc) {
+      var documentIdField = ConfigService.config.signalsDocumentId;
+      if (doc.hasOwnProperty(documentIdField)) {
+        return doc[documentIdField];
+      }
+      return null;
     }
   }
 })();

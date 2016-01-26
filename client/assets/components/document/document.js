@@ -70,13 +70,5 @@
       return null;
     }
 
-    function getDocumentId(doc) {
-      var documentIdField = ConfigService.config.signalsDocumentId;
-      if (doc.hasOwnProperty(documentIdField)) {
-        return doc[documentIdField];
-      }
-      return null;
-    }
-
   }
 })();
