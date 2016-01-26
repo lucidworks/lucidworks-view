@@ -1,11 +1,27 @@
 <div>
-  <a ng-show="vm.page === 0 && vm.lastPage > 1">
-    Next &gt;
-  </a>
-  <a ng-show="vm.page === vm.lastPage && vm.page > 0">
-    &lt; Previous
-  </a>
-  <a ng-show="vm.page !== (vm.lastPage || 0)">
-    <div>&lt;</div><div>Page {{vm.getNormalizedPage()}}<span class="show-for-medium"> of {{vm.totalPages}}</span></div><div>&gt;</div>
-  </a>
+  <ul class="menu-bar" ng-show="vm.page === 0 && vm.totalPages > 1">
+    <li>
+      <a ng-click="vm.nextPage()">
+        Next &gt;
+      </a>
+    </li>
+  </ul>
+  <ul class="menu-bar" ng-show="vm.page === vm.getlastPage() && vm.page > 0">
+    <li>
+      <a ng-click="vm.previousPage()">
+        &lt; Previous
+      </a>
+    </li>
+  </ul>
+  <ul  class="menu-bar" ng-show="vm.page !== (vm.getlastPage() || 0)">
+    <li>
+      <a ng-click="vm.previousPage()">&lt;</a>
+    </li>
+    <li>
+      <div>Page {{vm.getNormalizedPage()}}<span class="show-for-medium"> of {{vm.totalPages}}</span>
+    </li>
+    <li>
+        <a ng-click="vm.nextPage()">&gt;</a>
+    </li>
+  </ul>
 </div>

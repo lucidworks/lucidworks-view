@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -23,7 +23,7 @@
   Controller.$inject = ['Orwell', 'PaginateService'];
 
   /* @ngInject */
-  function Controller(Orwell, PaginateService) {
+  function Controller(Orwell, PaginateService, QueryService) {
     var vm = this;
     vm.page = 0;
     vm.totalPages = 0;
@@ -34,10 +34,10 @@
     activate();
 
     function activate() {
-      var queryObservable = Orwell.getObservable('queryResults');
+      var resultsObservable = Orwell.getObservable('queryResults');
 
-      queryObservable.addObserver(function(data){
-        if(data.hasOwnProperty('response')){
+      resultsObservable.addObserver(function (data) {
+        if (data.hasOwnProperty('response')) {
           vm.page = PaginateService.getCurrentPage();
           vm.totalPages = PaginateService.getTotalPages();
         } else {
@@ -47,7 +47,7 @@
       });
     }
 
-    function getNormalizedPage(){
+    function getNormalizedPage() {
       return vm.page + 1;
     }
 
