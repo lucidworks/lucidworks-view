@@ -13,7 +13,6 @@ appConfig = { //eslint-disable-line
   /**
    * The name of the realm to connect with
    *   default: 'native'
-   * @type {String}
    */
   connectionRealm: 'native',
 
@@ -114,8 +113,9 @@ appConfig = { //eslint-disable-line
    signalType: 'click',
    // This specifies the index pipeline that will be used to submit signals.
    signalsPipeline: '_signals_ingest', // '_signals_ingest' is the fusion default.
-   signalsDocumentId: 'id', // Should be a unique field per document in your collection.
+   // Should be a unique field per document in your collection.
    // used by signals as a reference to the main collection.
+   signalsDocumentId: 'id',
 
   // NOT IMPLEMENTED IN CURRENT UI
   // geo_field: 'coord', // Specify a location field here if you want to enable geospatial search.  Specify EMPTY value if your collection DOES NOT have geospatial data
