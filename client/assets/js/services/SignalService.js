@@ -12,23 +12,25 @@
   /* @ngInject */
   function SignalsService(ApiBase, ConfigService, $http, $q, QueryService) {
     var service = {
-      postSignal: postSignal
+      postSignal: postSignal,
+      getSignalsDocumentId: getSignalsDocumentId
     };
 
     return service;
 
-    function postSignal(doc) {
+    function postSignal(docId) {
       var deferred = $q.defer(),
         date = new Date(),
         data = [{
           params: {
             query: QueryService.getQueryObject().q,
-            docId: getSignalsDocumentId(doc)
+            docId: docId
           },
           type: ConfigService.config.signalType,
           timestamp: date.toISOString(),
           pipeline: ConfigService.config.signalsPipeline
         }];
+      // set content header
 
       $http
         .post(ApiBase.getEndpoint() + 'api/apollo/signals/' + ConfigService.config.collection,

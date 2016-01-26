@@ -53,6 +53,8 @@
 
       returnDoc.lw_image = getField('image', doc);
 
+      returnDoc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(doc);
+
       return returnDoc;
     }
 
