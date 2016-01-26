@@ -8,30 +8,32 @@
   ];
 
   function HomeController($log, $scope, ConfigService, QueryService, Orwell) {
-    var self = this; //eslint-disable-line
+    var hc = this; //eslint-disable-line
     var resultsObservable;
 
-    var init = function() {
-      self.searchQuery = '*:*';
-      self.search = doSearch;
+    activate();
+    doSearch();
+
+    function activate() {
+      hc.searchQuery = '*:*';
+      hc.search = doSearch;
+      hc.lastQuery = '*:*';
 
       resultsObservable = Orwell.getObservable('queryResults');
       resultsObservable.addObserver(function(data) {
         if (data.hasOwnProperty('response')) {
-          self.numFound = data.response.numFound;
+          hc.numFound = data.response.numFound;
+          hc.lastQuery = data.responseHeader.params.q;
         } else {
-          self.numFound = 0;
+          hc.numFound = 0;
         }
       });
-    };
-
-    init();
-    doSearch();
+    }
 
     function doSearch() {
       $log.info('Searching...');
       var queryObject = {
-        q: self.searchQuery,
+        q: hc.searchQuery,
         start: 0
       };
 
