@@ -18,16 +18,16 @@
     return service;
 
     function postSignal(documentId) {
-      var deferred = $q.defer();
-      var date = new Date();
-      var data = [{
-        params: {
-          query: QueryService.getQueryObject().q,
-          docId: documentId, //
-        },
-        type: ConfigService.config.signalType,
-        timestamp: date.toISOString()
-      }];
+      var deferred = $q.defer(),
+        date = new Date(),
+        data = [{
+          params: {
+            query: QueryService.getQueryObject().q,
+            docId: documentId, //
+          },
+          type: ConfigService.config.signalType,
+          timestamp: date.toISOString()
+        }];
 
       $http
         .post(ApiBase.getEndpoint() + 'api/apollo/signals/' + ConfigService.config.signalsPipeline,
