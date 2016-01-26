@@ -110,10 +110,12 @@ appConfig = { //eslint-disable-line
    * Allow the collection of data regaurding search results. The most typical use
    * case is to track click signals for a collection.
    */
-  // Signal type for title click.
-  signalType: 'click',
-  // This specifies the index pipeline that submitSignals() uses to submit signals (simulated clicks)
-  signals_pipeline: '_signals_ingest',
+   // Signal type for title click.
+   signalType: 'click',
+   // This specifies the index pipeline that will be used to submit signals.
+   signalsPipeline: '_signals_ingest', // '_signals_ingest' is the fusion default.
+   signalsDocumentId: 'id', // Should be a unique field per document in your collection.
+   // used by signals as a reference to the main collection.
 
   // NOT IMPLEMENTED IN CURRENT UI
   // geo_field: 'coord', // Specify a location field here if you want to enable geospatial search.  Specify EMPTY value if your collection DOES NOT have geospatial data

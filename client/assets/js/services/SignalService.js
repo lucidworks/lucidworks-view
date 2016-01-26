@@ -23,14 +23,14 @@
         data = [{
           params: {
             query: QueryService.getQueryObject().q,
-            docId: documentId, //
+            docId: documentId //
           },
           type: ConfigService.config.signalType,
           timestamp: date.toISOString()
         }];
 
       $http
-        .post(ApiBase.getEndpoint() + 'api/apollo/signals/' + ConfigService.config.signalsPipeline,
+        .post(ApiBase.getEndpoint() + 'api/apollo/signals/' + ConfigService.config.collection,
           data)
         .then(success)
         .catch(failure);
