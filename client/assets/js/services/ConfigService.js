@@ -58,8 +58,6 @@
 
     /**
      * Main Service function.
-     *
-     * @return {[type]}      [description]
      */
     function $get() {
       return {
