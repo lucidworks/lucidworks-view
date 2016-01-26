@@ -1,6 +1,6 @@
 (function () {
   angular.module('fusionSeedApp.components.document', ['fusionSeedApp.services.config',
-      'fusionSeedApp.utils.docs'
+      'fusionSeedApp.utils.docs', 'fusionSeedApp.service.signals'
     ])
     .directive('document', documentListItem);
 
@@ -19,12 +19,19 @@
     };
   }
 
-  Controller.$inject = ['$log', '$scope', 'DocsHelper', 'ConfigService'];
+  Controller.$inject = ['$log', '$scope', 'DocsHelper', 'ConfigService', 'SignalsService'];
 
-  function Controller($log, $scope, DocsHelper, ConfigService) {
-    var self = this;
+  function Controller($log, $scope, DocsHelper, ConfigService, SignalsService) {
+    var dc = this;
+    dc.postSignal = SignalsService.postSignal;
 
-    init();
+    activate();
+
+    ///////////
+
+    function activate() {
+      dc.doc = processDocument(DocsHelper.concatMultivaluedFields(dc.doc));
+    }
 
     function processDocument(doc) {
       //Populate the labels
@@ -51,9 +58,5 @@
       return returnDoc;
     }
 
-    function init() {
-      self.doc = processDocument(DocsHelper.concatMultivaluedFields(self.doc));
-    }
-    // $log.info(DocsHelper);
   }
 })();
