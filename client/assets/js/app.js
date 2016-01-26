@@ -18,8 +18,7 @@
       // Fusion Seed App
       'fusionSeedApp.components',
       'fusionSeedApp.services',
-      'fusionSeedApp.controllers',
-      'ngOrwell'
+      'fusionSeedApp.controllers'
     ])
     .constant('_', window._) //eslint-disable-line
     .config(config)
