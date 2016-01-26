@@ -62,7 +62,7 @@
      * @return {integer} The page number
      */
     function getCurrentPage() {
-      getPage(getStartRow());
+      return getPage(getStartRow());
     }
 
     /**
@@ -71,8 +71,8 @@
      * @return {integer}          The page number
      */
     function getPage(startRow){
-      if (getRowsPerPage() === 0) return 0;
-      return Math.ceil(startRow / getRowsPerPage);
+      if (getRowsPerPage() === 0 || startRow === 0) return 0;
+      return Math.ceil(startRow / getRowsPerPage());
     }
 
 
