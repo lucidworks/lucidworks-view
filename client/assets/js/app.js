@@ -1,30 +1,33 @@
 /*global FastClick*/
-(function(){
+(function () {
   'use strict';
 
-  angular.module('application', [
-    'ui.router',
-    'ngAnimate',
+  angular
+    .module('application', [
+      'ui.router',
+      'ngAnimate',
 
-    // Foundation
-    'foundation',
-    'foundation.dynamicRouting',
-    'foundation.dynamicRouting.animations',
+      // Foundation
+      'foundation',
+      'foundation.dynamicRouting',
+      'foundation.dynamicRouting.animations',
 
-    // Libraries
-    'ngOrwell',
+      // Libraries
+      'ngOrwell',
 
-    // Fusion Seed App
-    'fusionSeedApp.components',
-    'fusionSeedApp.services',
-    'fusionSeedApp.controllers',
-    'ngOrwell'
-  ])
-    .constant('_', window._)//eslint-disable-line
+      // Fusion Seed App
+      'fusionSeedApp.components',
+      'fusionSeedApp.services',
+      'fusionSeedApp.controllers',
+      'ngOrwell'
+    ])
+    .constant('_', window._) //eslint-disable-line
     .config(config)
     .run(run);
 
-  config.$inject = ['$urlRouterProvider', '$httpProvider','$locationProvider', 'ApiBaseProvider', 'ConfigServiceProvider'];
+  config.$inject = ['$urlRouterProvider', '$httpProvider', '$locationProvider',
+    'ApiBaseProvider', 'ConfigServiceProvider'
+  ];
   run.$inject = ['$document'];
 
   /**
@@ -36,12 +39,13 @@
    * @param  {Provider} ApiBaseProvider       Provider for ApiBase
    * @param  {Provider} ConfigServiceProvider Provider for ConfigService
    */
-  function config($urlProvider, $httpProvider, $locationProvider, ApiBaseProvider, ConfigServiceProvider) {
+  function config($urlProvider, $httpProvider, $locationProvider, ApiBaseProvider,
+    ConfigServiceProvider) {
     $urlProvider.otherwise('/');
     $httpProvider.interceptors.push('SessionInjector');
 
     $locationProvider.html5Mode({
-      enabled:true,
+      enabled: true,
       requireBase: false
     });
 
