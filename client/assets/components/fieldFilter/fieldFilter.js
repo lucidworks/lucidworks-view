@@ -10,12 +10,12 @@
     return {
       restrict: 'EA',
       templateUrl: 'assets/components/fieldFilter/fieldFilter.html',
-      scope: {
-        filterName: '@filterName'
-      },
+      scope: true,
       controller: Controller,
       controllerAs: 'vm',
-      bindToController: true
+      bindToController: {
+        filterName: '@filterName'
+      }
     };
 
   }
