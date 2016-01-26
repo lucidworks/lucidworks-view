@@ -19,7 +19,9 @@
     };
   }
 
-  Controller.$inject = ['$log', '$scope', 'DocsHelper', 'ConfigService', 'SignalsService'];
+  Controller.$inject = ['$log', '$scope', 'DocsHelper', 'ConfigService',
+    'SignalsService'
+  ];
 
   function Controller($log, $scope, DocsHelper, ConfigService, SignalsService) {
     var dc = this;
@@ -42,20 +44,38 @@
         ConfigService.getFieldLabels()
       );
 
-      returnDoc.lw_head = doc.hasOwnProperty(ConfigService.getFields.get('head')) ?
-        doc[ConfigService.getFields.get('head')] : 'Title Field Not Found';
+      returnDoc.lw_head = getField('head', doc) ?
+        getField('head', doc) : 'Title Field Not Found';
 
-      returnDoc.lw_subhead = doc.hasOwnProperty(ConfigService.getFields.get('subhead')) ?
-        doc[ConfigService.getFields.get('subhead')] : null;
+      returnDoc.lw_subhead = getField('subhead', doc);
 
-      returnDoc.lw_description = doc.hasOwnProperty(ConfigService.getFields.get(
-          'description')) ?
-        doc[ConfigService.getFields.get('description')] : null;
+      returnDoc.lw_description = getField('description', doc);
 
-      returnDoc.lw_image = doc.hasOwnProperty(ConfigService.getFields.get('image')) ?
-        doc[ConfigService.getFields.get('image')] : null;
+      returnDoc.lw_image = getField('image', doc);
 
       return returnDoc;
+    }
+
+    /**
+     * Given a field type get the actual field value.
+     * @param  {String} fieldType The Field type.
+     * @param  {object} doc       The document object
+     * @return {String|null}       The field value.
+     */
+    function getField(fieldType, doc) {
+      var fieldName = ConfigService.getFields.get(fieldType);
+      if (doc.hasOwnProperty(fieldName)) {
+        return doc[fieldName];
+      }
+      return null;
+    }
+
+    function getDocumentId(doc) {
+      var documentIdField = ConfigService.config.signalsDocumentId;
+      if (doc.hasOwnProperty(documentIdField)) {
+        return doc[documentIdField];
+      }
+      return null;
     }
 
   }
