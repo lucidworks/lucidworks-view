@@ -36,9 +36,9 @@
     }
 
     function processDocument(doc) {
-      //Populate the labels
       var returnDoc = {};
 
+      //Populate the additional fields to display
       returnDoc.fieldsToDisplay = DocsHelper.populateFieldLabels(
         DocsHelper.selectFields(doc, ConfigService.getFieldsToDisplay()),
         ConfigService.getFieldLabels()
