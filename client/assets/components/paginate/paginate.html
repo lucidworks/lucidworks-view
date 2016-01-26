@@ -17,8 +17,11 @@
     <li>
       <a ng-click="vm.gotoPreviousPage()">&lt;</a>
     </li>
-    <li class="center">
-      <span>Page {{vm.getNormalizedPage()}}<span class="show-for-medium"> of {{vm.totalPages}}</span></span>
+    <li class="text-center">
+      <a>
+        <span class="show-for-small-only">Page {{vm.getNormalizedPage()}}</span>
+        <span class="show-for-medium">Page {{vm.getNormalizedPage()}} of {{vm.totalPages}}</span>
+      </a>
     </li>
     <li>
         <a ng-click="vm.gotoNextPage()">&gt;</a>
