@@ -50,26 +50,45 @@
       });
     }
 
+    /**
+     * Get the page number (normalized for viewers from a 1 base)
+     * @return {integer} normalized page number
+     */
     function getNormalizedPage() {
       return vm.page + 1;
     }
 
+    /**
+     * Get the last page (0 start based)
+     * @return {integer} The last page from 0 base.
+     */
     function getLastPage() {
       return vm.totalPages - 1;
     }
 
+    /**
+     * Updates the query parameters to the next page.
+     */
     function gotoNextPage() {
       gotoPage(PaginateService.getCurrentPage() + 1);
     }
 
+    /**
+     * Updates the query parameters to the previous page.
+     */
     function gotoPreviousPage() {
       gotoPage(PaginateService.getCurrentPage() - 1);
     }
 
+    /**
+     * Actually updates the page to go to.
+     * @param  {integer} page The page to do to
+     */
     function gotoPage(page) {
       if (page < 0) return;
       if (page > PaginateService.getTotalPages()) return;
       if (page === PaginateService.getCurrentPage()) return;
+      // This will change the query and cause the interface to make an http call.
       QueryService.setQuery({
         start: PaginateService.pageToStartRow(page)
       });
