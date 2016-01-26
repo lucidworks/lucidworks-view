@@ -22,8 +22,7 @@
       var date = new Date();
       var data = [{
         params: {
-          query: QueryService.getQueryObject()
-            .q,
+          query: QueryService.getQueryObject().q,
           docId: documentId, //
         },
         type: ConfigService.config.signalType,
