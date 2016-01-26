@@ -58,21 +58,22 @@
       return vm.totalPages - 1;
     }
 
-    function gotoNextPage(){
-      $log.debug('Going to next page');
+    function gotoNextPage() {
       gotoPage(PaginateService.getCurrentPage() + 1);
     }
 
-    function gotoPreviousPage(){
+    function gotoPreviousPage() {
       gotoPage(PaginateService.getCurrentPage() - 1);
     }
 
-    function gotoPage(page){
-      $log.debug('Going to page'+page);
-      if(page < 0) return;
-      if(page > PaginateService.getTotalPages()) return;
-      if(page === PaginateService.getCurrentPage()) return;
-      QueryService.setQuery({start: PaginateService.pageToStartRow(page)});
+    function gotoPage(page) {
+      $log.debug('Going to page' + page);
+      if (page < 0) return;
+      if (page > PaginateService.getTotalPages()) return;
+      if (page === PaginateService.getCurrentPage()) return;
+      QueryService.setQuery({
+        start: PaginateService.pageToStartRow(page)
+      });
     }
 
   }
