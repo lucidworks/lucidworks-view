@@ -34,7 +34,7 @@
     activate();
 
     function activate() {
-      var queryObservable = Orwell.getObservable('query');
+      var queryObservable = Orwell.getObservable('queryResults');
 
       queryObservable.addObserver(function(data){
         if(data.hasOwnProperty('response')){
