@@ -5,13 +5,9 @@
     <li>
       <input type="text" placeholder="filter">
     </li>
-    <li>
-      <input type="checkbox" id="GE">
-      <label for="GE">GE (3034)</label>
-    </li>
-    <li>
-      <input type="checkbox" id="whirlpool">
-      <label for="whirlpool">Whirlpool (2154)</label>
+    <li ng-repeat="facet in vm.facetCounts">
+      <input type="checkbox" id="{{facet.hash}}">
+      <label for="{{facet.hash}}">{{facet.title}} <span>({{facet.amount}})</span></label>
     </li>
   </ul>
 </section>
