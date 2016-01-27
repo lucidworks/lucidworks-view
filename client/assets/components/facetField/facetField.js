@@ -17,7 +17,9 @@
       controller: Controller,
       controllerAs: 'vm',
       bindToController: {
-        facetName: '@facetName'
+        facetName: '@facetName',
+        facetLabel: '@facetLabel',
+        facetAutoOpen: '@facetAutoOpen'
       }
     };
 
@@ -38,11 +40,23 @@
 
     function activate() {
       resultsObservable.addObserver(function (data) {
+        // Exit early if there are no facets in the response.
+        if (!data.hasOwnProperty('facet_counts')) return;
+
+        // Determine if facet exists.
         var facetFields = data.facet_counts.facet_fields;
         if (facetFields.hasOwnProperty(vm.facetName)) {
           // Transform an array of values in format [‘aaaa’, 1234,’bbbb’,2345] into an array of objects.
           vm.facetCounts = arrayToObjectArray(facetFields[vm.facetName]);
         }
+
+        // Set inital active state
+        var active = true;
+        // If we have autoOpen set active to this state.
+        if(typeof vm.facetAutoOpen === 'boolean'){
+          active = vm.facetAutoOpen;
+        }
+        vm.active = active;
       });
     }
 
@@ -57,7 +71,7 @@
      * @param  {array} arr The array to transform
      * @return {array}     An array of objects
      */
-    function arrayToObjectArray (arr){
+    function arrayToObjectArray(arr) {
       return _.transform(arr, function (result, value, index) {
         if (index % 2 === 1) {
           result[result.length - 1] = {
@@ -71,7 +85,7 @@
       });
     }
 
-    function toggleFacet(){
+    function toggleFacet() {
 
     }
   }
