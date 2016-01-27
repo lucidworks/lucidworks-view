@@ -22,10 +22,10 @@
 
   }
 
-  Controller.$inject = ['ConfigService', 'Orwell', 'FoundationApi', '$log'];
+  Controller.$inject = ['ConfigService', 'Orwell', 'FoundationApi'];
 
   /* @ngInject */
-  function Controller(ConfigService, Orwell, FoundationApi, $log) {
+  function Controller(ConfigService, Orwell, FoundationApi) {
     var vm = this;
     vm.facetCounts = [];
     var resultsObservable = Orwell.getObservable('queryResults');
@@ -50,9 +50,6 @@
             }
           });
         }
-        // $log.debug('filter observer', data.facet_counts.facet_fields[vm.facetName]);
-        // $log.debug('filter observer', facetFields[vm.facetName]);
-        $log.debug('facet counts', vm.facetCounts);
       });
 
     }
