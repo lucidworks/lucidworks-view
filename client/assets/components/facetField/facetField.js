@@ -16,7 +16,8 @@
       controller: Controller,
       controllerAs: 'vm',
       bindToController: {
-        facetName: '@facetName'
+        facetName: '@facetName',
+        facetLabel: '@facetLabel'
       }
     };
 

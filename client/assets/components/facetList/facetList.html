@@ -1,0 +1,3 @@
+<div class="facet-list" ng-repeat="facet in vm.facets" ng-switch="facet.type">
+  <facet-field ng-switch-when="field" facet-name="{{facet.name}}" facet-label="{{facet.label}}"></facet-field>
+</div>
