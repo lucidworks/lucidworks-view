@@ -53,8 +53,8 @@
         // Set inital active state
         var active = true;
         // If we have autoOpen set active to this state.
-        if(typeof vm.facetAutoOpen === 'boolean'){
-          active = vm.facetAutoOpen;
+        if(angular.isDefined(vm.facetAutoOpen) && vm.facetAutoOpen === 'false'){
+          active = false;
         }
         vm.active = active;
       });
