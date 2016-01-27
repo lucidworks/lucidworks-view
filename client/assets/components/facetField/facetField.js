@@ -17,8 +17,7 @@
       controller: Controller,
       controllerAs: 'vm',
       bindToController: {
-        facetName: '@facetName',
-        facetLabel: '@facetLabel'
+        facetName: '@facetName'
       }
     };
 
@@ -34,6 +33,8 @@
     var resultsObservable = Orwell.getObservable('queryResults');
 
     activate();
+
+    //////////////
 
     function activate() {
       resultsObservable.addObserver(function (data) {

@@ -1,3 +1,8 @@
-<div class="facet-list" ng-repeat="facet in vm.facets" ng-switch="facet.type">
-  <facet-field ng-switch-when="field" facet-name="{{facet.name}}" facet-label="{{facet.label}}"></facet-field>
+<div class="facet-list" ng-repeat="facet in vm.facets">
+  <section class="block-list" ng-class="{'is-active': active}">
+    <header>{{facet.label ? facet.label : facet.name}}</header>
+    <div ng-switch="facet.type">
+      <facet-field ng-switch-when="field" facet-name="{{facet.name}}"></facet-field>
+    </div>
+  </section>
 </div>
