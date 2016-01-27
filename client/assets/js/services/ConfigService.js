@@ -30,7 +30,8 @@
       fl: [],
       field_display_labels: {},
       signalType: 'click',
-      signalsPipeline: '_signals_ingest'
+      signalsPipeline: '_signals_ingest',
+      facets: []
     })
     /** Config overrides from FUSION_CONFIG.js **/
     .constant('CONFIG_OVERRIDE', window.appConfig) //eslint-disable-line
