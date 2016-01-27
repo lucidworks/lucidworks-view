@@ -123,10 +123,12 @@ appConfig = { //eslint-disable-line
   /**
    * Facets
    *
-   * Allow the faceting of fields in the ui. In Fusion you can add facets to
-   * your query by adding a facet stage. Once they are in a facet stage, you can
-   * display them in the ui by adding facets here in the order you want them to
-   * show up in the interface.
+   * Allows the faceting of fields in the ui.
+   *
+   * In Fusion you can add facets to your query by adding a facet stage to your
+   * query pipeline. Once they are in a facet stage, you can display them in the
+   * ui by adding facets here in the order you want them to show up in the
+   * interface.
    *
    * Each facet must have:
    * - name
