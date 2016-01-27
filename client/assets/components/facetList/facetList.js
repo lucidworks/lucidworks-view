@@ -1,3 +1,4 @@
+/*global _*/
 (function () {
   'use strict';
 
@@ -29,8 +30,18 @@
     activate();
 
     function activate() {
-      vm.facets = ConfigService.config.facets;
-
+      var facets = [];
+      // default facet autoOpen to true;
+      _.forEach(ConfigService.config.facets, function(facet){
+        if(!facet.hasOwnProperty('autoOpen')){
+          facet.autoOpen = true;
+        }
+        // initialize active state.
+        facet.active = facet.autoOpen;
+        facets.push(facet);
+      });
+      vm.facets = facets;
     }
+
   }
 })();

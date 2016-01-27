@@ -138,9 +138,11 @@ appConfig = { //eslint-disable-line
    *   Currently only field types are implemented in the interface.
    * - label (optional)
    *   A label will be displayed in place of the name in the UI.
+   * - autoOpen (optional)
+   *   autoOpen the facet in the sidebar
    */
   facets: [
-    {name: 'subclass', type: 'field', label:'Subclass'},
+    {name: 'subclass', type: 'field', label:'Subclass', autoOpen:true},
   ],
 
   /**

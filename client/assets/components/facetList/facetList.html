@@ -1,8 +1,8 @@
-<div class="facet-list" ng-repeat="facet in vm.facets">
-  <section class="block-list" ng-class="{'is-active': active}">
-    <header>{{facet.label ? facet.label : facet.name}}</header>
-    <div ng-switch="facet.type">
-      <facet-field ng-switch-when="field" facet-name="{{facet.name}}"></facet-field>
+<div class="facet-list accordion" ng-repeat="facet in vm.facets">
+  <section class="accordion-item" class="block-list" ng-class="{'is-active': facet.active}">
+    <div class="accordion-title" ng-click="facet.active = !facet.active">{{facet.label ? facet.label : facet.name}}</div>
+    <div class="accordion-content" ng-switch="facet.type">
+      <facet-field class="block-list" ng-switch-when="field" facet-name="{{facet.name}}"></facet-field>
     </div>
   </section>
 </div>
