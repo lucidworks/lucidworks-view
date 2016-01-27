@@ -64,6 +64,10 @@ appConfig = { //eslint-disable-line
   //In doc page, display a image with each doc
   image_enabled: true,
 
+  // NOT IMPLEMENTED IN CURRENT UI
+  // geo_field: 'coord', // Specify a location field here if you want to enable geospatial search.  Specify EMPTY value if your collection DOES NOT have geospatial data
+  // distance: '10', // Default distance value in km for geospatial search
+
   // ADDING ADDITIONAL FIELDS TO DOCUMENTS
   //
   // There are 2 ways to add additional fields to the ui.
@@ -102,7 +106,6 @@ appConfig = { //eslint-disable-line
   // List of fields to retrieve when querying Fusion.
   fl: ['title','amenity','cuisine','city','street','description','id','coord','likes','last_modified_date'],
 
-
   /**
    * Signals
    *
@@ -117,9 +120,26 @@ appConfig = { //eslint-disable-line
    // used by signals as a reference to the main collection.
    signalsDocumentId: 'id',
 
-  // NOT IMPLEMENTED IN CURRENT UI
-  // geo_field: 'coord', // Specify a location field here if you want to enable geospatial search.  Specify EMPTY value if your collection DOES NOT have geospatial data
-  // distance: '10', // Default distance value in km for geospatial search
+  /**
+   * Facets
+   *
+   * Allow the faceting of fields in the ui. In Fusion you can add facets to
+   * your query by adding a facet stage. Once they are in a facet stage, you can
+   * display them in the ui by adding facets here in the order you want them to
+   * show up in the interface.
+   *
+   * Each facet must have:
+   * - name
+   *   This is the name of the field you facet on in the facet stage.
+   * - type
+   *   This is the type of facet.
+   *   Currently only field types are implemented in the interface.
+   * - label (optional)
+   *   A label will be displayed in place of the name in the UI.
+   */
+  facets: [
+    {name: 'subclass', type: 'field', label:'Subclass'},
+  ],
 
   /**
    * Search within results
