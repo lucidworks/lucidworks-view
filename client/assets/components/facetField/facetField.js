@@ -2,16 +2,16 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.facetFields', ['fusionSeedApp.services.config',
+    .module('fusionSeedApp.components.facetField', ['fusionSeedApp.services.config',
       'foundation.core'
     ])
-    .directive('facetFields', facetFields);
+    .directive('facetField', facetField);
 
   /* @ngInject */
-  function facetFields() {
+  function facetField() {
     return {
       restrict: 'EA',
-      templateUrl: 'assets/components/facetFields/facetFields.html',
+      templateUrl: 'assets/components/facetField/facetField.html',
       scope: true,
       controller: Controller,
       controllerAs: 'vm',
@@ -28,6 +28,7 @@
   function Controller(ConfigService, Orwell, FoundationApi) {
     var vm = this;
     vm.facetCounts = [];
+    vm.toggleFacet = toggleFacet;
     var resultsObservable = Orwell.getObservable('queryResults');
 
     activate();
@@ -51,6 +52,9 @@
           });
         }
       });
+    }
+
+    function toggleFacet(){
 
     }
   }
