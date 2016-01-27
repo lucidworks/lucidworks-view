@@ -1,3 +1,4 @@
+/*global _*/
 (function () {
   'use strict';
 
@@ -39,18 +40,32 @@
         var facetFields = data.facet_counts.facet_fields;
         if (facetFields.hasOwnProperty(vm.facetName)) {
           // Transform an array of values in format [‘aaaa’, 1234,’bbbb’,2345] into an array of objects.
-          vm.facetCounts = _.transform(facetFields[vm.facetName], function (result,
-            value, index) {
-            if (index % 2 === 1) {
-              result[result.length - 1] = {
-                title: result[result.length - 1],
-                amount: value,
-                hash: FoundationApi.generateUuid()
-              };
-            } else {
-              result.push(value);
-            }
-          });
+          vm.facetCounts = arrayToObjectArray(facetFields[vm.facetName]);
+        }
+      });
+    }
+
+    /**
+     * Turn a flat array into an object array.
+     *
+     * Transforms an array of values in format ['aaaa', 1234,'bbbb',2345] into
+     * an array of objects.
+     * [{title:'aaaa', amount:1234, hash: zf-hs-njkfhdsle},
+     *  {title:'bbbb', amount:2345, hash: zf-hs-jkewrkljn}]
+     *
+     * @param  {array} arr The array to transform
+     * @return {array}     An array of objects
+     */
+    function arrayToObjectArray (arr){
+      return _.transform(arr, function (result, value, index) {
+        if (index % 2 === 1) {
+          result[result.length - 1] = {
+            title: result[result.length - 1],
+            amount: value,
+            hash: FoundationApi.generateUuid()
+          };
+        } else {
+          result.push(value);
         }
       });
     }
