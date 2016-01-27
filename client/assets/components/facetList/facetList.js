@@ -33,11 +33,12 @@
       var facets = [];
       // default facet autoOpen to true;
       _.forEach(ConfigService.config.facets, function(facet){
-        if(!facet.hasOwnProperty('autoOpen')){
-          facet.autoOpen = true;
+        // Default active to true
+        facet.active = true;
+        // If we have autoOpen set active to this state.
+        if(facet.hasOwnProperty('autoOpen')){
+          facet.active = facet.autoOpen;
         }
-        // initialize active state.
-        facet.active = facet.autoOpen;
         facets.push(facet);
       });
       vm.facets = facets;
