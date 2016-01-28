@@ -91,12 +91,28 @@
 
 
     function fqFieldTransformer(data){
-      var values = {};
-      _.forEach(data.value, function(){
-
+      var values = [];
+      _.forEach(data.value, function(value, key){
+        var str = '';
+        if(value.hasOwnProperty('localParens')){
+          str += DataTransformerHelper.objectToLocalParens(value.localParens);
+        }
+        // build the field name.
+        if(value.hasOwnProperty('field')){
+          str += value.field + ':';
+        }
+        // build the value in the format (encodedValue).
+        if(value.hasOwnProperty('value')){
+          str += '('+encodeURIComponent(value.value)+')';
+        }
+        // allow a raw value to be passed through for special cases.
+        if(value.hasOwnProperty('rawValue')){
+          str += '('+rawValue+')';
+        }
+        values.push(str);
       });
       return {
-        data: '',
+        value: values,
         key: 'fq'
       };
     }

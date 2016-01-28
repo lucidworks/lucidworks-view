@@ -14,7 +14,8 @@
     return {
       registerTransformer: registerTransformer,
       objectToURLString: objectToURLString,
-      objectToStringOfSameKey: objectToStringOfSameKey
+      objectToStringOfSameKey: objectToStringOfSameKey,
+      objectToLocalParens: objectToLocalParens
     };
 
     /**
@@ -78,12 +79,31 @@
       },'');
     }
 
+    /**
+     * change an array/object into a string of the same key.
+     * @param  {array|object} obj The array to change to a query string.
+     * @param  {string}       key The key of the object/array
+     * @return {string}           The string of key value pairs
+     */
     function objectToStringOfSameKey(obj, key) {
       var str = '';
       _.forEach(obj, function(value){
         str += ((str!=='')?'&':'') + key + '=' + value;
       });
       return str;
+    }
+
+    /**
+     * Turn an object of key value pairs into local parens format.
+     * @param  {object} keyValuePairs The object of key value pairs
+     * @return {string}               String in the format of localParens.
+     */
+    function objectToLocalParens(keyValuePairs){
+      var str = '';
+      _.foreach(keyValuePairs, function(value, key){
+        str += ((str!=='')?' ':'') +key+'='+value;
+      });
+      return '{!'+str+'}';
     }
   }
 })();
