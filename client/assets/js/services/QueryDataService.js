@@ -1,23 +1,27 @@
 /*global _*/
-(function(){
-  angular.module('fusionSeedApp.services.queryData',
-    ['fusionSeedApp.services.config', 'fusionSeedApp.services.apiBase'])
+(function () {
+  angular.module('fusionSeedApp.services.queryData', ['fusionSeedApp.services.config',
+      'fusionSeedApp.services.apiBase'
+    ])
     .config(Config)
     .provider('QueryDataService', QueryDataService);
 
   Config.$inject = ['OrwellProvider'];
 
-  function Config(OrwellProvider){
-    OrwellProvider.createObservable('queryResults',{});
+  function Config(OrwellProvider) {
+    OrwellProvider.createObservable('queryResults', {});
   }
 
-  function QueryDataService(){
+  function QueryDataService() {
 
-    this.$get = ['$log', '$q', '$http', 'ConfigService', 'ApiBase', 'Orwell', $get];
+    this.$get = ['$log', '$q', '$http', 'ConfigService', 'ApiBase', 'Orwell',
+      'DataTransformerHelper', $get
+    ];
 
     /////////////
 
-    function $get($log, $q, $http, ConfigService, ApiBase, Orwell, DataTransformerHelper){
+    function $get($log, $q, $http, ConfigService, ApiBase, Orwell,
+      DataTransformerHelper) {
       var queryResultsObservable = Orwell.getObservable('queryResults');
       return {
         getQueryResults: getQueryResults
@@ -30,25 +34,26 @@
        *                         {'q': 'query', 'fq': 'blah'}
        * @return {Promise}       Promise that resolve with a Fusion response coming from Solr
        */
-      function getQueryResults(query){
+      function getQueryResults(query) {
         var deferred = $q.defer();
 
         var queryString = DataTransformerHelper.objectToURLString(query);
 
-        var fullUrl = getQueryUrl(ConfigService.getIfQueryProfile()) + '?' + queryString;
+        var fullUrl = getQueryUrl(ConfigService.getIfQueryProfile()) + '?' +
+          queryString;
 
         $http
           .get(fullUrl)
           .then(success)
           .catch(failure);
 
-        function success(response){
+        function success(response) {
           // Set the content to populate the rest of the ui.
           queryResultsObservable.setContent(response.data);
           deferred.resolve(response.data);
         }
 
-        function failure(err){
+        function failure(err) {
           deferred.reject(err.data);
         }
 
@@ -76,7 +81,7 @@
           ConfigService.getCollectionName() +
           '/select';
 
-        return isProfiles?profilesEndpoint:pipelinesEndpoint;
+        return isProfiles ? profilesEndpoint : pipelinesEndpoint;
       }
 
     }

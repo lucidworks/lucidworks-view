@@ -25,10 +25,10 @@
 
   }
 
-  Controller.$inject = ['ConfigService', 'Orwell', 'FoundationApi'];
+  Controller.$inject = ['ConfigService', 'QueryDataService', 'Orwell', 'FoundationApi', '$log'];
 
   /* @ngInject */
-  function Controller(ConfigService, Orwell, FoundationApi) {
+  function Controller(ConfigService, QueryDataService, Orwell, FoundationApi, $log) {
     var vm = this;
     vm.facetCounts = [];
     vm.toggleFacet = toggleFacet;
@@ -39,6 +39,10 @@
     //////////////
 
     function activate() {
+      // Register a transformer because facet fields can have funky URL syntax.
+      DataTransformerHelper.registerTransformer('fq:field', fqFieldTransformer);
+
+      // Add observer to update data when we get results back.
       resultsObservable.addObserver(function (data) {
         // Exit early if there are no facets in the response.
         if (!data.hasOwnProperty('facet_counts')) return;
@@ -85,8 +89,19 @@
       });
     }
 
-    function toggleFacet() {
 
+    function fqFieldTransformer(data){
+      var values = {};
+      _.forEach(data.value, function(){
+
+      });
+      return {
+        data: '',
+        key: 'fq'
+      };
+    }
+
+    function toggleFacet() {
     }
   }
 
