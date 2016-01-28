@@ -4,7 +4,7 @@
 
   angular
     .module('fusionSeedApp.components.facetField', ['fusionSeedApp.services.config',
-      'foundation.core'
+      'foundation.core', 'fusionSeedApp.utils.dataTransformer'
     ])
     .directive('facetField', facetField);
 
@@ -25,10 +25,10 @@
 
   }
 
-  Controller.$inject = ['ConfigService', 'QueryDataService', 'Orwell', 'FoundationApi', '$log'];
+  Controller.$inject = ['ConfigService', 'QueryDataService', 'Orwell', 'FoundationApi', 'DataTransformerHelper'];
 
   /* @ngInject */
-  function Controller(ConfigService, QueryDataService, Orwell, FoundationApi, $log) {
+  function Controller(ConfigService, QueryDataService, Orwell, FoundationApi, DataTransformerHelper) {
     var vm = this;
     vm.facetCounts = [];
     vm.toggleFacet = toggleFacet;
@@ -101,7 +101,12 @@
       };
     }
 
+
+
     function toggleFacet() {
+// set facet=true in query if any facet component
+// set facet.field
+// remember to url encode
     }
   }
 

@@ -1,7 +1,7 @@
 /*global _*/
 (function () {
   angular.module('fusionSeedApp.services.queryData', ['fusionSeedApp.services.config',
-      'fusionSeedApp.services.apiBase'
+      'fusionSeedApp.services.apiBase', 'fusionSeedApp.utils.dataTransformer'
     ])
     .config(Config)
     .provider('QueryDataService', QueryDataService);
