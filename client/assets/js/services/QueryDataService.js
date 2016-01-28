@@ -17,7 +17,7 @@
 
     /////////////
 
-    function $get($log, $q, $http, ConfigService, ApiBase, Orwell){
+    function $get($log, $q, $http, ConfigService, ApiBase, Orwell, DataTransformerHelper){
       var queryResultsObservable = Orwell.getObservable('queryResults');
       return {
         getQueryResults: getQueryResults
@@ -33,7 +33,7 @@
       function getQueryResults(query){
         var deferred = $q.defer();
 
-        var queryString = QueryObjectToString(query);
+        var queryString = DataTransformerHelper.objectToURLString(query);
 
         var fullUrl = getQueryUrl(ConfigService.getIfQueryProfile()) + '?' + queryString;
 
@@ -61,7 +61,7 @@
        * @param  {Boolean} isProfiles Determines which endpoint type to return;
        * @return {string}             The URL endpoint for the query without parameters.
        */
-      function getQueryUrl(isProfiles){
+      function getQueryUrl(isProfiles) {
         var profilesEndpoint = ApiBase.getEndpoint() +
           'api/apollo/collections/' +
           ConfigService.getCollectionName() +
@@ -77,17 +77,6 @@
           '/select';
 
         return isProfiles?profilesEndpoint:pipelinesEndpoint;
-      }
-
-      /**
-       * Turns a Query Object into a String
-       * @param {object} obj The query object to turn into a string
-       * @return {string}
-       */
-      function QueryObjectToString(obj){
-        return _.reduce(obj, function(str, value, key){
-          return str + ((str!=='')?'&':'') + key + '=' + value;
-        },'');
       }
 
     }
