@@ -41,8 +41,7 @@
 
         var queryString = DataTransformHelper.objectToURLString(query);
 
-        var fullUrl = getQueryUrl(ConfigService.getIfQueryProfile()) + '?' +
-          queryString;
+        var fullUrl = getQueryUrl(ConfigService.getIfQueryProfile()) + '?' + queryString;
 
         $http
           .get(fullUrl)
