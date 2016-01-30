@@ -25,10 +25,13 @@
 
   }
 
-  Controller.$inject = ['ConfigService', 'QueryDataService', 'Orwell', 'FoundationApi', 'DataTransformerHelper'];
+  Controller.$inject = ['ConfigService', 'QueryDataService', 'Orwell', 'FoundationApi',
+    'DataTransformerHelper'
+  ];
 
   /* @ngInject */
-  function Controller(ConfigService, QueryDataService, Orwell, FoundationApi, DataTransformerHelper) {
+  function Controller(ConfigService, QueryDataService, Orwell, FoundationApi,
+    DataTransformerHelper) {
     var vm = this;
     vm.facetCounts = [];
     vm.toggleFacet = toggleFacet;
@@ -57,7 +60,7 @@
         // Set inital active state
         var active = true;
         // If we have autoOpen set active to this state.
-        if(angular.isDefined(vm.facetAutoOpen) && vm.facetAutoOpen === 'false'){
+        if (angular.isDefined(vm.facetAutoOpen) && vm.facetAutoOpen === 'false') {
           active = false;
         }
         vm.active = active;
