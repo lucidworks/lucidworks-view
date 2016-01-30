@@ -24,6 +24,7 @@
     };
 
     var QueryDataTransformers = {
+      encode: {},
       keyValue: {
         'default': function(key, value){return keyValueString(key, value, '=');}
       },
@@ -82,6 +83,7 @@
         // get important values;
         var keyValue = QueryDataTransformers.keyValue.hasOwnProperty(key) ? QueryDataTransformers.keyValue[key] : false;
         var join = QueryDataTransformers.join.hasOwnProperty(key) ? QueryDataTransformers.join[key] : false;
+        var encode = QueryDataTransformers.encode.hasOwnProperty(key) ? QueryDataTransformers.encode[key] : false;
         var wrapper = QueryDataTransformers.wrapper.hasOwnProperty(key) ? QueryDataTransformers.wrapper[key] : false;
 
         // If this is an object apply special transformers if appropriate.
@@ -108,10 +110,13 @@
         }
 
         // create a key value pair from the remaining.
-        if(QueryDataTransformers.keyValue.hasOwnProperty(key)){
-          QueryDataTransformers.keyValue[key](value);
+        if(keyValue){
+          keyValue(value);
         } else {
           parameters = QueryDataTransformers.keyValue.default(key, value);
+        }
+        if(encode){
+          parameters = encode(value);
         }
         // If this field has a wrapper, apply it here.
         if (wrapper){

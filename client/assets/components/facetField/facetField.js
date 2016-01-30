@@ -28,13 +28,12 @@
   }
 
   Controller.$inject = ['ConfigService', 'QueryDataService', 'Orwell', 'FoundationApi',
-    // 'DataTransformHelper'
+   'DataTransformHelper'
   ];
 
   /* @ngInject */
-  // function Controller(ConfigService, QueryDataService, Orwell, FoundationApi,
-  //   DataTransformHelper) {
-  function Controller(ConfigService, QueryDataService, Orwell, FoundationApi) {
+  function Controller(ConfigService, QueryDataService, Orwell, FoundationApi,
+    DataTransformHelper) {
     var vm = this;
     vm.facetCounts = [];
     vm.toggleFacet = toggleFacet;
@@ -46,9 +45,10 @@
 
     function activate() {
       // Register a transformer because facet fields can have funky URL syntax.
-      // DataTransformHelper.registerTransformer('keyValue', 'fq:field', fqFieldkeyValueTransformer);
-      // DataTransformHelper.registerTransformer('join', 'localParens', localParenJoinTransformer);
-      // DataTransformHelper.registerTransformer('wrapper', 'localParens', localParenWrapperTransformer);
+      DataTransformHelper.registerTransformer('keyValue', 'fq:field', fqFieldkeyValueTransformer);
+      DataTransformHelper.registerTransformer('encode', 'fq:field', fqFieldEncode);
+      DataTransformHelper.registerTransformer('join', 'localParens', localParenJoinTransformer);
+      DataTransformHelper.registerTransformer('wrapper', 'localParens', localParenWrapperTransformer);
 
       // Add observer to update data when we get results back.
       resultsObservable.addObserver(function (data) {
@@ -105,6 +105,10 @@
 
     function fqFieldkeyValueTransformer(key, value) {
       return DataTransformHelper.keyValueString(key, value, ':');
+    }
+
+    function fqFieldEncode(data){
+      return encodeURIComponent(data);
     }
 
     function localParenJoinTransformer(str, values) {

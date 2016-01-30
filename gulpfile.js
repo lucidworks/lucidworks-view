@@ -56,8 +56,8 @@ global.paths = {
     'client/assets/js/app.js',
     'client/assets/js/services/*.js',
     'client/assets/js/controllers/*.js',
-    'client/assets/js/utils/*.js',
-    'client/assets/components/**/*.js',
+    'client/assets/js/utils/**/*.js',
+    'client/assets/components/**/*.js'
   ],
   configJS: [
     './FUSION_CONFIG.js'
