@@ -14,10 +14,16 @@
     activate();
     doSearch();
 
+
     function activate() {
       hc.searchQuery = '*:*';
       hc.search = doSearch;
       hc.lastQuery = '*:*';
+      //Only to make the default value work, as Angular tracks by Object
+      hc.resultsPerPageSelection = _.map([10,20,50,100],function(item){
+        return {value: item};
+      });
+      hc.resultsPerPage = hc.resultsPerPageSelection[0]; //Setting the default
 
       resultsObservable = Orwell.getObservable('queryResults');
       resultsObservable.addObserver(function(data) {
@@ -34,7 +40,8 @@
       $log.info('Searching...');
       var queryObject = {
         q: hc.searchQuery,
-        start: 0
+        start: 0,
+        rows: hc.resultsPerPage.value
       };
 
       QueryService
