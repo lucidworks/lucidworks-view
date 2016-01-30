@@ -22,7 +22,6 @@
     };
 
     var QueryDataTransformers = {
-      paramMutator: {},
       encode: {},
       keyValue: {
         'default': function(key, value){return keyValueString(key, value, '=');}
@@ -33,6 +32,7 @@
         'ampersand': function(str, values){return arrayJoinString(str, values, '&');},
         'default': function(str, values){return arrayJoinString(str, values, '');}
       },
+      preEncodeWrapper: {},
       wrapper: {
         'scope': function(data){return '('+data+')';},
         'default': function(data){return data;}
@@ -41,6 +41,8 @@
 
     this.$get = ['$log', $get];
     this.registerTransformer = registerTransformer;
+    this.arrayJoinString = arrayJoinString;
+    this.keyValueString = keyValueString;
 
     function $get($log){
       return {
@@ -55,79 +57,90 @@
        * @param {object} obj The query object to turn into a string
        * @return {string}
        */
-      function objectToURLString(obj, level){
+      function objectToURLString(obj){
         return _.reduce(obj, reducer, '');
 
         function reducer(str, value, key) {
           var parameters;
           var ret;
           // get important values;
-          var keyValue = QueryDataTransformers.keyValue.hasOwnProperty(key) ? QueryDataTransformers.keyValue[key] : false;
-          var join = QueryDataTransformers.join.hasOwnProperty(key) ? QueryDataTransformers.join[key] : false;
+          var keyValue = QueryDataTransformers.keyValue.hasOwnProperty(key) ? QueryDataTransformers.keyValue[key] : QueryDataTransformers.keyValue.default;
+          var join = QueryDataTransformers.join.hasOwnProperty(key) ? QueryDataTransformers.join[key] : QueryDataTransformers.join.default;
           var encode = QueryDataTransformers.encode.hasOwnProperty(key) ? QueryDataTransformers.encode[key] : false;
-          var paramMutator = QueryDataTransformers.paramMutator.hasOwnProperty(key) ? QueryDataTransformers.paramMutator[key] : false;
+          var preEncodeWrapper = QueryDataTransformers.preEncodeWrapper.hasOwnProperty(key) ? QueryDataTransformers.preEncodeWrapper[key] : false;
           var wrapper = QueryDataTransformers.wrapper.hasOwnProperty(key) ? QueryDataTransformers.wrapper[key] : false;
 
-          var thisKey = key;
-          if(paramMutator){
-            thisKey = paramMutator(key);
-          }
+          var wrappedValue = value;
 
-          // If this is an object apply special transformers if appropriate.
-          if (angular.isObject(value)) {
-            if (keyValue || join) {
-              parameters = objectToURLString(value.values, 1);
-
-              if(keyValue){
-                parameters = keyValue(thisKey, parameters);
-              }
-              if(join){
-                parameters = join(str, parameters);
-              }
-            } else {
-              parameters = objectToURLString(value, 1);
-            }
-          }
           // If this is an array join all the properties.
           if(angular.isArray(value)){
-            _.forEach(value, function(arrValue){
-              if(angular.isObject(arrValue)){
-                parameters = objectToURLString(arrValue, 1);
-              }
-              if(join){
-                parameters = join(str, arrValue);
-              } else {
-                parameters = QueryDataTransformers.join.default(value);
-              }
-            });
-          }
-          var wrappedValue = value;
-          if(encode){
-            wrappedValue = encode(value);
-          }
-          // If this field has a wrapper, apply it here.
-          if (wrapper){
-            wrappedValue = wrapper(wrappedValue);
-          }
-
-          // create a key value pair from the remaining.
-          if(keyValue){
-            parameters = keyValue(thisKey, wrappedValue);
+            parameters = arrayReducer(key, value, keyValue, join, preEncodeWrapper, encode, wrapper, 0);
           } else {
-            parameters = QueryDataTransformers.keyValue.default(thisKey, wrappedValue);
+            if(preEncodeWrapper){
+              wrappedValue = preEncodeWrapper(wrappedValue);
+            }
+            if(encode){
+              wrappedValue = encode(wrappedValue);
+            }
+            // If this field has a wrapper, apply it here.
+            if (wrapper){
+              wrappedValue = wrapper(wrappedValue);
+            }
+            // create a key value pair from the remaining.
+            parameters = keyValue(key, wrappedValue);
           }
 
           // This is the first level and should use ampersand by default.
-          if((angular.isUndefined(level) || level === false) && str !== ''){
+          if(str !== ''){
             ret = QueryDataTransformers.join.ampersand(str, parameters);
-          } else if(join) {
-            ret = join(str, parameters);
           } else {
-            ret = QueryDataTransformers.join.default(str, parameters);
+            ret = join(str, parameters);
           }
           $log.debug(ret);
           return ret;
         }
+      }
+
+      function arrayReducer(key, values, keyValue, join, preEncodeWrapper, encode, wrapper, level){
+        return _.reduce(values, arrayReducerFunc, '');
+        function arrayReducerFunc(str, value){
+          var newVal = value;
+          if(angular.isObject(value)){
+            newVal = parseKeyValueStore(value, level+1);
+          }
+          if(preEncodeWrapper){
+            newVal = preEncodeWrapper(newVal);
+          }
+          if(encode){
+            newVal = encode(newVal);
+          }
+          // If this field has a wrapper, apply it here.
+          if (wrapper){
+            newVal = wrapper(newVal);
+          }
+          if(str.length > 0){
+            var joiner = (level > 0) ? join : QueryDataTransformers.join.ampersand;
+            str = joiner(str, keyValue(key, newVal));
+          } else {
+            str = QueryDataTransformers.join.default(str, keyValue(key, newVal));
+          }
+          return str;
+        }
+      }
+      function parseKeyValueStore(obj, level){
+        var keyValue =  QueryDataTransformers.keyValue.default;
+        var join = QueryDataTransformers.join.default;
+        var encode = false;
+        var wrapper = false;
+        var preEncodeWrapper = false;
+        if(obj.hasOwnProperty('transformer')){
+          keyValue = QueryDataTransformers.keyValue.hasOwnProperty(obj.transformer) ? QueryDataTransformers.keyValue[obj.transformer] : QueryDataTransformers.keyValue.default;
+          join = QueryDataTransformers.join.hasOwnProperty(obj.transformer) ? QueryDataTransformers.join[obj.transformer] : QueryDataTransformers.join.default;
+          encode = QueryDataTransformers.encode.hasOwnProperty(obj.transformer) ? QueryDataTransformers.encode[obj.transformer] : false;
+          preEncodeWrapper = QueryDataTransformers.preEncodeWrapper.hasOwnProperty(obj.transformer) ? QueryDataTransformers.preEncodeWrapper[obj.transformer] : false;
+          wrapper = QueryDataTransformers.wrapper.hasOwnProperty(obj.transformer) ? QueryDataTransformers.wrapper[obj.transformer] : false;
+        }
+        return arrayReducer(obj.key, obj.values, keyValue, join, preEncodeWrapper, encode, wrapper, level);
       }
     }
 

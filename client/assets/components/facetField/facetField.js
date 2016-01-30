@@ -15,11 +15,13 @@
 
   function Config(DataTransformHelperProvider){
     // Register a transformer because facet fields can have funky URL syntax.
-    //DataTransformHelper.registerTransformer('keyValue', 'fq:field', fqFieldkeyValueTransformer);
-    DataTransformHelperProvider.registerTransformer('paramMutator', 'fq:field', fqFieldKeyMutator);
+    DataTransformHelperProvider.registerTransformer('keyValue', 'fq:field', fqFieldkeyValueTransformer);
     DataTransformHelperProvider.registerTransformer('encode', 'fq:field', fqFieldEncode);
-    DataTransformHelperProvider.registerTransformer('join', 'localParens', localParenJoinTransformer);
-    DataTransformHelperProvider.registerTransformer('wrapper', 'localParens', localParenWrapperTransformer);
+    DataTransformHelperProvider.registerTransformer('preEncodeWrapper', 'fq:field', fqFieldPreEncodeWrapper);
+    DataTransformHelperProvider.registerTransformer('wrapper', 'fq:field', fqFieldWrapper);
+
+    // DataTransformHelperProvider.registerTransformer('join', 'localParens', localParenJoinTransformer);
+    // DataTransformHelperProvider.registerTransformer('wrapper', 'localParens', localParenWrapperTransformer);
 
     /**
      * Transformers.
@@ -35,17 +37,21 @@
       return encodeURIComponent(data);
     }
 
-    function fqFieldKeyMutator(key){
-      return 'fq';
+    function fqFieldPreEncodeWrapper(data){
+      return '"'+data+'"';
     }
 
-    function localParenJoinTransformer(str, values) {
-      return DataTransformHelperProvider.arrayJoinString(str, values, ' ');
+    function fqFieldWrapper(data){
+      return '('+data+')';
     }
 
-    function localParenWrapperTransformer(data) {
-      return '{!' + data + '}';
-    }
+    // function localParenJoinTransformer(str, values) {
+    //   return DataTransformHelperProvider.arrayJoinString(str, values, ' ');
+    // }
+    //
+    // function localParenWrapperTransformer(data) {
+    //   return '{!' + data + '}';
+    // }
   }
 
   /* @ngInject */
