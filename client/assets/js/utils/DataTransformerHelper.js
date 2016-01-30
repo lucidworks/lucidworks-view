@@ -13,11 +13,11 @@
       return key + join + value;
     };
 
-    var arrayJoinString = function arrayJoinString(arr, join) {
+    var arrayJoinString = function arrayJoinString(str, arr, join) {
       if(angular.isString(arr)){
-        return join + arr;
+        return str + join + arr;
       }
-      return _.reduce(arr, arrayJoinStringReducer, '');
+      return _.reduce(arr, arrayJoinStringReducer, str);
       function arrayJoinStringReducer(str, value){
         return str + ((str!=='')?join:'') + value;
       }
@@ -28,10 +28,10 @@
         'default': function(key, value){return keyValueString(key, value, '=');}
       },
       join: {
-        'OR': function(values){return arrayJoinString(values, ' OR ');},
-        'AND': function(values){return arrayJoinString(values, ' AND ');},
-        'ampersand': function(values){return arrayJoinString(values, '&');},
-        'default': function(values){return arrayJoinString(values, '');}
+        'OR': function(str, values){return arrayJoinString(str, values, ' OR ');},
+        'AND': function(str, values){return arrayJoinString(str, values, ' AND ');},
+        'ampersand': function(str, values){return arrayJoinString(str, values, '&');},
+        'default': function(str, values){return arrayJoinString(str, values, '');}
       },
       wrapper: {
         'scope': function(data){return '('+data+')';},
@@ -120,11 +120,11 @@
 
         // This is the first level and should use ampersand by default.
         if((angular.isUndefined(level) || level === false) && str != ''){
-          ret = arrayJoinString(parameters, '&');
+          ret = arrayJoinString(str, parameters, '&');
         } else if(QueryDataTransformers.join.hasOwnProperty(key)) {
-          ret = QueryDataTransformers.join[key](parameters);
+          ret = QueryDataTransformers.join[key](str, parameters);
         } else {
-          ret = arrayJoinString(parameters, '');
+          ret = arrayJoinString(str, parameters, '');
         }
         $log.debug(ret);
         return ret;

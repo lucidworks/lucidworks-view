@@ -107,8 +107,8 @@
       return DataTransformHelper.keyValueString(key, value, ':');
     }
 
-    function localParenJoinTransformer(values) {
-      return DataTransformHelper.arrayJoinString(values, ' ');
+    function localParenJoinTransformer(str, values) {
+      return DataTransformHelper.arrayJoinString(str, values, ' ');
     }
 
     function localParenWrapperTransformer(data) {
