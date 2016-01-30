@@ -1,7 +1,8 @@
-/*global _*/
 (function () {
-  angular.module('fusionSeedApp.services.queryData', ['fusionSeedApp.services.config',
-      'fusionSeedApp.services.apiBase', 'fusionSeedApp.utils.dataTransformer'
+  angular.module('fusionSeedApp.services.queryData', [
+      'fusionSeedApp.services.config',
+      'fusionSeedApp.services.apiBase',
+      'fusionSeedApp.utils.dataTransform'
     ])
     .config(Config)
     .provider('QueryDataService', QueryDataService);
@@ -15,13 +16,14 @@
   function QueryDataService() {
 
     this.$get = ['$log', '$q', '$http', 'ConfigService', 'ApiBase', 'Orwell',
-      'DataTransformerHelper', $get
+      'DataTransformHelper',
+      $get
     ];
 
     /////////////
 
     function $get($log, $q, $http, ConfigService, ApiBase, Orwell,
-      DataTransformerHelper) {
+      DataTransformHelper) {
       var queryResultsObservable = Orwell.getObservable('queryResults');
       return {
         getQueryResults: getQueryResults
@@ -37,10 +39,9 @@
       function getQueryResults(query) {
         var deferred = $q.defer();
 
-        var queryString = DataTransformerHelper.objectToURLString(query);
+        var queryString = DataTransformHelper.objectToURLString(query);
 
-        var fullUrl = getQueryUrl(ConfigService.getIfQueryProfile()) + '?' +
-          queryString;
+        var fullUrl = getQueryUrl(ConfigService.getIfQueryProfile()) + '?' + queryString;
 
         $http
           .get(fullUrl)

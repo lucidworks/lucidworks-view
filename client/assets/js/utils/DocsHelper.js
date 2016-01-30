@@ -1,5 +1,6 @@
 (function () {
-  angular.module('fusionSeedApp.utils.docs', [])
+  angular
+    .module('fusionSeedApp.utils.docs', [])
     .factory('DocsHelper', DocsHelper);
 
   DocsHelper.$inject = ['$log', '_'];

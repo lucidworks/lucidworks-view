@@ -3,8 +3,10 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.facetField', ['fusionSeedApp.services.config',
-      'foundation.core', 'fusionSeedApp.utils.dataTransformer'
+    .module('fusionSeedApp.components.facetField', [
+      'fusionSeedApp.services.config',
+      'foundation.core',
+      'fusionSeedApp.utils.dataTransform'
     ])
     .directive('facetField', facetField);
 
@@ -25,10 +27,13 @@
 
   }
 
-  Controller.$inject = ['ConfigService', 'QueryDataService', 'Orwell', 'FoundationApi', 'DataTransformerHelper'];
+  Controller.$inject = ['ConfigService', 'QueryDataService', 'Orwell', 'FoundationApi',
+   'DataTransformHelper'
+  ];
 
   /* @ngInject */
-  function Controller(ConfigService, QueryDataService, Orwell, FoundationApi, DataTransformerHelper) {
+  function Controller(ConfigService, QueryDataService, Orwell, FoundationApi,
+    DataTransformHelper) {
     var vm = this;
     vm.facetCounts = [];
     vm.toggleFacet = toggleFacet;
@@ -40,7 +45,10 @@
 
     function activate() {
       // Register a transformer because facet fields can have funky URL syntax.
-      DataTransformerHelper.registerTransformer('fq:field', fqFieldTransformer);
+      DataTransformHelper.registerTransformer('keyValue', 'fq:field', fqFieldkeyValueTransformer);
+      DataTransformHelper.registerTransformer('encode', 'fq:field', fqFieldEncode);
+      DataTransformHelper.registerTransformer('join', 'localParens', localParenJoinTransformer);
+      DataTransformHelper.registerTransformer('wrapper', 'localParens', localParenWrapperTransformer);
 
       // Add observer to update data when we get results back.
       resultsObservable.addObserver(function (data) {
@@ -57,7 +65,7 @@
         // Set inital active state
         var active = true;
         // If we have autoOpen set active to this state.
-        if(angular.isDefined(vm.facetAutoOpen) && vm.facetAutoOpen === 'false'){
+        if (angular.isDefined(vm.facetAutoOpen) && vm.facetAutoOpen === 'false') {
           active = false;
         }
         vm.active = active;
@@ -89,40 +97,33 @@
       });
     }
 
+    /**
+     * Transformers.
+     *
+     * These will transform the output of the query, when the query is created.
+     */
 
-    function fqFieldTransformer(data){
-      var values = [];
-      _.forEach(data.value, function(value, key){
-        var str = '';
-        if(value.hasOwnProperty('localParens')){
-          str += DataTransformerHelper.objectToLocalParens(value.localParens);
-        }
-        // build the field name.
-        if(value.hasOwnProperty('field')){
-          str += value.field + ':';
-        }
-        // build the value in the format (encodedValue).
-        if(value.hasOwnProperty('value')){
-          str += '('+encodeURIComponent(value.value)+')';
-        }
-        // allow a raw value to be passed through for special cases.
-        if(value.hasOwnProperty('rawValue')){
-          str += '('+rawValue+')';
-        }
-        values.push(str);
-      });
-      return {
-        value: values,
-        key: 'fq'
-      };
+    function fqFieldkeyValueTransformer(key, value) {
+      return DataTransformHelper.keyValueString(key, value, ':');
+    }
+
+    function fqFieldEncode(data){
+      return encodeURIComponent(data);
+    }
+
+    function localParenJoinTransformer(str, values) {
+      return DataTransformHelper.arrayJoinString(str, values, ' ');
+    }
+
+    function localParenWrapperTransformer(data) {
+      return '{!' + data + '}';
     }
 
 
-
     function toggleFacet() {
-// set facet=true in query if any facet component
-// set facet.field
-// remember to url encode
+      // set facet=true in query if any facet component
+      // set facet.field
+      // remember to url encode
     }
   }
 
