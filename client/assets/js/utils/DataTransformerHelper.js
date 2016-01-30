@@ -82,7 +82,7 @@
                 parameters = keyValue(thisKey, parameters);
               }
               if(join){
-                parameters = join(parameters);
+                parameters = join(str, parameters);
               }
             } else {
               parameters = objectToURLString(value, 1);
@@ -90,25 +90,31 @@
           }
           // If this is an array join all the properties.
           if(angular.isArray(value)){
-            if(join){
-              parameters = join(value);
-            } else {
-              parameters = QueryDataTransformers.join.default(value);
-            }
+            _.forEach(value, function(arrValue){
+              if(angular.isObject(arrValue)){
+                parameters = objectToURLString(arrValue, 1);
+              }
+              if(join){
+                parameters = join(str, arrValue);
+              } else {
+                parameters = QueryDataTransformers.join.default(value);
+              }
+            });
+          }
+          var wrappedValue = value;
+          if(encode){
+            wrappedValue = encode(value);
+          }
+          // If this field has a wrapper, apply it here.
+          if (wrapper){
+            wrappedValue = wrapper(wrappedValue);
           }
 
           // create a key value pair from the remaining.
           if(keyValue){
-            keyValue(thisKey, value);
+            parameters = keyValue(thisKey, wrappedValue);
           } else {
-            parameters = QueryDataTransformers.keyValue.default(thisKey, value);
-          }
-          if(encode){
-            parameters = encode(value);
-          }
-          // If this field has a wrapper, apply it here.
-          if (wrapper){
-            parameters = wrapper(parameters);
+            parameters = QueryDataTransformers.keyValue.default(thisKey, wrappedValue);
           }
 
           // This is the first level and should use ampersand by default.
@@ -147,7 +153,7 @@
      * @param  {Function} cb   The callback function.
      */
     function registerTransformer(type, key, cb){
-      QueryDataTransformers[type][name] = cb;
+      QueryDataTransformers[type][key] = cb;
     }
 
 

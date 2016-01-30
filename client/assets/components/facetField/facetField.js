@@ -70,8 +70,7 @@
   ];
 
   /* @ngInject */
-  function Controller(ConfigService, QueryDataService, Orwell, FoundationApi,
-    DataTransformHelper) {
+  function Controller(ConfigService, QueryDataService, Orwell, FoundationApi) {
     var vm = this;
     vm.facetCounts = [];
     vm.toggleFacet = toggleFacet;
