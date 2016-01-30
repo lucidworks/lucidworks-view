@@ -7,7 +7,7 @@
     .constant('QUERY_OBJECT_DEFAULT', {
       q: '*:*',
       start: 0,
-      rows: 20,
+      rows: 10,
       // Do not override the return of JSON
       wt: 'json'
     })
