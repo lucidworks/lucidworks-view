@@ -8,7 +8,45 @@
       'foundation.core',
       'fusionSeedApp.utils.dataTransform'
     ])
+    .config(Config)
     .directive('facetField', facetField);
+
+  Config.$inject = ['DataTransformHelperProvider']
+
+  function Config(DataTransformHelperProvider){
+    // Register a transformer because facet fields can have funky URL syntax.
+    //DataTransformHelper.registerTransformer('keyValue', 'fq:field', fqFieldkeyValueTransformer);
+    DataTransformHelperProvider.registerTransformer('paramMutator', 'fq:field', fqFieldKeyMutator);
+    DataTransformHelperProvider.registerTransformer('encode', 'fq:field', fqFieldEncode);
+    DataTransformHelperProvider.registerTransformer('join', 'localParens', localParenJoinTransformer);
+    DataTransformHelperProvider.registerTransformer('wrapper', 'localParens', localParenWrapperTransformer);
+
+    /**
+     * Transformers.
+     *
+     * These will transform the output of the query, when the query is created.
+     */
+
+    function fqFieldkeyValueTransformer(key, value) {
+      return DataTransformHelperProvider.keyValueString(key, value, ':');
+    }
+
+    function fqFieldEncode(data){
+      return encodeURIComponent(data);
+    }
+
+    function fqFieldKeyMutator(key){
+      return 'fq';
+    }
+
+    function localParenJoinTransformer(str, values) {
+      return DataTransformHelperProvider.arrayJoinString(str, values, ' ');
+    }
+
+    function localParenWrapperTransformer(data) {
+      return '{!' + data + '}';
+    }
+  }
 
   /* @ngInject */
   function facetField() {
@@ -44,11 +82,6 @@
     //////////////
 
     function activate() {
-      // Register a transformer because facet fields can have funky URL syntax.
-      DataTransformHelper.registerTransformer('keyValue', 'fq:field', fqFieldkeyValueTransformer);
-      DataTransformHelper.registerTransformer('encode', 'fq:field', fqFieldEncode);
-      DataTransformHelper.registerTransformer('join', 'localParens', localParenJoinTransformer);
-      DataTransformHelper.registerTransformer('wrapper', 'localParens', localParenWrapperTransformer);
 
       // Add observer to update data when we get results back.
       resultsObservable.addObserver(function (data) {
@@ -96,29 +129,6 @@
         }
       });
     }
-
-    /**
-     * Transformers.
-     *
-     * These will transform the output of the query, when the query is created.
-     */
-
-    function fqFieldkeyValueTransformer(key, value) {
-      return DataTransformHelper.keyValueString(key, value, ':');
-    }
-
-    function fqFieldEncode(data){
-      return encodeURIComponent(data);
-    }
-
-    function localParenJoinTransformer(str, values) {
-      return DataTransformHelper.arrayJoinString(str, values, ' ');
-    }
-
-    function localParenWrapperTransformer(data) {
-      return '{!' + data + '}';
-    }
-
 
     function toggleFacet() {
       // set facet=true in query if any facet component

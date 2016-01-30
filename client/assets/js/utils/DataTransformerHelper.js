@@ -4,11 +4,9 @@
 
   angular
     .module('fusionSeedApp.utils.dataTransform', [])
-    .factory('DataTransformHelper', DataTransformHelper);
+    .provider('DataTransformHelper', DataTransformHelper);
 
-  DataTransformHelper.$inject = ['$log'];
-
-  function DataTransformHelper($log) {
+  function DataTransformHelper() {
     var keyValueString = function keyValueString(key, value, join) {
       return key + join + value;
     };
@@ -24,6 +22,7 @@
     };
 
     var QueryDataTransformers = {
+      paramMutator: {},
       encode: {},
       keyValue: {
         'default': function(key, value){return keyValueString(key, value, '=');}
@@ -39,10 +38,92 @@
         'default': function(data){return data;}
       }
     };
-    return {
-      registerTransformer: registerTransformer,
-      objectToURLString: objectToURLString
-    };
+
+    this.$get = ['$log', $get];
+    this.registerTransformer = registerTransformer;
+
+    function $get($log){
+      return {
+        registerTransformer: registerTransformer,
+        keyValueString: keyValueString,
+        arrayJoinString: arrayJoinString,
+        objectToURLString: objectToURLString
+      };
+
+      /**
+       * Turns an Object into a URL String
+       * @param {object} obj The query object to turn into a string
+       * @return {string}
+       */
+      function objectToURLString(obj, level){
+        return _.reduce(obj, reducer, '');
+
+        function reducer(str, value, key) {
+          var parameters;
+          var ret;
+          // get important values;
+          var keyValue = QueryDataTransformers.keyValue.hasOwnProperty(key) ? QueryDataTransformers.keyValue[key] : false;
+          var join = QueryDataTransformers.join.hasOwnProperty(key) ? QueryDataTransformers.join[key] : false;
+          var encode = QueryDataTransformers.encode.hasOwnProperty(key) ? QueryDataTransformers.encode[key] : false;
+          var paramMutator = QueryDataTransformers.paramMutator.hasOwnProperty(key) ? QueryDataTransformers.paramMutator[key] : false;
+          var wrapper = QueryDataTransformers.wrapper.hasOwnProperty(key) ? QueryDataTransformers.wrapper[key] : false;
+
+          var thisKey = key;
+          if(paramMutator){
+            thisKey = paramMutator(key);
+          }
+
+          // If this is an object apply special transformers if appropriate.
+          if (angular.isObject(value)) {
+            if (keyValue || join) {
+              parameters = objectToURLString(value.values, 1);
+
+              if(keyValue){
+                parameters = keyValue(thisKey, parameters);
+              }
+              if(join){
+                parameters = join(parameters);
+              }
+            } else {
+              parameters = objectToURLString(value, 1);
+            }
+          }
+          // If this is an array join all the properties.
+          if(angular.isArray(value)){
+            if(join){
+              parameters = join(value);
+            } else {
+              parameters = QueryDataTransformers.join.default(value);
+            }
+          }
+
+          // create a key value pair from the remaining.
+          if(keyValue){
+            keyValue(thisKey, value);
+          } else {
+            parameters = QueryDataTransformers.keyValue.default(thisKey, value);
+          }
+          if(encode){
+            parameters = encode(value);
+          }
+          // If this field has a wrapper, apply it here.
+          if (wrapper){
+            parameters = wrapper(parameters);
+          }
+
+          // This is the first level and should use ampersand by default.
+          if((angular.isUndefined(level) || level === false) && str !== ''){
+            ret = QueryDataTransformers.join.ampersand(str, parameters);
+          } else if(join) {
+            ret = join(str, parameters);
+          } else {
+            ret = QueryDataTransformers.join.default(str, parameters);
+          }
+          $log.debug(ret);
+          return ret;
+        }
+      }
+    }
 
     /**
      * Register a Query Data Transformer.
@@ -69,72 +150,6 @@
       QueryDataTransformers[type][name] = cb;
     }
 
-    /**
-     * Turns an Object into a URL String
-     * @param {object} obj The query object to turn into a string
-     * @return {string}
-     */
-    function objectToURLString(obj, level){
-      return _.reduce(obj, reducer, '');
-
-      function reducer(str, value, key) {
-        var parameters;
-        var ret;
-        // get important values;
-        var keyValue = QueryDataTransformers.keyValue.hasOwnProperty(key) ? QueryDataTransformers.keyValue[key] : false;
-        var join = QueryDataTransformers.join.hasOwnProperty(key) ? QueryDataTransformers.join[key] : false;
-        var encode = QueryDataTransformers.encode.hasOwnProperty(key) ? QueryDataTransformers.encode[key] : false;
-        var wrapper = QueryDataTransformers.wrapper.hasOwnProperty(key) ? QueryDataTransformers.wrapper[key] : false;
-
-        // If this is an object apply special transformers if appropriate.
-        if (angular.isObject(value)) {
-          if (keyValue || join) {
-            parameters = objectToURLString(value.values, 1);
-            if(keyValue){
-              parameters = keyValue(key, parameters);
-            }
-            if(join){
-              parameters = join(parameters);
-            }
-          } else {
-            parameters = objectToURLString(value, 1);
-          }
-        }
-        // If this is an array join all the properties.
-        if(angular.isArray(value)){
-          if(join){
-            parameters = join(value);
-          } else {
-            parameters = QueryDataTransformers.join.default(value);
-          }
-        }
-
-        // create a key value pair from the remaining.
-        if(keyValue){
-          keyValue(value);
-        } else {
-          parameters = QueryDataTransformers.keyValue.default(key, value);
-        }
-        if(encode){
-          parameters = encode(value);
-        }
-        // If this field has a wrapper, apply it here.
-        if (wrapper){
-          parameters = wrapper(parameters);
-        }
-
-        // This is the first level and should use ampersand by default.
-        if((angular.isUndefined(level) || level === false) && str != ''){
-          ret = arrayJoinString(str, parameters, '&');
-        } else if(QueryDataTransformers.join.hasOwnProperty(key)) {
-          ret = QueryDataTransformers.join[key](str, parameters);
-        } else {
-          ret = arrayJoinString(str, parameters, '');
-        }
-        $log.debug(ret);
-        return ret;
-      }
-    }
 
   }
 })();
