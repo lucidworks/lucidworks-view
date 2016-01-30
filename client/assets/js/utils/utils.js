@@ -1,4 +1,4 @@
 angular.module('fusionSeedApp.utils', [
-  'fusionSeedApp.utils.DataTransformerHelper',
-  'fusionSeedApp.utils.DocsHelper'
+  'fusionSeedApp.utils.dataTransform',
+  'fusionSeedApp.utils.docs'
 ]);
