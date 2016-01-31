@@ -2,7 +2,7 @@
   angular.module('fusionSeedApp.services.queryData', [
       'fusionSeedApp.services.config',
       'fusionSeedApp.services.apiBase',
-      'fusionSeedApp.utils.dataTransform'
+      'fusionSeedApp.utils.queryBuilder'
     ])
     .config(Config)
     .provider('QueryDataService', QueryDataService);

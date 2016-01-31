@@ -3,7 +3,7 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.utils.dataTransform', [])
+    .module('fusionSeedApp.utils.queryBuilder', [])
     .provider('QueryBuilder', QueryBuilder);
 
   function QueryBuilder() {

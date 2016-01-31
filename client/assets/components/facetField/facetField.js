@@ -6,7 +6,7 @@
     .module('fusionSeedApp.components.facetField', [
       'fusionSeedApp.services.config',
       'foundation.core',
-      'fusionSeedApp.utils.dataTransform'
+      'fusionSeedApp.utils.queryBuilder'
     ])
     .config(Config)
     .directive('facetField', facetField);
