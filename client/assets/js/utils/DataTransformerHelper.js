@@ -4,9 +4,9 @@
 
   angular
     .module('fusionSeedApp.utils.dataTransform', [])
-    .provider('DataTransformHelper', DataTransformHelper);
+    .provider('QueryBuilder', QueryBuilder);
 
-  function DataTransformHelper() {
+  function QueryBuilder() {
     var keyValueString = function keyValueString(key, value, join) {
       return key + join + value;
     };

@@ -11,17 +11,17 @@
     .config(Config)
     .directive('facetField', facetField);
 
-  Config.$inject = ['DataTransformHelperProvider']
+  Config.$inject = ['QueryBuilderProvider']
 
-  function Config(DataTransformHelperProvider){
+  function Config(QueryBuilderProvider){
     // Register a transformer because facet fields can have funky URL syntax.
-    DataTransformHelperProvider.registerTransformer('keyValue', 'fq:field', fqFieldkeyValueTransformer);
-    DataTransformHelperProvider.registerTransformer('encode', 'fq:field', fqFieldEncode);
-    DataTransformHelperProvider.registerTransformer('preEncodeWrapper', 'fq:field', fqFieldPreEncodeWrapper);
-    DataTransformHelperProvider.registerTransformer('wrapper', 'fq:field', fqFieldWrapper);
+    QueryBuilderProvider.registerTransformer('keyValue', 'fq:field', fqFieldkeyValueTransformer);
+    QueryBuilderProvider.registerTransformer('encode', 'fq:field', fqFieldEncode);
+    QueryBuilderProvider.registerTransformer('preEncodeWrapper', 'fq:field', fqFieldPreEncodeWrapper);
+    QueryBuilderProvider.registerTransformer('wrapper', 'fq:field', fqFieldWrapper);
 
-    // DataTransformHelperProvider.registerTransformer('join', 'localParens', localParenJoinTransformer);
-    // DataTransformHelperProvider.registerTransformer('wrapper', 'localParens', localParenWrapperTransformer);
+    // QueryBuilderProvider.registerTransformer('join', 'localParens', localParenJoinTransformer);
+    // QueryBuilderProvider.registerTransformer('wrapper', 'localParens', localParenWrapperTransformer);
 
     /**
      * Transformers.
@@ -30,7 +30,7 @@
      */
 
     function fqFieldkeyValueTransformer(key, value) {
-      return DataTransformHelperProvider.keyValueString(key, value, ':');
+      return QueryBuilderProvider.keyValueString(key, value, ':');
     }
 
     function fqFieldEncode(data){
@@ -46,7 +46,7 @@
     }
 
     // function localParenJoinTransformer(str, values) {
-    //   return DataTransformHelperProvider.arrayJoinString(str, values, ' ');
+    //   return QueryBuilderProvider.arrayJoinString(str, values, ' ');
     // }
     //
     // function localParenWrapperTransformer(data) {
@@ -72,7 +72,7 @@
   }
 
   Controller.$inject = ['ConfigService', 'QueryDataService', 'Orwell', 'FoundationApi',
-   'DataTransformHelper'
+   'QueryBuilder'
   ];
 
   /* @ngInject */

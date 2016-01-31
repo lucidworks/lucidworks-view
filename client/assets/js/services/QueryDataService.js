@@ -16,14 +16,14 @@
   function QueryDataService() {
 
     this.$get = ['$log', '$q', '$http', 'ConfigService', 'ApiBase', 'Orwell',
-      'DataTransformHelper',
+      'QueryBuilder',
       $get
     ];
 
     /////////////
 
     function $get($log, $q, $http, ConfigService, ApiBase, Orwell,
-      DataTransformHelper) {
+      QueryBuilder) {
       var queryResultsObservable = Orwell.getObservable('queryResults');
       return {
         getQueryResults: getQueryResults
@@ -39,7 +39,7 @@
       function getQueryResults(query) {
         var deferred = $q.defer();
 
-        var queryString = DataTransformHelper.objectToURLString(query);
+        var queryString = QueryBuilder.objectToURLString(query);
 
         var fullUrl = getQueryUrl(ConfigService.getIfQueryProfile()) + '?' + queryString;
 
