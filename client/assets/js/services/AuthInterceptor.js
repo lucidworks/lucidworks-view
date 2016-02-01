@@ -8,11 +8,8 @@
     .factory('SessionInjector', SessionInjector);
 
 
-  AuthInterceptor.$inject = ['$q', '$log', '$injector'];
-  SessionInjector.$inject = ['ConfigService'];
-
-  /* @ngInject */
   function SessionInjector(ConfigService) {
+    'ngInject';
     var sessionInjector = {
       request: function(config) {
         _.assign(config.headers, ConfigService.getAuthHeader());
@@ -23,9 +20,8 @@
   }
 
 
-  /* @ngInject */
   function AuthInterceptor($q, $log, $injector) {
-
+    'ngInject';
     return {
       responseError: responseError
     };

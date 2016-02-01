@@ -5,8 +5,8 @@
     .module('fusionSeedApp.components.paginate')
     .directive('paginate', paginate);
 
-  /* @ngInject */
   function paginate() {
+    'ngInject';
     var directive = {
       restrict: 'EA',
       templateUrl: 'assets/components/paginate/paginate.html',
@@ -20,10 +20,8 @@
 
   }
 
-  Controller.$inject = ['Orwell', 'PaginateService', 'QueryService', '$log'];
-
-  /* @ngInject */
   function Controller(Orwell, PaginateService, QueryService, $log) {
+    'ngInject';
     var vm = this;
     vm.page = 0;
     vm.totalPages = 0;

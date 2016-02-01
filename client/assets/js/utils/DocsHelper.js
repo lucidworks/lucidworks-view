@@ -3,8 +3,6 @@
     .module('fusionSeedApp.utils.docs', [])
     .factory('DocsHelper', DocsHelper);
 
-  DocsHelper.$inject = ['$log', '_'];
-
   /**
    * DocsHelper
    *
@@ -13,6 +11,7 @@
    * @return {Object}      The properties
    */
   function DocsHelper($log, _) {
+    'ngInject';
     return {
       populateFieldLabels: populateFieldLabels,
       concatMultivaluedFields: concatMultivaluedFields,

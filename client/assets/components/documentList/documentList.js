@@ -7,8 +7,8 @@
     ])
     .directive('documentList', documentList);
 
-  /* @ngInject */
   function documentList() {
+    'ngInject';
     return {
       restrict: 'EA',
       templateUrl: 'assets/components/documentList/documentList.html',
@@ -26,10 +26,9 @@
 
   }
 
-  Controller.$inject = ['$log', '$scope', '$anchorScroll', 'ConfigService', 'QueryService', 'Orwell'];
 
-  /* @ngInject */
   function Controller($log, $scope, $anchorScroll, ConfigService, QueryService, Orwell) {
+    'ngInject';
     var vm = this;
     vm.docs = [];
 

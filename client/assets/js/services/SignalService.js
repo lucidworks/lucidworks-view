@@ -7,10 +7,8 @@
     ])
     .factory('SignalsService', SignalsService);
 
-  SignalsService.$inject = ['ApiBase', 'ConfigService', '$http', '$q', 'QueryService'];
-
-  /* @ngInject */
   function SignalsService(ApiBase, ConfigService, $http, $q, QueryService) {
+    'ngInject';
     var service = {
       postSignal: postSignal,
       getSignalsDocumentId: getSignalsDocumentId

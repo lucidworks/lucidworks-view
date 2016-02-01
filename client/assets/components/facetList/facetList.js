@@ -6,8 +6,8 @@
     .module('fusionSeedApp.components.facetList', ['fusionSeedApp.services.config'])
     .directive('facetList', facetList);
 
-  /* @ngInject */
   function facetList() {
+    'ngInject';
     var directive = {
       restrict: 'EA',
       templateUrl: 'assets/components/facetList/facetList.html',
@@ -21,10 +21,8 @@
 
   }
 
-  Controller.$inject = ['ConfigService'];
-
-  /* @ngInject */
   function Controller(ConfigService) {
+    'ngInject';
     var vm = this;
 
     activate();

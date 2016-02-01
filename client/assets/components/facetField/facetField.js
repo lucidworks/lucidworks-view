@@ -11,9 +11,8 @@
     .config(Config)
     .directive('facetField', facetField);
 
-  Config.$inject = ['QueryBuilderProvider']
-
   function Config(QueryBuilderProvider){
+    'ngInject';
     // Register a transformer because facet fields can have funky URL syntax.
     QueryBuilderProvider.registerTransformer('keyValue', 'fq:field', fqFieldkeyValueTransformer);
     QueryBuilderProvider.registerTransformer('encode', 'fq:field', fqFieldEncode);
@@ -54,8 +53,8 @@
     // }
   }
 
-  /* @ngInject */
   function facetField() {
+    'ngInject';
     return {
       restrict: 'EA',
       templateUrl: 'assets/components/facetField/facetField.html',
@@ -71,12 +70,8 @@
 
   }
 
-  Controller.$inject = ['ConfigService', 'QueryDataService', 'Orwell', 'FoundationApi',
-   'QueryBuilder'
-  ];
-
-  /* @ngInject */
   function Controller(ConfigService, QueryDataService, Orwell, FoundationApi) {
+    'ngInject';
     var vm = this;
     vm.facetCounts = [];
     vm.toggleFacet = toggleFacet;

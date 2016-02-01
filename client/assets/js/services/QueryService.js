@@ -13,21 +13,19 @@
     })
     .provider('QueryService', QueryService);
 
-  Config.$inject = ['OrwellProvider'];
-
   function Config(OrwellProvider) {
+    'ngInject';
     OrwellProvider.createObservable('query', {});
   }
 
   function QueryService() {
 
-    this.$get = ['ConfigService', 'Orwell', 'QUERY_OBJECT_DEFAULT', 'QueryDataService',
-      $get
-    ];
+    this.$get = $get;
 
     /////////////
 
     function $get(ConfigService, Orwell, QUERY_OBJECT_DEFAULT, QueryDataService) {
+      'ngInject';
       var queryObservable = Orwell.getObservable('query'),
         queryObject = QUERY_OBJECT_DEFAULT;
 

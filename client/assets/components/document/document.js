@@ -4,9 +4,9 @@
     ])
     .directive('document', documentListItem);
 
-  documentListItem.$inject = [];
 
   function documentListItem() {
+    'ngInject';
     return {
       templateUrl: 'assets/components/document/document.html',
       scope: true,
@@ -19,11 +19,8 @@
     };
   }
 
-  Controller.$inject = ['$log', '$scope', 'DocsHelper', 'ConfigService',
-    'SignalsService'
-  ];
-
   function Controller($log, $scope, DocsHelper, ConfigService, SignalsService) {
+    'ngInject';
     var dc = this;
     dc.postSignal = SignalsService.postSignal;
 

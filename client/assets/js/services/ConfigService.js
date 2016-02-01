@@ -43,7 +43,6 @@
 
     .provider('ConfigService', ConfigService);
 
-  ConfigService.$inject = ['CONFIG_DEFAULT', 'CONFIG_OVERRIDE'];
 
   /**
    * ConfigService
@@ -52,9 +51,10 @@
    * @param {object} CONFIG_OVERRIDE [description]
    */
   function ConfigService(CONFIG_DEFAULT, CONFIG_OVERRIDE) {
+    'ngInject';
     var appConfig;
 
-    this.$get = [$get];
+    this.$get = $get;
     this.getFusionUrl = getFusionUrl;
 
     /* initialize on first load */
@@ -66,6 +66,7 @@
      * Main Service function.
      */
     function $get() {
+      'ngInject';
       return {
         init: init, //TODO: Only for test env
         config: appConfig,

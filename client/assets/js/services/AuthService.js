@@ -7,10 +7,8 @@
     ])
     .factory('AuthService', AuthService);
 
-  AuthService.$inject = ['$q', '$log', '$http', 'ApiBase', 'ConfigService'];
-
-  /* @ngInject */
   function AuthService($q, $log, $http, ApiBase, ConfigService) {
+    'ngInject';
     var config = ConfigService.config;
     var realmName = config.connectionRealm;
 

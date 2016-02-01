@@ -5,10 +5,9 @@
     .module('fusionSeedApp.components.paginate')
     .factory('PaginateService', PaginateService);
 
-  PaginateService.$inject = ['Orwell'];
 
-  /* @ngInject */
   function PaginateService(Orwell) {
+    'ngInject';
     var queryObservable, resultsObservable,
       service = {
         pageToStartRow: pageToStartRow,
@@ -17,7 +16,7 @@
         getTotalPages: getTotalPages
       };
 
-      activate();
+    activate();
 
     return service;
 

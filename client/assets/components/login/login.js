@@ -7,8 +7,8 @@
     ])
     .directive('login', login);
 
-  /* @ngInject */
   function login($log, ConfigService) {
+    'ngInject';
     return {
       controller: Controller,
       templateUrl: 'assets/components/login/login.html',
@@ -18,10 +18,8 @@
 
   }
 
-  Controller.$inject = ['$log', 'ConfigService', 'Orwell', 'AuthService', '$state'];
-
-  /* @ngInject */
   function Controller($log, ConfigService, Orwell, AuthService, $state) {
+    'ngInject';
     var vm = this;
     vm.username = '';
     vm.password = '';

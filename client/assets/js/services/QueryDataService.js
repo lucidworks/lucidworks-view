@@ -7,23 +7,21 @@
     .config(Config)
     .provider('QueryDataService', QueryDataService);
 
-  Config.$inject = ['OrwellProvider'];
 
   function Config(OrwellProvider) {
+    'ngInject';
     OrwellProvider.createObservable('queryResults', {});
   }
 
   function QueryDataService() {
 
-    this.$get = ['$log', '$q', '$http', 'ConfigService', 'ApiBase', 'Orwell',
-      'QueryBuilder',
-      $get
-    ];
+    this.$get = $get;
 
     /////////////
 
     function $get($log, $q, $http, ConfigService, ApiBase, Orwell,
       QueryBuilder) {
+      'ngInject';
       var queryResultsObservable = Orwell.getObservable('queryResults');
       return {
         getQueryResults: getQueryResults

@@ -3,11 +3,9 @@
   angular.module('fusionSeedApp.controllers.home', ['fusionSeedApp.services','angucomplete-alt'])
     .controller('HomeController', HomeController);
 
-  HomeController.$inject = ['$log', '$scope', 'ConfigService', 'QueryService',
-    'Orwell'
-  ];
 
   function HomeController($log, $scope, ConfigService, QueryService, Orwell) {
+    'ngInject';
     var hc = this; //eslint-disable-line
     var resultsObservable;
 

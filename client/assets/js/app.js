@@ -24,23 +24,19 @@
     .config(config)
     .run(run);
 
-  config.$inject = ['$urlRouterProvider', '$httpProvider', '$locationProvider',
-    'ApiBaseProvider', 'ConfigServiceProvider'
-  ];
-  run.$inject = ['$document'];
-
   /**
    * Main app config
    *
-   * @param  {Provider} $urlProvider          Provider for url
+   * @param  {Provider} $urlRouterProvider    Provider for url
    * @param  {Provider} $httpProvider         Provider for http
    * @param  {Provider} $locationProvider     Provider for location
    * @param  {Provider} ApiBaseProvider       Provider for ApiBase
    * @param  {Provider} ConfigServiceProvider Provider for ConfigService
    */
-  function config($urlProvider, $httpProvider, $locationProvider, ApiBaseProvider,
+  function config($urlRouterProvider, $httpProvider, $locationProvider, ApiBaseProvider,
     ConfigServiceProvider) {
-    $urlProvider.otherwise('/');
+    'ngInject';
+    $urlRouterProvider.otherwise('/');
     $httpProvider.interceptors.push('SessionInjector');
 
     $locationProvider.html5Mode({
@@ -58,6 +54,7 @@
    * @param  {Service} $document     Document service
    */
   function run($document) {
+    'ngInject';
     FastClick.attach($document.body);
   }
 })();

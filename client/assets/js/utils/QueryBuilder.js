@@ -7,6 +7,7 @@
     .provider('QueryBuilder', QueryBuilder);
 
   function QueryBuilder() {
+    'ngInject';
     var keyValueString = function keyValueString(key, value, join) {
       return key + join + value;
     };
@@ -39,12 +40,13 @@
       }
     };
 
-    this.$get = ['$log', $get];
+    this.$get = $get;
     this.registerTransformer = registerTransformer;
     this.arrayJoinString = arrayJoinString;
     this.keyValueString = keyValueString;
 
     function $get($log){
+      'ngInject';
       return {
         registerTransformer: registerTransformer,
         keyValueString: keyValueString,
