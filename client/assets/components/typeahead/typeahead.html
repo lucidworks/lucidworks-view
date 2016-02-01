@@ -1,3 +1,10 @@
-<div>
-  <p>here will be typeahead</p>
-</div>
+<angucomplete-alt id="searchId"
+  placeholder="Search ..."
+  pause="300"
+  title-field="{{ta.typeaheadField}}"
+  selected-object="ta.selectedSomething"
+  input-name="searchQuery"
+  remote-api-handler="ta.doTypeaheadSearch"
+  minlength="1"
+  input-class=""
+  match-class="highlight" />

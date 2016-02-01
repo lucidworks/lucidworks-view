@@ -79,7 +79,7 @@
         getIfQueryProfile: getIfQueryProfile,
         getFieldLabels: getFieldLabels,
         getFieldsToDisplay: getFieldsToDisplay,
-        getTypeaheadConfig: getTypeaheadConfigurations,
+        getTypeaheadConfig: getTypeaheadConfig,
         getTypeaheadRequestHandler: getTypeaheadRequestHandler,
         getTypeaheadField: getTypeaheadField,
         getTypeaheadProfile: getTypeaheadProfile,
@@ -176,7 +176,7 @@
       return allFields[fieldType] ? allFields[fieldType] : null;
     }
 
-    function getTypeaheadConfigurations(){
+    function getTypeaheadConfig(){
       var onlyTypeAheadKeys = _.chain(appConfig).keys(appConfig).filter(function(item){
         return item.match(/^typeahead/);
       }).value();

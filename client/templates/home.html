@@ -10,10 +10,10 @@ animationOut: slideOutLeft
   <!-- Top Bar -->
   <nav class="primary title-bar">
     <span class="center">
-      <form class="show-for-medium" ng-submit="hc.search()">
-        <typeahead></typeahead>
+      <form name="searchForm" class="show-for-medium" ng-submit="hc.search()">
         <span class="inline-label" style="margin-bottom: 0;">
-          <input type="text" placeholder="Search..." autocomplete="on" ng-model="hc.searchQuery"/>
+          <typeahead form-name="searchForm" query="hc.searchQuery"></typeahead>
+          <!-- <input type="text" placeholder="Search..." autocomplete="on" ng-model="hc.searchQuery"/> -->
           <a href="#" class="success button" ng-click="hc.search()"><img
             zf-iconic=""
             icon="magnifying-glass"
