@@ -29,7 +29,8 @@
      */
 
     function fqFieldkeyValueTransformer(key, value) {
-      return QueryBuilderProvider.keyValueString(key, value, ':');
+      var escapedKey = QueryBuilderProvider.escapeSolrFieldname(key);
+      return QueryBuilderProvider.keyValueString(escapedKey, value, ':');
     }
 
     function fqFieldEncode(data){

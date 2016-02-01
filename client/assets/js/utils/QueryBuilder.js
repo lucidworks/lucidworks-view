@@ -44,6 +44,7 @@
     this.registerTransformer = registerTransformer;
     this.arrayJoinString = arrayJoinString;
     this.keyValueString = keyValueString;
+    this.escapeSpecialChars = escapeSpecialChars;
 
     function $get($log){
       'ngInject';
@@ -51,7 +52,8 @@
         registerTransformer: registerTransformer,
         keyValueString: keyValueString,
         arrayJoinString: arrayJoinString,
-        objectToURLString: objectToURLString
+        objectToURLString: objectToURLString,
+        escapeSpecialChars:escapeSpecialChars
       };
 
       /**
@@ -169,6 +171,22 @@
      */
     function registerTransformer(type, key, cb){
       QueryDataTransformers[type][key] = cb;
+    }
+
+    /**
+    * Escape special characters that are part of the query syntax of Lucene
+    *
+    * @param {String} s - string to escape
+    *
+    * @return {String}
+    * @api public
+    */
+    function escapeSpecialChars(s){
+      return s.replace(/([\+\-!\(\)\{\}\[\]\^"~\*\?:\\])/g, function(match) {
+        return '\\' + match;
+      })
+      .replace(/&&/g, '\\&\\&')
+      .replace(/\|\|/g, '\\|\\|');
     }
 
 
