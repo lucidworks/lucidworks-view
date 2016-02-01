@@ -31,7 +31,12 @@
       field_display_labels: {},
       signalType: 'click',
       signalsPipeline: '_signals_ingest',
-      facets: []
+      facets: [],
+      typeahead_use_query_profile: true,
+      typeaheadQueryPipelineIdList: ['default'],
+      typeaheadQueryProfilesIdList: ['default'],
+      typeahead_fields: ['id'],
+      typeahead_requesthandler: 'select'
     })
     /** Config overrides from FUSION_CONFIG.js **/
     .constant('CONFIG_OVERRIDE', window.appConfig) //eslint-disable-line
@@ -73,6 +78,7 @@
         getIfQueryProfile: getIfQueryProfile,
         getFieldLabels: getFieldLabels,
         getFieldsToDisplay: getFieldsToDisplay,
+        getTypeaheadConfig: getTypeaheadConfigurations,
         getFields: {
           all: getAllFields,
           get: getSpecificField
@@ -163,6 +169,33 @@
         fieldType += '_field';
       }
       return allFields[fieldType] ? allFields[fieldType] : null;
+    }
+
+    function getTypeaheadConfigurations(){
+      var onlyTypeAheadKeys = _.chain(appConfig).keys(appConfig).filter(function(item){
+        return item.match(/^typeahead/);
+      }).value();
+      return _.pick(appConfig, onlyTypeAheadKeys);
+    }
+
+    function getIfTypeaheadProfile(){
+      return appConfig.typeahead_use_query_profile;
+    }
+
+    function getTypeaheadPipeline(){
+      return appConfig.typeaheadQueryPipelineIdList[0];
+    }
+
+    function getTypeaheadProfile(){
+      return appConfig.typeaheadQueryProfileIdList[0];
+    }
+
+    function getTypeaheadRequestHandler(){
+      return appConfig.typeahead_requesthandler;
+    }
+
+    function getTypeaheadField(){
+      return appConfig.typeahead_fields[0];
     }
 
     function getFieldsToDisplay() {

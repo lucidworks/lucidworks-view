@@ -4,5 +4,6 @@ angular.module('fusionSeedApp.components', [
   'fusionSeedApp.components.facetField',
   'fusionSeedApp.components.facetList',
   'fusionSeedApp.components.login',
-  'fusionSeedApp.components.paginate'
+  'fusionSeedApp.components.paginate',
+  'fusionSeedApp.components.typeahead'
 ]);

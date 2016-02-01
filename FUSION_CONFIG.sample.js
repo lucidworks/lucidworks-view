@@ -174,22 +174,27 @@ appConfig = { //eslint-disable-line
    *
    * Typeahead or autocomplete shows you a number of suggested queries as you type in the search box.
    */
-  typeahead_retrieve_num: 5, //Number of suggestions to retrieve from any typeahead mechanisms below
+  typeahead_use_query_profile: true,
+  typeaheadQueryPipelineIdList: ['default'],
+  typeahaedQueryProfilesIdList: ['default'],
+  typeahead_fields: ['id'],
+  typeahead_requesthandler: 'select'
 
-  typeahead_terms_enabled: true, //Enable terms mechanism to do typeahead
-  field_fq_enabled: false, //When using terms mechanism, set this to true if you want to include field name when doing auto complete
-  typeahead_terms_requesthandler: 'terms',
-  typeahead_terms_fl: 'suggestions',
-
-  typeahead_suggester1_enabled: false, //Set to true if you want to enable.
-  typeahead_suggester1_dictionary: 'Suggester_name', //Please make sure this dictionary is configured in solrconfig.xml if you plan to use this suggester
-  typeahead_suggester_requesthandler: 'suggest', //Please make sure this requestHandler is configured in solrconfig.xml if you plan to use suggester
-
-  typeahead_suggester2_enabled: false, //Set to true if you want to enable.
-  typeahead_suggester2_dictionary: 'Suggester_city', //Please make sure this dictionary is configured in solrconfig.xml if you plan to use this suggester
-
-  typeahead_logs_collection_enabled: false, //Set to true if you want to enable.
-
-  typeahead_signals_collection_enabled: false //Set to true if you want to enable.
+  // typeahead_retrieve_num: 5, //Number of suggestions to retrieve from any typeahead mechanisms below
+  // typeahead_terms_enabled: true, //Enable terms mechanism to do typeahead
+  // field_fq_enabled: false, //When using terms mechanism, set this to true if you want to include field name when doing auto complete
+  // typeahead_terms_requesthandler: 'terms',
+  // typeahead_terms_fl: 'suggestions',
+  //
+  // typeahead_suggester1_enabled: false, //Set to true if you want to enable.
+  // typeahead_suggester1_dictionary: 'Suggester_name', //Please make sure this dictionary is configured in solrconfig.xml if you plan to use this suggester
+  // typeahead_suggester_requesthandler: 'suggest', //Please make sure this requestHandler is configured in solrconfig.xml if you plan to use suggester
+  //
+  // typeahead_suggester2_enabled: false, //Set to true if you want to enable.
+  // typeahead_suggester2_dictionary: 'Suggester_city', //Please make sure this dictionary is configured in solrconfig.xml if you plan to use this suggester
+  //
+  // typeahead_logs_collection_enabled: false, //Set to true if you want to enable.
+  //
+  // typeahead_signals_collection_enabled: false //Set to true if you want to enable.
 
 };

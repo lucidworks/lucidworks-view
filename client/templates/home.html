@@ -11,8 +11,9 @@ animationOut: slideOutLeft
   <nav class="primary title-bar">
     <span class="center">
       <form class="show-for-medium" ng-submit="hc.search()">
+        <typeahead></typeahead>
         <span class="inline-label" style="margin-bottom: 0;">
-          <input type="text" placeholder="Search..." ng-model="hc.searchQuery"/>
+          <input type="text" placeholder="Search..." autocomplete="on" ng-model="hc.searchQuery"/>
           <a href="#" class="success button" ng-click="hc.search()"><img
             zf-iconic=""
             icon="magnifying-glass"
@@ -57,7 +58,11 @@ animationOut: slideOutLeft
     <div class="title-bar">
       <span class="left">{{hc.numFound}} results</span>
       <span class="left">Results per page
-        <select ng-options="item.value for item in hc.resultsPerPageSelection" ng-model="hc.resultsPerPage" ng-change="hc.search()"></select>
+        <select
+          ng-options="item.value for item in hc.resultsPerPageSelection"
+          ng-model="hc.resultsPerPage"
+          ng-change="hc.search()">
+        </select>
       </span>
       <span class="right">
         <span zf-action-sheet="">

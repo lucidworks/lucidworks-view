@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  angular.module('fusionSeedApp.controllers.home', ['fusionSeedApp.services'])
+  angular.module('fusionSeedApp.controllers.home', ['fusionSeedApp.services','angucomplete-alt'])
     .controller('HomeController', HomeController);
 
   HomeController.$inject = ['$log', '$scope', 'ConfigService', 'QueryService',
