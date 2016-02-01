@@ -7,7 +7,7 @@
     ])
     .directive('login', login);
 
-  function login($log, ConfigService) {
+  function login($log) {
     'ngInject';
     return {
       controller: Controller,
