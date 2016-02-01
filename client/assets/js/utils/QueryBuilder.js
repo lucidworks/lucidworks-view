@@ -45,6 +45,7 @@
     this.arrayJoinString = arrayJoinString;
     this.keyValueString = keyValueString;
     this.escapeSpecialChars = escapeSpecialChars;
+    this.encodeURIComponentPlus = encodeURIComponentPlus;
 
     function $get($log){
       'ngInject';
@@ -53,7 +54,8 @@
         keyValueString: keyValueString,
         arrayJoinString: arrayJoinString,
         objectToURLString: objectToURLString,
-        escapeSpecialChars:escapeSpecialChars
+        escapeSpecialChars:escapeSpecialChars,
+        encodeURIComponentPlus: encodeURIComponentPlus
       };
 
       /**
@@ -179,7 +181,6 @@
     * @param {String} s - string to escape
     *
     * @return {String}
-    * @api public
     */
     function escapeSpecialChars(s){
       return s.replace(/([\+\-!\(\)\{\}\[\]\^"~\*\?:\\])/g, function(match) {
@@ -187,6 +188,15 @@
       })
       .replace(/&&/g, '\\&\\&')
       .replace(/\|\|/g, '\\|\\|');
+    }
+
+    /**
+     * Encodes a URI using plus instead of %20.
+     * @param  {string} str The string to URL component to encode
+     * @return {string}     The encoded string.
+     */
+    function encodeURIComponentPlus(str){
+      return encodeURIComponent(str).replace(/%20/g, '+');
     }
 
 
