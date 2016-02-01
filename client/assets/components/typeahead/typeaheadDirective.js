@@ -21,6 +21,11 @@
   Controller.$inject = ['$log', 'ConfigService', 'TypeaheadService'];
   function Controller($log, ConfigService, TypeaheadService){
     $log.info(ConfigService.getTypeaheadConfig());
+    TypeaheadService.getQueryResults({
+      q: '*:*'
+    }).then(function(resp){
+      $log.info(resp);
+    });
   }
 
   function Link(scope, elem){

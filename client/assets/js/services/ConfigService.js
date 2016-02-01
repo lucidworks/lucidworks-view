@@ -79,6 +79,10 @@
         getFieldLabels: getFieldLabels,
         getFieldsToDisplay: getFieldsToDisplay,
         getTypeaheadConfig: getTypeaheadConfigurations,
+        getTypeaheadRequestHandler: getTypeaheadRequestHandler,
+        getTypeaheadField: getTypeaheadField,
+        getTypeaheadProfile: getTypeaheadProfile,
+        getTypeaheadPipeline: getTypeaheadPipeline,
         getFields: {
           all: getAllFields,
           get: getSpecificField
@@ -187,7 +191,7 @@
     }
 
     function getTypeaheadProfile(){
-      return appConfig.typeaheadQueryProfileIdList[0];
+      return appConfig.typeaheadQueryProfilesIdList[0];
     }
 
     function getTypeaheadRequestHandler(){
