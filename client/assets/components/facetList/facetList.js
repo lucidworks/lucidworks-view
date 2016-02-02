@@ -21,14 +21,45 @@
 
   }
 
-  function Controller(ConfigService) {
+  function Controller(ConfigService, Orwell, $log) {
     'ngInject';
     var vm = this;
+    var resultsObservable = Orwell.getObservable('queryResults');
+    vm.facets = [];
 
     activate();
 
     function activate() {
-      vm.facets = ConfigService.config.facets;
+      resultsObservable.addObserver(function (data) {
+        // Exit early if there are no facets in the response.
+        if (!data.hasOwnProperty('facet_counts')) return;
+
+        // Iterate through each facet type.
+        _.forEach(data.facet_counts, resultFacetParse);
+
+        function resultFacetParse(resultFacets, facetType){
+          // Return early if no facets exists for type.
+          if(_.isEmpty(resultFacets)){
+            return;
+          }
+          // Keep a list of facet names and recreate facets based on changes to this list.
+          var facetFields = Object.keys(resultFacets);
+          if (!_.isEqual(vm.facetNames, facetFields)) {
+            vm.facetNames = facetFields;
+            var facets = [];
+            _.forEach(facetFields, function(value){
+              var facet = {
+                name: value,
+                type: facetType,
+                autoOpen: true,
+                label: value
+              };
+              facets.push(facet);
+            });
+            vm.facets = facets;
+          }
+        }
+      });
     }
 
   }
