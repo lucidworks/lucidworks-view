@@ -101,7 +101,7 @@
         // CASE: facet key exists in query.
         if(keyArr.length > 0) {
           var keyObj = keyArr[0];
-          var removed = _.remove(keyObj.values, facet.title);
+          var removed = _.remove(keyObj.values, function(value){return value === facet.title;});
           // CASE: value didn't previously exist add to values.
           if(removed.length === 0){
             keyObj.values.push(facet.title);
@@ -116,7 +116,6 @@
           }
         } else { // CASE: Facet key doesnt exist ADD key AND VALUE.
           query = addQueryFacet(query, key, facet.title);
-          facet.active = true;
         }
 
       }
