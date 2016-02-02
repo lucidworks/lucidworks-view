@@ -3,7 +3,7 @@
 
   angular
     .module('fusionSeedApp.components.typeahead')
-    .service('TypeaheadService', TypeaheadService);
+    .factory('TypeaheadService', TypeaheadService);
 
   TypeaheadService.$inject = ['$log', '$http', '$q', 'ConfigService', 'ApiBase', 'QueryBuilder'];
   function TypeaheadService($log, $http, $q, ConfigService, ApiBase, QueryBuilder){
