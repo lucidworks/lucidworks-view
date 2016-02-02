@@ -39,25 +39,31 @@
     function activate() {
 
       // Add observer to update data when we get results back.
-      resultsObservable.addObserver(function (data) {
-        // Exit early if there are no facets in the response.
-        if (!data.hasOwnProperty('facet_counts')) return;
+      resultsObservable.addObserver(parseFacets);
+      // initialize the facets.
+      parseFacets(resultsObservable.getContent());
+    }
 
-        // Determine if facet exists.
-        var facetFields = data.facet_counts.facet_fields;
-        if (facetFields.hasOwnProperty(vm.facetName)) {
-          // Transform an array of values in format [‘aaaa’, 1234,’bbbb’,2345] into an array of objects.
-          vm.facetCounts = arrayToObjectArray(facetFields[vm.facetName]);
-        }
+    function parseFacets(data){
+      // Exit early if there are no facets in the response.
+      if (!data.hasOwnProperty('facet_counts')) return;
 
-        // Set inital active state
-        var active = true;
-        // If we have autoOpen set active to this state.
-        if (angular.isDefined(vm.facetAutoOpen) && vm.facetAutoOpen === 'false') {
-          active = false;
-        }
-        vm.active = active;
-      });
+      // Determine if facet exists.
+      var facetFields = data.facet_counts.facet_fields;
+      $log.debug('facetFields',facetFields);
+      $log.debug('facetName',vm.facetName);
+      if (facetFields.hasOwnProperty(vm.facetName)) {
+        // Transform an array of values in format [‘aaaa’, 1234,’bbbb’,2345] into an array of objects.
+        vm.facetCounts = arrayToObjectArray(facetFields[vm.facetName]);
+      }
+
+      // Set inital active state
+      var active = true;
+      // If we have autoOpen set active to this state.
+      if (angular.isDefined(vm.facetAutoOpen) && vm.facetAutoOpen === 'false') {
+        active = false;
+      }
+      vm.active = active;
     }
 
     /**
@@ -120,6 +126,7 @@
 
       }
       // Set the query and trigger the refresh.
+      query.start = 0;
       QueryService.setQuery(query);
     }
 
