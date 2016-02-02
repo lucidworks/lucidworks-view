@@ -178,7 +178,7 @@
     /**
     * Escape special characters that are part of the query syntax of Lucene
     *
-    * @param {String} s - string to escape
+    * @param {String} s The string to escape
     *
     * @return {String}
     */
