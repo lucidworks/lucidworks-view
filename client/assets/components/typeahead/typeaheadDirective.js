@@ -5,8 +5,8 @@
     .module('fusionSeedApp.components.typeahead')
     .directive('typeahead', typeahead);
 
-  typeahead.$inject = [];
   function typeahead(){
+    'ngInject';
     return {
       restrict: 'EA',
       controller: Controller,
@@ -18,8 +18,8 @@
     };
   }
 
-  Controller.$inject = ['$log', 'ConfigService', 'TypeaheadService'];
   function Controller($log, ConfigService, TypeaheadService){
+    'ngInject';
     $log.info(ConfigService.getTypeaheadConfig());
     TypeaheadService.getQueryResults({
       q: '*:*'
