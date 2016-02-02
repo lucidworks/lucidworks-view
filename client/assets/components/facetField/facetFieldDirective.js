@@ -86,7 +86,7 @@
             title: result[result.length - 1],
             amount: value,
             hash: FoundationApi.generateUuid(),
-            active: isFacetActive(vm.facetName, value)
+            active: isFacetActive(vm.facetName, result[result.length - 1])
           };
         } else {
           result.push(value);
@@ -94,6 +94,10 @@
       });
     }
 
+    /**
+     * Toggles a facet on or off depending on it's current state.
+     * @param  {object} facet The facet object
+     */
     function toggleFacet(facet) {
       var key = vm.facetName;
       var query = QueryService.getQueryObject();
@@ -114,7 +118,7 @@
           if(removed.length === 0){
             keyObj.values.push(facet.title);
           }
-          // attach keyobject back to query if there are still values.
+          // CASE: there are still values in facet attach keyobject back to query.
           if(keyObj.values.length > 0){
             query.fq.push(keyObj);
           }
@@ -128,10 +132,21 @@
 
       }
       // Set the query and trigger the refresh.
+      updateFacetQuery(query);
+    }
+
+    function updateFacetQuery(query){
+      // Set the query and trigger the refresh.
       query.start = 0;
       QueryService.setQuery(query);
     }
 
+    /**
+     * Determine if a facet is currently active.
+     * @param  {string}  key   The key for the facet
+     * @param  {object}  value the facet
+     * @return {Boolean}       [description]
+     */
     function isFacetActive(key, value){
       var query = QueryService.getQueryObject();
       if(!query.hasOwnProperty('fq')){
@@ -141,7 +156,7 @@
       if(_.isEmpty(keyObj)){
         return false;
       }
-      if(_.isEmpty(_.find(keyObj.values, value))){
+      if(_.isEmpty(_.find(keyObj.values, function(data){return data === value;}))){
         return false;
       }
       return true;
