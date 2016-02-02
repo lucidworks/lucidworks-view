@@ -8,3 +8,27 @@
   border-right: 1px solid #e7e7e7;
   // transition-timing-function: cubic-bezier(0.76, -0.245, 0.24, 1.245);
 }
+
+.angucomplete-holder{
+  flex: 1;
+  position: relative;
+}
+
+#searchInput_dropdown {
+  position: absolute;
+  top: 50px;
+  left: 0px;
+  background: white;
+  color: black;
+  border: solid black 1px;
+  z-index: 1000;
+  text-align: left;
+
+  .angucomplete-selected-row{
+    background: gray;
+  }
+
+  .highlight {
+    color: orange;
+  }
+}

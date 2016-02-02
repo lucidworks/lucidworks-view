@@ -8,7 +8,7 @@ gulp.task('watch', function(){
   gulp.watch(['./client/assets/js/**/*', './js/**/*'], ['jslint:app','uglify:app', 'reloadBrowsers']);
 
   // Watch Directives
-  gulp.watch(['./client/assets/components/**/*'], ['uglify:app', 'copy', 'reloadBrowsers']);
+  gulp.watch(['./client/assets/components/**/*'], ['uglify:app', 'copy', 'reloadBrowsers','sass']);
 
   // Watch static files
   gulp.watch(['./client/**/*.*', '!./client/templates/**/*.*', '!./client/assets/{scss,js}/**/*.*'], ['copy', 'reloadBrowsers']);

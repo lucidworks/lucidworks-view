@@ -12,7 +12,7 @@ animationOut: slideOutLeft
     <span class="center">
       <form name="searchForm" class="show-for-medium" ng-submit="hc.search()">
         <span class="inline-label" style="margin-bottom: 0;">
-          <typeahead form-name="searchForm" query="hc.searchQuery"></typeahead>
+          <typeahead query="hc.searchQuery"></typeahead>
           <!-- <input type="text" placeholder="Search..." autocomplete="on" ng-model="hc.searchQuery"/> -->
           <a href="#" class="success button" ng-click="hc.search()"><img
             zf-iconic=""
@@ -44,7 +44,8 @@ animationOut: slideOutLeft
   <nav class="primary title-bar show-for-small-only">
     <form ng-submit="hc.search()">
       <span class="inline-label" style="margin-bottom: 0;">
-        <input type="text" placeholder="Search..." ng-model="hc.searchQuery">
+        <typeahead query="hc.searchQuery"></typeahead>
+        <!-- <input type="text" placeholder="Search..." ng-model="hc.searchQuery"> -->
         <a href="#" class="success button" ng-click="hc.search()"><img
           zf-iconic=""
           icon="magnifying-glass"

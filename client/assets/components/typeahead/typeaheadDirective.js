@@ -13,11 +13,11 @@
       link: Link,
       templateUrl: 'assets/components/typeahead/typeahead.html',
       scope: {
-        query: '=',
-        formName: '@'
+        query: '='
       },
       controllerAs: 'ta',
       bindToController: true,
+      require: '^form'
     };
   }
 
@@ -31,6 +31,7 @@
     ta.updateSearchQuery = updateSearchQuery;
 
     function selectedSomething(object){
+      $log.info(object);
       var newValue = object.originalObject[ta.typeaheadField];
       ta.query = newValue;
     }
