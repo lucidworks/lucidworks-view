@@ -123,31 +123,6 @@ appConfig = { //eslint-disable-line
    signalsDocumentId: 'id',
 
   /**
-   * Facets
-   *
-   * Allows the faceting of fields in the ui.
-   *
-   * In Fusion you can add facets to your query by adding a facet stage to your
-   * query pipeline. Once they are in a facet stage, you can display them in the
-   * ui by adding facets here in the order you want them to show up in the
-   * interface.
-   *
-   * Each facet must have:
-   * - name
-   *   This is the name of the field you facet on in the facet stage.
-   * - type
-   *   This is the type of facet.
-   *   Currently only field types are implemented in the interface.
-   * - label (optional)
-   *   A label will be displayed in place of the name in the UI.
-   * - autoOpen (optional)
-   *   autoOpen the facet in the sidebar
-   */
-  facets: [
-    {name: 'subclass', type: 'field', label:'Subclass', autoOpen:true},
-  ],
-
-  /**
    * Search within results
    *
    * This allows you to do a subquery within your results.
