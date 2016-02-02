@@ -5,6 +5,8 @@
     .module('fusionSeedApp.components.typeahead')
     .factory('TypeaheadService', TypeaheadService);
 
+  //TODO: Combine this with queryservice (refactor)
+
   function TypeaheadService($log, $http, $q, ConfigService, ApiBase, QueryBuilder){
     'ngInject';
     var endpoint = ApiBase.getEndpoint();

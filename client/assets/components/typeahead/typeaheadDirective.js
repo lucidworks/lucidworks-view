@@ -31,7 +31,6 @@
     ta.updateSearchQuery = updateSearchQuery;
 
     function selectedSomething(object){
-      $log.info(object);
       var newValue = object.originalObject[ta.typeaheadField];
       ta.query = newValue;
     }
@@ -41,8 +40,6 @@
     }
 
     function doTypeaheadSearch(userInputString, timeoutPromise) {
-      $log.info($scope.$parent[ta.formName]);
-      $log.info($scope);
       var deferred = $q.defer();
       TypeaheadService.getQueryResults({
         q: userInputString
