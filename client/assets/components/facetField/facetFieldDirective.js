@@ -96,13 +96,14 @@
       } else {
         // Remove the key object from the query.
         // We will re-add later if we need to.
-        var keyObj = _.remove(query.fq, {key: key, transformer:'fq:field'});
+        var keyArr = _.remove(query.fq, {key: key, transformer:'fq:field'});
 
         // CASE: facet key exists in query.
-        if(angular.isDefined(keyObj)) {
+        if(keyArr.length > 0) {
+          var keyObj = keyArr[0];
           var removed = _.remove(keyObj.values, facet.title);
           // CASE: value didn't previously exist add to values.
-          if(_.isEmpty(removed)){
+          if(removed.length === 0){
             keyObj.values.push(facet.title);
           }
           // attach keyobject back to query if there are still values.
@@ -147,7 +148,8 @@
         values: [title],
         transformer: 'fq:field'
       };
-      return query.fq.push(keyObj);
+      query.fq.push(keyObj);
+      return query;
     }
 
   }
