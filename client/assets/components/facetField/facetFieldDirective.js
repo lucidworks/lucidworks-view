@@ -78,7 +78,7 @@
             title: result[result.length - 1],
             amount: value,
             hash: FoundationApi.generateUuid(),
-            active: false
+            active: isFacetActive(vm.facetName, value)
           };
         } else {
           result.push(value);
@@ -88,7 +88,7 @@
 
     function toggleFacet(facet) {
       var key = vm.facetName;
-      var query = QueryService.getContent();
+      var query = QueryService.getQueryObject();
 
       // CASE: fq exists.
       if(!query.hasOwnProperty('fq')){
@@ -115,16 +115,31 @@
           }
         } else { // CASE: Facet key doesnt exist ADD key AND VALUE.
           query = addQueryFacet(query, key, facet.title);
+          facet.active = true;
         }
 
       }
       // Set the query and trigger the refresh.
       QueryService.setQuery(query);
+    }
 
+    function isFacetActive(key, value){
+      var query = QueryService.getQueryObject();
+      if(!query.hasOwnProperty('fq')){
+        return false;
+      }
+      var keyObj = _.find(query.fq, {key: key, transformer: 'fq:field'});
+      if(_.isEmpty(keyObj)){
+        return false;
+      }
+      if(_.isEmpty(_.find(keyObj.values, value))){
+        return false;
+      }
+      return true;
     }
 
     function addQueryFacet(query, key, title){
-      if(!query.hasOwnProperty(fq)){
+      if(!query.hasOwnProperty('fq')){
         query.fq = [];
       }
       var keyObj = {
