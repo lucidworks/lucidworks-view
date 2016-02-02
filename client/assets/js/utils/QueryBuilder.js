@@ -44,6 +44,8 @@
     this.registerTransformer = registerTransformer;
     this.arrayJoinString = arrayJoinString;
     this.keyValueString = keyValueString;
+    this.escapeSpecialChars = escapeSpecialChars;
+    this.encodeURIComponentPlus = encodeURIComponentPlus;
 
     function $get($log){
       'ngInject';
@@ -51,7 +53,9 @@
         registerTransformer: registerTransformer,
         keyValueString: keyValueString,
         arrayJoinString: arrayJoinString,
-        objectToURLString: objectToURLString
+        objectToURLString: objectToURLString,
+        escapeSpecialChars:escapeSpecialChars,
+        encodeURIComponentPlus: encodeURIComponentPlus
       };
 
       /**
@@ -169,6 +173,30 @@
      */
     function registerTransformer(type, key, cb){
       QueryDataTransformers[type][key] = cb;
+    }
+
+    /**
+    * Escape special characters that are part of the query syntax of Lucene
+    *
+    * @param {String} s - string to escape
+    *
+    * @return {String}
+    */
+    function escapeSpecialChars(s){
+      return s.replace(/([\+\-!\(\)\{\}\[\]\^"~\*\?:\\])/g, function(match) {
+        return '\\' + match;
+      })
+      .replace(/&&/g, '\\&\\&')
+      .replace(/\|\|/g, '\\|\\|');
+    }
+
+    /**
+     * Encodes a URI using plus instead of %20.
+     * @param  {string} str The string to URL component to encode
+     * @return {string}     The encoded string.
+     */
+    function encodeURIComponentPlus(str){
+      return encodeURIComponent(str).replace(/%20/g, '+');
     }
 
 
