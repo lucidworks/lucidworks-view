@@ -12,17 +12,12 @@
     return {
       restrict: 'EA',
       templateUrl: 'assets/components/documentList/documentList.html',
-      link: linkFunc,
       controller: Controller,
       controllerAs: 'vm',
       bindToController: true,
       scope: true,
       replace: true
     };
-
-    function linkFunc(scope, el, attr, ctrl){
-
-    }
 
   }
 
