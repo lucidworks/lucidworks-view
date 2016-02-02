@@ -26,6 +26,7 @@
     var vm = this;
     var resultsObservable = Orwell.getObservable('queryResults');
     vm.facets = [];
+    vm.facetNames = {};
 
     activate();
 
