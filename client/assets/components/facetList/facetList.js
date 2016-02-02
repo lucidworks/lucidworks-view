@@ -44,8 +44,8 @@
           }
           // Keep a list of facet names and recreate facets based on changes to this list.
           var facetFields = Object.keys(resultFacets);
-          if (!_.isEqual(vm.facetNames, facetFields)) {
-            vm.facetNames = facetFields;
+          if (!_.isEqual(vm.facetNames[facetType], facetFields)) {
+            vm.facetNames[facetType] = facetFields;
             var facets = [];
             _.forEach(facetFields, function(value){
               var facet = {
