@@ -23,7 +23,6 @@
     };
 
     var QueryDataTransformers = {
-      encode: {},
       keyValue: {
         'default': function(key, value){return keyValueString(key, value, '=');}
       },
@@ -34,6 +33,7 @@
         'default': function(str, values){return arrayJoinString(str, values, '');}
       },
       preEncodeWrapper: {},
+      encode: {},
       wrapper: {
         'scope': function(data){return '('+data+')';},
         'default': function(data){return data;}
@@ -48,7 +48,7 @@
     this.encodeURIComponentPlus = encodeURIComponentPlus;
 
     function $get($log){
-      'ngInject';
+      'ngInject';//eslint-disable-line
       return {
         registerTransformer: registerTransformer,
         keyValueString: keyValueString,
