@@ -28,10 +28,15 @@
     ta.typeaheadField = ConfigService.getTypeaheadField();
     ta.doTypeaheadSearch = doTypeaheadSearch;
     ta.selectedSomething = selectedSomething;
+    ta.updateSearchQuery = updateSearchQuery;
 
     function selectedSomething(object){
       var newValue = object.originalObject[ta.typeaheadField];
       ta.query = newValue;
+    }
+
+    function updateSearchQuery(inputString){
+      ta.query = inputString;
     }
 
     function doTypeaheadSearch(userInputString, timeoutPromise) {
