@@ -44,14 +44,16 @@
       parseFacets(resultsObservable.getContent());
     }
 
+    /**
+     * Parses the facets from an observable into an array of facets.
+     * @param  {object} data The data from the observable.
+     */
     function parseFacets(data){
       // Exit early if there are no facets in the response.
       if (!data.hasOwnProperty('facet_counts')) return;
 
       // Determine if facet exists.
       var facetFields = data.facet_counts.facet_fields;
-      $log.debug('facetFields',facetFields);
-      $log.debug('facetName',vm.facetName);
       if (facetFields.hasOwnProperty(vm.facetName)) {
         // Transform an array of values in format [‘aaaa’, 1234,’bbbb’,2345] into an array of objects.
         vm.facetCounts = arrayToObjectArray(facetFields[vm.facetName]);
