@@ -111,7 +111,7 @@
             query.fq.push(keyObj);
           }
           // Delete 'fq' if it is now empty.
-          if(query.fq.length < 0){
+          if(query.fq.length === 0){
             delete query.fq;
           }
         } else { // CASE: Facet key doesnt exist ADD key AND VALUE.
