@@ -18,8 +18,8 @@
     QueryBuilderProvider.registerTransformer('wrapper', 'fq:field', fqFieldWrapper);
 
     // TODO implement transformer for localParens
-    // QueryBuilderProvider.registerTransformer('join', 'localParens', localParenJoinTransformer);
-    // QueryBuilderProvider.registerTransformer('wrapper', 'localParens', localParenWrapperTransformer);
+    QueryBuilderProvider.registerTransformer('join', 'localParens', localParenJoinTransformer);
+    QueryBuilderProvider.registerTransformer('wrapper', 'localParens', localParenWrapperTransformer);
 
     /**
      * Transformers.
@@ -44,13 +44,13 @@
       return '('+data+')';
     }
 
-    // function localParenJoinTransformer(str, values) {
-    //   return QueryBuilderProvider.arrayJoinString(str, values, ' ');
-    // }
-    //
-    // function localParenWrapperTransformer(data) {
-    //   return '{!' + data + '}';
-    // }
+    function localParenJoinTransformer(str, values) {
+      return QueryBuilderProvider.arrayJoinString(str, values, ' ');
+    }
+
+    function localParenWrapperTransformer(data) {
+      return '{!' + data + '}';
+    }
   }
 
 })();
