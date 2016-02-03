@@ -21,6 +21,10 @@ appConfig = { //eslint-disable-line
   // If allow AllowAnonymousAccess is set to true the authorizationHeader field must also be set.
   // The text after 'Basic' is a base64 encoded username and password
   // in the format of admin:password123.
+  anonymous_access: {
+      username: 'anonymous_search',
+      password: 'password123'
+  },
   authorizationHeader: {
     'Authorization': 'Basic YWRtaW46cGFzc3dvcmQxMjM='
     // WARNING: using this default setting in a production app is not recommended.
@@ -32,16 +36,10 @@ appConfig = { //eslint-disable-line
   // The name of your collection
   collection: 'MyCollection',
 
-  // Please specify a list of the pipeline(s)/profile(s) that you want to leverage with this UI.
-  // 1st pipeline will be default,
-  // 2nd pipeline could be signal-enabled.
-  queryPipelineIdList: ['default','not-default'],
+  // Please specify a pipeline or profile that you want to leverage with this UI.
+  queryPipelineIdList: ['default'],
   queryProfilesIdList: ['default'],
-  use_query_profile: true,
-  // Force use of query-profile
-
-  // Specify any additional query params you want to include as part of your search query,
-  // addl_params: '',
+  use_query_profile: true, // Force use of query-profile
 
   // Search UI Title
   // This title appears in a number of places in the app, including page title, and header.
@@ -65,10 +63,6 @@ appConfig = { //eslint-disable-line
   image_field: 'image',
   //In doc page, display a image with each doc
   image_enabled: true,
-
-  // NOT IMPLEMENTED IN CURRENT UI
-  // geo_field: 'coord', // Specify a location field here if you want to enable geospatial search.  Specify EMPTY value if your collection DOES NOT have geospatial data
-  // distance: '10', // Default distance value in km for geospatial search
 
   // ADDING ADDITIONAL FIELDS TO DOCUMENTS
   //
@@ -104,30 +98,19 @@ appConfig = { //eslint-disable-line
     // you can add as many lines of labels as you want
   },
 
-  // IMPORTANT: Make sure this fl list contains id and any fields you set for head_field/head_url_field/image_field
-  // List of fields to retrieve when querying Fusion.
-  fl: ['title','amenity','cuisine','city','street','description','id','coord','likes','last_modified_date'],
-
   /**
    * Signals
    *
    * Allow the collection of data regaurding search results. The most typical use
    * case is to track click signals for a collection.
    */
-   // Signal type for title click.
-   signalType: 'click',
-   // This specifies the index pipeline that will be used to submit signals.
-   signalsPipeline: '_signals_ingest', // '_signals_ingest' is the fusion default.
-   // Should be a unique field per document in your collection.
-   // used by signals as a reference to the main collection.
-   signalsDocumentId: 'id',
-
-  /**
-   * Search within results
-   *
-   * This allows you to do a subquery within your results.
-   */
-  search_within_results_enabled: false, //Set to true if you want search with results enabled
+  // Signal type for title click.
+  signalType: 'click',
+  // This specifies the index pipeline that will be used to submit signals.
+  signalsPipeline: '_signals_ingest', // '_signals_ingest' is the fusion default.
+  // Should be a unique field per document in your collection.
+  // used by signals as a reference to the main collection.
+  signalsDocumentId: 'id',
 
   /**
    * Spellcheck
@@ -147,29 +130,13 @@ appConfig = { //eslint-disable-line
   /**
    * Typeahead
    *
-   * Typeahead or autocomplete shows you a number of suggested queries as you type in the search box.
+   * Typeahead or autocomplete shows you a number of suggested queries as you
+   * type in the search box.
    */
   typeahead_use_query_profile: true,
   typeaheadQueryPipelineIdList: ['default'],
   typeahaedQueryProfilesIdList: ['default'],
   typeahead_fields: ['id'],
   typeahead_requesthandler: 'select'
-
-  // typeahead_retrieve_num: 5, //Number of suggestions to retrieve from any typeahead mechanisms below
-  // typeahead_terms_enabled: true, //Enable terms mechanism to do typeahead
-  // field_fq_enabled: false, //When using terms mechanism, set this to true if you want to include field name when doing auto complete
-  // typeahead_terms_requesthandler: 'terms',
-  // typeahead_terms_fl: 'suggestions',
-  //
-  // typeahead_suggester1_enabled: false, //Set to true if you want to enable.
-  // typeahead_suggester1_dictionary: 'Suggester_name', //Please make sure this dictionary is configured in solrconfig.xml if you plan to use this suggester
-  // typeahead_suggester_requesthandler: 'suggest', //Please make sure this requestHandler is configured in solrconfig.xml if you plan to use suggester
-  //
-  // typeahead_suggester2_enabled: false, //Set to true if you want to enable.
-  // typeahead_suggester2_dictionary: 'Suggester_city', //Please make sure this dictionary is configured in solrconfig.xml if you plan to use this suggester
-  //
-  // typeahead_logs_collection_enabled: false, //Set to true if you want to enable.
-  //
-  // typeahead_signals_collection_enabled: false //Set to true if you want to enable.
 
 };
