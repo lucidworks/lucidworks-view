@@ -21,7 +21,7 @@
 
   }
 
-  function Controller(ConfigService, Orwell, $log) {
+  function Controller(ConfigService, Orwell) {
     'ngInject';
     var vm = this;
     var resultsObservable = Orwell.getObservable('queryResults');
