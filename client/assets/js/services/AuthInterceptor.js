@@ -31,9 +31,12 @@
     function responseError(resp) {
       var deferred = $q.defer();
       var $state = $injector.get('$state');
-      if (!$state.is('login') && (resp.status === 401 || resp.status === 403)) {
+      if (!$state.is('login') && (resp.status === 401)) {
         deferred.reject(resp);
         $state.go('login');
+      } else if(resp.status === 403){
+        // TODO handle unauthorized users.
+        $log.warn('You are unauthorized to access that endpoint');
       }
 
       return deferred.promise;
