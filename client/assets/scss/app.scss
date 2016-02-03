@@ -9,26 +9,34 @@
   // transition-timing-function: cubic-bezier(0.76, -0.245, 0.24, 1.245);
 }
 
-.angucomplete-holder{
+//TODO: This should be in typeahead.scss
+typeahead{
   flex: 1;
-  position: relative;
-}
 
-#searchInput_dropdown {
-  position: absolute;
-  top: 50px;
-  left: 0px;
-  background: white;
-  color: black;
-  border: solid black 1px;
-  z-index: 1000;
-  text-align: left;
-
-  .angucomplete-selected-row{
-    background: gray;
+  #searchInput_value{
+    margin-bottom: 0px;
   }
 
-  .highlight {
-    color: orange;
+  .angucomplete-holder{
+    position: relative;
+  }
+
+  #searchInput_dropdown {
+    position: absolute;
+    top: 45px;
+    left: 0px;
+    background: white;
+    color: black;
+    border: solid black 1px;
+    z-index: 1000;
+    text-align: left;
+
+    .angucomplete-selected-row{
+      background: gray;
+    }
+
+    .highlight {
+      color: orange;
+    }
   }
 }

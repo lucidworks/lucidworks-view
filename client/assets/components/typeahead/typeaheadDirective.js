@@ -31,8 +31,10 @@
     ta.updateSearchQuery = updateSearchQuery;
 
     function selectedSomething(object){
-      var newValue = object.originalObject[ta.typeaheadField];
-      ta.query = newValue;
+      if(object){
+        var newValue = object.originalObject[ta.typeaheadField];
+        ta.query = newValue;
+      }
     }
 
     function updateSearchQuery(inputString){
