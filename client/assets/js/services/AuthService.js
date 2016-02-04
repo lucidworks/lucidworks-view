@@ -27,7 +27,7 @@
         .post(ApiBase.getEndpoint() + 'api/session?realmName=' + realmName, {
           username: username,
           password: password
-        }, {withCredentials: false})
+        })
         .then(function (resp) {
           deferred.resolve(resp);
         }, function (err) {
