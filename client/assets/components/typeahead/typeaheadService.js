@@ -8,13 +8,8 @@
 
   //TODO: Combine this with queryservice (refactor)
 
-  function TypeaheadService($log, $http, $q, ConfigService, ApiBase, QueryBuilder){
+  function TypeaheadService($log, $http, $q, ConfigService, ApiBase, QueryBuilder, QueryDataService){
     'ngInject';
-    var endpoint = ApiBase.getEndpoint();
-    var collectionName = ConfigService.getCollectionName();
-    var requestHandler = ConfigService.getTypeaheadRequestHandler();
-    var profile = ConfigService.getTypeaheadProfile();
-    var pipeline = ConfigService.getTypeaheadPipeline();
 
     return {
       getQueryResults: getQueryResults
@@ -24,7 +19,9 @@
 
     function getQueryResults(query){
       var deferred = $q.defer();
+
       var queryString = QueryBuilder.objectToURLString(_.assign(query,{wt:'json'}));
+
       var fullUrl = getQueryUrl(ConfigService.getIfQueryProfile()) + '?' + queryString;
 
       $http
@@ -33,7 +30,6 @@
         .catch(failure);
 
       function success(response) {
-        // Set the content to populate the rest of the ui.
         deferred.resolve(response.data);
       }
 
@@ -48,19 +44,11 @@
      * Private function
      */
     function getQueryUrl(isProfile){
-      var profileUrl = endpoint +
-        'api/apollo/collections/' +
-        collectionName +
-        '/query-profiles/' +
-        profile + '/' +
-        requestHandler;
+      var requestHandler = ConfigService.getTypeaheadRequestHandler();
 
-      var pipelineUrl = endpoint +
-        'api/apollo/query-pipelines/' +
-        pipeline +
-        '/collection/' +
-        collectionName + '/' +
-        requestHandler;
+      var profileUrl = QueryDataService.getProfileEndpoint(ConfigService.getTypeaheadProfile(), requestHandler);
+
+      var pipelineUrl = QueryDataService.getPipelineEndpoint(ConfigService.getTypeaheadPipeline(), requestHandler);
 
       return isProfile?profileUrl:pipelineUrl;
     }

@@ -1,5 +1,6 @@
 (function () {
-  angular.module('fusionSeedApp.services.queryData', [
+  angular
+    .module('fusionSeedApp.services.queryData', [
       'fusionSeedApp.services.config',
       'fusionSeedApp.services.apiBase',
       'fusionSeedApp.utils.queryBuilder'
@@ -24,7 +25,9 @@
       'ngInject';
       var queryResultsObservable = Orwell.getObservable('queryResults');
       return {
-        getQueryResults: getQueryResults
+        getQueryResults: getQueryResults,
+        getProfileEndpoint: getProfileEndpoint,
+        getPipelineEndpoint: getPipelineEndpoint
       };
 
       /**
@@ -66,21 +69,22 @@
        * @return {string}             The URL endpoint for the query without parameters.
        */
       function getQueryUrl(isProfiles) {
-        var profilesEndpoint = ApiBase.getEndpoint() +
-          'api/apollo/collections/' +
-          ConfigService.getCollectionName() +
-          '/query-profiles/' +
-          ConfigService.getQueryProfile() +
-          '/select';
-
-        var pipelinesEndpoint = ApiBase.getEndpoint() +
-          'api/apollo/query-pipelines/' +
-          ConfigService.getQueryPipeline() +
-          '/collection/' +
-          ConfigService.getCollectionName() +
-          '/select';
+        var profilesEndpoint = getProfileEndpoint(ConfigService.getQueryProfile(), 'select');
+        var pipelinesEndpoint = getPipelineEndpoint(ConfigService.getQueryPipeline(), 'select');
 
         return isProfiles ? profilesEndpoint : pipelinesEndpoint;
+      }
+
+      function getProfileEndpoint(profile, requestHandler){
+        return ApiBase.getEndpoint() + 'api/apollo/collections/' +
+          ConfigService.getCollectionName() + '/query-profiles/' +
+          profile + '/' + requestHandler;
+      }
+
+      function getPipelineEndpoint(pipeline, requestHandler){
+        return ApiBase.getEndpoint() + 'api/apollo/query-pipelines/' +
+          pipeline + '/collection/' + ConfigService.getCollectionName() +
+          '/' + requestHandler;
       }
 
     }
