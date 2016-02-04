@@ -8,20 +8,6 @@
 
   function QueryBuilder() {
     'ngInject';
-    var keyValueString = function keyValueString(key, value, join) {
-      return key + join + value;
-    };
-
-    var arrayJoinString = function arrayJoinString(str, arr, join) {
-      if(angular.isString(arr)){
-        return str + join + arr;
-      }
-      return _.reduce(arr, arrayJoinStringReducer, str);
-      function arrayJoinStringReducer(str, value){
-        return str + ((str!=='')?join:'') + value;
-      }
-    };
-
     var QueryDataTransformers = {
       keyValue: {
         'default': function(key, value){return keyValueString(key, value, '=');}
@@ -66,21 +52,28 @@
       function objectToURLString(obj){
         return _.reduce(obj, reducer, '');
 
+        /**
+         * Simple reducer only handles top level url concatenation.
+         * @param  {String} str   String with which to concatenate onto.
+         * @param  {array|String} value The value of this object property
+         * @param  {String} key   key of the property.
+         * @return {String}       A concatenated query string.
+         */
         function reducer(str, value, key) {
           var parameters;
           var ret;
           // get important values;
-          var keyValue = QueryDataTransformers.keyValue.hasOwnProperty(key) ? QueryDataTransformers.keyValue[key] : QueryDataTransformers.keyValue.default;
-          var join = QueryDataTransformers.join.hasOwnProperty(key) ? QueryDataTransformers.join[key] : QueryDataTransformers.join.default;
-          var encode = QueryDataTransformers.encode.hasOwnProperty(key) ? QueryDataTransformers.encode[key] : false;
-          var preEncodeWrapper = QueryDataTransformers.preEncodeWrapper.hasOwnProperty(key) ? QueryDataTransformers.preEncodeWrapper[key] : false;
-          var wrapper = QueryDataTransformers.wrapper.hasOwnProperty(key) ? QueryDataTransformers.wrapper[key] : false;
+          var keyValue = getTransformerFn('keyValue', key, QueryDataTransformers.keyValue.default);
+          var preEncodeWrapper = getTransformerFn('preEncodeWrapper', key, false);
+          var encode = getTransformerFn('encode', key, false);
+          var wrapper = getTransformerFn('wrapper', key, false);
+          var join = getTransformerFn('join', key, QueryDataTransformers.join.default);
 
           var wrappedValue = value;
 
           // If this is an array join all the properties.
           if(angular.isArray(value)){
-            parameters = arrayReducer(key, value, keyValue, join, preEncodeWrapper, encode, wrapper, 0);
+            parameters = arrayReducer(key, value, keyValue, preEncodeWrapper, encode, wrapper, join, 0);
           } else {
             if(preEncodeWrapper){
               wrappedValue = preEncodeWrapper(wrappedValue);
@@ -107,7 +100,24 @@
         }
       }
 
-      function arrayReducer(key, values, keyValue, join, preEncodeWrapper, encode, wrapper, level){
+      /**
+       * Reduces an array into a string.
+       * @param  {string}         key              key in a key value pair.
+       * @param  {array}          values           An array of values.
+       * @param  {Function}       keyValue         The key value function for this
+       *                                           array.
+       * @param  {Function|false} preEncodeWrapper The preEncodeWrapper function for
+       *                                           this array.
+       * @param  {Function|false} encode           The encode function for this
+       *                                           array.
+       * @param  {Function|false} wrapper          The wrapper function for this
+       *                                           array.
+       * @param  {Function}       join             The join function for this array.
+       * @param  {integer}        level            The level of recurion in the
+       *                                           tree.
+       * @return {string}                  A reduced string from the array.
+       */
+      function arrayReducer(key, values, keyValue, preEncodeWrapper, encode, wrapper, join, level){
         return _.reduce(values, arrayReducerFunc, '');
         function arrayReducerFunc(str, value){
           var newVal = value;
@@ -133,21 +143,39 @@
           return str;
         }
       }
+
+      /**
+       * Given an object parses the keys and values and reduces the values into a string.
+       * @param  {object} obj   The object to parse.
+       * @param  {integer} level How far are we into the tree.
+       * @return {string}       The reduced string.
+       */
       function parseKeyValueStore(obj, level){
         var keyValue =  QueryDataTransformers.keyValue.default;
-        var join = QueryDataTransformers.join.default;
+        var preEncodeWrapper = false;
         var encode = false;
         var wrapper = false;
-        var preEncodeWrapper = false;
+        var join = QueryDataTransformers.join.default;
         if(obj.hasOwnProperty('transformer')){
-          keyValue = QueryDataTransformers.keyValue.hasOwnProperty(obj.transformer) ? QueryDataTransformers.keyValue[obj.transformer] : QueryDataTransformers.keyValue.default;
-          join = QueryDataTransformers.join.hasOwnProperty(obj.transformer) ? QueryDataTransformers.join[obj.transformer] : QueryDataTransformers.join.default;
-          encode = QueryDataTransformers.encode.hasOwnProperty(obj.transformer) ? QueryDataTransformers.encode[obj.transformer] : false;
-          preEncodeWrapper = QueryDataTransformers.preEncodeWrapper.hasOwnProperty(obj.transformer) ? QueryDataTransformers.preEncodeWrapper[obj.transformer] : false;
-          wrapper = QueryDataTransformers.wrapper.hasOwnProperty(obj.transformer) ? QueryDataTransformers.wrapper[obj.transformer] : false;
+          keyValue = getTransformerFn('keyValue', obj.transformer, QueryDataTransformers.keyValue.default);
+          preEncodeWrapper = getTransformerFn('preEncodeWrapper', obj.transformer, false);
+          encode = getTransformerFn('encode', obj.transformer, false);
+          wrapper = getTransformerFn('wrapper', obj.transformer, false);
+          join = getTransformerFn('join', obj.transformer, QueryDataTransformers.join.default);
         }
-        return arrayReducer(obj.key, obj.values, keyValue, join, preEncodeWrapper, encode, wrapper, level);
+        return arrayReducer(obj.key, obj.values, keyValue, preEncodeWrapper, encode, wrapper, join, level);
       }
+    }
+
+    /**
+     * Simple function to determine which transformer to return.
+     * @param  {string} type                       The type of transformer.
+     * @param  {string} key                        The key of the transformer.
+     * @param  {function|false} defaultTransformer The default transformer function
+     * @return {function}                          The transformer function.
+     */
+    function getTransformerFn(type, key, defaultTransformer){
+      return QueryDataTransformers[type].hasOwnProperty(key) ? QueryDataTransformers[type][key] : defaultTransformer;
     }
 
     /**
@@ -192,11 +220,46 @@
 
     /**
      * Encodes a URI using plus instead of %20.
+     *
      * @param  {string} str The string to URL component to encode
+     *
      * @return {string}     The encoded string.
+     * @public
      */
     function encodeURIComponentPlus(str){
       return encodeURIComponent(str).replace(/%20/g, '+');
+    }
+
+    /**
+     * A helper function to consitantly concatanate a key, value, and join.
+     *
+     * @param  {String} key   Key to concatanate
+     * @param  {String} value Value to concatanate
+     * @param  {String} join  string to join the key and the value (ex. =).
+     *
+     * @return {String}       The joined string.
+     * @public
+     */
+    function keyValueString(key, value, join) {
+      return key + join + value;
+    }
+
+    /**
+     * Concatanates an array of strings to a string using joins.
+     * @param  {string} str  The initial string to start with.
+     * @param  {Array}  arr  The array to concatenate with joins
+     * @param  {string} join The string to join the array and strings together
+     * @return {string}      The concatenated string.
+     * @public
+     */
+    function arrayJoinString(str, arr, join) {
+      if(angular.isString(arr)){
+        return str + join + arr;
+      }
+      return _.reduce(arr, arrayJoinStringReducer, str);
+      function arrayJoinStringReducer(str, value){
+        return str + ((str!=='')?join:'') + value;
+      }
     }
 
 
