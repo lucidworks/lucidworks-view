@@ -45,15 +45,17 @@
         $log.warn('You are unauthorized to access that endpoint');
       }
 
-      function useAnonCreds(ConfigService){
-       'ngInject';//eslint-disable-line
-       
-        return (ConfigService.config.anonymous_access.username === '' ||
-          ConfigService.config.anonymous_access.password === '');
+      function useAnonCreds(){
+        var ConfigService = $injector.get('ConfigService'),
+        anonAccess = ConfigService.config.anonymous_access;
+
+        return !(anonAccess.username === '' || anonAccess.password === '');
       }
 
-      function getAnonSession(ConfigService, AuthService, QueryService){
-        'ngInject';//eslint-disable-line
+      function getAnonSession(){
+        var ConfigService = $injector.get('ConfigService'),
+          AuthService = $injector.get('AuthService'),
+          QueryService = $injector.get('QueryService');
 
         tryingAnon = true;
         AuthService.createSession(ConfigService.config.anonymous_access.username, ConfigService.config.anonymous_access.password)
