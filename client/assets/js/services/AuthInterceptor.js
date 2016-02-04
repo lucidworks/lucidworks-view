@@ -35,6 +35,7 @@
       if (!$state.is('login') && (resp.status === 401)) {
         if(useAnonCreds && !tryingAnon) {
           getAnonSession();
+          deferred.reject(resp);
         } else {
           deferred.reject(resp);
           $state.go('login');
@@ -44,16 +45,15 @@
         $log.warn('You are unauthorized to access that endpoint');
       }
 
-      function useAnonCreds(){
-        var ConfigService = $injector.get('ConfigService');
+      function useAnonCreds(ConfigService){
+       'ngInject';//eslint-disable-line
+       
         return (ConfigService.config.anonymous_access.username === '' ||
           ConfigService.config.anonymous_access.password === '');
       }
 
-      function getAnonSession(){
-        var ConfigService = $injector.get('ConfigService'),
-          AuthService = $injector.get('AuthService'),
-          QueryService = $injector.get('QueryService');
+      function getAnonSession(ConfigService, AuthService, QueryService){
+        'ngInject';//eslint-disable-line
 
         tryingAnon = true;
         AuthService.createSession(ConfigService.config.anonymous_access.username, ConfigService.config.anonymous_access.password)
