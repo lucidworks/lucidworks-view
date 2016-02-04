@@ -20,11 +20,6 @@
       hc.search = doSearch;
       hc.lastQuery = '*:*';
       hc.logout = logout;
-      //Only to make the default value work, as Angular tracks by Object
-      hc.resultsPerPageSelection = _.map([10,20,50,100],function(item){
-        return {value: item};
-      });
-      hc.resultsPerPage = hc.resultsPerPageSelection[0]; //Setting the default
 
       resultsObservable = Orwell.getObservable('queryResults');
       resultsObservable.addObserver(function(data) {
