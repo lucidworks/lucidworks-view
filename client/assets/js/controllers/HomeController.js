@@ -22,6 +22,7 @@
       hc.lastQuery = '*:*';
       hc.logout = logout;
 
+      // Use an observable to get the contents of a queryResults after it is updated.
       resultsObservable = Orwell.getObservable('queryResults');
       resultsObservable.addObserver(function(data) {
         if (data.hasOwnProperty('response')) {
@@ -33,18 +34,23 @@
       });
     }
 
+    /**
+     * Initializes a new search.
+     */
     function doSearch() {
       $log.info('Searching...');
       var queryObject = {
         q: hc.searchQuery,
         start: 0,
-        rows: hc.resultsPerPage.value
       };
 
       QueryService
         .setQuery(queryObject);
     }
 
+    /**
+     * Logs a user out of a session.
+     */
     function logout(){
       AuthService.destroySession();
     }

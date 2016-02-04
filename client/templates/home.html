@@ -61,14 +61,6 @@ animationOut: slideOutLeft
       <span class="left">
         <div class="row">
           <div class="small-2 columns">{{hc.numFound}} results</div>
-          <div class="small-3">
-            Results per page
-              <select
-                ng-options="item.value for item in hc.resultsPerPageSelection"
-                ng-model="hc.resultsPerPage"
-                ng-change="hc.search()">
-              </select>
-          </div>
         </div>
       </span>
       <span class="right">
