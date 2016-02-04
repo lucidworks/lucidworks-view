@@ -1,3 +1,4 @@
+/*global _*/
 (function() {
   'use strict';
   angular.module('fusionSeedApp.controllers.home', ['fusionSeedApp.services','angucomplete-alt'])
