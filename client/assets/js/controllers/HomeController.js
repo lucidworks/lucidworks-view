@@ -4,7 +4,7 @@
     .controller('HomeController', HomeController);
 
 
-  function HomeController($log, $scope, ConfigService, QueryService, Orwell) {
+  function HomeController($log, $scope, ConfigService, QueryService, Orwell, AuthService) {
     'ngInject';
     var hc = this; //eslint-disable-line
     var resultsObservable;
@@ -12,11 +12,13 @@
     activate();
     doSearch();
 
+    ////////////////
 
     function activate() {
       hc.searchQuery = '*:*';
       hc.search = doSearch;
       hc.lastQuery = '*:*';
+      hc.logout = logout;
       //Only to make the default value work, as Angular tracks by Object
       hc.resultsPerPageSelection = _.map([10,20,50,100],function(item){
         return {value: item};
@@ -44,6 +46,10 @@
 
       QueryService
         .setQuery(queryObject);
+    }
+
+    function logout(){
+      AuthService.destroySession();
     }
   }
 })();

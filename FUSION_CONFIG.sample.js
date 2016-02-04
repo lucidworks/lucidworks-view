@@ -16,15 +16,12 @@ appConfig = { //eslint-disable-line
    */
   connectionRealm: 'native',
 
-  // Allow anyone to use this search app without logging in.
-  AllowAnonymousAccess: true,
-  // If allow AllowAnonymousAccess is set to true the authorizationHeader field must also be set.
-  // The text after 'Basic' is a base64 encoded username and password
-  // in the format of admin:password123.
-  authorizationHeader: {
-    'Authorization': 'Basic YWRtaW46cGFzc3dvcmQxMjM='
-    // WARNING: using this default setting in a production app is not recommended.
+  // To allow anonymous access add a valid username and password here.
+  anonymous_access: {
+    username: '',
+    password: ''
   },
+
   // In order to get your own auth header with username password please run
   // gulp setupAuthHeader --username <username> --password <password> --realm <realm name> --hostname <hostname or IP, port optional>
   // Defaults: username=admin, password=password123, realm=native, hostname=localhost:8764
