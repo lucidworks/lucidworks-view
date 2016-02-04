@@ -11,6 +11,7 @@
     var resultsObservable;
 
     activate();
+    // initializes a search.
     doSearch();
 
     ////////////////
