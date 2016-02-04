@@ -47,7 +47,9 @@
 
       TypeaheadService
         .getQueryResults({
-          q: userInputString
+          q: userInputString,
+          // make sure results are json.
+          wt: 'json'
         })
         .then(function(resp){
           var objectToResolve = {
