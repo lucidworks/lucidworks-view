@@ -10,7 +10,6 @@
     return {
       restrict: 'EA',
       controller: Controller,
-      link: Link,
       templateUrl: 'assets/components/typeahead/typeahead.html',
       scope: true,
       controllerAs: 'ta',
@@ -45,23 +44,25 @@
 
     function doTypeaheadSearch(userInputString, timeoutPromise) {
       var deferred = $q.defer();
-      TypeaheadService.getQueryResults({
-        q: userInputString
-      }).then(function(resp){
-        var objectToResolve = {
-          data: resp.response.docs
-        };
-        deferred.resolve(objectToResolve);
-      }).catch(function(error){
-        timeoutPromise.reject(error);
-      });
+
+      TypeaheadService
+        .getQueryResults({
+          q: userInputString
+        })
+        .then(function(resp){
+          var objectToResolve = {
+            data: resp.response.docs
+          };
+          deferred.resolve(objectToResolve);
+        })
+        .catch(function(error){
+          timeoutPromise.reject(error);
+        });
+
       return deferred.promise;
     }
 
 
   }
 
-  function Link(scope, elem){
-
-  }
 })();
