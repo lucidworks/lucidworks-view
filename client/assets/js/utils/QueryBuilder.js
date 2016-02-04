@@ -8,6 +8,7 @@
 
   function QueryBuilder() {
     'ngInject';
+    /** @type object QueryTransformer defaults */
     var QueryDataTransformers = {
       keyValue: {
         'default': function(key, value){return keyValueString(key, value, '=');}
@@ -48,7 +49,9 @@
     /**
      * Turns an Object into a URL String
      * @param {object} obj The query object to turn into a string
-     * @return {string}
+     *
+     * @return {string}    The query string.
+     * @public
      */
     function objectToURLString(obj){
       return _.reduce(obj, outerReducer, '');
@@ -74,6 +77,7 @@
      * @param  {string}   key  The key of the transformer
      *                         EX: 'fq:field'
      * @param  {Function} cb   The callback function.
+     * @public
      */
     function registerTransformer(type, key, cb){
       QueryDataTransformers[type][key] = cb;
@@ -85,6 +89,7 @@
     * @param {String} s The string to escape
     *
     * @return {String}
+    * @public
     */
     function escapeSpecialChars(s){
       return s.replace(/([\+\-!\(\)\{\}\[\]\^"~\*\?:\\])/g, function(match) {
@@ -138,9 +143,9 @@
       }
     }
 
-    /////////////////////////
-    /// Internal functions //
-    /////////////////////////
+    //////////////////////////
+    /// Internal functions ///
+    //////////////////////////
 
     /**
      * Simple reducer only handles top level url concatenation.
@@ -152,7 +157,7 @@
     function outerReducer(str, value, key) {
       var parameters;
       var ret;
-      // get important values;
+      // get transformer functions;
       var keyValue = getTransformerFn('keyValue', key, QueryDataTransformers.keyValue.default);
       var preEncodeWrapper = getTransformerFn('preEncodeWrapper', key, false);
       var encode = getTransformerFn('encode', key, false);
@@ -239,18 +244,13 @@
      * @return {string}       The reduced string.
      */
     function parseKeyValueStore(obj, level){
-      var keyValue =  QueryDataTransformers.keyValue.default;
-      var preEncodeWrapper = false;
-      var encode = false;
-      var wrapper = false;
-      var join = QueryDataTransformers.join.default;
-      if(obj.hasOwnProperty('transformer')){
-        keyValue = getTransformerFn('keyValue', obj.transformer, QueryDataTransformers.keyValue.default);
-        preEncodeWrapper = getTransformerFn('preEncodeWrapper', obj.transformer, false);
-        encode = getTransformerFn('encode', obj.transformer, false);
-        wrapper = getTransformerFn('wrapper', obj.transformer, false);
-        join = getTransformerFn('join', obj.transformer, QueryDataTransformers.join.default);
-      }
+      var transformer = obj.hasOwnProperty('transformer') ? obj.transformer : '_use_default_';
+
+      var keyValue = getTransformerFn('keyValue', transformer, QueryDataTransformers.keyValue.default);
+      var preEncodeWrapper = getTransformerFn('preEncodeWrapper', transformer, false);
+      var encode = getTransformerFn('encode', transformer, false);
+      var wrapper = getTransformerFn('wrapper', transformer, false);
+      var join = getTransformerFn('join', transformer, QueryDataTransformers.join.default);
       return arrayReducer(obj.key, obj.values, keyValue, preEncodeWrapper, encode, wrapper, join, level);
     }
 
