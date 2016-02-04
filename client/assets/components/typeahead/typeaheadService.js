@@ -19,6 +19,8 @@
       getQueryResults: getQueryResults
     };
 
+    ////////////
+
     function getQueryResults(query){
       var deferred = $q.defer();
       var queryString = QueryBuilder.objectToURLString(_.assign(query,{wt:'json'}));
