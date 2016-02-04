@@ -33,149 +33,25 @@
     this.escapeSpecialChars = escapeSpecialChars;
     this.encodeURIComponentPlus = encodeURIComponentPlus;
 
-    function $get($log){
+    function $get(){
       'ngInject';//eslint-disable-line
       return {
         registerTransformer: registerTransformer,
         keyValueString: keyValueString,
         arrayJoinString: arrayJoinString,
         objectToURLString: objectToURLString,
-        escapeSpecialChars:escapeSpecialChars,
+        escapeSpecialChars: escapeSpecialChars,
         encodeURIComponentPlus: encodeURIComponentPlus
       };
-
-      /**
-       * Turns an Object into a URL String
-       * @param {object} obj The query object to turn into a string
-       * @return {string}
-       */
-      function objectToURLString(obj){
-        return _.reduce(obj, reducer, '');
-
-        /**
-         * Simple reducer only handles top level url concatenation.
-         * @param  {String} str   String with which to concatenate onto.
-         * @param  {array|String} value The value of this object property
-         * @param  {String} key   key of the property.
-         * @return {String}       A concatenated query string.
-         */
-        function reducer(str, value, key) {
-          var parameters;
-          var ret;
-          // get important values;
-          var keyValue = getTransformerFn('keyValue', key, QueryDataTransformers.keyValue.default);
-          var preEncodeWrapper = getTransformerFn('preEncodeWrapper', key, false);
-          var encode = getTransformerFn('encode', key, false);
-          var wrapper = getTransformerFn('wrapper', key, false);
-          var join = getTransformerFn('join', key, QueryDataTransformers.join.default);
-
-          var wrappedValue = value;
-
-          // If this is an array join all the properties.
-          if(angular.isArray(value)){
-            parameters = arrayReducer(key, value, keyValue, preEncodeWrapper, encode, wrapper, join, 0);
-          } else {
-            if(preEncodeWrapper){
-              wrappedValue = preEncodeWrapper(wrappedValue);
-            }
-            if(encode){
-              wrappedValue = encode(wrappedValue);
-            }
-            // If this field has a wrapper, apply it here.
-            if (wrapper){
-              wrappedValue = wrapper(wrappedValue);
-            }
-            // create a key value pair from the remaining.
-            parameters = keyValue(key, wrappedValue);
-          }
-
-          // This is the first level and should use ampersand by default.
-          if(str !== ''){
-            ret = QueryDataTransformers.join.ampersand(str, parameters);
-          } else {
-            ret = join(str, parameters);
-          }
-          $log.debug(ret);
-          return ret;
-        }
-      }
-
-      /**
-       * Reduces an array into a string.
-       * @param  {string}         key              key in a key value pair.
-       * @param  {array}          values           An array of values.
-       * @param  {Function}       keyValue         The key value function for this
-       *                                           array.
-       * @param  {Function|false} preEncodeWrapper The preEncodeWrapper function for
-       *                                           this array.
-       * @param  {Function|false} encode           The encode function for this
-       *                                           array.
-       * @param  {Function|false} wrapper          The wrapper function for this
-       *                                           array.
-       * @param  {Function}       join             The join function for this array.
-       * @param  {integer}        level            The level of recurion in the
-       *                                           tree.
-       * @return {string}                  A reduced string from the array.
-       */
-      function arrayReducer(key, values, keyValue, preEncodeWrapper, encode, wrapper, join, level){
-        return _.reduce(values, arrayReducerFunc, '');
-        function arrayReducerFunc(str, value){
-          var newVal = value;
-          if(angular.isObject(value)){
-            newVal = parseKeyValueStore(value, level+1);
-          }
-          if(preEncodeWrapper){
-            newVal = preEncodeWrapper(newVal);
-          }
-          if(encode){
-            newVal = encode(newVal);
-          }
-          // If this field has a wrapper, apply it here.
-          if (wrapper){
-            newVal = wrapper(newVal);
-          }
-          if(str.length > 0){
-            var joiner = (level > 0) ? join : QueryDataTransformers.join.ampersand;
-            str = joiner(str, keyValue(key, newVal));
-          } else {
-            str = QueryDataTransformers.join.default(str, keyValue(key, newVal));
-          }
-          return str;
-        }
-      }
-
-      /**
-       * Given an object parses the keys and values and reduces the values into a string.
-       * @param  {object} obj   The object to parse.
-       * @param  {integer} level How far are we into the tree.
-       * @return {string}       The reduced string.
-       */
-      function parseKeyValueStore(obj, level){
-        var keyValue =  QueryDataTransformers.keyValue.default;
-        var preEncodeWrapper = false;
-        var encode = false;
-        var wrapper = false;
-        var join = QueryDataTransformers.join.default;
-        if(obj.hasOwnProperty('transformer')){
-          keyValue = getTransformerFn('keyValue', obj.transformer, QueryDataTransformers.keyValue.default);
-          preEncodeWrapper = getTransformerFn('preEncodeWrapper', obj.transformer, false);
-          encode = getTransformerFn('encode', obj.transformer, false);
-          wrapper = getTransformerFn('wrapper', obj.transformer, false);
-          join = getTransformerFn('join', obj.transformer, QueryDataTransformers.join.default);
-        }
-        return arrayReducer(obj.key, obj.values, keyValue, preEncodeWrapper, encode, wrapper, join, level);
-      }
     }
 
     /**
-     * Simple function to determine which transformer to return.
-     * @param  {string} type                       The type of transformer.
-     * @param  {string} key                        The key of the transformer.
-     * @param  {function|false} defaultTransformer The default transformer function
-     * @return {function}                          The transformer function.
+     * Turns an Object into a URL String
+     * @param {object} obj The query object to turn into a string
+     * @return {string}
      */
-    function getTransformerFn(type, key, defaultTransformer){
-      return QueryDataTransformers[type].hasOwnProperty(key) ? QueryDataTransformers[type][key] : defaultTransformer;
+    function objectToURLString(obj){
+      return _.reduce(obj, outerReducer, '');
     }
 
     /**
@@ -262,6 +138,132 @@
       }
     }
 
+    /////////////////////////
+    /// Internal functions //
+    /////////////////////////
+
+    /**
+     * Simple reducer only handles top level url concatenation.
+     * @param  {String} str   String with which to concatenate onto.
+     * @param  {array|String} value The value of this object property
+     * @param  {String} key   key of the property.
+     * @return {String}       A concatenated query string.
+     */
+    function outerReducer(str, value, key) {
+      var parameters;
+      var ret;
+      // get important values;
+      var keyValue = getTransformerFn('keyValue', key, QueryDataTransformers.keyValue.default);
+      var preEncodeWrapper = getTransformerFn('preEncodeWrapper', key, false);
+      var encode = getTransformerFn('encode', key, false);
+      var wrapper = getTransformerFn('wrapper', key, false);
+      var join = getTransformerFn('join', key, QueryDataTransformers.join.default);
+
+      var wrappedValue = value;
+
+      // If this is an array join all the properties.
+      if(angular.isArray(value)){
+        parameters = arrayReducer(key, value, keyValue, preEncodeWrapper, encode, wrapper, join, 0);
+      } else {
+        if(preEncodeWrapper){
+          wrappedValue = preEncodeWrapper(wrappedValue);
+        }
+        if(encode){
+          wrappedValue = encode(wrappedValue);
+        }
+        // If this field has a wrapper, apply it here.
+        if (wrapper){
+          wrappedValue = wrapper(wrappedValue);
+        }
+        // create a key value pair from the remaining.
+        parameters = keyValue(key, wrappedValue);
+      }
+
+      // This is the first level and should use ampersand by default.
+      if(str !== ''){
+        ret = QueryDataTransformers.join.ampersand(str, parameters);
+      } else {
+        ret = join(str, parameters);
+      }
+      return ret;
+    }
+
+    /**
+     * Reduces an array into a string.
+     * @param  {string}         key              key in a key value pair.
+     * @param  {array}          values           An array of values.
+     * @param  {Function}       keyValue         The key value function for this
+     *                                           array.
+     * @param  {Function|false} preEncodeWrapper The preEncodeWrapper function for
+     *                                           this array.
+     * @param  {Function|false} encode           The encode function for this
+     *                                           array.
+     * @param  {Function|false} wrapper          The wrapper function for this
+     *                                           array.
+     * @param  {Function}       join             The join function for this array.
+     * @param  {integer}        level            The level of recurion in the
+     *                                           tree.
+     * @return {string}                  A reduced string from the array.
+     */
+    function arrayReducer(key, values, keyValue, preEncodeWrapper, encode, wrapper, join, level){
+      return _.reduce(values, arrayReducerFunc, '');
+      function arrayReducerFunc(str, value){
+        var newVal = value;
+        if(angular.isObject(value)){
+          newVal = parseKeyValueStore(value, level+1);
+        }
+        if(preEncodeWrapper){
+          newVal = preEncodeWrapper(newVal);
+        }
+        if(encode){
+          newVal = encode(newVal);
+        }
+        // If this field has a wrapper, apply it here.
+        if (wrapper){
+          newVal = wrapper(newVal);
+        }
+        if(str.length > 0){
+          var joiner = (level > 0) ? join : QueryDataTransformers.join.ampersand;
+          str = joiner(str, keyValue(key, newVal));
+        } else {
+          str = QueryDataTransformers.join.default(str, keyValue(key, newVal));
+        }
+        return str;
+      }
+    }
+
+    /**
+     * Given an object parses the keys and values and reduces the values into a string.
+     * @param  {object} obj   The object to parse.
+     * @param  {integer} level How far are we into the tree.
+     * @return {string}       The reduced string.
+     */
+    function parseKeyValueStore(obj, level){
+      var keyValue =  QueryDataTransformers.keyValue.default;
+      var preEncodeWrapper = false;
+      var encode = false;
+      var wrapper = false;
+      var join = QueryDataTransformers.join.default;
+      if(obj.hasOwnProperty('transformer')){
+        keyValue = getTransformerFn('keyValue', obj.transformer, QueryDataTransformers.keyValue.default);
+        preEncodeWrapper = getTransformerFn('preEncodeWrapper', obj.transformer, false);
+        encode = getTransformerFn('encode', obj.transformer, false);
+        wrapper = getTransformerFn('wrapper', obj.transformer, false);
+        join = getTransformerFn('join', obj.transformer, QueryDataTransformers.join.default);
+      }
+      return arrayReducer(obj.key, obj.values, keyValue, preEncodeWrapper, encode, wrapper, join, level);
+    }
+
+    /**
+     * Simple function to determine which transformer to return.
+     * @param  {string} type                       The type of transformer.
+     * @param  {string} key                        The key of the transformer.
+     * @param  {function|false} defaultTransformer The default transformer function
+     * @return {function}                          The transformer function.
+     */
+    function getTransformerFn(type, key, defaultTransformer){
+      return QueryDataTransformers[type].hasOwnProperty(key) ? QueryDataTransformers[type][key] : defaultTransformer;
+    }
 
   }
 })();
