@@ -17,7 +17,7 @@
     QueryBuilderProvider.registerTransformer('preEncodeWrapper', 'fq:field', fqFieldPreEncodeWrapper);
     QueryBuilderProvider.registerTransformer('wrapper', 'fq:field', fqFieldWrapper);
 
-    // TODO implement transformer for localParens
+    // TODO properly implement transformer for localParens
     QueryBuilderProvider.registerTransformer('join', 'localParens', localParenJoinTransformer);
     QueryBuilderProvider.registerTransformer('wrapper', 'localParens', localParenWrapperTransformer);
 

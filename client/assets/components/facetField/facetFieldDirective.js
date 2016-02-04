@@ -135,8 +135,11 @@
       updateFacetQuery(query);
     }
 
+    /**
+     * Sets the facet query and sets start row to beginning.
+     * @param  {object} query The query object.
+     */
     function updateFacetQuery(query){
-      // Set the query and trigger the refresh.
       query.start = 0;
       QueryService.setQuery(query);
     }
