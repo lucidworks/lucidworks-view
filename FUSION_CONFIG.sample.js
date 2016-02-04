@@ -16,15 +16,19 @@ appConfig = { //eslint-disable-line
    */
   connectionRealm: 'native',
 
-  // To allow anonymous access add a valid username and password here.
+  /**
+   * Anonymous access
+   *
+   * To allow anonymous access add a valid username and password here.
+   *
+   * SECURITY WARNING
+   * It is recommended you use an account with the 'search' role
+   * to use anonymous access.
+   */
   anonymous_access: {
     username: '',
     password: ''
   },
-
-  // In order to get your own auth header with username password please run
-  // gulp setupAuthHeader --username <username> --password <password> --realm <realm name> --hostname <hostname or IP, port optional>
-  // Defaults: username=admin, password=password123, realm=native, hostname=localhost:8764
 
   // The name of your collection
   collection: 'MyCollection',
