@@ -30,6 +30,8 @@
     ta.selectedSomething = selectedSomething;
     ta.updateSearchQuery = updateSearchQuery;
 
+    //////////
+
     function selectedSomething(object){
       if(object){
         var newValue = object.originalObject[ta.typeaheadField];
@@ -50,7 +52,7 @@
           data: resp.response.docs
         };
         deferred.resolve(objectToResolve);
-      }).catch(function(err){
+      }).catch(function(error){
         timeoutPromise.reject(error);
       });
       return deferred.promise;
