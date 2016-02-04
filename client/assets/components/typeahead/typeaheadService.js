@@ -20,7 +20,7 @@
     function getQueryResults(query){
       var deferred = $q.defer();
 
-      var queryString = QueryBuilder.objectToURLString(_.assign(query,{wt:'json'}));
+      var queryString = QueryBuilder.objectToURLString(query);
 
       var fullUrl = getQueryUrl(ConfigService.getIfQueryProfile()) + '?' + queryString;
 
