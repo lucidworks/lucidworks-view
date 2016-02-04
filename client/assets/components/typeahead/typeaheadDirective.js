@@ -12,11 +12,11 @@
       controller: Controller,
       link: Link,
       templateUrl: 'assets/components/typeahead/typeahead.html',
-      scope: {
+      scope: true,
+      controllerAs: 'ta',
+      bindToController: {
         query: '='
       },
-      controllerAs: 'ta',
-      bindToController: true,
       require: '^form'
     };
   }
