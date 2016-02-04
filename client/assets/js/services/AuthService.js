@@ -52,7 +52,7 @@
     function destroySession() {
       var deferred = $q.defer();
       $http
-        .delete(ApiBase.getEndpoint() + 'session?realmName=' + realmName)
+        .delete(ApiBase.getEndpoint() + 'api/session?realmName=' + realmName)
         .then(function (resp) {
           deferred.resolve(resp);
         });

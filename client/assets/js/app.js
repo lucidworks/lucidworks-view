@@ -37,7 +37,8 @@
     ConfigServiceProvider) {
     'ngInject';
     $urlRouterProvider.otherwise('/');
-    $httpProvider.interceptors.push('SessionInjector');
+    $httpProvider.interceptors.push('AuthInterceptor');
+    $httpProvider.defaults['withCredentials'] = true;//eslint-disable-line
 
     $locationProvider.html5Mode({
       enabled: true,
