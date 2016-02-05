@@ -34,7 +34,7 @@
    * @param  {Provider} ConfigServiceProvider Provider for ConfigService
    */
   function config($urlRouterProvider, $httpProvider, $locationProvider, ApiBaseProvider,
-    ConfigServiceProvider) {
+    ConfigServiceProvider, $windowProvider) {
     'ngInject';
     $urlRouterProvider.otherwise('/');
     $httpProvider.interceptors.push('AuthInterceptor');
@@ -46,7 +46,14 @@
     });
 
     $locationProvider.hashPrefix('!');
-    ApiBaseProvider.setEndpoint(ConfigServiceProvider.getFusionUrl());
+    // If using a proxy use the same url.
+    var ConfigService = ConfigServiceProvider.$get();
+    if(ConfigService.config.useProxy){
+      var $window = $windowProvider.$get();
+      ApiBaseProvider.setEndpoint($window.location.host+'/');
+    } else {
+      ApiBaseProvider.setEndpoint(ConfigServiceProvider.getFusionUrl());
+    }
   }
 
   /**

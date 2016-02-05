@@ -9,13 +9,15 @@
       host: 'http://localhost',
       port: '8764',
       connectionRealm: 'native',
-      AllowAnonymousAccess: true,
-
+      anonymous_access: {
+        username: '',
+        password: ''
+      },
+      useProxy: true,
       collection: 'MyCollection',
       queryPipelineIdList: ['default', 'not-default'],
       queryProfilesIdList: ['default'],
       use_query_profile: true,
-      addl_params: '', //We might not need this
       searchAppTitle: 'Fusion Seed App',
       head_field: 'title',
       subhead_field: 'subtitle',
