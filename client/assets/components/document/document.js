@@ -50,6 +50,8 @@
 
       returnDoc.lw_image = getField('image', doc);
 
+      returnDoc.lw_url = getField('head_url', doc);
+
       returnDoc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(doc);
 
       return returnDoc;
