@@ -10,9 +10,7 @@
       port: '8764',
       connectionRealm: 'native',
       AllowAnonymousAccess: true,
-      authorizationHeader: {
-        'Authorization': 'Basic YWRtaW46cGFzc3dvcmQxMjM='
-      },
+
       collection: 'MyCollection',
       queryPipelineIdList: ['default', 'not-default'],
       queryProfilesIdList: ['default'],

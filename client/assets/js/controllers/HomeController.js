@@ -1,7 +1,8 @@
 /*global _*/
 (function() {
   'use strict';
-  angular.module('fusionSeedApp.controllers.home', ['fusionSeedApp.services','angucomplete-alt'])
+  angular
+    .module('fusionSeedApp.controllers.home', ['fusionSeedApp.services', 'angucomplete-alt'])
     .controller('HomeController', HomeController);
 
 
@@ -21,6 +22,7 @@
       hc.search = doSearch;
       hc.lastQuery = '*:*';
       hc.logout = logout;
+      hc.appName = ConfigService.config.searchAppTitle;
 
       // Use an observable to get the contents of a queryResults after it is updated.
       resultsObservable = Orwell.getObservable('queryResults');

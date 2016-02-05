@@ -4,16 +4,16 @@ url: /login
 animationIn: slideInLeft
 animationOut: slideOutRight
 ---
-<div class="grid-frame vertical">
+<div class="grid-frame vertical" ng-controller="LoginController as lc">
 
     <!-- Top Bar -->
     <nav class="primary title-bar">
       <span class="center">
-        <span class="show-for-small-only"><a class="title">Fusion seed app</a></span>
+        <span class="show-for-small-only"><a class="title">{{lc.appName}}</a></span>
       </span>
       <ul class="left menu-bar primary condense">
         <li class="show-for-medium">
-          <a class="title">Fusion seed app</a>
+          <a class="title">{{lc.appName}}</a>
         </li>
       </ul>
     </nav>
