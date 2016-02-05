@@ -131,10 +131,6 @@
       return appConfig.collection;
     }
 
-    // function getLabels() { //TODO: Decide whether defined labels will be the only ones shown
-    //   return appConfig.field_display_labels;
-    // }
-
     /**
      * @return {object}
      *
@@ -179,10 +175,6 @@
         return item.match(/^typeahead/);
       }).value();
       return _.pick(appConfig, onlyTypeAheadKeys);
-    }
-
-    function getIfTypeaheadProfile(){
-      return appConfig.typeahead_use_query_profile;
     }
 
     function getTypeaheadPipeline(){
