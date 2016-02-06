@@ -16,11 +16,7 @@ gulp.task('browsersync', ['build'], function() {
     proxyMiddleware('/api', {
       target: fusionConfig.host+':'+fusionConfig.port
     }),
-    historyFallback({ index: '/'+openPath+'/index.html' }),
-    // function (req, res, next) {
-    //   res.setHeader('Access-Control-Allow-Credentials', 'true');
-    //   next();
-    // }
+    historyFallback({ index: '/'+openPath+'/index.html' })
   ];
 
   browserSync.init({

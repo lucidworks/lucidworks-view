@@ -1,4 +1,3 @@
-/*global _*/
 (function() {
   'use strict';
   angular
@@ -43,7 +42,7 @@
       $log.info('Searching...');
       var queryObject = {
         q: hc.searchQuery,
-        start: 0,
+        start: 0
       };
 
       QueryService

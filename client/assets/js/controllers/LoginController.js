@@ -7,7 +7,7 @@
 
   function LoginController(ConfigService) {
     'ngInject';
-    var lc = this;
-    lc.appName = ConfigService.config.searchAppTitle;
+    var vm = this;
+    vm.appName = ConfigService.config.searchAppTitle;
   }
 })();

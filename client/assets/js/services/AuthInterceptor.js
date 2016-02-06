@@ -47,7 +47,7 @@
 
       function useAnonCreds(){
         var ConfigService = $injector.get('ConfigService'),
-        anonAccess = ConfigService.config.anonymous_access;
+          anonAccess = ConfigService.config.anonymous_access;
 
         return !(anonAccess.username === '' || anonAccess.password === '');
       }

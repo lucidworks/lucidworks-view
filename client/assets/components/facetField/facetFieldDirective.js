@@ -22,7 +22,7 @@
     };
   }
 
-  function Controller(ConfigService, QueryService, QueryDataService, Orwell, FoundationApi, $log) {
+  function Controller(ConfigService, QueryService, QueryDataService, Orwell, FoundationApi) {
     'ngInject';
     var vm = this;
     vm.facetCounts = [];

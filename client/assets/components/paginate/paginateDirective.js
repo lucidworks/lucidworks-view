@@ -20,7 +20,7 @@
 
   }
 
-  function Controller(Orwell, PaginateService, QueryService, $log) {
+  function Controller(Orwell, PaginateService, QueryService) {
     'ngInject';
     var vm = this;
     vm.page = 0;
@@ -30,9 +30,9 @@
     vm.gotoNextPage = gotoNextPage;
     vm.gotoPreviousPage = gotoPreviousPage;
 
-
-
     activate();
+
+    /////////////
 
     function activate() {
       var resultsObservable = Orwell.getObservable('queryResults');

@@ -1,12 +1,9 @@
-/*global _*/
 (function () {
   'use strict';
 
   angular
     .module('fusionSeedApp.components.typeahead')
     .factory('TypeaheadService', TypeaheadService);
-
-  //TODO: Combine this with queryservice (refactor)
 
   function TypeaheadService($log, $http, $q, ConfigService, ApiBase, QueryBuilder, QueryDataService){
     'ngInject';
