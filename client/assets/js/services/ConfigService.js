@@ -52,11 +52,11 @@
    */
   function ConfigService(CONFIG_DEFAULT, CONFIG_OVERRIDE) {
     'ngInject';
-    var appConfig;
+    var appConfig,
+      vm = this;
 
-    this.$get = $get;
-    this.config = appConfig;
-    this.getFusionUrl = getFusionUrl;
+    vm.$get = $get;
+    vm.getFusionUrl = getFusionUrl;
 
     /* initialize on first load */
     init();
@@ -100,6 +100,7 @@
       var localOverride = (arguments.length > 0) ? arguments[0] : {};
 
       appConfig = _.assign({}, CONFIG_DEFAULT, CONFIG_OVERRIDE, localOverride);
+      vm.config = appConfig;
     }
 
     function getIfQueryProfile() {
