@@ -55,6 +55,7 @@
     var appConfig;
 
     this.$get = $get;
+    this.config = appConfig;
     this.getFusionUrl = getFusionUrl;
 
     /* initialize on first load */

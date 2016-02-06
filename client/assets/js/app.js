@@ -38,7 +38,7 @@
     'ngInject';
     $urlRouterProvider.otherwise('/');
     $httpProvider.interceptors.push('AuthInterceptor');
-    $httpProvider.defaults['withCredentials'] = true;//eslint-disable-line
+    $httpProvider.defaults['withCredentials'] = true; //eslint-disable-line
 
     $locationProvider.html5Mode({
       enabled: true,
@@ -47,10 +47,10 @@
 
     $locationProvider.hashPrefix('!');
     // If using a proxy use the same url.
-    var ConfigService = ConfigServiceProvider.$get();
-    if(ConfigService.config.useProxy){
+    if (ConfigServiceProvider.config.useProxy) {
       var $window = $windowProvider.$get();
-      ApiBaseProvider.setEndpoint($window.location.host+'/');
+      ApiBaseProvider.setEndpoint($window.location.protocol + '//' + $window.location.host +
+        '/');
     } else {
       ApiBaseProvider.setEndpoint(ConfigServiceProvider.getFusionUrl());
     }

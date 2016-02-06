@@ -1,4 +1,4 @@
-var $               = require('gulp-load-plugins')();
+/*global require*/
 var log             = require('connect-logger');
 var argv            = require('yargs').argv;
 var gulp            = require('gulp');
@@ -14,29 +14,29 @@ gulp.task('browsersync', ['build'], function() {
   var middleware = [
     log(),
     proxyMiddleware('/api', {
-        target: fusionConfig.host+':'+fusionConfig.port
+      target: fusionConfig.host+':'+fusionConfig.port
     }),
     historyFallback({ index: '/'+openPath+'/index.html' }),
-    function (req, res, next) {
-      res.setHeader('Access-Control-Allow-Credentials', 'true');
-      next();
-    }
+    // function (req, res, next) {
+    //   res.setHeader('Access-Control-Allow-Credentials', 'true');
+    //   next();
+    // }
   ];
 
-    browserSync.init({
-        server: {
-          baseDir: "./build/",
-          middleware: middleware
-        },
-        files: [
-          openPath + '/**/*.html',
-          openPath + '/**/*.css',
-          openPath + '/**/*.js'
-        ]
-    });
+  browserSync.init({
+    server: {
+      baseDir: './build/',
+      middleware: middleware
+    },
+    files: [
+      openPath + '/**/*.html',
+      openPath + '/**/*.css',
+      openPath + '/**/*.js'
+    ]
+  });
 
-    // gulp.watch("app/scss/*.scss", ['sass']);
-    // gulp.watch("app/*.html").on('change', browserSync.reload);
+  // gulp.watch("app/scss/*.scss", ['sass']);
+  // gulp.watch("app/*.html").on('change', browserSync.reload);
 });
 
 //Reloads all the browsers
