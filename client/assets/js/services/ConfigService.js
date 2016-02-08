@@ -24,7 +24,6 @@
       description_field: 'description',
       head_url_field: 'url',
       image_field: 'image',
-      image_enabled: true,
       fields_to_display: [],
       profiles_enabled: true, // do we use
       fl: [],
@@ -148,10 +147,6 @@
       _.keys(appConfig)
         .filter(function (item) {
           return item.match(/\_field$/);
-        })
-        .filter(function (item) {
-          var key = item.split('_')[0] + '_enabled';
-          return _.has(appConfig, key) ? appConfig[key] : true;
         })
         .filter(function (item) {
           return _.trim(appConfig[item]) !== '';

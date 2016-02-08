@@ -56,10 +56,8 @@ appConfig = { //eslint-disable-line
   description_field: 'description',
   //In search results, for each doc, use this field to generate link value when a user clicks on head_field
   head_url_field: 'url',
-  //In search results, display a image in each doc page
+  //In search results, display a image in each doc page (leave empty for no image).
   image_field: 'image',
-  //In doc page, display a image with each doc
-  image_enabled: true,
 
   // ADDING ADDITIONAL FIELDS TO DOCUMENTS
   //
