@@ -1,7 +1,7 @@
 (function () {
   'use strict';
   // Initialize module.
-  angular.module('fusionSeedApp.components.typeahead', [
+  angular.module('fusionSeedApp.components.searchbox', [
     'fusionSeedApp.services.apiBase',
     'fusionSeedApp.services.config',
     'fusionSeedApp.services.query',

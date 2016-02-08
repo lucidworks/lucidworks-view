@@ -1,0 +1,28 @@
+.search-box{
+  #searchInput_value{
+    margin-bottom: 0px;
+  }
+
+  .angucomplete-holder{
+    position: relative;
+  }
+
+  #searchInput_dropdown {
+    position: absolute;
+    top: 45px;
+    left: 0px;
+    background: white;
+    color: black;
+    border: solid black 1px;
+    z-index: 1000;
+    text-align: left;
+
+    .angucomplete-selected-row{
+      background: gray;
+    }
+
+    .highlight {
+      color: orange;
+    }
+  }
+}

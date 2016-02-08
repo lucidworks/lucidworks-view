@@ -9,35 +9,3 @@
   border-right: 1px solid #e7e7e7;
   // transition-timing-function: cubic-bezier(0.76, -0.245, 0.24, 1.245);
 }
-
-//TODO: This should be in typeahead.scss
-typeahead{
-  flex: 1;
-
-  #searchInput_value{
-    margin-bottom: 0px;
-  }
-
-  .angucomplete-holder{
-    position: relative;
-  }
-
-  #searchInput_dropdown {
-    position: absolute;
-    top: 45px;
-    left: 0px;
-    background: white;
-    color: black;
-    border: solid black 1px;
-    z-index: 1000;
-    text-align: left;
-
-    .angucomplete-selected-row{
-      background: gray;
-    }
-
-    .highlight {
-      color: orange;
-    }
-  }
-}

@@ -2,15 +2,15 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.typeahead')
-    .directive('typeahead', typeahead);
+    .module('fusionSeedApp.components.searchbox')
+    .directive('searchBox', searchbox);
 
-  function typeahead(){
+  function searchbox(){
     'ngInject';
     return {
       restrict: 'EA',
       controller: Controller,
-      templateUrl: 'assets/components/typeahead/typeahead.html',
+      templateUrl: 'assets/components/searchBox/searchBox.html',
       scope: true,
       controllerAs: 'ta',
       bindToController: {
@@ -20,7 +20,7 @@
     };
   }
 
-  function Controller($scope, $q, ConfigService, TypeaheadService){
+  function Controller($log, $scope, $q, ConfigService, SearchBoxDataService){
     'ngInject';
     var ta = this;
     ta.typeaheadField = ConfigService.getTypeaheadField();
@@ -44,7 +44,7 @@
     function doTypeaheadSearch(userInputString, timeoutPromise) {
       var deferred = $q.defer();
 
-      TypeaheadService
+      SearchBoxDataService
         .getQueryResults({
           q: userInputString,
           // make sure results are json.

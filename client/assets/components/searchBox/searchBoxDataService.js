@@ -2,10 +2,10 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.typeahead')
-    .factory('TypeaheadService', TypeaheadService);
+    .module('fusionSeedApp.components.searchbox')
+    .factory('SearchBoxDataService', SearchBoxDataService);
 
-  function TypeaheadService($log, $http, $q, ConfigService, ApiBase, QueryBuilder, QueryDataService){
+  function SearchBoxDataService($log, $http, $q, ConfigService, ApiBase, QueryBuilder, QueryDataService){
     'ngInject';
 
     return {
