@@ -25,8 +25,6 @@
       head_url_field: 'url',
       image_field: 'image',
       fields_to_display: [],
-      profiles_enabled: true, // do we use
-      fl: [],
       field_display_labels: {},
       sort_fields: [],
       signalType: 'click',
