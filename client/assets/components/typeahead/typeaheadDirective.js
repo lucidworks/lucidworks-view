@@ -20,9 +20,8 @@
     };
   }
 
-  function Controller($log, $scope, $q, ConfigService, TypeaheadService){
+  function Controller($scope, $q, ConfigService, TypeaheadService){
     'ngInject';
-    $log.info(ConfigService.getTypeaheadConfig());
     var ta = this;
     ta.typeaheadField = ConfigService.getTypeaheadField();
     ta.doTypeaheadSearch = doTypeaheadSearch;

@@ -22,14 +22,19 @@
   }
 
   /* @ngInject */
-  function Controller($log, ConfigService) {
+  function Controller($log, $scope, ConfigService, QueryService) {
     'ngInject';
     var vm = this;
+    vm.switchSort = switchSort;
 
     activate();
 
+    /////////////
+
     function activate() {
       createSortList();
+
+      $scope.$watch('vm.selectedSort', handleSelectedSortChange);
     }
 
     function createSortList(){
@@ -40,6 +45,28 @@
       });
       vm.sortOptions = sortOptions;
       vm.selectedSort = vm.sortOptions[0];
+    }
+
+    function handleSelectedSortChange(newValue, oldValue){
+      if(newValue === oldValue) return;
+
+      switchSort(newValue);
+    }
+
+    function switchSort(sort){
+      var query = QueryService.getQueryObject();
+      $log.debug(sort);
+      switch(sort.type) {
+      case 'text':
+        if(angular.isUndefined(query.sort)){
+          query.sort = sort.label+'%20'+sort.order;
+          QueryService.setQuery(query);
+        }
+        break;
+      default:
+        delete query.sort;
+        QueryService.setQuery(query);
+      }
     }
   }
 })();
