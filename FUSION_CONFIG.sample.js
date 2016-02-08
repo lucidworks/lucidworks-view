@@ -96,6 +96,13 @@ appConfig = { //eslint-disable-line
   },
 
   /**
+   * Sorts
+   *
+   * A list of field names to make available for users to sort their results.
+   */
+  sort_fields: ['title'],
+
+  /**
    * Signals
    *
    * Allow the collection of data regaurding search results. The most typical use

@@ -1,3 +1,4 @@
+/*global _*/
 (function() {
   'use strict';
 
@@ -9,7 +10,7 @@
   function sort() {
     var directive = {
       restrict: 'E',
-      templateUrl: 'client/assets/compnents/sort/sort.html',
+      templateUrl: 'assets/components/sort/sort.html',
       scope: true,
       controller: Controller,
       controllerAs: 'vm',
@@ -22,14 +23,24 @@
   }
 
   /* @ngInject */
-  function Controller($log) {
+  function Controller($log, ConfigService) {
     'ngInject';
     var vm = this;
 
     activate();
 
     function activate() {
+      createSortList();
+    }
 
+    function createSortList(){
+      var sortOptions = [{label:'default sort', type:'default', order:'', active: true}];
+      _.forEach(ConfigService.config.sort_fields, function(value){
+        sortOptions.push({label: value, type: 'text', order: 'asc', active: false});
+        sortOptions.push({label: value, type: 'text', order: 'desc', active: false});
+      });
+      vm.sortOptions = sortOptions;
+      vm.selectedSort = vm.sortOptions[0];
     }
   }
 })();

@@ -1,0 +1,12 @@
+<span zf-action-sheet="">
+  <zf-as-button>
+    <span class="button" style="margin: 0;">Sort</span>
+  </zf-as-button>
+  <span zf-as-content="" position="bottom"><ul>
+    <li ng-repeat="sort in vm.sortOptions">
+      {{sort}}
+      <input type="radio" id="{{sort.label + sort.order}}" ng-value="sort" ng-model="vm.selectedSort">
+      <label for="{{sort.label + sort.order}}">{{sort.label}}</label>
+    </li>
+  </ul></span>
+</span>

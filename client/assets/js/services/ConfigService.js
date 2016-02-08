@@ -29,6 +29,7 @@
       profiles_enabled: true, // do we use
       fl: [],
       field_display_labels: {},
+      sort_fields: [],
       signalType: 'click',
       signalsPipeline: '_signals_ingest',
       facets: [],
