@@ -120,19 +120,6 @@ appConfig = { //eslint-disable-line
   signalsDocumentId: 'id',
 
   /**
-   * Spellcheck
-   *
-   * Allow the interface to inform users when it is possible they made a mistake.
-   * In the interface this looks like "Did you mean y?" when you do a query for x.
-   *
-   * NOTE: Spellcheck will not work unless the requestHandler and dictionary are
-   * configured in solrconfig.xml
-   */
-  spellcheck_enabled: false,
-  // Must be configured in solrconfig.xml
-  spellcheck_dictionary: 'default_text',
-
-  /**
    * Typeahead
    *
    * Typeahead or autocomplete shows you a number of suggested queries as you
