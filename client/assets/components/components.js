@@ -5,6 +5,6 @@ angular.module('fusionSeedApp.components', [
   'fusionSeedApp.components.facetList',
   'fusionSeedApp.components.login',
   'fusionSeedApp.components.paginate',
-  'fusionSeedApp.components.sort',
-  'fusionSeedApp.components.searchbox'
+  'fusionSeedApp.components.searchbox',
+  'fusionSeedApp.components.sort'
 ]);
