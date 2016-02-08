@@ -26,6 +26,9 @@ module.exports = {
     "extends": [
       "angular",
       "eslint:recommended"
-    ]
+    ],
+  "globals": {
+    "_": false
+  }
 };
 /*eslint-enable */

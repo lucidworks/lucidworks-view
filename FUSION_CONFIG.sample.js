@@ -125,8 +125,6 @@ appConfig = { //eslint-disable-line
    */
   spellcheck_enabled: false,
   // Must be configured in solrconfig.xml
-  spellcheck_requesthandler: 'spell',
-  // Must be configured in solrconfig.xml
   spellcheck_dictionary: 'default_text',
 
   /**
