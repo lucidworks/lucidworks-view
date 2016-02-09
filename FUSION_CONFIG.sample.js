@@ -129,6 +129,6 @@ appConfig = { //eslint-disable-line
   typeaheadQueryPipelineIdList: ['default'],
   typeahaedQueryProfilesIdList: ['default'],
   typeahead_fields: ['id'],
-  typeahead_requesthandler: 'select'
+  typeahead_requesthandler: 'suggest'
 
 };
