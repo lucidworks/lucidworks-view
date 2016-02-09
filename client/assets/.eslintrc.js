@@ -20,7 +20,11 @@ module.exports = {
     "no-extra-semi": 1,            // disallow unnecessary semicolons
     "no-inner-declarations": 2,    // disallow function or variable declarations in nested blocks
   },
+  "env": {
+    "browser": true
+  },
   "extends": [
+    "angular",
     "eslint:recommended"
   ],
   "globals": {
