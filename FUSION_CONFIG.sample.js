@@ -133,8 +133,8 @@ appConfig = { //eslint-disable-line
   // It is recommended to use suggest as it is more performant.
   // It will require some additional configuration.
   // @see https://lucidworks.com/blog/2016/02/04/fusion-plus-solr-suggesters-search-less-typing/
-  
+
   //typeahead_requesthandler: 'suggest', // recommended (requires configuration)
-  typeahead_requesthandler: 'select',
+  typeahead_requesthandler: 'select'
 
 };
