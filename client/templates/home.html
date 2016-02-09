@@ -89,8 +89,10 @@ animationOut: slideOutLeft
     <div class="large-9 medium-8 small-12 grid-block">
         <div class="grid-content">
           <!-- Spellcheck -->
-          <div>
-            Showing Results for "{{hc.lastQuery}}".<br/>
+          <div class="card">
+            <div class="card-section center">
+              Showing Results for "{{hc.lastQuery}}".
+            </div>
           </div>
           <document-list context="hc.context"></document-list>
           <paginate></paginate>
