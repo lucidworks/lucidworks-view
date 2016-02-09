@@ -13,7 +13,8 @@
       controller: Controller,
       templateUrl: 'assets/components/login/login.html',
       controllerAs: 'vm',
-      bindToController: true
+      bindToController: true,
+      scope: true
     };
 
   }
