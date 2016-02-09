@@ -1,3 +1,4 @@
+/*eslint-env node*/
 var args = require('yargs').argv;
 var gulp = require('gulp');
 var http = require('http');

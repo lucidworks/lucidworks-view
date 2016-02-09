@@ -1,4 +1,5 @@
-/* globals require, global, console */
+/*eslint-env node*/
+/* globals global, console */
 
 var $               = require('gulp-load-plugins')();
 var gulp            = require('gulp');

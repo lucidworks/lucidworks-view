@@ -1,4 +1,4 @@
-
+/*eslint-env node*/
 var gulp    = require('gulp');
 var rimraf  = require('rimraf');
 
