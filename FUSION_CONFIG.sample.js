@@ -129,6 +129,12 @@ appConfig = { //eslint-disable-line
   typeaheadQueryPipelineIdList: ['default'],
   typeahaedQueryProfilesIdList: ['default'],
   typeahead_fields: ['id'],
-  typeahead_requesthandler: 'suggest'
+  // The request handler defines how typeahead gets it's results.
+  // It is recommended to use suggest as it is more performant.
+  // It will require some additional configuration.
+  // @see https://lucidworks.com/blog/2016/02/04/fusion-plus-solr-suggesters-search-less-typing/
+  
+  //typeahead_requesthandler: 'suggest', // recommended (requires configuration)
+  typeahead_requesthandler: 'select',
 
 };
