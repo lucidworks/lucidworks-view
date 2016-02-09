@@ -28,7 +28,8 @@ module.exports = {
     "eslint:recommended"
   ],
   "globals": {
-    "_": false
+    "_": false,
+    "global": false
   }
 };
 /*eslint-enable */
