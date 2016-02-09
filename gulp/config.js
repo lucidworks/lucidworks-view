@@ -1,4 +1,5 @@
 /*eslint-env node*/
+/*eslint angular/log:0 no-console:0*/
 var $               = require('gulp-load-plugins')();
 var log             = require('connect-logger');
 var gulp            = require('gulp');

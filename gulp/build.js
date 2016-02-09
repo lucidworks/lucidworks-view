@@ -1,5 +1,6 @@
 /*eslint-env node*/
-/* globals global, console */
+/*global global*/
+/*eslint angular/log:0 no-console:0*/
 
 var $               = require('gulp-load-plugins')();
 var gulp            = require('gulp');
@@ -51,7 +52,7 @@ gulp.task('copy:foundation', function(cb) {
 // Compiles and copies the Foundation for Apps JavaScript, as well as your app's custom JS
 gulp.task('uglify', ['uglify:foundation', 'uglify:app']);
 
-gulp.task('uglify:foundation', function(cb) {
+gulp.task('uglify:foundation', function() {
   var uglify = $.if(global.isProduction, $.uglify()
     .on('error', function (e) {
       console.log(e);

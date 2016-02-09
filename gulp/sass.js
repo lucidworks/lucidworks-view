@@ -10,7 +10,7 @@ gulp.task('sass', function () {
   return gulp.src('client/assets/scss/app.scss')
     .pipe($.sass({
       includePaths: global.paths.sass,
-      outputStyle: (isProduction ? 'compressed' : 'nested'),
+      outputStyle: (global.isProduction ? 'compressed' : 'nested'),
       errLogToConsole: true
     }))
     .pipe($.autoprefixer({
