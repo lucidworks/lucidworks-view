@@ -1,6 +1,6 @@
 /*eslint-env node*/
 /*global global*/
-/*eslint angular/log:0 no-console:0*/
+/*eslint no-console:0*/
 
 var $               = require('gulp-load-plugins')();
 var gulp            = require('gulp');
