@@ -38,7 +38,7 @@
         } else {
           vm.docs = [];
         }
-        $anchorScroll('topOfDocList');
+        $anchorScroll('topOfMainContent');
       });
     }
   }
