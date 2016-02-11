@@ -58,7 +58,7 @@ Transformers are called on each step of a reduction of a key value object.
 ### Writing your own transformers
 You can add transformers in a service or in module config. Just inject QueryBuilderProvider or QueryBuilder.
 
-The registerTransformer function allows you to register any transformers you want for use. These are then used in a keyvalue pair and are triggered via the 'transformer' property of a key value pair.
+The registerTransformer function allows you to register any transformers you want for use. These are then used in a keyvalue object and are triggered via the 'transformer' property of a key value object.
 
 Example registering a transformer
 ```
