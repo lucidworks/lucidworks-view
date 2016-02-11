@@ -5,5 +5,6 @@ angular.module('fusionSeedApp.services', [
   'fusionSeedApp.services.query',
   'fusionSeedApp.services.queryData',
   'fusionSeedApp.services.auth',
+  'fusionSeedApp.services.link',
   'fusionSeedApp.services.authInterceptor'
 ]);

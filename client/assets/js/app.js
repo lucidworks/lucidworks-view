@@ -14,6 +14,7 @@
 
       // Libraries
       'ngOrwell',
+      'rison',
 
       // Fusion Seed App
       'fusionSeedApp.components',
