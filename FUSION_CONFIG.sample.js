@@ -3,6 +3,11 @@ appConfig = { //eslint-disable-line
   // leave them as-is and see what happens in UI.
   // You may need to clear browser history/cache before your changes take affect.
 
+  // Styles and colors: in addition to the functional settings in this file,
+  // you can edit the settings file in client/assets/scss/_settings.scss
+  // There you can edit settings to change look and feel such as colors, and other
+  // basic style parameters.
+
   // localhost is used here for same computer use only.
   // You will need to put a hostname or ip address here if you want to go to
   // view this app from another machine.
@@ -133,7 +138,7 @@ appConfig = { //eslint-disable-line
   // It is recommended to use suggest as it is more performant.
   // It will require some additional configuration.
   // @see https://lucidworks.com/blog/2016/02/04/fusion-plus-solr-suggesters-search-less-typing/
-  
+
   //typeahead_requesthandler: 'suggest', // recommended (requires configuration)
   typeahead_requesthandler: 'select',
 
