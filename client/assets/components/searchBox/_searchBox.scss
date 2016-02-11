@@ -16,7 +16,7 @@ $search-box-typeahead-highlight-color:     $success-color;
 
 @include exports(search-box) {
   .search-box {
-    #searchInput_value {
+    .angucomplete-input {
       margin-bottom: 0px;
     }
 
