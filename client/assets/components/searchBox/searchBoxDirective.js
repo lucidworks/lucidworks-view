@@ -20,7 +20,7 @@
     };
   }
 
-  function Controller($log, $scope, $q, ConfigService, SearchBoxDataService){
+  function Controller($log, $scope, $q, ConfigService, QueryService, SearchBoxDataService){
     'ngInject';
     var ta = this;
     ta.typeaheadField = ConfigService.getTypeaheadField();
@@ -45,11 +45,7 @@
       var deferred = $q.defer();
 
       SearchBoxDataService
-        .getQueryResults({
-          q: userInputString,
-          // make sure results are json.
-          wt: 'json'
-        })
+        .getQueryResults(QueryService.getQueryObject())
         .then(function(resp){
           var objectToResolve = {
             data: resp.response.docs
