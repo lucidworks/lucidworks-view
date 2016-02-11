@@ -1,4 +1,4 @@
-/*global require*/
+/*eslint-env node*/
 var log             = require('connect-logger');
 var argv            = require('yargs').argv;
 var gulp            = require('gulp');

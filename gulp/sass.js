@@ -1,3 +1,4 @@
+/*eslint-env node*/
 var $               = require('gulp-load-plugins')();
 var gulp            = require('gulp');
 var browserSync     = require('browser-sync').create();
@@ -9,7 +10,7 @@ gulp.task('sass', function () {
   return gulp.src('client/assets/scss/app.scss')
     .pipe($.sass({
       includePaths: global.paths.sass,
-      outputStyle: (isProduction ? 'compressed' : 'nested'),
+      outputStyle: (global.isProduction ? 'compressed' : 'nested'),
       errLogToConsole: true
     }))
     .pipe($.autoprefixer({

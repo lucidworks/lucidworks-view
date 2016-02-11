@@ -1,4 +1,4 @@
-/*global require*/
+/*eslint-env node*/
 var $               = require('gulp-load-plugins')();
 var gulp            = require('gulp');
 var argv            = require('yargs').argv;
