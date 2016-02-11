@@ -27,6 +27,7 @@ Acceptable types: ```string```, ```array```, ```key value object```
  - Will be concatenated to the query string
 - ```key value object```
  - A key and value pair that will be concatenated together.
+ - The values in a key value pair can contain an array string or even another key value object, allowing you to nest as many as you need to create your query.
 
 ## Transformers
 types: ```preEncodeWrapper```, ```encode```, ```wrapper```, ```keyValue```, ```join```,
