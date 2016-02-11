@@ -54,13 +54,27 @@ Transformers are called on each step of a reduction of a key value object.
   - Joins the key value to the rest of the query string.
   - Ex. in faceField it joins a the key value with ''
 
+### Writing your own transformers
+You can add transformers in a service or in module config. Just inject QueryBuilderProvider or QueryBuilder.
 
-First the preEncodeWrapper is run, It Transforms the
+The registerTransformer function allows you to register any transformers you want for use. These are then used in a keyvalue pair and are triggered via the 'transformer' property of a key value pair.
 
-  keyValue pair is run, which transforms the syntax into key value pair syntax.
-
-For example on the first level things are typically joined via =. Which effectively runs the following.
- ```
-  key + '=' + value
+Example registering a transformer
 ```
-You can use the keyValueString helper function to make this easier and consistent.
+QueryBuilderProvider.registerTransformer('wrapper', 'fq:field', fqFieldWrapper);
+function fqFieldWrapper(data){
+  return '('+data+')';
+}
+```
+Now every time an object has that transformer it will be output with that wrapper.
+```
+{fq: [{
+  key: 'name',
+  value: 'value',
+  transformer: 'fq:field'
+}]}
+```
+if the above object just had that one transformer it would produce the string.
+```
+ fq=name(value)
+```
