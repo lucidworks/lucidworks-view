@@ -29,6 +29,7 @@
     vm.getLastPage = getLastPage;
     vm.gotoNextPage = gotoNextPage;
     vm.gotoPreviousPage = gotoPreviousPage;
+    vm.showState = 'next';
 
     activate();
 
@@ -46,6 +47,12 @@
           vm.totalPages = 0;
         }
       });
+    }
+
+    function pickPaginatorType(){
+      if(vm.page === 0 && vm.totalPages > 1) return 'next';
+      if(vm.page === vm.getLastPage() && vm.page > 0) return 'previous';
+      if(vm.page !== vm.getLastPage()) return 'both';
     }
 
     /**
