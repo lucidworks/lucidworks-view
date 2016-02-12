@@ -25,13 +25,14 @@ $search-box-typeahead-highlight-color:     $success-color;
     }
 
     .angucomplete-dropdown {
-      position: absolute;
-      left: 0px;
       background: $search-box-typeahead-background;
-      color: $search-box-typeahead-text-color;
       border: $search-box-typeahead-border;
-      z-index: 1000;
+      color: $search-box-typeahead-text-color;
+      left: 0px;
+      padding: 4px;
+      position: absolute;
       text-align: left;
+      z-index: 1000;
 
       .angucomplete-selected-row {
         background: $search-box-typeahead-selected-background;
