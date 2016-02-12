@@ -42,6 +42,7 @@
         if (data.hasOwnProperty('response')) {
           vm.page = PaginateService.getCurrentPage();
           vm.totalPages = PaginateService.getTotalPages();
+          vm.showState =  pickPaginatorType();
         } else {
           vm.page = 0;
           vm.totalPages = 0;
