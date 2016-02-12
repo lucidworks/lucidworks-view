@@ -182,7 +182,7 @@
     }
 
     function getTypeaheadProfile(){
-      return appConfig.typeahaed_query_profiles_id_list[0];
+      return appConfig.typeahead_query_profiles_id_list[0];
     }
 
     function getTypeaheadRequestHandler(){
