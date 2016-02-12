@@ -7,17 +7,18 @@
     .constant('CONFIG_DEFAULT', {
       host: 'http://localhost',
       port: '8764',
-      connectionRealm: 'native',
+      connection_realm: 'native',
       anonymous_access: {
         username: '',
         password: ''
       },
-      useProxy: true,
+      // change default for fusion 2.3
+      use_proxy: true,
       collection: 'MyCollection',
-      queryPipelineIdList: ['default', 'not-default'],
-      queryProfilesIdList: ['default'],
+      query_pipeline_id_list: ['default'],
+      query_profiles_id_list: ['default'],
       use_query_profile: true,
-      searchAppTitle: 'Fusion Seed App',
+      search_app_title: 'Fusion Seed App',
       head_field: 'title',
       subhead_field: 'subtitle',
       description_field: 'description',
@@ -26,12 +27,13 @@
       fields_to_display: [],
       field_display_labels: {},
       sort_fields: [],
-      signalType: 'click',
-      signalsPipeline: '_signals_ingest',
+      signal_type: 'click',
+      signals_pipeline: '_signals_ingest',
+      signals_document_id: 'id',
       facets: [],
       typeahead_use_query_profile: true,
-      typeaheadQueryPipelineIdList: ['default'],
-      typeaheadQueryProfilesIdList: ['default'],
+      typeahead_query_pipeline_id_list: ['default'],
+      typeahead_query_profiles_id_list: ['default'],
       typeahead_fields: ['id'],
       typeahead_requesthandler: 'select'
     })
@@ -65,6 +67,7 @@
      */
     function $get() {
       'ngInject';
+
       return {
         init: init, //TODO: Only for test env
         config: appConfig,
@@ -73,7 +76,6 @@
         getCollectionName: getCollectionName,
         getQueryPipeline: getQueryPipeline,
         getLoginCredentials: getLoginCredentials,
-        getAuthHeader: getAuthHeader,
         getIfQueryProfile: getIfQueryProfile,
         getFieldLabels: getFieldLabels,
         getFieldsToDisplay: getFieldsToDisplay,
@@ -114,11 +116,11 @@
     }
 
     function getQueryPipeline() {
-      return appConfig.queryPipelineIdList[0];
+      return appConfig.query_pipeline_id_list[0];
     }
 
     function getQueryProfile() {
-      return appConfig.queryProfilesIdList[0];
+      return appConfig.query_profiles_id_list[0];
     }
 
     function getLoginCredentials() {
@@ -175,11 +177,11 @@
     }
 
     function getTypeaheadPipeline(){
-      return appConfig.typeaheadQueryPipelineIdList[0];
+      return appConfig.typeahead_query_pipeline_id_list[0];
     }
 
     function getTypeaheadProfile(){
-      return appConfig.typeaheadQueryProfilesIdList[0];
+      return appConfig.typeahaed_query_profiles_id_list[0];
     }
 
     function getTypeaheadRequestHandler(){
@@ -192,10 +194,6 @@
 
     function getFieldsToDisplay() {
       return appConfig.fields_to_display;
-    }
-
-    function getAuthHeader() {
-      return appConfig.authorizationHeader;
     }
 
     function getFieldLabels() {

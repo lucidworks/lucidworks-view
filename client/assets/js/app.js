@@ -47,7 +47,7 @@
 
     $locationProvider.hashPrefix('!');
     // If using a proxy use the same url.
-    if (ConfigServiceProvider.config.useProxy) {
+    if (ConfigServiceProvider.config.use_proxy) {
       var $window = $windowProvider.$get();
       ApiBaseProvider.setEndpoint($window.location.protocol + '//' + $window.location.host +
         '/');

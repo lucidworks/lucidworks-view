@@ -19,7 +19,7 @@ appConfig = { //eslint-disable-line
    * The name of the realm to connect with
    *   default: 'native'
    */
-  connectionRealm: 'native',
+  connection_realm: 'native',
 
   /**
    * Anonymous access
@@ -39,13 +39,13 @@ appConfig = { //eslint-disable-line
   collection: 'MyCollection',
 
   // Please specify a pipeline or profile that you want to leverage with this UI.
-  queryPipelineIdList: ['default'],
-  queryProfilesIdList: ['default'],
+  query_pipeline_id_list: ['default'],
+  query_profiles_id_list: ['default'],
   use_query_profile: true, // Force use of query-profile
 
   // Search UI Title
   // This title appears in a number of places in the app, including page title, and header.
-  searchAppTitle: 'Fusion Seed App',
+  search_app_title: 'Fusion Seed App',
 
   /**
    * Document display
@@ -117,12 +117,12 @@ appConfig = { //eslint-disable-line
    * case is to track click signals for a collection.
    */
   // Signal type for title click.
-  signalType: 'click',
+  signal_type: 'click',
   // This specifies the index pipeline that will be used to submit signals.
-  signalsPipeline: '_signals_ingest', // '_signals_ingest' is the fusion default.
+  signals_pipeline: '_signals_ingest', // '_signals_ingest' is the fusion default.
   // Should be a unique field per document in your collection.
   // used by signals as a reference to the main collection.
-  signalsDocumentId: 'id',
+  signals_document_id: 'id',
 
   /**
    * Typeahead
@@ -131,8 +131,8 @@ appConfig = { //eslint-disable-line
    * type in the search box.
    */
   typeahead_use_query_profile: true,
-  typeaheadQueryPipelineIdList: ['default'],
-  typeahaedQueryProfilesIdList: ['default'],
+  typeahead_query_pipeline_id_list: ['default'],
+  typeahaed_query_profiles_id_list: ['default'],
   typeahead_fields: ['id'],
   // The request handler defines how typeahead gets it's results.
   // It is recommended to use suggest as it is more performant.
