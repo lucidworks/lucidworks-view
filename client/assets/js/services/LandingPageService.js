@@ -7,25 +7,27 @@
 
   function LandingPageService($log, Orwell, $window) {
     'ngInject';
-    var service = {};
 
     activate();
 
+    var service = {};
+
     return service;
+
 
     //////////////
 
     function activate() {
       var resultsObservable = Orwell.getObservable('queryResults');
-      $log.debug('hello results');
 
       resultsObservable.addObserver(function(data) {
-        var landing_pages = _.get(data, 'response.fusion.landing-pages');
+        var landing_pages = _.get(data, 'fusion.landing-pages');
         $log.debug(landing_pages);
         if(angular.isArray(landing_pages)) {
           $window.location.assign(landing_pages[0]);
         }
       });
     }
+
   }
 })();
