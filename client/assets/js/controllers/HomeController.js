@@ -21,7 +21,7 @@
       hc.search = doSearch;
       hc.lastQuery = '*:*';
       hc.logout = logout;
-      hc.appName = ConfigService.config.searchAppTitle;
+      hc.appName = ConfigService.config.search_app_title;
 
       // Use an observable to get the contents of a queryResults after it is updated.
       resultsObservable = Orwell.getObservable('queryResults');
