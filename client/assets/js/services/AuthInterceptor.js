@@ -3,20 +3,7 @@
 
   angular
     .module('fusionSeedApp.services.authInterceptor', ['fusionSeedApp.services.config'])
-    .factory('AuthInterceptor', AuthInterceptor)
-    .factory('SessionInjector', SessionInjector);
-
-
-  function SessionInjector(ConfigService) {
-    'ngInject';
-    var sessionInjector = {
-      request: function(config) {
-        _.assign(config.headers, ConfigService.getAuthHeader());
-        return config;
-      }
-    };
-    return sessionInjector;
-  }
+    .factory('AuthInterceptor', AuthInterceptor);
 
 
   function AuthInterceptor($q, $log, $injector) {

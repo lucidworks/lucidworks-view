@@ -1,28 +1,47 @@
-.search-box{
-  #searchInput_value{
-    margin-bottom: 0px;
-  }
+/*
+  SEARCH BOX
+  ----------
 
-  .angucomplete-holder{
-    position: relative;
-  }
+  The search box lets you search content, and see typeahead results.
+ */
 
-  #searchInput_dropdown {
-    position: absolute;
-    top: 45px;
-    left: 0px;
-    background: white;
-    color: black;
-    border: solid black 1px;
-    z-index: 1000;
-    text-align: left;
+/// @Fusion-seed-app.settings
+// Search-box
+$search-box-typeahead-border:              1px solid #ddd;
+$search-box-typeahead-background:          $body-background;
+$search-box-typeahead-text-color:          grayscale($primary-color);
+$search-box-typeahead-selected-background: $gray-light;
+$search-box-typeahead-highlight-color:     $success-color;
 
-    .angucomplete-selected-row{
-      background: gray;
+
+@include exports(search-box) {
+  .search-box {
+    .angucomplete-input {
+      margin-bottom: 0px;
     }
 
-    .highlight {
-      color: orange;
+    .angucomplete-holder {
+      position: relative;
+    }
+
+    .angucomplete-dropdown {
+      background: $search-box-typeahead-background;
+      border: $search-box-typeahead-border;
+      color: $search-box-typeahead-text-color;
+      left: 0px;
+      padding: 4px;
+      position: absolute;
+      text-align: left;
+      z-index: 1000;
+
+      .angucomplete-selected-row {
+        background: $search-box-typeahead-selected-background;
+      }
+
+      .highlight {
+        color: $search-box-typeahead-highlight-color;
+      }
     }
   }
+
 }

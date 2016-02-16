@@ -5,7 +5,7 @@
     .controller('HomeController', HomeController);
 
 
-  function HomeController($log, $scope, ConfigService, QueryService, Orwell, AuthService) {
+  function HomeController($scope, ConfigService, QueryService, Orwell, AuthService) {
     'ngInject';
     var hc = this; //eslint-disable-line
     var resultsObservable;
@@ -21,7 +21,7 @@
       hc.search = doSearch;
       hc.lastQuery = '*:*';
       hc.logout = logout;
-      hc.appName = ConfigService.config.searchAppTitle;
+      hc.appName = ConfigService.config.search_app_title;
 
       // Use an observable to get the contents of a queryResults after it is updated.
       resultsObservable = Orwell.getObservable('queryResults');
@@ -39,7 +39,6 @@
      * Initializes a new search.
      */
     function doSearch() {
-      $log.info('Searching...');
       var queryObject = {
         q: hc.searchQuery,
         start: 0

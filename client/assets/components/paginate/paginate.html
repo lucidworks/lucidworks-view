@@ -1,19 +1,19 @@
-<div>
-  <ul class="menu-bar" ng-show="vm.page === 0 && vm.totalPages > 1">
+<div ng-switch="vm.showState">
+  <ul class="menu-bar" ng-switch-when="next">
     <li>
       <a ng-click="vm.gotoNextPage()">
         Next &gt;
       </a>
     </li>
   </ul>
-  <ul class="menu-bar" ng-show="vm.page === vm.getlastPage() && vm.page > 0">
+  <ul class="menu-bar" ng-switch-when="previous">
     <li>
       <a ng-click="vm.gotoPreviousPage()">
         &lt; Previous
       </a>
     </li>
   </ul>
-  <ul  class="menu-bar" ng-show="vm.page !== (vm.getlastPage() || 0)">
+  <ul  class="menu-bar" ng-switch-when="both">
     <li>
       <a ng-click="vm.gotoPreviousPage()">&lt;</a>
     </li>

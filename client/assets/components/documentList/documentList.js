@@ -3,7 +3,7 @@
 
   angular
     .module('fusionSeedApp.components.documentList', ['fusionSeedApp.services.config',
-      'ngOrwell'
+      'ngOrwell', 'fusionSeedApp.services.landingPage'
     ])
     .directive('documentList', documentList);
 
@@ -22,7 +22,7 @@
   }
 
 
-  function Controller($log, $scope, $anchorScroll, ConfigService, QueryService, Orwell) {
+  function Controller($log, $scope, $anchorScroll, ConfigService, QueryService, Orwell, LandingPageService) {
     'ngInject';
     var vm = this;
     vm.docs = [];

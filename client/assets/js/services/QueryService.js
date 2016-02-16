@@ -23,7 +23,7 @@
 
     /////////////
 
-    function $get(ConfigService, Orwell, QUERY_OBJECT_DEFAULT, QueryDataService) {
+    function $get($log, ConfigService, Orwell, QUERY_OBJECT_DEFAULT, QueryDataService) {
       'ngInject';
       var queryObservable = Orwell.getObservable('query'),
         queryObject = QUERY_OBJECT_DEFAULT;
@@ -53,6 +53,9 @@
       }
 
       function setQuery(query) {
+        if (ConfigService.config.query_debug) {
+          $log.debug(query);
+        }
         queryObject = _.assign({}, queryObject, query);
         queryObservable.setContent(queryObject);
 

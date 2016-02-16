@@ -8,6 +8,6 @@
   function LoginController(ConfigService) {
     'ngInject';
     var vm = this;
-    vm.appName = ConfigService.config.searchAppTitle;
+    vm.appName = ConfigService.config.search_app_title;
   }
 })();

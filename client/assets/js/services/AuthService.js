@@ -10,7 +10,7 @@
   function AuthService($q, $log, $http, ApiBase, ConfigService) {
     'ngInject';
     var config = ConfigService.config;
-    var realmName = config.connectionRealm;
+    var realmName = config.connection_realm;
 
     return {
       createSession: createSession,
