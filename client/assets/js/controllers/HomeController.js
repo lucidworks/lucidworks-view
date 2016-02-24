@@ -5,23 +5,29 @@
     .controller('HomeController', HomeController);
 
 
-  function HomeController($scope, ConfigService, QueryService, Orwell, AuthService) {
+  function HomeController($log, $scope, ConfigService, QueryService, LinkService, Orwell, AuthService, _) {
+
     'ngInject';
     var hc = this; //eslint-disable-line
     var resultsObservable;
+    var query;
+
+    hc.searchQuery = '*:*';
 
     activate();
-    // initializes a search.
-    doSearch();
 
+    // initializes a search from the URL object
     ////////////////
+    ///
 
     function activate() {
-      hc.searchQuery = '*:*';
       hc.search = doSearch;
-      hc.lastQuery = '*:*';
       hc.logout = logout;
       hc.appName = ConfigService.config.search_app_title;
+
+      query = LinkService.getQueryFromUrl();
+      //Setting the query object... also populating the the view model
+      hc.searchQuery = _.has(query,'q')?query.q:'*:*';
 
       // Use an observable to get the contents of a queryResults after it is updated.
       resultsObservable = Orwell.getObservable('queryResults');
@@ -33,19 +39,22 @@
           hc.numFound = 0;
         }
       });
+
+      QueryService.setQuery(query);
     }
 
     /**
      * Initializes a new search.
      */
     function doSearch() {
-      var queryObject = {
+      $log.info('Searching...');
+
+      query = {
         q: hc.searchQuery,
         start: 0
       };
 
-      QueryService
-        .setQuery(queryObject);
+      LinkService.setQuery(query);
     }
 
     /**
