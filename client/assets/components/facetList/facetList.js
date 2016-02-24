@@ -52,7 +52,7 @@
                 name: value,
                 type: facetType,
                 autoOpen: true,
-                label: value
+                label: ConfigService.getFieldLabels()[value]||value
               };
               facets.push(facet);
             });
