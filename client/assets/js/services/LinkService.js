@@ -12,7 +12,7 @@
     start: 0
   };
 
-  function LinkService($log, $rison, $location, QueryService, BLANK_QUERY, QUERY_PARAM) {
+  function LinkService($log, $rison, $state, $location, QueryService, BLANK_QUERY, QUERY_PARAM) {
     'ngInject';
     return {
       setQuery: setQuery,
@@ -20,9 +20,11 @@
     };
 
     function setQuery(queryObject){
-      var queryObjectString = $rison.stringify(queryObject);
-      $location.search(QUERY_PARAM, queryObjectString)
       QueryService.setQuery(queryObject);
+      var queryObjectString = $rison.stringify(QueryService.getQueryObject());
+      var newStateObject = {};
+      newStateObject[QUERY_PARAM] = queryObjectString;
+      $state.go('home', newStateObject, {notify: false});
     }
 
     function getQueryFromUrl(){
