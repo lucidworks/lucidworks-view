@@ -55,7 +55,7 @@
 
     function switchSort(sort){
       var query = QueryService.getQueryObject();
-      $log.debug(sort);
+      $log.debug('sort', sort);
       switch(sort.type) {
       case 'text':
         if(angular.isUndefined(query.sort)){

@@ -54,7 +54,7 @@
 
       function setQuery(query) {
         if (ConfigService.config.query_debug) {
-          $log.debug(query);
+          $log.debug('query', query);
         }
         queryObject = _.assign({}, queryObject, query);
         queryObservable.setContent(queryObject);

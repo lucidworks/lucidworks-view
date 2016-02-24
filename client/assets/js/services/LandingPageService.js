@@ -22,7 +22,7 @@
 
       resultsObservable.addObserver(function(data) {
         var landing_pages = _.get(data, 'fusion.landing-pages');
-        $log.debug(landing_pages);
+        $log.debug('landing_pages', landing_pages);
         if(angular.isArray(landing_pages)) {
           $window.location.assign(landing_pages[0]);
         }
