@@ -22,7 +22,7 @@
   }
 
   /* @ngInject */
-  function Controller($log, $scope, ConfigService, QueryService) {
+  function Controller($log, $scope, ConfigService, QueryService, LinkService) {
     'ngInject';
     var vm = this;
     vm.switchSort = switchSort;
@@ -60,12 +60,12 @@
       case 'text':
         if(angular.isUndefined(query.sort)){
           query.sort = sort.label+'%20'+sort.order;
-          QueryService.setQuery(query);
+          LinkService.setQuery(query);
         }
         break;
       default:
         delete query.sort;
-        QueryService.setQuery(query);
+        LinkService.setQuery(query);
       }
     }
   }
