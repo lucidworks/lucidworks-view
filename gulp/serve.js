@@ -40,6 +40,8 @@ gulp.task('reloadBrowsers', browserSync.reload);
 
 gulp.task('serve', ['browsersync', 'watch']);
 
+gulp.task('default', ['browsersync', 'watch']);
+
 function getOpenPath() {
   var src = argv.open || '';
   if (!src) {
