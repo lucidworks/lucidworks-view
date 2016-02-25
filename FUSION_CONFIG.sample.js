@@ -99,6 +99,16 @@ appConfig = { //eslint-disable-line
   },
 
   /**
+   * Landing pages
+   *
+   * Fusion allows mapping of specific queries links (or other data) with it's landing pages QP stage.
+   * This seed app can redirect to those landing pages link or display them in the main page.
+   *
+   */
+
+  // landing_page_redirect: false,
+
+  /**
    * Sorts
    *
    * A list of field names to make available for users to sort their results.

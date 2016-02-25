@@ -1,0 +1,8 @@
+<div ng-if="lp.landingPages" class = "card">
+  <div class = "card-section center">
+    <p>See also:</p>
+    <ul class="landing-pages">
+      <li ng-repeat="page in lp.landingPages"><a href="{{page}}">{{page}}</a></li>
+    </ul>
+  </div>
+</div>

@@ -5,25 +5,39 @@
     .module('fusionSeedApp.services.landingPage', [])
     .factory('LandingPageService', LandingPageService);
 
-  function LandingPageService($log, Orwell, $window) {
+  function LandingPageService($log, Orwell, $window, ConfigService) {
     'ngInject';
 
     activate();
 
-    var service = {};
+    var service = {
+      getLandingPagesFromData: getLandingPagesFromData
+    };
 
     return service;
 
 
     //////////////
 
+    /**
+     * Extracts landing pages from Fusion response data.
+     */
+    function getLandingPagesFromData(data){
+      return _.get(data, 'fusion.landing-pages');
+    }
+
+    /**
+     * This activate() is to redirect the window the first landing-page
+     * in case redirect flag in appConfig
+     * is `true`.
+     */
     function activate() {
       var resultsObservable = Orwell.getObservable('queryResults');
 
       resultsObservable.addObserver(function(data) {
-        var landing_pages = _.get(data, 'fusion.landing-pages');
+        var landing_pages = getLandingPagesFromData(data);
         $log.debug('landing_pages', landing_pages);
-        if(angular.isArray(landing_pages)) {
+        if(angular.isArray(landing_pages) && ConfigService.getLandingPageRedirect()){
           $window.location.assign(landing_pages[0]);
         }
       });

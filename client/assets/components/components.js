@@ -6,5 +6,6 @@ angular.module('fusionSeedApp.components', [
   'fusionSeedApp.components.login',
   'fusionSeedApp.components.paginate',
   'fusionSeedApp.components.searchbox',
+  'fusionSeedApp.components.landingpage',
   'fusionSeedApp.components.sort'
 ]);

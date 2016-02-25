@@ -36,7 +36,8 @@
       typeahead_query_pipeline_id_list: ['default'],
       typeahead_query_profiles_id_list: ['default'],
       typeahead_fields: ['id'],
-      typeahead_requesthandler: 'select'
+      typeahead_requesthandler: 'select',
+      landing_page_redirect: true
     })
     /** Config overrides from FUSION_CONFIG.js **/
     .constant('CONFIG_OVERRIDE', window.appConfig) //eslint-disable-line
@@ -85,6 +86,7 @@
         getTypeaheadField: getTypeaheadField,
         getTypeaheadProfile: getTypeaheadProfile,
         getTypeaheadPipeline: getTypeaheadPipeline,
+        getLandingPageRedirect: getLandingPageRedirect,
         getFields: {
           all: getAllFields,
           get: getSpecificField
@@ -129,6 +131,10 @@
         username: appConfig.user,
         passowrd: appConfig.password
       };
+    }
+
+    function getLandingPageRedirect(){
+      return appConfig.landing_page_redirect;
     }
 
     function getCollectionName() {
