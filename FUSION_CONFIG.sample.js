@@ -15,6 +15,8 @@ appConfig = { //eslint-disable-line
   host: 'http://localhost',
   port:'8764',
 
+  // This flag enables requests route through a dev proxy
+  use_proxy: true,
   /**
    * The name of the realm to connect with
    *   default: 'native'
