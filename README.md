@@ -62,4 +62,4 @@ npm test
 ```
 
 ## Configuration
-In order to configure the application you can use the settings in the FUSION_CONFIG.js in this file.
+When you do `npm start` the first time, a copy of FUSION_CONFIG.sample.js is made onto FUSION_CONFIG.js. Once that is created you can modify that (FUSION_CONFIG.js) and watch the app change in realtime in the browser. BrowserSync will reload the app with the new configuration every time you save.
