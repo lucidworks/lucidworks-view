@@ -28,13 +28,8 @@
     }
 
     function getQueryFromUrl(){
-      var urlQuery = $location.search()[QUERY_PARAM];
-      if(urlQuery){
-        return $rison.parse($location.search().query);
-      }
-      else{
-        return BLANK_QUERY;
-      }
+      var queryString = $location.search()[QUERY_PARAM];
+      return queryString?$rison.parse(queryString):BLANK_QUERY;
     }
   }
 })();

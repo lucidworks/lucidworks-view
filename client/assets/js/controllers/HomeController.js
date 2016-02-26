@@ -27,7 +27,7 @@
 
       query = LinkService.getQueryFromUrl();
       //Setting the query object... also populating the the view model
-      hc.searchQuery = _.has(query,'q')?query.q:'*:*';
+      hc.searchQuery = _.get(query,'q','*:*');
 
       // Use an observable to get the contents of a queryResults after it is updated.
       resultsObservable = Orwell.getObservable('queryResults');

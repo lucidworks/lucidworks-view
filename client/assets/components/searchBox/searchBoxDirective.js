@@ -27,7 +27,7 @@
     ta.doTypeaheadSearch = doTypeaheadSearch;
     ta.selectedSomething = selectedSomething;
     ta.updateSearchQuery = updateSearchQuery;
-    ta.initialValue = ta.query;
+    ta.initialValue = decodeURIComponent(ta.query);
 
     //////////
     ///
