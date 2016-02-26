@@ -83,7 +83,7 @@
 
       function getPipelineEndpoint(pipeline, requestHandler){
         return ApiBase.getEndpoint() + 'api/apollo/query-pipelines/' +
-          pipeline + '/collection/' + ConfigService.getCollectionName() +
+          pipeline + '/collections/' + ConfigService.getCollectionName() +
           '/' + requestHandler;
       }
 
