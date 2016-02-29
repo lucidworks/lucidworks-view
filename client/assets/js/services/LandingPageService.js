@@ -1,11 +1,11 @@
-(function() {
+(function () {
   'use strict';
 
   angular
     .module('fusionSeedApp.services.landingPage', [])
     .factory('LandingPageService', LandingPageService);
 
-  function LandingPageService($log, Orwell, $window, ConfigService, FusionHelper) {
+  function LandingPageService($log, Orwell, $window, ConfigService) {
     'ngInject';
 
     activate();
@@ -27,10 +27,10 @@
     function activate() {
       var resultsObservable = Orwell.getObservable('queryResults');
 
-      resultsObservable.addObserver(function(data) {
+      resultsObservable.addObserver(function (data) {
         var landing_pages = service.getLandingPagesFromData(data);
         $log.debug('landing_pages', landing_pages);
-        if(angular.isArray(landing_pages) && ConfigService.getLandingPageRedirect()){
+        if (angular.isArray(landing_pages) && ConfigService.getLandingPageRedirect()) {
           $window.location.assign(landing_pages[0]);
         }
       });
