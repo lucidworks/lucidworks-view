@@ -20,7 +20,7 @@
 
   }
 
-  function Controller(Orwell, PaginateService, QueryService, LinkService) {
+  function Controller(Orwell, PaginateService, LinkService) {
     'ngInject';
     var vm = this;
     vm.page = 0;
@@ -98,9 +98,6 @@
       LinkService.setQuery({
         start: PaginateService.pageToStartRow(page)
       });
-      // QueryService.setQuery({
-      //   start: PaginateService.pageToStartRow(page)
-      // });
     }
 
   }
