@@ -5,7 +5,7 @@
     .controller('HomeController', HomeController);
 
 
-  function HomeController($log, $scope, ConfigService, QueryService, LinkService, Orwell, AuthService, _) {
+  function HomeController($log, $scope, ConfigService, LinkService, Orwell, AuthService, _) {
 
     'ngInject';
     var hc = this; //eslint-disable-line
@@ -41,7 +41,7 @@
         }
       });
 
-      QueryService.setQuery(query);
+      LinkService.setQuery(query);
     }
 
     /**
