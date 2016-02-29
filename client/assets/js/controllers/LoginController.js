@@ -5,13 +5,9 @@
     .module('fusionSeedApp.controllers.login', ['fusionSeedApp.services.config'])
     .controller('LoginController', LoginController);
 
-  function LoginController($state, ConfigService, AuthService) {
+  function LoginController(ConfigService) {
     'ngInject';
     var vm = this;
     vm.appName = ConfigService.config.search_app_title;
-
-    AuthService.getSession().then(function(resp){
-      $state.go('home');
-    });
   }
 })();
