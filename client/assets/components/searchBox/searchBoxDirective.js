@@ -5,7 +5,7 @@
     .module('fusionSeedApp.components.searchbox')
     .directive('searchBox', searchbox);
 
-  function searchbox(){
+  function searchbox() {
     'ngInject';
     return {
       restrict: 'EA',
@@ -20,7 +20,8 @@
     };
   }
 
-  function Controller($log, $scope, $q, ConfigService, QueryService, SearchBoxDataService){
+  function Controller($log, $scope, $q, ConfigService, QueryService,
+    SearchBoxDataService) {
     'ngInject';
     var ta = this;
     ta.typeaheadField = ConfigService.getTypeaheadField();
@@ -30,16 +31,15 @@
     ta.initialValue = decodeURIComponent(ta.query);
 
     //////////
-    ///
 
-    function selectedSomething(object){
-      if(object){
+    function selectedSomething(object) {
+      if (object) {
         var newValue = object.originalObject[ta.typeaheadField];
         ta.query = newValue;
       }
     }
 
-    function updateSearchQuery(inputString){
+    function updateSearchQuery(inputString) {
       ta.query = inputString;
     }
 
@@ -48,13 +48,13 @@
 
       SearchBoxDataService
         .getQueryResults(QueryService.getQueryObject())
-        .then(function(resp){
+        .then(function (resp) {
           var objectToResolve = {
             data: resp.response.docs
           };
           deferred.resolve(objectToResolve);
         })
-        .catch(function(error){
+        .catch(function (error) {
           timeoutPromise.reject(error);
         });
 

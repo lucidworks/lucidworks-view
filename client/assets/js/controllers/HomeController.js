@@ -16,10 +16,11 @@
 
     activate();
 
-    // initializes a search from the URL object
     ////////////////
-    ///
 
+    /**
+     * Initializes a search from the URL object
+     */
     function activate() {
       hc.search = doSearch;
       hc.logout = logout;
