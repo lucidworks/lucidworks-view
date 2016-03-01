@@ -53,7 +53,7 @@
      * @public
      */
     function objectToURLString(obj){
-      return _.reduce(obj, outerReducer, '');
+      return _.reduce(obj, outerReducer, '').replace('#', '%23');
     }
 
     /**
