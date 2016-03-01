@@ -11,8 +11,15 @@ files:
   include: 'client/assets/**/*.s+(a|c)ss'
 # Rule Configuration
 rules:
+  brace-style:
+    style: 1tbs
+  class-name-format:
+    allow-leading-underscore: false
+    convention: hyphenatedlowercase
   extends-before-mixins: 2
   extends-before-declarations: 2
+  leading-zero:
+    include: false
   placeholder-in-extend: 2
   mixins-before-declarations:
     - 2
