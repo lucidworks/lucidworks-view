@@ -21,11 +21,11 @@
     };
 
     function setQuery(queryObject) {
-      QueryService.setQuery(queryObject);
       var queryObjectString = $rison.stringify(QueryService.getQueryObject());
       var newStateObject = {};
       newStateObject[QUERY_PARAM] = queryObjectString;
       $state.go('home', newStateObject, {notify: false});
+      QueryService.setQuery(queryObject);
     }
 
     function getQueryFromUrl() {
