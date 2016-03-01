@@ -49,10 +49,14 @@
       SearchBoxDataService
         .getTypeaheadResults(QueryService.getQueryObject())
         .then(function (resp) {
-          var objectToResolve = {
-            data: resp.response.docs
-          };
-          deferred.resolve(objectToResolve);
+          if(resp.hasOwnProperty('response')) {
+            var objectToResolve = {
+              data: resp.response.docs
+            };
+            deferred.resolve(objectToResolve);
+          } else {
+            deferred.reject('No response docs');
+          }
         })
         .catch(function (error) {
           timeoutPromise.reject(error);
