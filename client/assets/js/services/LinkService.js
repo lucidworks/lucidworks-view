@@ -30,7 +30,7 @@
 
     function getQueryFromUrl() {
       var queryString = $location.search()[QUERY_PARAM];
-      return queryString ? $rison.parse(queryString) : BLANK_QUERY;
+      return queryString ? $rison.parse(decodeURIComponent(queryString)) : BLANK_QUERY;
     }
   }
 })();
