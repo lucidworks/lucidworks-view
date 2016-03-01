@@ -24,6 +24,8 @@
       var queryObjectString = $rison.stringify(QueryService.getQueryObject());
       var newStateObject = {};
       newStateObject[QUERY_PARAM] = queryObjectString;
+      // Adding reloadOnSearch:false for now fixes the double reload bug SU-60
+      // @see http://stackoverflow.com/a/22863315
       $state.go('home', newStateObject, {notify: false, reloadOnSearch: false});
       QueryService.setQuery(queryObject);
     }
