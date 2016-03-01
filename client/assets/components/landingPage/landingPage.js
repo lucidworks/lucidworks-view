@@ -26,7 +26,6 @@
 
     resultsObservable.addObserver(function (data) {
       var landing_pages = LandingPageService.getLandingPagesFromData(data);
-      $log.debug('landing_pages', landing_pages);
       if (angular.isArray(landing_pages)) {
         lp.landingPages = landing_pages;
       } else {
