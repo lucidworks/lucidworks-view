@@ -1,4 +1,8 @@
 <div ng-switch="vm.showState">
+  <div ng-switch-when="neither">
+     There are no results for that query!
+     <div class="info">Try searching on a different term or using different facets to refine your search</div>
+  </div>
   <ul class="menu-bar" ng-switch-when="next">
     <li>
       <a ng-click="vm.gotoNextPage()">

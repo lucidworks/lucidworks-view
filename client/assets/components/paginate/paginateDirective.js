@@ -51,6 +51,7 @@
     }
 
     function pickPaginatorType(){
+      if(vm.totalPages < 1) return 'neither';
       if(vm.page === 0 && vm.totalPages > 1) return 'next';
       if(vm.page === vm.getLastPage() && vm.page > 0) return 'previous';
       if(vm.page !== vm.getLastPage()) return 'both';
