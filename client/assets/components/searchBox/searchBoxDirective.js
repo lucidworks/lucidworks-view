@@ -47,7 +47,7 @@
       var deferred = $q.defer();
 
       SearchBoxDataService
-        .getQueryResults(QueryService.getQueryObject())
+        .getTypeaheadResults(QueryService.getQueryObject())
         .then(function (resp) {
           var objectToResolve = {
             data: resp.response.docs

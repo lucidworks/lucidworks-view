@@ -9,12 +9,12 @@
     'ngInject';
 
     return {
-      getQueryResults: getQueryResults
+      getTypeaheadResults: getTypeaheadResults
     };
 
     ////////////
 
-    function getQueryResults(query){
+    function getTypeaheadResults(query){
       var deferred = $q.defer();
 
       var queryString = QueryBuilder.objectToURLString(query);
