@@ -24,7 +24,7 @@
       var queryObjectString = $rison.stringify(QueryService.getQueryObject());
       var newStateObject = {};
       newStateObject[QUERY_PARAM] = queryObjectString;
-      $state.go('home', newStateObject, {notify: false});
+      $state.go('home', newStateObject, {notify: false, reloadOnSearch: false});
       QueryService.setQuery(queryObject);
     }
 
