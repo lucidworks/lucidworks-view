@@ -55,7 +55,7 @@
     function objectToURLString(obj){
       // Reduce then replace any hashes with the URI compatible equivelent so
       // we don't clobber the rest of the query.
-      return _.reduce(obj, outerReducer, '').replace('#', '%23');
+      return _.reduce(obj, outerReducer, '').replace(/\#/g, '%23');
     }
 
     /**

@@ -12,6 +12,8 @@ ngDescribe({
       it('should turn hash tags into uri encoded components', function(){
         var obj = {q: '#1', start: 0, rows: 10, wt: 'json'};
         expect(deps.QueryBuilder.objectToURLString(obj)).toEqual('q=%231&start=0&rows=10&wt=json');
+        var obj = {q: '1#2#3', start: 0, rows: 10, wt: 'json'};
+        expect(deps.QueryBuilder.objectToURLString(obj)).toEqual('q=1%232%233&start=0&rows=10&wt=json');
       });
     });
     describe('transformers should be registered', function() {
