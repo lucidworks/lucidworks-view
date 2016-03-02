@@ -41,6 +41,12 @@ $search-box-typeahead-highlight-color:     $success-color;
       .highlight {
         color: $search-box-typeahead-highlight-color;
       }
+
+      .angucomplete-title {
+        background-image: url('../img/iconic/expand.svg');
+        background-repeat: no-repeat;
+        background-position: right;
+      }
     }
   }
 
