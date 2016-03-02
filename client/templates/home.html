@@ -30,7 +30,12 @@ animationOut: slideOutLeft
     <!-- Mobile Search bar -->
     <ul class="left menu-bar primary condense">
       <li class="show-for-small-only">
-        <a zf-toggle="sidebar">&hellip;</a>
+        <a zf-toggle="sidebar"><img
+          zf-iconic=""
+          icon="menu"
+          data-direction="top"
+          size="small"
+          class="iconic-color-secondary"></a></a>
       </li>
       <li class="show-for-medium">
         <a class="title">{{hc.appName}}</a>
@@ -47,7 +52,6 @@ animationOut: slideOutLeft
       <span class="inline-label" style="margin-bottom: 0;">
         <!-- TODO Add a class -->
         <search-box query="hc.searchQuery" style="flex:1"></search-box>
-        <!-- <input type="text" placeholder="Search..." ng-model="hc.searchQuery"> -->
         <a href="#" class="success button" ng-click="hc.search()"><img
           zf-iconic=""
           icon="magnifying-glass"
