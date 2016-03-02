@@ -42,10 +42,19 @@ $search-box-typeahead-highlight-color:     $success-color;
         color: $search-box-typeahead-highlight-color;
       }
 
-      .angucomplete-title {
-        background-image: url('../img/iconic/expand.svg');
-        background-repeat: no-repeat;
-        background-position: right;
+      .angucomplete-title{
+        padding: .5rem 1.5rem .5rem .5rem;
+        &:after {
+          content:'';
+          float: right;
+          background-image: url('../img/iconic/expand.svg');
+          transform: scaleX(-1);
+          background-repeat: no-repeat;
+          width: 1.5rem;
+          height: 1.3rem;
+          margin-top: -.2rem;
+          margin-right: -1rem;
+        }
       }
     }
   }
