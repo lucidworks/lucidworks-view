@@ -1,1 +1,1 @@
-appConfig = {};
+appConfig = {};//eslint-disable-line

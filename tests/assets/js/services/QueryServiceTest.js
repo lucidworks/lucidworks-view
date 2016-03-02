@@ -1,3 +1,4 @@
+/*global ngDescribe, describe, it, expect*/
 ngDescribe({
   name: 'QueryService',
   modules: 'application',
