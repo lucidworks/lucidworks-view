@@ -13,8 +13,8 @@
     'ngInject';
     // Register transformers because facet fields can have funky URL syntax.
     QueryBuilderProvider.registerTransformer('keyValue', 'fq:field', fqFieldkeyValueTransformer);
-    QueryBuilderProvider.registerTransformer('encode', 'fq:field', fqFieldEncode);
     QueryBuilderProvider.registerTransformer('preEncodeWrapper', 'fq:field', fqFieldPreEncodeWrapper);
+    QueryBuilderProvider.registerTransformer('encode', 'fq:field', fqFieldEncode);
     QueryBuilderProvider.registerTransformer('wrapper', 'fq:field', fqFieldWrapper);
 
     // TODO properly implement transformer for localParens
@@ -32,12 +32,12 @@
       return QueryBuilderProvider.keyValueString(escapedKey, value, ':');
     }
 
-    function fqFieldEncode(data){
-      return QueryBuilderProvider.encodeURIComponentPlus(data);
-    }
-
     function fqFieldPreEncodeWrapper(data){
       return '"'+data+'"';
+    }
+
+    function fqFieldEncode(data){
+      return QueryBuilderProvider.encodeURIComponentPlus(data);
     }
 
     function fqFieldWrapper(data){
