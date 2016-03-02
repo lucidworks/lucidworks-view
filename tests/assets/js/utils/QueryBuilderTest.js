@@ -88,7 +88,19 @@ ngDescribe({
       });
     });
     describe('helper functions should help transform', function(){
-
+      it('should escape special characters used in lucene', function(){
+        expect(deps.QueryBuilder.escapeSpecialChars('string + - && { } has special chars ? * ||')).toEqual('string \\+ \\- \\\&\\\& \\{ \\} has special chars \\? \\* \\|\\|');
+      });
+      it('should be able to encode URI components with plusses', function(){
+        expect(deps.QueryBuilder.encodeURIComponentPlus('string % $ has spaces')).toEqual('string+%25+%24+has+spaces');
+      });
+      it('should help build key value string', function(){
+        expect(deps.QueryBuilder.keyValueString('key', 'value', 'join')).toEqual('keyjoinvalue');
+      });
+      it('should help build an array joined string', function(){
+        expect(deps.QueryBuilder.arrayJoinString('', ['in','the','array'], '~')).toEqual('in~the~array');
+        expect(deps.QueryBuilder.arrayJoinString('thisIsAString', ['in','the','array'], '~')).toEqual('thisIsAString~in~the~array');
+      });
     });
   }
 });
