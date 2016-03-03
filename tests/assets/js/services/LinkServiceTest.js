@@ -3,7 +3,6 @@ ngDescribe({
   name: 'LinkService',
   modules: 'fusionSeedApp.services',
   inject: ['LinkService', '$rison', '$state', '$location', 'QueryService'],
-  only: true,
   mocks: {
     ng:{
       $location: {
