@@ -68,7 +68,8 @@
 
       query = {
         q: hc.searchQuery,
-        start: 0
+        start: 0,
+        fq: []
       };
 
       LinkService.setQuery(query);
