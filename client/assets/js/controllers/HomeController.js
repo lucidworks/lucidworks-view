@@ -69,6 +69,7 @@
       query = {
         q: hc.searchQuery,
         start: 0,
+        // TODO better solution for turning off fq on a new query
         fq: []
       };
 
