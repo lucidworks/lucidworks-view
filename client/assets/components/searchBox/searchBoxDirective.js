@@ -28,9 +28,7 @@
     ta.doTypeaheadSearch = doTypeaheadSearch;
     ta.selectedSomething = selectedSomething;
     ta.updateSearchQuery = updateSearchQuery;
-    ta.initialValue = ta.query;
-
-    //////////
+    ta.initialValue = _.isArray(ta.query)?ta.query[0]:ta.query;
 
     function selectedSomething(object) {
       if (object) {
