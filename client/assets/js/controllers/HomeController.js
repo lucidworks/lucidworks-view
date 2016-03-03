@@ -67,7 +67,7 @@
       $log.info('Searching...');
 
       query = {
-        q: hc.searchQuery,
+        q: encodeURIComponent(hc.searchQuery),
         start: 0,
         // TODO better solution for turning off fq on a new query
         fq: []
