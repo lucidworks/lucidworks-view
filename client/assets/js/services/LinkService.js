@@ -22,7 +22,10 @@
 
     function setQuery(queryObject) {
       QueryService.setQuery(queryObject);
-      var queryObjectString = $rison.stringify(QueryService.getQueryObject());
+      var queryObjectToBeStringed = _.clone(QueryService.getQueryObject(),true);
+      //Only need the slashes to get encoded, so that app state doesn't change
+      queryObjectToBeStringed.q = queryObjectToBeStringed.q.replace(/\//g,'%2F');
+      var queryObjectString = $rison.stringify(queryObjectToBeStringed);
       var newStateObject = {};
       newStateObject[QUERY_PARAM] = queryObjectString;
       // Adding reloadOnSearch:false for now fixes the double reload bug SU-60
