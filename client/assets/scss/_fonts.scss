@@ -1,0 +1,47 @@
+/* Webfont: Lato-Bold */
+@font-face {
+    font-family: 'LatoWebBold';
+    src: url('../webfonts/Lato-Bold.eot'); /* IE9 Compat Modes */
+    src: url('../webfonts/Lato-Bold.woff2') format('woff2'), /* Modern Browsers */
+         url('../webfonts/Lato-Bold.woff') format('woff'), /* Modern Browsers */
+         url('../webfonts/Lato-Bold.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+/* Webfont: Lato-BoldItalic */
+@font-face {
+    font-family: 'LatoWebBold';
+    src: url('../webfonts/Lato-BoldItalic.eot'); /* IE9 Compat Modes */
+    src: url('../webfonts/Lato-BoldItalic.woff2') format('woff2'), /* Modern Browsers */
+         url('../webfonts/Lato-BoldItalic.woff') format('woff'), /* Modern Browsers */
+         url('../webfonts/Lato-BoldItalic.ttf') format('truetype');
+    font-style: italic;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+/* Webfont: Lato-Regular */
+@font-face {
+    font-family: 'LatoWeb';
+    src: url('../webfonts/Lato-Regular.eot'); /* IE9 Compat Modes */
+    src: url('../webfonts/Lato-Regular.woff2') format('woff2'), /* Modern Browsers */
+         url('../webfonts/Lato-Regular.woff') format('woff'), /* Modern Browsers */
+         url('../webfonts/Lato-Regular.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+/* Webfont: Lato-Italic */
+@font-face {
+    font-family: 'LatoWeb';
+    src: url('../webfonts/Lato-Italic.eot'); /* IE9 Compat Modes */
+    src: url('../webfonts/Lato-Italic.woff2') format('woff2'), /* Modern Browsers */
+         url('../webfonts/Lato-Italic.woff') format('woff'), /* Modern Browsers */
+         url('../webfonts/Lato-Italic.ttf') format('truetype');
+    font-style: italic;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
