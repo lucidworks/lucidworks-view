@@ -13,3 +13,14 @@
 .search-box-outer{
   flex: 1;
 }
+
+.search-label{
+  margin-bottom: 0;
+}
+
+.card-result-comment{
+  .card-get-started,
+  .card-no-results{
+    text-align: center;
+  }
+}
