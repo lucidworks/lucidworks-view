@@ -62,8 +62,9 @@
    *
    * @param  {Service} $document     Document service
    */
-  function run($document) {
+  function run($document, $rootScope, ConfigService) {
     'ngInject';
+    $rootScope.title = ConfigService.config.search_app_title;
     FastClick.attach($document.body);
   }
 })();
