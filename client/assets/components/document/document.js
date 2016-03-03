@@ -1,6 +1,6 @@
 (function () {
   angular.module('fusionSeedApp.components.document', ['fusionSeedApp.services.config',
-      'fusionSeedApp.utils.docs', 'fusionSeedApp.service.signals'
+      'fusionSeedApp.utils.docs', 'fusionSeedApp.services.signals'
     ])
     .directive('document', documentListItem);
 

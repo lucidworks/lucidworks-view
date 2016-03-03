@@ -8,5 +8,5 @@ angular.module('fusionSeedApp.services', [
   'fusionSeedApp.services.link',
   'fusionSeedApp.services.query',
   'fusionSeedApp.services.queryData',
-  'fusionSeedApp.service.signals'
+  'fusionSeedApp.services.signals'
 ]);

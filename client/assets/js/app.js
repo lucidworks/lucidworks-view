@@ -3,7 +3,7 @@
   'use strict';
 
   angular
-    .module('application', [
+    .module('fusionSeedApp', [
       'ui.router',
       'ngAnimate',
 

@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.service.signals', ['fusionSeedApp.services.apiBase',
+    .module('fusionSeedApp.services.signals', ['fusionSeedApp.services.apiBase',
       'fusionSeedApp.services.config'
     ])
     .factory('SignalsService', SignalsService);
