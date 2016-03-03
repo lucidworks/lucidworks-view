@@ -13,7 +13,7 @@
         password: ''
       },
       // change default for fusion 2.3
-      use_proxy: false,
+      use_proxy: true,
       collection: 'MyCollection',
       query_debug: false,
       query_pipeline_id_list: ['default'],

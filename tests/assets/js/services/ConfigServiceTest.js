@@ -1,7 +1,7 @@
 /*global ngDescribe, describe, it, expect*/
 ngDescribe({
   name: 'ConfigService',
-  modules: 'fusionSeedApp',
+  modules: 'fusionSeedApp.services',
   inject: ['ConfigService'],
   tests: function(deps){
     describe('specific little properties getter should be working', function(){

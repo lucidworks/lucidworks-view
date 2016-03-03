@@ -3,7 +3,8 @@
     .module('fusionSeedApp.services.queryData', [
       'fusionSeedApp.services.config',
       'fusionSeedApp.services.apiBase',
-      'fusionSeedApp.utils.queryBuilder'
+      'fusionSeedApp.utils.queryBuilder',
+      'ngOrwell'
     ])
     .config(Config)
     .provider('QueryDataService', QueryDataService);

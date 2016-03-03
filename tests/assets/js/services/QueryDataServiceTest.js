@@ -1,14 +1,19 @@
 /*global ngDescribe, describe, it, expect*/
 ngDescribe({
   name: 'QueryService',
-  modules: 'fusionSeedApp',
-  inject: ['ConfigService', 'QueryDataService', '$httpBackend'],
+  modules: 'fusionSeedApp.services',
+  inject: ['ConfigService', 'QueryDataService', 'ApiBase', '$httpBackend'],
   http:{
     get:{
       'templates/home.html': ''
     }
   },
   tests: function(deps){
+    beforeEach(function(){
+      deps.ConfigService.init(window.appConfig);
+      deps.ApiBase.setEndpoint(deps.ConfigService.getFusionUrl());
+    });
+
     describe('it should make the right call', function(){
       it('with the right query', function(){
         deps.$httpBackend.expectGET('http://localhost:8764/api/apollo/collections/MyCollection/query-profiles/default/select?q=hello&wt=json').respond({'key':'value'});
