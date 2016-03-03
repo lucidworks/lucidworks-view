@@ -33,7 +33,7 @@
     function selectedSomething(object) {
       if (object) {
         var newValue = object.originalObject[ta.typeaheadField];
-        ta.query = newValue;
+        ta.query = _.isArray(newValue)?newValue[0]:newValue;;
       }
     }
 
