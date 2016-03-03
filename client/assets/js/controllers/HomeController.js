@@ -25,6 +25,8 @@
       hc.search = doSearch;
       hc.logout = logout;
       hc.appName = ConfigService.config.search_app_title;
+      hc.status = 'loading';
+      hc.lastQuery = '';
 
       query = LinkService.getQueryFromUrl();
       //Setting the query object... also populating the the view model
@@ -39,9 +41,23 @@
         } else {
           hc.numFound = 0;
         }
+        updateStatus();
       });
 
       LinkService.setQuery(query);
+    }
+
+    function updateStatus(){
+      var status = '';
+      if(hc.numFound === 0){
+        status = 'no-results';
+        if(hc.lastQuery === ''){
+          status = 'get-started';
+        }
+      } else {
+        status = 'normal';
+      }
+      hc.status = status;
     }
 
     /**
