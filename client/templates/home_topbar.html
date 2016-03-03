@@ -4,7 +4,7 @@
     <form name="searchForm" class="show-for-medium" ng-submit="hc.search()">
       <span class="inline-label" style="margin-bottom: 0;">
         <!-- TODO Add a class -->
-        <search-box query="hc.searchQuery" class="search-box-outer" style="flex:1"></search-box>
+        <search-box query="hc.searchQuery" class="search-box-outer"></search-box>
         <a href="#" class="success button" ng-click="hc.search()"><img
           zf-iconic=""
           icon="magnifying-glass"
@@ -40,8 +40,7 @@
 <nav class="primary title-bar show-for-small-only">
   <form ng-submit="hc.search()">
     <span class="inline-label" style="margin-bottom: 0;">
-      <!-- TODO Add a class -->
-      <search-box query="hc.searchQuery" style="flex:1"></search-box>
+      <search-box query="hc.searchQuery" class="search-box-outer"></search-box>
       <a href="#" class="success button" ng-click="hc.search()"><img
         zf-iconic=""
         icon="magnifying-glass"
