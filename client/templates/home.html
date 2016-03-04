@@ -9,7 +9,68 @@ controller: HomeController as hc
 <div class="grid-frame vertical">
 
   <!-- Top Bar -->
-  <div ng-include="'templates/home_topbar.html'"></div>
+  <nav class="primary title-bar">
+    <span class="center">
+      <form name="searchForm" class="show-for-medium" ng-submit="hc.search()">
+        <span class="inline-label search-label">
+          <search-box query="hc.searchQuery" class="search-box-outer"></search-box>
+          <a href="#" class="success button" ng-click="hc.search()"><img
+            zf-iconic=""
+            icon="magnifying-glass"
+            data-direction="top"
+            size="small"
+            class="iconic-color-secondary"></a>
+        </span>
+      </form>
+      <span class="show-for-small-only">
+        <a class="title">{{hc.appName}}</a>
+      </span>
+    </span>
+    <!-- Mobile Search bar -->
+    <ul class="left menu-bar primary condense">
+      <li class="show-for-small-only">
+        <a zf-toggle="sidebar"><img
+          zf-iconic=""
+          icon="menu"
+          data-direction="top"
+          size="small"
+          class="iconic-color-secondary"></a></a>
+      </li>
+      <li class="show-for-medium">
+        <a class="title">{{hc.appName}}</a>
+      </li>
+    </ul>
+    <ul class="right menu-bar primary condense">
+      <li class="show-for-medium">
+        <a ui-sref="login" ng-click="hc.logout()">Logout</a>
+      </li>
+    </ul>
+  </nav>
+  <nav class="primary title-bar show-for-small-only">
+    <form ng-submit="hc.search()">
+      <span class="inline-label search-label">
+        <search-box query="hc.searchQuery" class="search-box-outer"></search-box>
+        <a href="#" class="success button" ng-click="hc.search()"><img
+          zf-iconic=""
+          icon="magnifying-glass"
+          data-direction="top"
+          size="small"
+          class="iconic-color-secondary"></a>
+      </span>
+    </form>
+  </nav>
+  <!-- Secondary Top Bar -->
+  <div class="title-bar">
+    <span class="left">
+      <div class="row">
+        <div class="small-2 columns">{{hc.numFound}} results</div>
+      </div>
+    </span>
+    <span class="right">
+      <sort></sort>
+    </span>
+  </div>
+
 
   <!-- Main Content Frame -->
   <div class="grid-block vertical" ng-include="'templates/home_main-content-frame.html'"></div>

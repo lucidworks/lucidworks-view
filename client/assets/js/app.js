@@ -65,6 +65,6 @@
   function run($document, $rootScope, ConfigService) {
     'ngInject';
     $rootScope.title = ConfigService.config.search_app_title;
-    FastClick.attach($document.body);
+    // FastClick.attach($document.body);
   }
 })();

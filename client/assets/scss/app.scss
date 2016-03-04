@@ -1,3 +1,4 @@
+@import "fonts";
 @import "settings";
 @import "foundation";
 @import "../components/components";
@@ -12,4 +13,16 @@
 
 .search-box-outer{
   flex: 1;
+}
+
+.search-label{
+  margin-bottom: 0;
+}
+
+.card-result-comment {
+  margin-top: .75rem;
+  .card-get-started,
+  .card-no-results {
+    text-align: center;
+  }
 }

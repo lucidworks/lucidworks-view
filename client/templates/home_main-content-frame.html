@@ -18,19 +18,19 @@
   <div class="large-9 medium-8 small-12 grid-block">
     <div class="grid-content">
       <a name="topOfMainContent"></a>
-      <div class="card" ng-switch="hc.status">
-        <div class="card-section center" ng-switch-when="normal">
+      <div class="card card-result-comment" ng-switch="hc.status">
+        <div class="card-section center card-normal" ng-switch-when="normal">
           Showing Results for "{{hc.lastQuery}}".
         </div>
-        <div class="card-section center" ng-switch-when="get-started">
+        <div class="card-section center card-get-started" ng-switch-when="get-started">
           <img zf-iconic="" icon="empty_state" data-direction="top" size="medium" />
           <h2>Your results will live here</h2>
-          <p>Try searching any query above in the search box</p>
+          <p class="subheader">Try searching any query above in the search box</p>
         </div>
-        <div class="card-section center" ng-switch-when="no-results">
+        <div class="card-section center card-no-results" ng-switch-when="no-results">
           <img zf-iconic="" icon="no_results" data-direction="top" size="medium" />
-          <h2>There are no results for "<span class="highlight">{{hc.lastQuery}}</span>"</h2>
-          <p class="info">Try searching on a different term or using different facets to refine your search</p>
+          <h2>There are no results for &ldquo;<span class="highlight">{{hc.lastQuery}}</span>&rdquo;</h2>
+          <p class="subheader">Try searching on a different term or using different facets to refine your search</p>
         </div>
       </div>
       <landing-page></landing-page>
