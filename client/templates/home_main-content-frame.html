@@ -25,12 +25,12 @@
         <div class="card-section center card-get-started" ng-switch-when="get-started">
           <img zf-iconic="" icon="empty_state" data-direction="top" size="medium" />
           <h2>Your results will live here</h2>
-          <p>Try searching any query above in the search box</p>
+          <p class="subheader">Try searching any query above in the search box</p>
         </div>
         <div class="card-section center card-no-results" ng-switch-when="no-results">
           <img zf-iconic="" icon="no_results" data-direction="top" size="medium" />
           <h2>There are no results for "<span class="highlight">{{hc.lastQuery}}</span>"</h2>
-          <p class="info">Try searching on a different term or using different facets to refine your search</p>
+          <p class="subheader">Try searching on a different term or using different facets to refine your search</p>
         </div>
       </div>
       <landing-page></landing-page>
