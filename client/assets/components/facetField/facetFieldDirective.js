@@ -46,10 +46,17 @@
       parseFacets(resultsObservable.getContent());
     }
 
+    /**
+     * Toggles the more button for the facet.
+     */
     function toggleMore(){
       vm.more = !vm.more;
     }
 
+   /**
+    * Gets the amount to limit by
+    * @return {integer|undefined} The amount to return or undefined.
+    */
     function getLimitAmount(){
       if(vm.more){
         return undefined;

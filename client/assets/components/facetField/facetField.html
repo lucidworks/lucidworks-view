@@ -10,7 +10,7 @@
         <label for="{{facet.hash}}">{{facet.title}} <span>({{facet.amount}})</span></label>
       </li>
       <li class="facet-more-link right" ng-if="vm.facetCounts.length > 5">
-        <a ng-click="vm.toggleMore()">{{(vm.facetCounts.length - 5)}} {{vm.more ? 'less' :' more'}}</a>
+        <a ng-click="vm.toggleMore()">{{(vm.facetCounts.length - vm.getLimitAmount())}} {{vm.more ? 'less' :' more'}}</a>
       </li>
     </ul>
   </div>
