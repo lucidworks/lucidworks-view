@@ -20,11 +20,27 @@
       getQueryFromUrl: getQueryFromUrl
     };
 
+    function encodeSlashes(queryObject){
+      var newQueryObject = {};
+      _.forIn(queryObject, function(item, key){
+        if(_.isArray(item) || _.isObject(item)){
+          newQueryObject[key] = encodeSlashes(item);
+        }
+        else if(_.isString(item)){
+          newQueryObject[key] = item.replace(/\//g,'%2F');
+        }
+        else{
+          newQueryObject[key] = item;
+        }
+      });
+      return newQueryObject;
+    }
+
     function setQuery(queryObject) {
       QueryService.setQuery(queryObject);
       var queryObjectToBeStringed = _.clone(QueryService.getQueryObject(),true);
       //Only need the slashes to get encoded, so that app state doesn't change
-      queryObjectToBeStringed.q = queryObjectToBeStringed.q.replace(/\//g,'%2F');
+      queryObjectToBeStringed = encodeSlashes(queryObjectToBeStringed);
       var queryObjectString = $rison.stringify(queryObjectToBeStringed);
       var newStateObject = {};
       newStateObject[QUERY_PARAM] = queryObjectString;
