@@ -82,7 +82,6 @@
     function setQuery(queryObject) {
       QueryService.setQuery(queryObject);
       var queryObjectToBeStringed = _.clone(QueryService.getQueryObject(),true);
-      $log.info('queryObjectToBeStringed',queryObjectToBeStringed);
       //Only need the slashes to get encoded, so that app state doesn't change
       queryObjectToBeStringed = encodeSlashes(queryObjectToBeStringed);
       var queryObjectString = $rison.stringify(queryObjectToBeStringed);
