@@ -136,6 +136,9 @@
           var removed = _.remove(keyObj.values, function(value){return value === facet.title;});
           // CASE: value didn't previously exist add to values.
           if(removed.length === 0){
+            if(!keyObj.hasOwnProperty('values')){
+              keyObj.values = [];
+            }
             keyObj.values.push(facet.title);
           }
           // CASE: there are still values in facet attach keyobject back to query.
