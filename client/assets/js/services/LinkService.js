@@ -99,7 +99,7 @@
         queryObject = queryString ? $rison.parse(decodeURIComponent(queryString)):BLANK_QUERY;
       }
       catch(e){
-        $log.info('Cannot parse query URL');
+        $log.error('Cannot parse query URL');
         queryObject = BLANK_QUERY;
       }
       return treatArrays(queryObject);
