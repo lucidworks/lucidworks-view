@@ -20,6 +20,9 @@
       getQueryFromUrl: getQueryFromUrl
     };
 
+    /**
+     * Traverses the whole object tree and encodes slashes
+     */
     function encodeSlashes(queryObject){
       var newQueryObject = {};
       _.forIn(queryObject, function(item, key){
@@ -36,6 +39,9 @@
       return newQueryObject;
     }
 
+    /**
+     * Checks if the `item` is a possible array.
+     */
     function isArrayable(item){
       var stuff = _.keys(item);
 
@@ -49,6 +55,9 @@
       return stuff.length === stuffToCheck.length;
     }
 
+    /**
+     * Converts a possible array to array
+     */
     function convertToArray(item){
       var newArray = [];
       var newArrayLength = 0;
@@ -60,6 +69,9 @@
       return newArray;
     }
 
+    /**
+     * Traverses the whole object tree, if there is a possible array converts that to an array
+     */
     function treatArrays(queryObject){
       var newQueryObject = _.isArray(queryObject)?[]:{};
       _.forIn(queryObject, function(item, key){
@@ -79,6 +91,13 @@
       return newQueryObject;
     }
 
+    /**
+     * [setQuery Sets the query object that will be updated
+     * on the URL bar and get passed
+     * on to QueryService
+     * for a search]
+     * @param {[object]} queryObject []
+     */
     function setQuery(queryObject) {
       QueryService.setQuery(queryObject);
       var queryObjectToBeStringed = _.clone(QueryService.getQueryObject(),true);
@@ -92,6 +111,9 @@
       $state.go('home', newStateObject, {notify: false, reloadOnSearch: false});
     }
 
+    /**
+     * Gets query object from URL
+     */
     function getQueryFromUrl() {
       var queryString = $location.search()[QUERY_PARAM];
       var queryObject;
