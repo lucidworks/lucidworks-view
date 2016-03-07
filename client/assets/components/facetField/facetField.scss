@@ -1,5 +1,9 @@
 .block-list li.facet-active > label,
-.block-list li.facet-active:hover > label{
+.block-list li.facet-active:hover > label {
   color: $warning-color;
   font-weight: bold;
+}
+.block-list li.facet-more-link a,
+.block-list li.facet-more-link a:hover {
+  color: $warning-color;
 }

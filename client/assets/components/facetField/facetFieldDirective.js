@@ -26,6 +26,9 @@
     var vm = this;
     vm.facetCounts = [];
     vm.toggleFacet = toggleFacet;
+    vm.toggleMore = toggleMore;
+    vm.getLimitAmount = getLimitAmount;
+    vm.more = false;
     var resultsObservable = Orwell.getObservable('queryResults');
 
     activate();
@@ -41,6 +44,17 @@
       resultsObservable.addObserver(parseFacets);
       // initialize the facets.
       parseFacets(resultsObservable.getContent());
+    }
+
+    function toggleMore(){
+      vm.more = !vm.more;
+    }
+
+    function getLimitAmount(){
+      if(vm.more){
+        return undefined;
+      }
+      return 5;
     }
 
     /**
