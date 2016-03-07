@@ -95,7 +95,14 @@
 
     function getQueryFromUrl() {
       var queryString = $location.search()[QUERY_PARAM];
-      var queryObject = queryString ? $rison.parse(decodeURIComponent(queryString)):BLANK_QUERY;
+      var queryObject;
+      try{
+        queryObject = queryString ? $rison.parse(decodeURIComponent(queryString)):BLANK_QUERY;
+      }
+      catch(e){
+        $log.info('Cannot parse query URL');
+        queryObject = BLANK_QUERY;
+      }
       return treatArrays(queryObject);
     }
   }
