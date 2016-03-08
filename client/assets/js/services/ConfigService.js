@@ -117,11 +117,11 @@
     }
 
     function getQueryPipeline() {
-      return appConfig.query_pipeline_id[0];
+      return appConfig.query_pipeline_id;
     }
 
     function getQueryProfile() {
-      return appConfig.query_profile_id[0];
+      return appConfig.query_profile_id;
     }
 
     function getLoginCredentials() {
@@ -182,11 +182,11 @@
     }
 
     function getTypeaheadPipeline(){
-      return appConfig.typeahead_query_pipeline_id[0];
+      return appConfig.typeahead_query_pipeline_id;
     }
 
     function getTypeaheadProfile(){
-      return appConfig.typeahead_query_profile_id[0];
+      return appConfig.typeahead_query_profile_id;
     }
 
     function getTypeaheadRequestHandler(){
