@@ -24,14 +24,16 @@
   "scripts": {
     "start": "gulp",
     "build": "gulp build --production",
-    "test": "./node_modules/.bin/karma start karma.conf.js"
+    "test": "karma start karma.conf.js"
   },
   "devDependencies": {
+    "bower": "1.7.7",
     "browser-sync": "^2.11.0",
     "connect-history-api-fallback": "^1.1.0",
     "connect-logger": "0.0.1",
-    "eslint-config-angular": "^0.4.0",
-    "eslint-plugin-angular": "^0.15.0",
+    "eslint": "1.10.3",
+    "eslint-config-angular": "0.4.0",
+    "eslint-plugin-angular": "0.15.0",
     "front-router": "^1.0.0",
     "gulp": "^3.9.0",
     "gulp-angular-templatecache": "^1.8.0",
