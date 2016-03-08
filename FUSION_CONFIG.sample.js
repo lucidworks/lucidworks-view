@@ -126,7 +126,7 @@ appConfig = { //eslint-disable-line
   /**
    * Signals
    *
-   * Allow the collection of data regaurding search results. The most typical use
+   * Allow the collection of data regarding search results. The most typical use
    * case is to track click signals for a collection.
    */
   // Signal type for title click.
