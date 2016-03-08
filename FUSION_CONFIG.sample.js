@@ -39,8 +39,8 @@ appConfig = { //eslint-disable-line
   collection: 'MyCollection',
 
   // Please specify a pipeline or profile that you want to leverage with this UI.
-  query_pipeline_id_list: ['default'],
-  query_profiles_id_list: ['default'],
+  query_pipeline_id: 'default',
+  query_profile_id: 'default',
   use_query_profile: true, // Force use of query-profile
 
   // Search UI Title
@@ -144,8 +144,8 @@ appConfig = { //eslint-disable-line
    * type in the search box.
    */
   typeahead_use_query_profile: true,
-  typeahead_query_pipeline_id_list: ['default'],
-  typeahaed_query_profiles_id_list: ['default'],
+  typeahead_query_pipeline_id: 'default',
+  typeahaed_query_profile_id: 'default',
   typeahead_fields: ['id'],
   // The request handler defines how typeahead gets it's results.
   // It is recommended to use suggest as it is more performant.

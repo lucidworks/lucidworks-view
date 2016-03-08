@@ -16,8 +16,8 @@
       use_proxy: true,
       collection: 'MyCollection',
       query_debug: false,
-      query_pipeline_id_list: ['default'],
-      query_profiles_id_list: ['default'],
+      query_pipeline_id: 'default',
+      query_profile_id: 'default',
       use_query_profile: true,
       search_app_title: 'Fusion Seed App',
       head_field: 'title',
@@ -33,8 +33,8 @@
       signals_document_id: 'id',
       facets: [],
       typeahead_use_query_profile: true,
-      typeahead_query_pipeline_id_list: ['default'],
-      typeahead_query_profiles_id_list: ['default'],
+      typeahead_query_pipeline_id: 'default',
+      typeahead_query_profile_id: 'default',
       typeahead_fields: ['id'],
       typeahead_requesthandler: 'select',
       landing_page_redirect: true
@@ -111,19 +111,17 @@
 
     /**
      * Returns a fusion URL complete w/ endslash.
-     *
-     * @return {[type]} [description]
      */
     function getFusionUrl() {
       return appConfig.host + ':' + appConfig.port + '/';
     }
 
     function getQueryPipeline() {
-      return appConfig.query_pipeline_id_list[0];
+      return appConfig.query_pipeline_id[0];
     }
 
     function getQueryProfile() {
-      return appConfig.query_profiles_id_list[0];
+      return appConfig.query_profile_id[0];
     }
 
     function getLoginCredentials() {
@@ -184,11 +182,11 @@
     }
 
     function getTypeaheadPipeline(){
-      return appConfig.typeahead_query_pipeline_id_list[0];
+      return appConfig.typeahead_query_pipeline_id[0];
     }
 
     function getTypeaheadProfile(){
-      return appConfig.typeahead_query_profiles_id_list[0];
+      return appConfig.typeahead_query_profile_id[0];
     }
 
     function getTypeaheadRequestHandler(){
