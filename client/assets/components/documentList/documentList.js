@@ -22,10 +22,11 @@
   }
 
 
-  function Controller($scope, $anchorScroll, Orwell) {
+  function Controller($scope, $sce, $anchorScroll, Orwell) {
     'ngInject';
     var vm = this;
     vm.docs = [];
+    vm.highlighting = {};
 
     activate();
 
@@ -33,10 +34,27 @@
       var resultsObservable = Orwell.getObservable('queryResults');
 
       resultsObservable.addObserver(function (data) {
+        console.log("in dcl");
         if (data.hasOwnProperty('response')) {
           vm.docs = data.response.docs;
         } else {
           vm.docs = [];
+        }
+        if (data.hasOwnProperty('highlighting')){
+          _.each(data.highlighting, function(value, key, list){
+            var vals = {};
+            if (value) {
+              _.each(Object.keys(value), function (key) {
+                var val = value[key];
+                _.each(val, function(high){
+                  vals[key] = $sce.trustAsHtml(high);
+                })
+              });
+              vm.highlighting[key] = vals;
+            }
+          })
+        } else {
+          vm.highlighting = {};
         }
         $anchorScroll('topOfMainContent');
       });

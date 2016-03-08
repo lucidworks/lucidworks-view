@@ -6,3 +6,5 @@ build
 .sass-cache
 tmp
 FUSION_CONFIG.js
+.idea
+*.iml

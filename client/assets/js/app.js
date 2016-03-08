@@ -6,6 +6,7 @@
     .module('fusionSeedApp', [
       'ui.router',
       'ngAnimate',
+      'ngSanitize',
 
       // Foundation
       'foundation',

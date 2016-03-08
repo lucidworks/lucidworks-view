@@ -30,31 +30,34 @@
 
     function activate() {
       dc.doc = processDocument(DocsHelper.concatMultivaluedFields(dc.doc));
+      dc.doc_type = dc.doc["_lw_data_source_type_s"];
+      $log.info("Doc Type: " + dc.doc_type);
     }
 
+
+
     function processDocument(doc) {
-      var returnDoc = {};
 
       //Populate the additional fields to display
-      returnDoc.fieldsToDisplay = DocsHelper.populateFieldLabels(
+      doc.fieldsToDisplay = DocsHelper.populateFieldLabels(
         DocsHelper.selectFields(doc, ConfigService.getFieldsToDisplay()),
         ConfigService.getFieldLabels()
       );
 
-      returnDoc.lw_head = getField('head', doc) ?
+      doc.lw_head = getField('head', doc) ?
         getField('head', doc) : 'Title Field Not Found';
 
-      returnDoc.lw_subhead = getField('subhead', doc);
+      doc.lw_subhead = getField('subhead', doc);
 
-      returnDoc.lw_description = getField('description', doc);
+      doc.lw_description = getField('description', doc);
 
-      returnDoc.lw_image = getField('image', doc);
+      doc.lw_image = getField('image', doc);
 
-      returnDoc.lw_url = getField('head_url', doc);
+      doc.lw_url = getField('head_url', doc);
 
-      returnDoc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(doc);
-
-      return returnDoc;
+      doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(doc);
+      $log.info(doc);
+      return doc;
     }
 
     /**
