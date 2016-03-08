@@ -3,15 +3,21 @@ appConfig = { //eslint-disable-line
   // leave them as-is and see what happens in UI.
   // You may need to clear browser history/cache before your changes take affect.
 
-  // Styles and colors: in addition to the functional settings in this file,
-  // you can edit the settings file in client/assets/scss/_settings.scss
-  // There you can edit settings to change look and feel such as colors, and other
-  // basic style parameters.
+  /**
+   * Styles and colors
+   *
+   * In addition to the functional settings in this file,
+   * you can edit the settings file in client/assets/scss/_settings.scss
+   *
+   * There you can edit settings to change look and feel such as colors, and other
+   * basic style parameters.
+   */
 
-  // localhost is used here for same computer use only.
-  // You will need to put a hostname or ip address here if you want to go to
-  // view this app from another machine.
-  // @type string
+  /**
+   * localhost is used here for same computer use only.
+   * You will need to put a hostname or ip address here if you want to go to
+   * view this app from another machine.
+   */
   host: 'http://localhost',
   port:'8764',
 
