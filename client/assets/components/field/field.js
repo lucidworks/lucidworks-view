@@ -53,7 +53,7 @@
         }
       }
       //only shorten if not highlighting, since highlighing in solr can control snippet size there and b/c we have a Trusted object and not a plain old string
-      if (hasHighlight == false && result && result.length > maxlength){
+      if (hasHighlight === false && result && result.length > maxlength){
         //trim it, ideally on whitespace
         var idx = result.lastIndexOf(' ', maxlength);
         if (idx != -1){
@@ -62,7 +62,7 @@
           //we can't find simple whitespace, so just trim arbitrarily
           result = result.substring(0, maxlength);
         }
-        result += "...";
+        result += '...';
       }
       return result;
     }
