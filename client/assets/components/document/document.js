@@ -30,8 +30,8 @@
 
     function activate() {
       dc.doc = processDocument(DocsHelper.concatMultivaluedFields(dc.doc));
-      dc.doc_type = dc.doc["_lw_data_source_type_s"];
-      $log.info("Doc Type: " + dc.doc_type);
+      dc.doc_type = dc.doc['_lw_data_source_type_s'];
+      $log.info('Doc Type: ' + dc.doc_type);
     }
 
 
