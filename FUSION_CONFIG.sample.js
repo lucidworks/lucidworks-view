@@ -38,7 +38,7 @@ appConfig = { //eslint-disable-line
    */
   anonymous_access: {
     username: 'admin',
-    password: 'password123'
+  //  password: 'password123'
   },
 
   // The name of your collection
