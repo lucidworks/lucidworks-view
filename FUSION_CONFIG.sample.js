@@ -49,8 +49,23 @@ appConfig = { //eslint-disable-line
 
   /**
    * Document display
+   * Fusion seed app is set up to get you started with the following field types.
    *
-   * These parameters change the field that is displayed in the document.
+   * Optionally for each data type you can turn on the ability to display all fields
+   * in a simple list.
+   *
+   * Customizing document display.
+   * You can add your own document displays with Fusion Seed App. You will have to
+   * write an html template and add a new directive for your document type.
+   */
+
+  /**
+   * Fallback Document display
+   *
+   * This applies only to document displays that are not handled by the handful of
+   * document templates used above.
+   *
+   * These parameters change the fields that are displayed in the fallback document display.
    * You can also add additional fields by editing the document template.
    * Document template is located at:
    *   your_project_directory/client/assets/components/document/document.html
