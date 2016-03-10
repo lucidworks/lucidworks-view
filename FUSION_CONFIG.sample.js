@@ -50,8 +50,10 @@ appConfig = { //eslint-disable-line
   use_query_profile: true, // Force use of query-profile
 
   // Search UI Title
-  // This title appears in a number of places in the app, including page title, and header.
+  // This title appears in a number of places in the app, including page title.
+  // In the header it is replaced by the logo if one is provided.
   search_app_title: 'Fusion Seed App',
+  logo_location: 'assets/img/logo/lucidworks-white.svg',
 
   /**
    * Document display

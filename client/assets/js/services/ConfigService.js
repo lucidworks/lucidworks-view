@@ -15,6 +15,7 @@
       // change default for fusion 2.3
       use_proxy: true,
       collection: 'MyCollection',
+      logo_location: 'assets/img/logo/lucidworks-white.svg',
       query_debug: false,
       query_pipeline_id: 'default',
       query_profile_id: 'default',
