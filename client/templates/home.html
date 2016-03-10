@@ -23,7 +23,7 @@ controller: HomeController as hc
         </span>
       </form>
       <span class="show-for-small-only">
-        <a class="title"><img ng-src="{{hc.logoLocation}}" /><span ng-if="!hc.logoLocation">{{hc.appName}}</span></a>
+        <a class="title"><img ng-if="hc.logoLocation" ng-src="{{hc.logoLocation}}" /><span ng-if="!hc.logoLocation">{{hc.appName}}</span></a>
       </span>
     </span>
     <!-- Mobile Search bar -->
@@ -37,7 +37,7 @@ controller: HomeController as hc
           class="iconic-color-secondary"></a></a>
       </li>
       <li class="show-for-medium">
-        <a class="title"><img ng-src="{{hc.logoLocation}}" /><span ng-if="!hc.logoLocation">{{hc.appName}}</span></a>
+        <a class="title"><img ng-if="hc.logoLocation" ng-src="{{hc.logoLocation}}" /><span ng-if="!hc.logoLocation">{{hc.appName}}</span></a>
       </li>
     </ul>
     <ul class="right menu-bar primary condense">
