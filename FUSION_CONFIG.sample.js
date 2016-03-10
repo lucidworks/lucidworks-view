@@ -53,6 +53,8 @@ appConfig = { //eslint-disable-line
   // This title appears in a number of places in the app, including page title.
   // In the header it is replaced by the logo if one is provided.
   search_app_title: 'Fusion Seed App',
+  // Specify the path to your logo relative to the root app folder '/'.
+  // Or use an empty string if you don't want to use a logo.
   logo_location: 'assets/img/logo/lucidworks-white.svg',
 
   /**

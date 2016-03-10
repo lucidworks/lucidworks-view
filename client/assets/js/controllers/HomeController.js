@@ -25,6 +25,7 @@
       hc.search = doSearch;
       hc.logout = logout;
       hc.appName = ConfigService.config.search_app_title;
+      hc.logoLocation = ConfigService.config.logo_location;
       hc.status = 'loading';
       hc.lastQuery = '';
 
