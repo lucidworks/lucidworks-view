@@ -4,7 +4,7 @@ var $               = require('gulp-load-plugins')();
 var gulp            = require('gulp');
 var fs              = require('fs');
 
-// Copies your app's vonfig
+// Copies your app's config
 gulp.task('copy:config', function() {
   if(fs.existsSync(global.paths.configJS[0])){ //If the file exists use that, or copy from the sample
     return gulp.src(global.paths.configJS).pipe(gulp.dest('./build/assets/js/'));
