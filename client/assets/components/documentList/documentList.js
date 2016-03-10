@@ -22,7 +22,7 @@
   }
 
 
-  function Controller($sce, $anchorScroll, Orwell) {
+  function Controller($log, $sce, $anchorScroll, Orwell) {
     'ngInject';
     var vm = this;
     vm.docs = [];
@@ -36,7 +36,7 @@
       var resultsObservable = Orwell.getObservable('queryResults');
 
       resultsObservable.addObserver(function (data) {
-        console.log("in dcl");
+        $log.debug('in dcl');
         vm.docs = parseDocuments(data);
         vm.highlighting = parseHighlighting(data);
         $anchorScroll('topOfMainContent');
