@@ -34,8 +34,11 @@
       $log.info('Doc Type: ' + dc.doc_type);
     }
 
-
-
+    /**
+     * Processes a document prepares fields from the config for display.
+     * @param  {object} doc A single document record
+     * @return {object}     The document record with processed properties.
+     */
     function processDocument(doc) {
 
       //Populate the additional fields to display
