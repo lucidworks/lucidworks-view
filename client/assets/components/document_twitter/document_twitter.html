@@ -1,0 +1,12 @@
+<article class="grid-block document row">
+  {{vm.doc}}
+  <div>
+    <blockquote class="twitter-tweet" data-lang="{{vm.doc.userLang[0]}}">
+      <p lang="{{vm.doc.userLang[0]}}" dir="ltr">
+        <field value="vm.doc.tweet_t" highlight="vm.highlight" maxlength="200" hkey="tweet_t"></field>
+      </p>&mdash;
+      <field value="vm.doc.userScreenName_s" highlight="vm.highlight" maxlength="200" hkey="userScreenName_s"></field> (@<field value="vm.doc.userScreenName_s" highlight="vm.highlight" maxlength="200" hkey="userScreenName_s"></field>) <a
+        href="https://twitter.com/{{vm.doc.userScreenName}}/status/{{vm.doc.id}}"><field value="vm.doc.dateCreated_dt" ></field></a>
+    </blockquote>
+  </div>
+</article>
