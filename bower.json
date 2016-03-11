@@ -26,6 +26,7 @@
     "lodash": "https://github.com/lodash/lodash.git",
     "ng-orwell": "~1.1.2",
     "angucomplete-alt": "~2.2.0",
+    "angular-sanitize": "1.4.9",
     "angular-rison": "~0.0.13"
   },
   "devDependencies": {

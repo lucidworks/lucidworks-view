@@ -1,0 +1,18 @@
+<!-- show head field linked with a url. -->
+<h3 class="head-field" ng-if="dc.doc.name_s"><a href="#"
+                                                 ng-click="dc.handleDoc(this, dc.doc.id, dc.doc.score, $index)">
+  <field value="dc.doc.name_s" highlight="dc.highlight" maxlength="200" hkey="name_s"></field>
+</a>
+</h3>
+<!-- show head field without a url. -->
+<h3 class="head-field" ng-if="!dc.doc.name_s">
+  <field value="dc.doc.id" maxlength="200"></field>
+</h3>
+<h6 class="subheader" ng-if="dc.doc.name_s">
+  <field value="dc.doc.id" maxlength="200"></field>
+</h6>
+<p class="large-8 xlarge-7 xx-large-6">
+    <field ng-if="dc.doc.content" value="dc.doc.content" highlight="dc.highlight" maxlength="200"
+           hkey="content"></field>
+    <field ng-if="dc.doc.body" value="dc.doc.body" highlight="dc.highlight" maxlength="200" hkey="body"></field>
+</p>

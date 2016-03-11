@@ -30,31 +30,50 @@
 
     function activate() {
       dc.doc = processDocument(DocsHelper.concatMultivaluedFields(dc.doc));
+      dc.doc_type = getDocType(dc.doc);
+      $log.info('Doc Type: ' + dc.doc_type);
     }
 
+    /**
+     * Get the document type for the document.
+     * @param  {object} doc Document object
+     * @return {string}     Type of document
+     */
+    function getDocType(doc){
+      // Change to your collection datasource type name
+      // if(doc['_lw_data_source_s'] === 'MyDatasource-default'){
+      //   return doc['_lw_data_source_s'];
+      // }
+      return doc['_lw_data_source_type_s'];
+    }
+
+    /**
+     * Processes a document prepares fields from the config for display.
+     * @param  {object} doc A single document record
+     * @return {object}     The document record with processed properties.
+     */
     function processDocument(doc) {
-      var returnDoc = {};
 
       //Populate the additional fields to display
-      returnDoc.fieldsToDisplay = DocsHelper.populateFieldLabels(
+      doc.fieldsToDisplay = DocsHelper.populateFieldLabels(
         DocsHelper.selectFields(doc, ConfigService.getFieldsToDisplay()),
         ConfigService.getFieldLabels()
       );
 
-      returnDoc.lw_head = getField('head', doc) ?
+      doc.lw_head = getField('head', doc) ?
         getField('head', doc) : 'Title Field Not Found';
 
-      returnDoc.lw_subhead = getField('subhead', doc);
+      doc.lw_subhead = getField('subhead', doc);
 
-      returnDoc.lw_description = getField('description', doc);
+      doc.lw_description = getField('description', doc);
 
-      returnDoc.lw_image = getField('image', doc);
+      doc.lw_image = getField('image', doc);
 
-      returnDoc.lw_url = getField('head_url', doc);
+      doc.lw_url = getField('head_url', doc);
 
-      returnDoc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(doc);
-
-      return returnDoc;
+      doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(doc);
+      $log.info(doc);
+      return doc;
     }
 
     /**

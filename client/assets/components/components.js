@@ -3,6 +3,7 @@ angular.module('fusionSeedApp.components', [
   'fusionSeedApp.components.documentList',
   'fusionSeedApp.components.facetField',
   'fusionSeedApp.components.facetList',
+  'fusionSeedApp.components.field',
   'fusionSeedApp.components.login',
   'fusionSeedApp.components.paginate',
   'fusionSeedApp.components.searchbox',
