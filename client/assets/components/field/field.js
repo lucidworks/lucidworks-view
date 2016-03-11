@@ -33,7 +33,7 @@
     ///////////
 
     function activate() {
-      //console.log("Field:");
+      //console.log('Field:');
       //console.log(dc.doc);
       //console.log(fc);
       fc.value = processField(fc.value, fc.hkey, fc.highlight, fc.maxlength);
