@@ -22,7 +22,7 @@
 
   }
 
-  function DocumentWebController($log) {
+  function DocumentWebController($log, SignalsService) {
     'ngInject';
     var vm = this;
 
@@ -31,7 +31,7 @@
     /////////
 
     function activate() {
-      $log.debug('in doc web');
+      vm.postSignal = SignalsService.postSignal;
     }
   }
 })();
