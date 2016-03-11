@@ -11,7 +11,7 @@
       restrict: 'EA',
       templateUrl: 'assets/components/document_web/document_web.html',
       scope: true,
-      controller: DocumentWebController,
+      controller: Controller,
       controllerAs: 'vm',
       bindToController: {
         doc: '='
@@ -22,7 +22,7 @@
 
   }
 
-  function DocumentWebController($log, SignalsService) {
+  function Controller(SignalsService) {
     'ngInject';
     var vm = this;
 

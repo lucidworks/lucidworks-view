@@ -1,5 +1,6 @@
 <div id="documentList">
   <div ng-repeat="doc in vm.docs" ng-switch="vm.getDocType(doc)">
+    <document-file ng-switch-when="lucid.anda/file" doc="vm.decorateDocument(doc)" ></document>
     <document-web ng-switch-when="lucid.anda/web" doc="vm.decorateDocument(doc)" ></document>
     <document ng-switch-default doc="vm.decorateDocument(doc)" ></document>
   </div>
