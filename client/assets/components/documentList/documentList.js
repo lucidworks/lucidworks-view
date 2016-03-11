@@ -22,11 +22,13 @@
   }
 
 
-  function Controller($log, $sce, $anchorScroll, Orwell) {
+  function Controller($log, $sce, $anchorScroll, Orwell, SignalsService) {
     'ngInject';
     var vm = this;
     vm.docs = [];
     vm.highlighting = {};
+    vm.getDocType = getDocType;
+    vm.decorateDocument = decorateDocument;
 
     activate();
 
@@ -39,8 +41,32 @@
         $log.debug('in dcl');
         vm.docs = parseDocuments(data);
         vm.highlighting = parseHighlighting(data);
+        vm.getDoctype = getDocType;
         $anchorScroll('topOfMainContent');
       });
+    }
+
+    /**
+     * Get the document type for the document.
+     * @param  {object} doc Document object
+     * @return {string}     Type of document
+     */
+    function getDocType(doc){
+      // Change to your collection datasource type name
+      // if(doc['_lw_data_source_s'] === 'MyDatasource-default'){
+      //   return doc['_lw_data_source_s'];
+      // }
+      return doc['_lw_data_source_type_s'];
+    }
+
+    /**
+     * Decorates the document object before sending to the document directive.
+     * @param  {object} doc Document object
+     * @return {object}     Document object
+     */
+    function decorateDocument(doc){
+      doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(doc);
+      return doc;
     }
 
     /**
