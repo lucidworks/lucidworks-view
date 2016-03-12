@@ -5,7 +5,7 @@
         <field value="vm.doc.tweet[0]" highlight="vm.highlight" maxlength="200" hkey="tweet"></field>
       </p>&mdash;
       <field value="vm.doc.userScreenName[0]" highlight="vm.highlight" maxlength="200" hkey="userScreenName"></field> (@<field value="vm.doc.userScreenName[0]" highlight="vm.highlight" maxlength="200" hkey="userScreenName[0]"></field>) <a
-        href="https://twitter.com/{{vm.doc.userScreenName[0]}}/status/{{vm.doc.id}}"><field value="vm.doc.createdAt[0]" ></field></a>
+        ng-href="https://twitter.com/{{vm.doc.userScreenName[0]}}/status/{{vm.doc.id}}" ng-click="vm.postSignal(vm.doc.__signals_doc_id__)"><field value="vm.doc.createdAt[0]" ></field></a>
     </blockquote>
   </div>
 </article>
