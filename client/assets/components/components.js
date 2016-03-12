@@ -1,6 +1,7 @@
 angular.module('fusionSeedApp.components', [
   'fusionSeedApp.components.document',
   'fusionSeedApp.components.document_file',
+  'fusionSeedApp.components.document_twitter',
   'fusionSeedApp.components.document_web',
   'fusionSeedApp.components.documentList',
   'fusionSeedApp.components.facetField',
