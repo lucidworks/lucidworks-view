@@ -22,7 +22,7 @@
 
   }
 
-  function Controller(SignalsService, $log) {
+  function Controller(SignalsService, $log, $filter) {
     'ngInject';
     var vm = this;
 
@@ -30,7 +30,13 @@
 
     function activate() {
       vm.postSignal = SignalsService.postSignal;
+      vm.doc = processDocument(vm.doc);
       $log.debug('twitter');
+    }
+
+    function processDocument(doc) {
+      doc.createdAtFormatted = $filter('date')(doc.createdAt[0]);
+      return doc;
     }
   }
 })();
