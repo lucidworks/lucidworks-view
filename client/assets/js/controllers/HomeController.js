@@ -5,7 +5,7 @@
     .controller('HomeController', HomeController);
 
 
-  function HomeController($log, $scope, ConfigService, LinkService, Orwell, AuthService, _, $timeout) {
+  function HomeController($log, $scope, ConfigService, URLService, Orwell, AuthService, _, $timeout) {
 
     'ngInject';
     var hc = this; //eslint-disable-line
@@ -29,7 +29,7 @@
       hc.status = 'loading';
       hc.lastQuery = '';
 
-      query = LinkService.getQueryFromUrl();
+      query = URLService.getQueryFromUrl();
       //Setting the query object... also populating the the view model
       hc.searchQuery = _.get(query,'q','*:*');
 
@@ -47,7 +47,7 @@
 
       //Force the set of query object after one digest cycle
       $timeout(function(){
-        LinkService.setQuery(query);
+        URLService.setQuery(query);
       });
 
     }
@@ -78,7 +78,7 @@
         fq: []
       };
 
-      LinkService.setQuery(query);
+      URLService.setQuery(query);
     }
 
     /**

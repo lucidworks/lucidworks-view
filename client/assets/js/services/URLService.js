@@ -2,17 +2,17 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.services.link', ['rison'])
+    .module('fusionSeedApp.services.url', ['rison'])
     .constant('BLANK_QUERY', blankQuery)
     .constant('QUERY_PARAM', 'query')
-    .factory('LinkService', LinkService);
+    .factory('URLService', URLService);
 
   var blankQuery = {
     q: '*:*',
     start: 0
   };
 
-  function LinkService($log, $rison, $state, $location, QueryService, BLANK_QUERY,
+  function URLService($log, $rison, $state, $location, QueryService, BLANK_QUERY,
     QUERY_PARAM) {
     'ngInject';
     return {

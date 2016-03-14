@@ -5,7 +5,7 @@ angular.module('fusionSeedApp.services', [
   'fusionSeedApp.services.authInterceptor',
   'fusionSeedApp.services.config',
   'fusionSeedApp.services.landingPage',
-  'fusionSeedApp.services.link',
+  'fusionSeedApp.services.url',
   'fusionSeedApp.services.query',
   'fusionSeedApp.services.queryData',
   'fusionSeedApp.services.signals'

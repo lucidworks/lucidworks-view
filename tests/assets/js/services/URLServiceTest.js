@@ -1,8 +1,8 @@
 /*global ngDescribe, describe, it, expect, beforeEach*/
 ngDescribe({
-  name: 'LinkService',
+  name: 'URLService',
   modules: 'fusionSeedApp.services',
-  inject: ['LinkService', '$rison', '$state', '$location', 'QueryService'],
+  inject: ['URLService', '$rison', '$state', '$location', 'QueryService'],
   mocks: {
     ng:{
       $location: {
@@ -25,14 +25,14 @@ ngDescribe({
     });
 
     it('getQueryFromUrl should make the proper calls', function(){
-      var stuff = deps.LinkService.getQueryFromUrl();
+      var stuff = deps.URLService.getQueryFromUrl();
       expect(deps.$location.search).toHaveBeenCalled();
       expect(deps.$rison.parse).toHaveBeenCalledWith('(somerawquery:blah)');
       expect(stuff).toEqual({somerawquery:'blah'});
     });
 
     it('setQuery should make the right calls as well', function(){
-      deps.LinkService.setQuery({});
+      deps.URLService.setQuery({});
       expect(deps.$state.go).toHaveBeenCalledWith('home', {query:'(q:\'*:*\',rows:10,start:0,wt:json)'}, {notify: false, reloadOnSearch: false});
       expect(deps.$rison.stringify).toHaveBeenCalledWith({
         q:'*:*',

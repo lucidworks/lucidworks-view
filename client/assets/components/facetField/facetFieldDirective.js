@@ -21,7 +21,7 @@
     };
   }
 
-  function Controller(ConfigService, QueryService, LinkService, QueryDataService, Orwell, FoundationApi) {
+  function Controller(ConfigService, QueryService, URLService, QueryDataService, Orwell, FoundationApi) {
     'ngInject';
     var vm = this;
     vm.facetCounts = [];
@@ -164,7 +164,7 @@
      */
     function updateFacetQuery(query){
       query.start = 0;
-      LinkService.setQuery(query);
+      URLService.setQuery(query);
     }
 
     /**
