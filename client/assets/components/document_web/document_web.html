@@ -1,10 +1,5 @@
 <article class="grid-block document row">
-  <div class="image small-4 medium-2 grid-content" ng-class="{hide:!vm.doc.image}">
-    <div zf-interchange="">
-      <img media="small" ng-src="{{vm.doc.lw_image}}">
-    </div>
-  </div>
-  <div class="detail vertical grid-content" ng-class="{'small-8':vm.doc.image, 'medium-10': vm.doc.image, 'small-12':!vm.doc.image}">
+  <div class="detail vertical grid-content">
     <!-- show head field linked with a title. -->
     <h3 class="head-field" ng-if="vm.doc.title">
       <a ng-href="{{vm.doc.url[0]}}" ng-click="vm.postSignal(vm.doc.__signals_doc_id__)">
