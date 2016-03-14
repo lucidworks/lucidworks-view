@@ -11,7 +11,7 @@
       templateUrl: 'assets/components/document/document_default/document_default.html',
       scope: true,
       controller: Controller,
-      controllerAs: 'dc',
+      controllerAs: 'vm',
       bindToController: {
         doc: '=',
         highlight: '='
@@ -22,16 +22,16 @@
 
   function Controller($log, $scope, DocsHelper, ConfigService, SignalsService) {
     'ngInject';
-    var dc = this;
-    dc.postSignal = SignalsService.postSignal;
+    var vm = this;
+    vm.postSignal = SignalsService.postSignal;
 
     activate();
 
     ///////////
 
     function activate() {
-      dc.doc = processDocument(DocsHelper.concatMultivaluedFields(dc.doc));
-      $log.info('Doc Type: ' + dc.doc_type);
+      vm.doc = processDocument(DocsHelper.concatMultivaluedFields(vm.doc));
+      $log.info('Doc Type: ' + vm.doc_type);
     }
 
     /**
