@@ -30,21 +30,7 @@
 
     function activate() {
       dc.doc = processDocument(DocsHelper.concatMultivaluedFields(dc.doc));
-      dc.doc_type = getDocType(dc.doc);
       $log.info('Doc Type: ' + dc.doc_type);
-    }
-
-    /**
-     * Get the document type for the document.
-     * @param  {object} doc Document object
-     * @return {string}     Type of document
-     */
-    function getDocType(doc){
-      // Change to your collection datasource type name
-      // if(doc['_lw_data_source_s'] === 'MyDatasource-default'){
-      //   return doc['_lw_data_source_s'];
-      // }
-      return doc['_lw_data_source_type_s'];
     }
 
     /**
@@ -71,7 +57,6 @@
 
       doc.lw_url = getField('head_url', doc);
 
-      doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(doc);
       $log.info(doc);
       return doc;
     }
