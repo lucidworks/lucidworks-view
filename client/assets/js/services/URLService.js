@@ -20,6 +20,48 @@
       getQueryFromUrl: getQueryFromUrl
     };
 
+    //////////
+
+    /**
+     * Sets the query object that will be updated
+     * on the URL bar and get passed
+     * on to QueryService
+     * for a search
+     * @param {object} queryObject The query object
+     */
+    function setQuery(queryObject) {
+      QueryService.setQuery(queryObject);
+      var queryObjectToBeStringed = _.clone(QueryService.getQueryObject(),true);
+      //Only need the slashes to get encoded, so that app state doesn't change
+      queryObjectToBeStringed = encodeSlashes(queryObjectToBeStringed);
+      var queryObjectString = $rison.stringify(queryObjectToBeStringed);
+      var newStateObject = {};
+      newStateObject[QUERY_PARAM] = queryObjectString;
+      // Adding reloadOnSearch:false for now fixes the double reload bug SU-60
+      // @see http://stackoverflow.com/a/22863315
+      $state.go('home', newStateObject, {notify: false, reloadOnSearch: false});
+    }
+
+    /**
+     * Gets query object from URL
+     */
+    function getQueryFromUrl() {
+      var queryString = $location.search()[QUERY_PARAM];
+      var queryObject;
+      try{
+        queryObject = queryString ? $rison.parse(decodeURIComponent(queryString)):BLANK_QUERY;
+      }
+      catch(e){
+        $log.error('Cannot parse query URL');
+        queryObject = BLANK_QUERY;
+      }
+      return convertTreeArrays(queryObject);
+    }
+
+    //////////////////////////
+    /// Internal functions ///
+    //////////////////////////
+
     /**
      * Traverses the whole object tree and encodes slashes
      */
@@ -56,9 +98,9 @@
     }
 
     /**
-     * Converts a possible array to array
+     * Converts an object to an array.
      */
-    function convertToArray(item){
+    function objectToArray(item){
       var newArray = [];
       var newArrayLength = 0;
       _.forIn(item, function(item, key){
@@ -70,17 +112,18 @@
     }
 
     /**
-     * Traverses the whole object tree, if there is a possible array converts that to an array
+     * Traverses the whole object tree, if there is a possible array converts
+     * that to an array
      */
-    function convertArrays(queryObject){
+    function convertTreeArrays(queryObject){
       var newQueryObject = _.isArray(queryObject)?[]:{};
       _.forIn(queryObject, function(item, key){
         if(_.isObject(item) || _.isArray(item)){
           //Checking if the object could be an array by checking all the keys are integers
           //Rison specs are inadequate to decide, hence this piece of function
-          var tempObject = convertArrays(item);
+          var tempObject = convertTreeArrays(item);
           if(_.isObject(item) && isArrayable(item)){
-            tempObject = convertToArray(item);
+            tempObject = objectToArray(item);
           }
           newQueryObject[key] = tempObject;
         }
@@ -89,42 +132,6 @@
         }
       });
       return newQueryObject;
-    }
-
-    /**
-     * Sets the query object that will be updated
-     * on the URL bar and get passed
-     * on to QueryService
-     * for a search
-     * @param {object} queryObject The query object
-     */
-    function setQuery(queryObject) {
-      QueryService.setQuery(queryObject);
-      var queryObjectToBeStringed = _.clone(QueryService.getQueryObject(),true);
-      //Only need the slashes to get encoded, so that app state doesn't change
-      queryObjectToBeStringed = encodeSlashes(queryObjectToBeStringed);
-      var queryObjectString = $rison.stringify(queryObjectToBeStringed);
-      var newStateObject = {};
-      newStateObject[QUERY_PARAM] = queryObjectString;
-      // Adding reloadOnSearch:false for now fixes the double reload bug SU-60
-      // @see http://stackoverflow.com/a/22863315
-      $state.go('home', newStateObject, {notify: false, reloadOnSearch: false});
-    }
-
-    /**
-     * Gets query object from URL
-     */
-    function getQueryFromUrl() {
-      var queryString = $location.search()[QUERY_PARAM];
-      var queryObject;
-      try{
-        queryObject = queryString ? $rison.parse(decodeURIComponent(queryString)):BLANK_QUERY;
-      }
-      catch(e){
-        $log.error('Cannot parse query URL');
-        queryObject = BLANK_QUERY;
-      }
-      return convertArrays(queryObject);
     }
   }
 })();
