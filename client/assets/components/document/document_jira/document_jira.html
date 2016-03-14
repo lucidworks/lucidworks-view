@@ -19,6 +19,7 @@
           {{vm.doc.key_s}}
         </a>
         Last Modified: <field ng-if="vm.doc.lastModified_dt" value="vm.doc.lastModified_dtFormatted" maxlength="200"></field>
+        <span ng-if="vm.doc.lead_s">Lead: <field value="vm.doc.lead_s" maxlength="200"></field></span>
       </p>
      </div>
   </div>
