@@ -2,13 +2,13 @@
   angular.module('fusionSeedApp.components.document', ['fusionSeedApp.services.config',
       'fusionSeedApp.utils.docs', 'fusionSeedApp.services.signals'
     ])
-    .directive('document', documentListItem);
+    .directive('documentDefault', documentDefault);
 
 
-  function documentListItem() {
+  function documentDefault() {
     'ngInject';
     return {
-      templateUrl: 'assets/components/document/document.html',
+      templateUrl: 'assets/components/document_default/document_default.html',
       scope: true,
       controller: Controller,
       controllerAs: 'dc',
