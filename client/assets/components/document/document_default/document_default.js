@@ -13,7 +13,8 @@
       controller: Controller,
       controllerAs: 'dc',
       bindToController: {
-        doc: '='
+        doc: '=',
+        highlight: '='
       },
       replace: true
     };

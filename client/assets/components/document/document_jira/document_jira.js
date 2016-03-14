@@ -14,7 +14,8 @@
       controller: Controller,
       controllerAs: 'vm',
       bindToController: {
-        doc: '='
+        doc: '=',
+        highlight: '='
       }
     };
 
