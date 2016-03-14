@@ -27,11 +27,6 @@
   every category in that result.
  -->
 <article class="grid-block document row" ng-switch="dc.doc_type">
-    <span ng-switch-when="lucid.anda/file"><div ng-include="'templates/doc_templates/file.html'"></div></span>
-    <span ng-switch-when="lucid.anda/web"><div ng-include="'templates/doc_templates/web.html'"></div></span>
-    <span ng-switch-when="lucid.anda/jira"><div ng-include="'templates/doc_templates/jira.html'"></div></span>
     <span ng-switch-when="lucid.anda/github"><div ng-include="'templates/doc_templates/github.html'"></div></span>
-    <span ng-switch-when="lucid.twitter.stream/twitter_stream"><div ng-include="'templates/doc_templates/tweet.html'"></div></span>
-    <span ng-switch-when="lucid.twitter.search/twitter_search"><div ng-include="'templates/doc_templates/tweet.html'"></div></span>
     <span ng-switch-default><div ng-include="'templates/doc_templates/default.html'"></div></span>
 </article>
