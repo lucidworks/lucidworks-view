@@ -72,13 +72,13 @@
     /**
      * Traverses the whole object tree, if there is a possible array converts that to an array
      */
-    function treatArrays(queryObject){
+    function convertArrays(queryObject){
       var newQueryObject = _.isArray(queryObject)?[]:{};
       _.forIn(queryObject, function(item, key){
         if(_.isObject(item) || _.isArray(item)){
           //Checking if the object could be an array by checking all the keys are integers
           //Rison specs are inadequate to decide, hence this piece of function
-          var tempObject = treatArrays(item);
+          var tempObject = convertArrays(item);
           if(_.isObject(item) && isArrayable(item)){
             tempObject = convertToArray(item);
           }
@@ -92,11 +92,11 @@
     }
 
     /**
-     * [setQuery Sets the query object that will be updated
+     * Sets the query object that will be updated
      * on the URL bar and get passed
      * on to QueryService
-     * for a search]
-     * @param {[object]} queryObject []
+     * for a search
+     * @param {object} queryObject The query object
      */
     function setQuery(queryObject) {
       QueryService.setQuery(queryObject);
@@ -124,7 +124,7 @@
         $log.error('Cannot parse query URL');
         queryObject = BLANK_QUERY;
       }
-      return treatArrays(queryObject);
+      return convertArrays(queryObject);
     }
   }
 })();
