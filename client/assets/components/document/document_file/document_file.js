@@ -2,14 +2,14 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.document_web', ['fusionSeedApp.services.signals'])
-    .directive('documentWeb', documentWeb);
+    .module('fusionSeedApp.components.document_file', ['fusionSeedApp.services.signals'])
+    .directive('documentFile', documentFile);
 
   /* @ngInject */
-  function documentWeb() {
+  function documentFile() {
     var directive = {
       restrict: 'EA',
-      templateUrl: 'assets/components/document_web/document_web.html',
+      templateUrl: 'assets/components/document/document_file/document_file.html',
       scope: true,
       controller: Controller,
       controllerAs: 'vm',
@@ -22,16 +22,15 @@
 
   }
 
-  function Controller(SignalsService) {
+  function Controller(SignalsService, $log) {
     'ngInject';
     var vm = this;
 
     activate();
 
-    /////////
-
     function activate() {
       vm.postSignal = SignalsService.postSignal;
+      $log.debug('anda.file');
     }
   }
 })();

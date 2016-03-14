@@ -9,7 +9,7 @@
   function documentTwitter() {
     var directive = {
       restrict: 'EA',
-      templateUrl: 'assets/components/document_twitter/document_twitter.html',
+      templateUrl: 'assets/components/document/document_twitter/document_twitter.html',
       scope: true,
       controller: Controller,
       controllerAs: 'vm',

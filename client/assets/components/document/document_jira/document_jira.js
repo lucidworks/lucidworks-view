@@ -2,14 +2,14 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.document_slack', ['fusionSeedApp.services.signals'])
-    .directive('documentSlack', documentSlack);
+    .module('fusionSeedApp.components.document_jira', ['fusionSeedApp.services.signals'])
+    .directive('documentJira', documentJira);
 
   /* @ngInject */
-  function documentSlack() {
+  function documentJira() {
     var directive = {
       restrict: 'EA',
-      templateUrl: 'assets/components/document_slack/document_slack.html',
+      templateUrl: 'assets/components/document/document_jira/document_jira.html',
       scope: true,
       controller: Controller,
       controllerAs: 'vm',
@@ -32,11 +32,11 @@
     function activate() {
       vm.postSignal = SignalsService.postSignal;
       vm.doc = processDocument(vm.doc);
-      $log.debug('slack');
+      $log.debug('jira');
     }
 
     function processDocument(doc) {
-      doc.timestamp_tdtFormatted = $filter('date')(vm.doc.timestamp_tdt);
+      doc.lastModified_dtFormatted = $filter('date')(vm.doc.lastModified_dt);
       return doc;
     }
   }
