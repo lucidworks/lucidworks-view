@@ -8,7 +8,7 @@
   function documentDefault() {
     'ngInject';
     return {
-      templateUrl: 'assets/components/document_default/document_default.html',
+      templateUrl: 'assets/components/document/document_default/document_default.html',
       scope: true,
       controller: Controller,
       controllerAs: 'dc',
