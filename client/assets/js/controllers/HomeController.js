@@ -5,7 +5,7 @@
     .controller('HomeController', HomeController);
 
 
-  function HomeController($log, $scope, ConfigService, URLService, Orwell, AuthService, _, $timeout) {
+  function HomeController($scope, ConfigService, URLService, Orwell, AuthService, _, $timeout) {
 
     'ngInject';
     var hc = this; //eslint-disable-line
@@ -69,8 +69,6 @@
      * Initializes a new search.
      */
     function doSearch() {
-      $log.info('Searching...');
-
       query = {
         q: hc.searchQuery,
         start: 0,

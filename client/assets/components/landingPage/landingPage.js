@@ -17,7 +17,7 @@
 
   }
 
-  function Controller($log, $scope, Orwell, LandingPageService) {
+  function Controller($scope, Orwell, LandingPageService) {
     'ngInject';
     var lp = this;
     lp.landingPages = false;

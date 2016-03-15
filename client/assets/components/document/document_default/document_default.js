@@ -20,7 +20,7 @@
     };
   }
 
-  function Controller($log, $scope, DocsHelper, ConfigService, SignalsService) {
+  function Controller($scope, DocsHelper, ConfigService, SignalsService) {
     'ngInject';
     var vm = this;
     vm.postSignal = SignalsService.postSignal;
@@ -31,7 +31,6 @@
 
     function activate() {
       vm.doc = processDocument(DocsHelper.concatMultivaluedFields(vm.doc));
-      $log.info('Doc Type: ' + vm.doc_type);
     }
 
     /**
@@ -58,7 +57,6 @@
 
       doc.lw_url = getField('head_url', doc);
 
-      $log.info(doc);
       return doc;
     }
 

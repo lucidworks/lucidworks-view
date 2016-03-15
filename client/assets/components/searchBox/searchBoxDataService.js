@@ -5,7 +5,7 @@
     .module('fusionSeedApp.components.searchbox')
     .factory('SearchBoxDataService', SearchBoxDataService);
 
-  function SearchBoxDataService($log, $http, $q, ConfigService, ApiBase, QueryBuilder, QueryDataService){
+  function SearchBoxDataService($http, $q, ConfigService, ApiBase, QueryBuilder, QueryDataService){
     'ngInject';
 
     return {

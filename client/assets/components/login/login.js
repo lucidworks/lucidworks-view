@@ -19,7 +19,7 @@
 
   }
 
-  function Controller($log, ConfigService, Orwell, AuthService, $state) {
+  function Controller(ConfigService, Orwell, AuthService, $state) {
     'ngInject';
     var vm = this;
     vm.username = '';

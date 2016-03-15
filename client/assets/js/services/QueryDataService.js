@@ -21,8 +21,7 @@
 
     /////////////
 
-    function $get($log, $q, $http, ConfigService, ApiBase, Orwell,
-      QueryBuilder) {
+    function $get($q, $http, ConfigService, ApiBase, Orwell, QueryBuilder) {
       'ngInject';
       var queryResultsObservable = Orwell.getObservable('queryResults');
       return {

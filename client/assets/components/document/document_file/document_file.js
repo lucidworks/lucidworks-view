@@ -23,7 +23,7 @@
 
   }
 
-  function Controller(SignalsService, $log) {
+  function Controller(SignalsService) {
     'ngInject';
     var vm = this;
 
@@ -31,7 +31,6 @@
 
     function activate() {
       vm.postSignal = SignalsService.postSignal;
-      $log.debug('anda.file');
     }
   }
 })();

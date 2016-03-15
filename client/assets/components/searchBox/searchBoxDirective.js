@@ -20,7 +20,7 @@
     };
   }
 
-  function Controller($log, $scope, $q, ConfigService, QueryService,
+  function Controller($scope, $q, ConfigService, QueryService,
     SearchBoxDataService) {
     'ngInject';
     var ta = this;

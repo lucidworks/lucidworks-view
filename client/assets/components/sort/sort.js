@@ -22,7 +22,7 @@
   }
 
   /* @ngInject */
-  function Controller($log, $scope, ConfigService, QueryService, URLService) {
+  function Controller($scope, ConfigService, QueryService, URLService) {
     'ngInject';
     var vm = this;
     vm.switchSort = switchSort;
@@ -55,7 +55,6 @@
 
     function switchSort(sort){
       var query = QueryService.getQueryObject();
-      $log.debug('sort', sort);
       switch(sort.type) {
       case 'text':
         if(angular.isUndefined(query.sort)){
