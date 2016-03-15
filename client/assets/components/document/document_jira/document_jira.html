@@ -1,7 +1,7 @@
 <article class="grid-block document row">
   <div class="detail vertical grid-content">
     <h3 class="subheader">
-      <a ng-href="{{vm.doc.id}}" ng-click="vm.postSignal(vm.doc.__signals_doc_id__)">
+      <a ng-href="{{vm.doc.id}}" ng-click="vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank">
         {{vm.doc.name_s}}{{vm.doc.summary_s}}
       </a>
     </h3>
@@ -15,7 +15,7 @@
       <p>
         <field ng-if="vm.doc.jira_content_type_s" value="vm.doc.jira_content_type_s" highlight="vm.highlight" maxlength="200"
                hkey="jira_content_type_s"></field>
-        <a ng-if="vm.doc.parent_s" ng-href="{{vm.doc.id}}" ng-click="vm.postSignal(vm.doc.__signals_doc_id__)">
+        <a ng-if="vm.doc.parent_s" ng-href="{{vm.doc.id}}" ng-click="vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank">
           {{vm.doc.key_s}}
         </a>
         Last Modified: <field ng-if="vm.doc.lastModified_dt" value="vm.doc.lastModified_dtFormatted" maxlength="200"></field>
