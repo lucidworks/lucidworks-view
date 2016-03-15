@@ -13,8 +13,8 @@
       controller: Controller,
       controllerAs: 'vm',
       bindToController: {
-        doc: '&',
-        highlight: '&'
+        doc: '=',
+        highlight: '='
       },
       replace: true
     };
