@@ -55,7 +55,8 @@
         $log.error('Cannot parse query URL');
         queryObject = BLANK_QUERY;
       }
-      return convertTreeArrays(queryObject);
+      var temp = convertTreeArrays(queryObject);
+      return temp;
     }
 
     //////////////////////////
@@ -85,16 +86,20 @@
      * Checks if the `item` is a possible array.
      */
     function isArrayable(item){
-      var stuff = _.keys(item);
-
-      var stuffToCheck = _.chain(stuff).map(function(value){
-        return parseInt(value);
-      })
-      .filter(function(value){
-        return _.isNumber(value);
-      })
-      .value();
-      return stuff.length === stuffToCheck.length;
+      if(item instanceof Object && !(item instanceof String)){
+        var stuff = _.keys(item);
+        var stuffToCheck = _.chain(stuff).map(function(value){
+          return _.parseInt(value);
+        })
+        .filter(function(value){
+          return !_.isNaN(value);
+        })
+        .value();
+        return stuff.length === stuffToCheck.length;
+      }
+      else{
+        return false;
+      }
     }
 
     /**
@@ -113,24 +118,31 @@
 
     /**
      * Traverses the whole object tree, if there is a possible array converts
-     * that to an array
+     * that to an array.
+     * Checking if the object could be an array by checking all the keys are integers.
+     * Rison specs are inadequate to decide, hence this piece of function
      */
     function convertTreeArrays(queryObject){
-      var newQueryObject = _.isArray(queryObject)?[]:{};
-      _.forIn(queryObject, function(item, key){
-        if(_.isObject(item) || _.isArray(item)){
-          //Checking if the object could be an array by checking all the keys are integers
-          //Rison specs are inadequate to decide, hence this piece of function
-          var tempObject = convertTreeArrays(item);
-          if(_.isObject(item) && isArrayable(item)){
-            tempObject = objectToArray(item);
-          }
-          newQueryObject[key] = tempObject;
+      var newQueryObject = {};
+
+      var arrayer = function(item){
+        if(isArrayable(item)){
+          return objectToArray(item);
+        }
+        else{
+          return item;
+        }
+      };
+
+      _.forEach(queryObject, function(item, key){
+        if(_.isObject(item)){
+          newQueryObject[key] = arrayer(convertTreeArrays(item));
         }
         else{
           newQueryObject[key] = item;
         }
       });
+
       return newQueryObject;
     }
   }
