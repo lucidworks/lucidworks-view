@@ -4,8 +4,8 @@
   </zf-as-button>
   <span zf-as-content="" position="bottom"><ul class="block-list">
     <li ng-repeat="sort in vm.sortOptions">
-      <input type="radio" id="{{sort.label + sort.order}}" ng-value="sort" ng-model="vm.selectedSort">
-      <label for="{{sort.label + sort.order}}">{{sort.label}}<span ng-if="sort.order">&nbsp;{{sort.order}}</span></label>
+      <input type="radio" id="{{::(sort.label + sort.order)}}" ng-value="sort" ng-model="vm.selectedSort">
+      <label for="{{::(sort.label + sort.order)}}">{{sort.label}}<span ng-if="sort.order">&nbsp;{{sort.order}}</span></label>
     </li>
   </ul></span>
 </span>
