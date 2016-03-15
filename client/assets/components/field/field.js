@@ -23,24 +23,16 @@
     };
   }
 
-  function Controller($log, $scope, $state, DocsHelper, ConfigService, SignalsService, QueryService) {
+  function Controller() {
     'ngInject';
     var fc = this;
-    fc.handleField = handleField;
 
     activate();
 
     ///////////
 
     function activate() {
-      //console.log('Field:');
-      //console.log(dc.doc);
-      //console.log(fc);
       fc.value = processField(fc.value, fc.hkey, fc.highlight, fc.maxlength);
-    }
-
-    function handleField(e, docId, score, position) {
-      //dc.postSignal(signalId);
     }
 
     function processField(field, highlightKey, highlight, maxlength) {
