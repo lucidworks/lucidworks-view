@@ -1,11 +1,11 @@
 <article class="grid-block document row">
   <div>
-    <blockquote class="twitter-tweet" data-lang="{{vm.doc.userLang[0]}}">
-      <p lang="{{vm.doc.userLang[0]}}" dir="ltr">
-        <field value="vm.doc.tweet[0]" highlight="vm.highlight" maxlength="200" hkey="tweet"></field>
+    <blockquote class="twitter-tweet" data-lang="{{::vm.doc.userLang[0]}}">
+      <p lang="{{::vm.doc.userLang[0]}}" dir="ltr">
+        <field value="::vm.doc.tweet[0]" highlight="::vm.highlight" hkey="tweet"></field>
       </p>&mdash;
-      <field value="vm.doc.userScreenName[0]" highlight="vm.highlight" maxlength="200" hkey="userScreenName"></field> (@<field value="vm.doc.userScreenName[0]" highlight="vm.highlight" maxlength="200" hkey="userScreenName[0]"></field>) <a
-        ng-href="https://twitter.com/{{vm.doc.userScreenName[0]}}/status/{{vm.doc.id}}" ng-click="vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank"><field value="vm.doc.createdAtFormatted" ></field></a>
+      <field value="::vm.doc.userScreenName[0]" highlight="::vm.highlight" hkey="userScreenName"></field> (@<field value="vm.doc.userScreenName[0]" highlight="::vm.highlight" maxlength="200" hkey="{{::userScreenName[0]}}"></field>) <a
+        ng-href="https://twitter.com/{{::vm.doc.userScreenName[0]}}/status/{{::vm.doc.id}}" ng-click="vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank"><field value="::vm.doc.createdAtFormatted"></field></a>
     </blockquote>
   </div>
 </article>
