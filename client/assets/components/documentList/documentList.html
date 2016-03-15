@@ -1,11 +1,11 @@
 <div id="documentList">
   <div ng-repeat="doc in vm.docs" ng-switch="::vm.getDocType(doc)">
-    <document-file ng-switch-when="lucid.anda/file" doc="::vm.decorateDocument(doc)" highlight="vm.highlighting"></document-file>
-    <document-jira ng-switch-when="lucid.anda/jira" doc="::vm.decorateDocument(doc)" highlight="vm.highlighting"></document-jira>
-    <document-slack ng-switch-when="lucid.slack/slack" doc="::vm.decorateDocument(doc)" highlight="vm.highlighting"></document-slack>
-    <document-twitter ng-switch-when="lucid.twitter.search/twitter_search" doc="::vm.decorateDocument(doc)" highlight="vm.highlighting"></document-twitter>
-    <document-twitter ng-switch-when="lucid.twitter.stream/twitter_stream" doc="::vm.decorateDocument(doc)" highlight="vm.highlighting"></document-twitter>
-    <document-web ng-switch-when="lucid.anda/web" doc="::vm.decorateDocument(doc)" highlight="vm.highlighting"></document-web>
-    <document-default ng-switch-default doc="::vm.decorateDocument(doc)" highlight="vm.highlighting"></document-default>
+    <document-file ng-switch-when="lucid.anda/file" doc="vm.decorateDocument(doc)" bind="doc" highlight="vm.highlighting"></document-file>
+    <document-jira ng-switch-when="lucid.anda/jira" doc="vm.decorateDocument(doc)" bind="doc" highlight="vm.highlighting"></document-jira>
+    <document-slack ng-switch-when="lucid.slack/slack" doc="vm.decorateDocument(doc)" bind="doc" highlight="vm.highlighting"></document-slack>
+    <document-twitter ng-switch-when="lucid.twitter.search/twitter_search" bind="doc" doc="vm.decorateDocument(doc)" highlight="vm.highlighting"></document-twitter>
+    <document-twitter ng-switch-when="lucid.twitter.stream/twitter_stream" bind="doc" doc="vm.decorateDocument(doc)" highlight="vm.highlighting"></document-twitter>
+    <document-web ng-switch-when="lucid.anda/web" doc="vm.decorateDocument(doc)" bind="doc" highlight="vm.highlighting"></document-web>
+    <document-default ng-switch-default doc="vm.decorateDocument(doc)" bind="doc" highlight="vm.highlighting"></document-default>
   </div>
 </div>
