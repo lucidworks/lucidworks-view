@@ -9,7 +9,7 @@
   function documentExample() {
     var directive = {
       restrict: 'EA',
-      templateUrl: 'assets/components/document/document_file/document_EXAMPLE.html',
+      templateUrl: 'assets/components/document/document_EXAMPLE/document_EXAMPLE.html',
       scope: true,
       controller: Controller,
       controllerAs: 'vm',
