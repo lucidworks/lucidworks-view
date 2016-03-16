@@ -8,14 +8,14 @@ gulp.task('watch', function(){
   // Watch JavaScript
   gulp.watch(['./client/assets/js/**/*', './js/**/*'], ['jslint:app','uglify:app', 'reloadBrowsers']);
 
-  // Watch Directives
-  gulp.watch(['./client/assets/components/**/*'], ['uglify:app', 'copy', 'sass', 'reloadBrowsers']);
+  // Watch Components
+  gulp.watch(['./client/assets/components/**/*.{scss,js}'], ['uglify:app', 'copy', 'sass', 'reloadBrowsers']);
 
   // Watch static files
   gulp.watch(['./client/**/*.*', '!./client/templates/**/*.*', '!./client/assets/{scss,js}/**/*.*'], ['copy', 'reloadBrowsers']);
 
   // Watch app templates
-  gulp.watch(['./client/templates/**/*.html'], ['copy:templates', 'reloadBrowsers']);
+  gulp.watch(['./client/templates/**/*.html', 'client/assets/components/**/*.html'], ['template:routes', 'copy:components', 'concat:components', 'reloadBrowsers']);
 
   // Watch config
   gulp.watch(global.paths.configJS, ['jslint:config','copy:config', 'reloadBrowsers']);
