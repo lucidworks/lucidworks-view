@@ -16,7 +16,7 @@
 
     /**
      * [responseError HTTP interceptor for error responses]
-     * @param  {[Object]} resp [The interecepted HTTP response]
+     * @param  {} resp [The interecepted HTTP response]
      * @return {[Angular Promise]} [The promise ]
      */
     function responseError(resp) {

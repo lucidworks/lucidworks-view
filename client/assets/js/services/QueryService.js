@@ -58,7 +58,7 @@
 
       /**
        * [getQueryObject Gets the actual query object of the current query]
-       * @return {[Object]} [The Query object]
+       * @return {} [The Query object]
        */
       function getQueryObject() {
         return queryObservable.getContent();
@@ -67,7 +67,7 @@
       /**
        * [setQuery Sets the query object for a new query
        * And also makes the query]
-       * @param {[Object]} query [The query description as an object]
+       * @param {} query [The query description as an object]
        */
       function setQuery(query) {
         if (ConfigService.config.query_debug) {

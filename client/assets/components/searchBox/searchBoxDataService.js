@@ -17,7 +17,7 @@
     /**
      * [getTypeaheadResults Makes a separate query for typeahead response]
      *
-     * @param  {[Object]} query [The actual query]
+     * @param  {} query [The actual query]
      * @return {[Angular promise]} [The response promise that resolves/gets
      * rejected when Fusion returns the typeahead query results]
      */

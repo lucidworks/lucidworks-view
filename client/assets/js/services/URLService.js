@@ -30,7 +30,7 @@
      * on the URL bar and get passed
      * on to QueryService
      * for a search]
-     * @param {[Object]} queryObject
+     * @param {} queryObject
      * [Query object that is to be
      * stored in the URL and queried with]
      */
@@ -50,7 +50,7 @@
     /**
      * [getQueryFromUrl gets app state query object from the URL bar]
      *
-     * @return {[Object]} [Query object that can be used in QueryService.setQuery()]
+     * @return {} [Query object that can be used in QueryService.setQuery()]
      */
     function getQueryFromUrl() {
       var queryString = $location.search()[QUERY_PARAM];
@@ -74,8 +74,8 @@
      * [encodeSlashes HTTP encodes slashes in an object values
      * This is to ensure that state doesn't change when URL changes]
      *
-     * @param  {[Object]} queryObject [The object to scan and encode the slashes]
-     * @return {[Object]} [An object with all the slashes encoded]
+     * @param  {Object} queryObject [The object to scan and encode the slashes]
+     * @return {Object} [An object with all the slashes encoded]
      */
     function encodeSlashes(queryObject){
       var newQueryObject = {};
@@ -98,7 +98,7 @@
 
     /**
      * [isArrayable Checks if `item` could be an array]
-     * @param  {[Object,String]}  item [The Object to check for array-fiability]
+     * @param  {Object|String}  item [The Object to check for array-fiability]
      * @return {Boolean}  [If `item` could be an array]
      */
     function isArrayable(item){
@@ -129,7 +129,7 @@
     /**
      * [objectToArray Converts `item` to ar array]
      *
-     * @param  {[Object]} item [The Object to convert]
+     * @param  {} item [The Object to convert]
      * @return {[Array]} [The Array that came out of Object]
      */
     function objectToArray(item){
@@ -148,9 +148,9 @@
      * [convertTreeArrays Traverses the whole object tree recursively, if there is a possible array converts
      * that to an array.]
      *
-     * @param  {[Object]} queryObject [The object to traverse, and convert arrayable
+     * @param  {Object} queryObject [The object to traverse, and convert arrayable
      * objects to arrays]
-     * @return {[Object]}             [Object with all the possible arrays converted to arrays]
+     * @return {Object}             [Object with all the possible arrays converted to arrays]
      */
     function convertTreeArrays(queryObject){
       var newQueryObject = {};

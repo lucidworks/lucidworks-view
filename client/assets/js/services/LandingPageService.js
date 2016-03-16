@@ -37,7 +37,7 @@
 
     /**
      * [getLandingPagesFromData Gets landing page data from Fusion response]
-     * @param  {[Object]} data [The Fusion response]
+     * @param  {} data [The Fusion response]
      * @return {[Object|Array]}      [The landing page data]
      */
     function getLandingPagesFromData(data) {

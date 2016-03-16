@@ -22,8 +22,8 @@
 
     /**
      * [createSession Creates a session with Fusion]
-     * @param  {[String]} username
-     * @param  {[String]} password
+     * @param  {String} username
+     * @param  {String} password
      * @return {[Angular Promise]} [Response promise after HTTP request gets resolved]
      */
     function createSession(username, password) {

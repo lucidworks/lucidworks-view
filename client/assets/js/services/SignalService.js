@@ -20,7 +20,7 @@
      * [postSignal Posts a signal to Fusion associated with a docID
      * https://lucidworks.com/blog/2015/03/23/mixed-signals-using-lucidworks-fusions-signals-api/]
      *
-     * @param  {[String]} docId
+     * @param  {String} docId
      * [The document ID that will be
      * associated with the signal entry]
      * @return {[Angular Promise]}
@@ -59,8 +59,8 @@
 
     /**
      * [getSignalsDocumentId Given a document return a signals document ID value.]
-     * @param  {[String]} doc [The document]
-     * @return {[String]}     [The document ID value]
+     * @param  {String} doc [The document]
+     * @return {String}     [The document ID value]
      */
     function getSignalsDocumentId(doc) {
       var documentIdField = ConfigService.config.signalsDocumentId;
