@@ -47,9 +47,9 @@ global.paths = {
     'bower_components/hammerjs/hammer.js',
     'bower_components/angular/angular.js',
     'bower_components/angular-animate/angular-animate.js',
+    'bower_components/angular-sanitize/angular-sanitize.js',
     'bower_components/angular-ui-router/release/angular-ui-router.js',
     'bower_components/angucomplete-alt/angucomplete-alt.js',
-    'bower_components/angular-sanitize/angular-sanitize.js',
     'bower_components/angular-rison/dist/angular-rison.js',
     'bower_components/foundation-apps/js/vendor/**/*.js',
     'bower_components/foundation-apps/js/angular/**/*.js',
@@ -63,6 +63,10 @@ global.paths = {
     'client/assets/js/controllers/*.js',
     'client/assets/js/utils/**/*.js',
     'client/assets/components/**/*.js'
+  ],
+  components: [
+    'client/assets/components/**/*.html',
+    'bower_components/foundation-apps/js/angular/components/**/*.html'
   ],
   configJS: [
     './FUSION_CONFIG.js'
