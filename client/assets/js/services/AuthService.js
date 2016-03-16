@@ -20,7 +20,12 @@
 
     //////////////
 
-
+    /**
+     * [createSession Creates a session with Fusion]
+     * @param  {[String]} username
+     * @param  {[String]} password
+     * @return {[Angular Promise]} [Response promise after HTTP request gets resolved]
+     */
     function createSession(username, password) {
       var deferred = $q.defer();
       $http
@@ -37,6 +42,15 @@
       return deferred.promise;
     }
 
+    /**
+     * [getSession
+     * Gets current session.
+     * Rejects returned promise if no-session
+     * Resolves returned promise if there is a valid session cookie
+     * ]
+     *
+     * @return {[Angular Promise]} [Response promise]
+     */
     function getSession() {
       var deferred = $q.defer();
       $http
@@ -49,6 +63,9 @@
       return deferred.promise;
     }
 
+    /**
+     * [destroySession destroys the current session]
+     */
     function destroySession() {
       var deferred = $q.defer();
       $http

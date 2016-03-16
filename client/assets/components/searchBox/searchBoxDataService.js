@@ -14,6 +14,13 @@
 
     ////////////
 
+    /**
+     * [getTypeaheadResults Makes a separate query for typeahead response]
+     *
+     * @param  {[Object]} query [The actual query]
+     * @return {[Angular promise]} [The response promise that resolves/gets
+     * rejected when Fusion returns the typeahead query results]
+     */
     function getTypeaheadResults(query){
       var deferred = $q.defer();
 
@@ -37,8 +44,11 @@
       return deferred.promise;
     }
 
+
     /**
-     * Private function
+     * [getQueryUrl Gets the apropriate query URL]
+     * @param  {Boolean} isProfile [If the query should be over profiles]
+     * @return {[type]}            [If the query should be over pipelines]
      */
     function getQueryUrl(isProfile){
       var requestHandler = ConfigService.getTypeaheadRequestHandler();

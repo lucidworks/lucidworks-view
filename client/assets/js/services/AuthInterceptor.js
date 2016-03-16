@@ -13,8 +13,12 @@
       responseError: responseError
     };
 
-    //////////////
 
+    /**
+     * [responseError HTTP interceptor for error responses]
+     * @param  {[Object]} resp [The interecepted HTTP response]
+     * @return {[Angular Promise]} [The promise ]
+     */
     function responseError(resp) {
       var deferred = $q.defer();
       var $state = $injector.get('$state');
@@ -31,6 +35,11 @@
         $log.warn('You are unauthorized to access that endpoint');
       }
 
+      /**
+       * [useAnonCreds checks if Anonymouse login credentials
+       * inside the configurationare usable]
+       * @return {[Boolean]} [true -> usable anon creds]
+       */
       function useAnonCreds(){
         var ConfigService = $injector.get('ConfigService'),
           anonAccess = ConfigService.config.anonymous_access;
@@ -38,6 +47,9 @@
         return !(anonAccess.username === '' || anonAccess.password === '');
       }
 
+      /**
+       * Get anonymous session with config username:password
+       */
       function getAnonSession(){
         var ConfigService = $injector.get('ConfigService'),
           AuthService = $injector.get('AuthService'),
