@@ -15,7 +15,7 @@ gulp.task('watch', function(){
   gulp.watch(['./client/**/*.*', '!./client/templates/**/*.*', '!./client/assets/{scss,js}/**/*.*'], ['copy', 'reloadBrowsers']);
 
   // Watch app templates
-  gulp.watch(['./client/templates/**/*.html', 'client/assets/components/**/*.html'], ['template:routes', 'copy:components', 'concat:components', 'reloadBrowsers']);
+  gulp.watch(['./client/templates/**/*.html', 'client/assets/components/**/*.html'], ['copy:components', 'concat:components', 'reloadBrowsers']);
 
   // Watch config
   gulp.watch(global.paths.configJS, ['jslint:config','copy:config', 'reloadBrowsers']);
