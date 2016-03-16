@@ -61,7 +61,6 @@ gulp.task('copy:components', function(cb) {
 
 gulp.task('concat:components', function(cb){
   gulp.src(['./tmp/components-templates.js','./tmp/foundation-templates.js','./tmp/templates.js'])
-  // .pipe($.uglify())
   .pipe($.concat('templates.js'))
   .pipe(gulp.dest('./build/assets/js'));
 
