@@ -1,15 +1,15 @@
-# Fusion Seed App
-  This is the Fusion Seed App project perfect for getting started with Fusion, powered by Lucidworks Fusion, Gulp, Angular, and libsass. It provides you with a basic search template, and some easy config to get you started.
+# Tiara
+  Tiara is a consumer-facing front end for Lucidworks Fusion.  It provides a basic search interface with simple configuration, so you can quickly deliver a Fusion-based search solution with minimal development.  Tiara is powered by Fusion, Gulp, Angular, and libsass.
 
-  This application will help you get up and running with Fusion.
+  You can also use Tiara as the basis for developing a more sophisticated Web interface, using Foundation for Apps: http://foundation.zurb.com/apps/docs/
 
-  This app uses Foundation for Apps. Learn more about foundation for apps.
-
-    http://foundation.zurb.com/apps/docs/
+  For more information about Fusion, see https://doc.lucidworks.com/.
 
 ## Requirements
 
-  You'll need the following software installed to get started.
+If you start from a tarball, all dependencies are included.
+
+If you start by cloning the repository, you'll need the following software:
 
 - [Node.js](http://nodejs.org): Use the installer for your OS.
 - [Git](http://git-scm.com/downloads): Use the installer for your OS.
@@ -19,47 +19,63 @@
 
 ## Get Started
 
-  Clone this repository, where `app` is the name of your app.
-
+1. Clone the repository, where `app` is the name of your app:
   ```bash
   git clone https://github.com/LucidWorks/lucidworks-seed-app app
   ```
+1. Change into the directory:
+  ```bash
+  cd app
+  ```
+1. Install the dependencies:
+  ```bash
+  npm install
+  bower install
+  ```
+  If prompted for a version for AngularJS, select 1.4.10.
+1. While you're working on your project, run:
+  ```bash
+  npm start
+  ```
+  This will compile the Sass and assemble your Angular app.
+1. **Now go to `http://localhost:3000` in your browser to see it in action.**
+  The first time you browse to the app, you'll see a login page.  Use your Fusion login and password.  To enable anonymous access, edit the `anonymous_access` keys in FUSION_CONFIG.js.
+  When you change FUSION_CONFIG.js or any file in the `client` folder, the appropriate Gulp task will run to build new files. This uses [`browser-sync`](https://www.browsersync.io/) for instant reload upon change of source files. Visit `http://localhost:3001` (or whatever your terminal shows as the browser-sync UI) for the `browser-sync` dashboard.
 
-Change into the directory.
+The first time you
 
-```bash
-cd app
-```
-
-Install the dependencies. If you're running Mac OS or Linux, you may need to run `sudo npm install` instead, depending on how your machine is configured.
-
-```bash
-npm install
-bower install
-```
-
-While you're working on your project, run:
-
-```bash
-npm start
-```
-
-This will compile the Sass and assemble your Angular app. **Now go to `localhost:3000` in your browser to see it in action.** When you change any file in the `client` folder, the appropriate Gulp task will run to build new files.
-
-To run the compiling process once, without watching any files, use the `build` command.
-
+To run the compiling process once, without watching any files, use the `build` command:
 ```bash
 npm build
 ```
 
-[//]: <> (This uses [`browser-sync`](https://www.browsersync.io/) for instant reload upon change of source files. Visit `http://localhost:3001` (or whatever your terminal shows as the browser-sync UI) for `browser-sync` dashboard.)
-
-
 ## Unit testing
+
 ```
 npm build
 npm test
 ```
 
-## Configuration
-When you do `npm start` the first time, a copy of FUSION_CONFIG.sample.js is made onto FUSION_CONFIG.js. Once that is created you can modify that (FUSION_CONFIG.js) and watch the app change in realtime in the browser. BrowserSync will reload the app with the new configuration every time you save.
+## Basic Configuration
+
+The first time you run `npm start`, FUSION_CONFIG.sample.js is copied to FUSION_CONFIG.js.  Modify this file to customize Tiara's look and feel.  Documentation about the configuration keys is included in the file.
+
+At a minimum, you _must_ configure the `collection` key to match the name of your Fusion collection.
+
+In a production environment, you must also configure `host` and `port` to point to the UI service of your Fusion deployment.  The default is `localhost:8764` for development purposes.
+
+When the app is running with BrowserSync, it reloads the configuration every time you save FUSION_CONFIG.js.  You can modify the configuration and watch the app change in real time in your browser.
+
+## Customizing the Interface
+
+The title and logo for your interface are configured in FUSION_CONFIG.js as `search_app_title` and `logo_location`.
+
+CSS options are configured in the files in client/assets/scss.
+
+Templates for various regions of the UI are located in client/assets/components.
+
+Search results from different document types can use different templates.  The client/assets/components/document directory contains templates for some common document types, plus default templates for all others.  Data types correspond to Connectors in Fusion.  See (Customizing Documents)[docs/Customizing_Documents.md] for details about working with these.
+
+## What's Next
+
+For additional instructions about working with Tiara, see the [docs](docs/) directory.

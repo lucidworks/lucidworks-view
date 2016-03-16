@@ -1,45 +1,65 @@
 # How to customize documents
-Fusion seed app allows you to customize the display of different document types. By default there are custom displays for some of the most commonly used Fusion Connectors.
 
-All documents are located in the filesystem in
- the ```client/assets/components/document``` folder
+Tiara allows you to customize the display of different document types.  By default there are custom templates to display some of the most commonly-used Fusion Connectors.  All templates are located in the ```client/assets/components/document``` folder.
 
-There are currently 4 default document types.
+Tiara comes with templates for these common document types:
 
-- local (filesystem)
-- JIRA (repository)
-- Twitter (social)
-- Anda Web (web)
-- Default (everything else)
+- document_file (filesystem)
+- document_jira (repository)
+- document_slack (social)
+- document_twitter (social)
+- document_web (web)
 
-You can edit the existing templates based on the datasource you use. Any datasource which does not match the the above, will be handled by the document_default template.
-```client/assets/components/document/document_default ```
+## Default document display
 
-The default document type allows you to edit the config to expose different fields via your config file.
+There's also a document_default template for any document type that doesn't match the above.  You can configure this template in FUSION_CONFIG.js to expose different fields, depending on your data.  Open FUSION_CONFIG.js and scroll to this line to see the available options:
 
-## Adding additional document types
+```
+   * Document_default display
+```
 
-The document type used to render the document is selected in the documentList component. You can add new document types by
-1. creating a new component.
-2. If necessary changing the getDocType function to trigger your template.
+## Adding custom document types
+
+You can add new document types by
+1. creating a new document component and
+2. if necessary modifying the getDocType function to trigger your template.
 
 ### Creating a new document component
-1. Create a new component.
-2. Register the module in ```client/assets/components/components.js```
-3. Add the directive to ```client/assets/components/documentList/documentList.html```
-4. If necessary modify the getDocType method in ```client/assets/components/documentList/documentList.js```.
+1. Copy one of the existing template directories and give it a name like `document_<mydoctype>`.
+1. Give the files in the new directory names that match the directory name, like this:
+  ```
+  _document_<mydoctpe>.scss
+  document_<mydoctype>.html
+  document_<mydoctype>.js
+  ```
+1. Customize the templates as needed.
+  At a minimum, you _must_ modify the following values in document_<mydoctype>.js:
+  * `module`
+  * `directive`
+  * `templateURL`
+  For more information about customizing Angular templates, see https://code.angularjs.org/1.4.8/docs/guide/templates.
+1. Add the value of `module` to the list in ```client/assets/components/components.js```.
+1. Add the value of `directive` to ```client/assets/components/documentList/documentList.html```.
 
-```
-/**
- * Get the document type for the document.
- * @param  {object} doc Document object
- * @return {string}     Type of document
- */
-function getDocType(doc){
-  // Change to your collection datasource type name
-  // if(doc['_lw_data_source_s'] === 'MyDatasource-default'){
-  //   return doc['_lw_data_source_s'];
-  // }
-  return doc['_lw_data_source_type_s'];
-}
-```
+### Modifying the getDocType function
+
+The getDocType method specifies the data field that the app uses to select a template.  The default is `_lw_data_source_type_s`, but you can add conditional statements to read additional fields.
+
+1. Open ```client/assets/components/documentList/documentList.js``` and locate this section:
+  ```
+  /**
+   * Get the document type for the document.
+   * @param  {object} doc Document object
+   * @return {string}     Type of document
+   */
+  function getDocType(doc){
+    // Change to your collection datasource type name
+    // if(doc['_lw_data_source_s'] === 'MyDatasource-default'){
+    //   return doc['_lw_data_source_s'];
+    // }
+    return doc['_lw_data_source_type_s'];
+  }
+  ```
+1. Uncomment the `if` statement.
+1. Replace `_lw_data_source_s` with the name of a field from your data.
+1. Replace `MyDatasource-default` with the name of your template.
