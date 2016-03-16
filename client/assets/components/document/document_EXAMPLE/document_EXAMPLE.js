@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.document_file', ['fusionSeedApp.services.signals'])
+    .module('fusionSeedApp.components.document_EXAMPLE', ['fusionSeedApp.services.signals'])
     .directive('documentExample', documentExample);
 
   /* @ngInject */
