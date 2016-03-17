@@ -1,18 +1,20 @@
 # How to customize documents
 
-Tiara allows you to customize the display of different document types.  By default there are custom templates to display some of the most commonly-used Fusion Connectors.  All templates are located in the ```client/assets/components/document``` folder.
+Tiara lets you customize the display of different document types, which correspond to datasources in Fusion.  It includes built-in templates to display some of the most common document types:
 
-Tiara comes with templates for these common document types:
+- `document_file` (filesystem)
+- `document_jira` (repository)
+- `document_slack` (social)
+- `document_twitter` (social)
+- `document_web` (web)
 
-- document_file (filesystem)
-- document_jira (repository)
-- document_slack (social)
-- document_twitter (social)
-- document_web (web)
+All templates are located in the ```client/assets/components/document``` folder.
 
 ## Default document display
 
-There's also a document_default template for any document type that doesn't match the above.  You can configure this template in FUSION_CONFIG.js to expose different fields, depending on your data.  Open FUSION_CONFIG.js and scroll to this line to see the available options:
+There's also a `document_default` template to display any document type that doesn't match the above.  You can configure this template in `FUSION_CONFIG.js` to expose different fields, depending on your data.  
+
+Open `FUSION_CONFIG.js` and scroll to this line to see the available options:
 
 ```
    * Document_default display
@@ -21,31 +23,39 @@ There's also a document_default template for any document type that doesn't matc
 ## Adding custom document types
 
 You can add new document types by
+
 1. creating a new document component and
-2. if necessary modifying the getDocType function to trigger your template.
+2. modifying the `getDocType` function to trigger your template.
 
 ### Creating a new document component
 1. Copy one of the existing template directories and give it a name like `document_<mydoctype>`.
 1. Give the files in the new directory names that match the directory name, like this:
+
   ```
   _document_<mydoctpe>.scss
   document_<mydoctype>.html
   document_<mydoctype>.js
   ```
+
 1. Customize the templates as needed.
-  At a minimum, you _must_ modify the following values in document_<mydoctype>.js:
+  At a minimum, you _must_ modify the following values in `document_<mydoctype>.js`:
+
   * `module`
   * `directive`
   * `templateURL`
+
   For more information about customizing Angular templates, see https://code.angularjs.org/1.4.8/docs/guide/templates.
+
 1. Add the value of `module` to the list in ```client/assets/components/components.js```.
+
 1. Add the value of `directive` to ```client/assets/components/documentList/documentList.html```.
 
 ### Modifying the getDocType function
 
-The getDocType method specifies the data field that the app uses to select a template.  The default is `_lw_data_source_type_s`, but you can add conditional statements to read additional fields.
+The `getDocType` method specifies the data field that the app uses to select a template.  The default is `_lw_data_source_type_s`, but you can add conditional statements to read additional fields.
 
 1. Open ```client/assets/components/documentList/documentList.js``` and locate this section:
+
   ```
   /**
    * Get the document type for the document.
