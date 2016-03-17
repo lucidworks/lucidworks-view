@@ -7,5 +7,7 @@
     Password
     <input type="password" ng-model="vm.password" />
   </label>
-  <a class="button" ng-click="vm.submit()">submit</a>
+  <!-- The hidden input element only to catch RETURN press -->
+  <input type="submit" style="display:none;" />
+  <a class="button" ng-click="vm.submit()">Log In</a>
 </form>
