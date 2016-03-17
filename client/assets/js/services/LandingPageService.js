@@ -20,9 +20,9 @@
     //////////////
 
     /**
-     * This activate() is to redirect the window the first landing-page
+     * [activate is attach handlers that will redirect the window the first landing-page
      * in case redirect flag in appConfig
-     * is `true`.
+     * is `true`.]
      */
     function activate() {
       var resultsObservable = Orwell.getObservable('queryResults');
@@ -36,7 +36,9 @@
     }
 
     /**
-     * Extracts landing pages from Fusion response data.
+     * [getLandingPagesFromData Gets landing page data from Fusion response]
+     * @param  {} data [The Fusion response]
+     * @return {[Object|Array]}      [The landing page data]
      */
     function getLandingPagesFromData(data) {
       return _.get(data, 'fusion.landing-pages');

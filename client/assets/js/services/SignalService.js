@@ -16,6 +16,16 @@
 
     return service;
 
+    /**
+     * [postSignal Posts a signal to Fusion associated with a docID
+     * https://lucidworks.com/blog/2015/03/23/mixed-signals-using-lucidworks-fusions-signals-api/]
+     *
+     * @param  {String} docId
+     * [The document ID that will be
+     * associated with the signal entry]
+     * @return {[Angular Promise]}
+     * [A promise of the response that we comes from Fusion after the signal post]
+     */
     function postSignal(docId) {
       var deferred = $q.defer(),
         date = new Date(),
@@ -48,9 +58,9 @@
     }
 
     /**
-     * Given a document return a signals document ID value.
-     * @param  {object} doc The document
-     * @return {string|Number}     The document ID value
+     * [getSignalsDocumentId Given a document return a signals document ID value.]
+     * @param  {String} doc [The document]
+     * @return {String}     [The document ID value]
      */
     function getSignalsDocumentId(doc) {
       var documentIdField = ConfigService.config.signalsDocumentId;

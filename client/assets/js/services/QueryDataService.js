@@ -74,7 +74,7 @@
 
         return isProfiles ? profilesEndpoint : pipelinesEndpoint;
       }
-
+      
       function getProfileEndpoint(profile, requestHandler){
         return ApiBase.getEndpoint() + 'api/apollo/collections/' +
           ConfigService.getCollectionName() + '/query-profiles/' +

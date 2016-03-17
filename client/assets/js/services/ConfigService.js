@@ -145,7 +145,6 @@
      *
      * Returns all the config properties that
      * ends with a `_field` which is not a blank string
-     * and is toggled by explicit enable-ment by `_enabled` of the same type
      */
     function getAllFields() {
       var fieldsMap = {};
