@@ -7,7 +7,7 @@
     ])
     .factory('AuthService', AuthService);
 
-  function AuthService($q, $http, ApiBase, ConfigService) {
+  function AuthService($q, $log, $http, $rootScope, ApiBase, ConfigService) {
     'ngInject';
     var config = ConfigService.config;
     var realmName = config.connection_realm;
