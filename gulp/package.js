@@ -40,12 +40,31 @@ var buildTargets  = {
   }
 };
 
+var fileLocations = {
+  bower: ['bower_components/*/**'],
+  node_modules: ['node_modules/*/**'],
+  client: ['client/*/**'],
+  docs: ['docs/**/*'],
+  gulp: ['gulp/**/*', '!gulp/package.js'],
+  tests: ['tests/**/*'],
+  main_components: [
+    'bower.json',
+    'sass.yml',
+    'FUSION_CONFIG.sample.js',
+    'gulpfile.js',
+    'karma.conf.js',
+    'package.json',
+    '*.sh',
+    '*.md'
+  ]
+};
+
 // default target
 var os_target = buildTargets.mac;
 
 // Builds the entire app for deployment
 gulp.task('package', function(cb) {
-  sequence('clean:package', 'download_node', 'move:node', cb);
+  sequence('clean:package', 'move:app', 'move:node', cb);
 });
 
 gulp.task('download_node', function(cb){
@@ -54,41 +73,85 @@ gulp.task('download_node', function(cb){
   os_target.os = argv.os ? argv.os: os_target.os;
   os_target.platform = argv.platform ? argv.platform: os_target.platform;
   os_target.extension = argv.extension ? argv.extension: os_target.extension;
-console.log(os_target);
+  console.log(os_target);
   gulpDownloadTarget(os_target, cb);
 });
 
 gulp.task('download_node_mac', function(cb){
   os_target = buildTargets.mac;
-  gulpDownloadTarget(os_target, cb);
+  gulpDownloadTarget(os_target);
+  cb();
 });
 gulp.task('download_node_linux', function(cb){
   os_target = buildTargets.linux;
-  gulpDownloadTarget(os_target, cb);
+  gulpDownloadTarget(os_target);
+  cb();
 });
 gulp.task('download_node_linux32', function(cb){
   os_target = buildTargets.linux32;
-  gulpDownloadTarget(os_target, cb);
+  gulpDownloadTarget(os_target);
+  cb();
 });
 gulp.task('download_node_sunos', function(cb){
   os_target = buildTargets.sunos;
-  gulpDownloadTarget(os_target, cb);
+  gulpDownloadTarget(os_target);
+  cb();
 });
 
-gulp.task('move:node', function(cb){
-  gulp.src('tmp/node/'+packageName(os_target)+'/**/*')
+gulp.task('move:node', ['download_node'], function(cb){
+  gulp.src('tmp/node/'+packageName(os_target)+'/*/**')
     .pipe(gulp.dest('dist/lib/nodejs'));
   cb();
 });
 
-////////
+gulp.task('move:app', ['move:bower', 'move:node_modules', 'move:client', 'move:docs', 'move:gulp', 'move:tests'], function(cb){
+  gulp.src(fileLocations.main_components)
+  .pipe(gulp.dest('dist'));
+  cb();
+});
+gulp.task('move:bower', function(cb){
+  gulp.src(fileLocations.bower)
+  .pipe(gulp.dest('dist/bower_components'));
+  cb();
+});
+gulp.task('move:node_modules', function(cb){
+  gulp.src(fileLocations.node_modules)
+  .pipe(gulp.dest('dist/node_modules'));
+  cb();
+});
+gulp.task('move:client', function(cb){
+  gulp.src(fileLocations.client)
+  .pipe(gulp.dest('dist/client'));
+  cb();
+});
+gulp.task('move:docs', function(cb){
+  gulp.src(fileLocations.docs)
+  .pipe(gulp.dest('dist/docs'));
+  cb();
+});
+gulp.task('move:gulp', function(cb){
+  gulp.src(fileLocations.gulp)
+  .pipe(gulp.dest('dist/gulp'));
+  cb();
+});
+gulp.task('move:tests', function(cb){
+  gulp.src(fileLocations.tests)
+  .pipe(gulp.dest('dist/tests'));
+  cb();
+});
 
-function gulpDownloadTarget(target, cb){
+////////
+/**
+ * Download nodejs based on a target config.
+ * @param  {object}   target The target config.
+ * @param  {Function} cb     Callback when completed.
+ * @return {[type]}          [description]
+ */
+function gulpDownloadTarget(target){
   $.download(buildUrl(target))
     .pipe($.gunzip())
     .pipe($.untar())
     .pipe(gulp.dest('tmp/node'));
-  cb();
 }
 
 function buildUrl(target){
