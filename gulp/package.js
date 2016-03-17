@@ -7,7 +7,7 @@ var gulp            = require('gulp');
 var argv            = require('yargs').argv;
 var sequence        = require('run-sequence');
 
-var nodeversion     = 'v.5.2.0';
+var nodeversion     = 'v5.2.0';
 
 var buildTargets  = {
   mac: {
