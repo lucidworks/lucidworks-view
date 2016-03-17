@@ -1,5 +1,5 @@
 # Tiara
-  Tiara is a consumer-facing front end for Lucidworks Fusion.  It provides a basic search interface with simple configuration, so you can quickly deliver a Fusion-based search solution with minimal development.  Tiara is powered by Fusion, Gulp, Angular, and libsass.
+  Tiara is a consumer-facing front end for Lucidworks Fusion.  It provides a basic search interface with simple configuration, so you can quickly deliver a Fusion-based search solution with minimal development.  Tiara is powered by Fusion, Gulp, Angular, and libSaSS.
 
   You can also use Tiara as the basis for developing a more sophisticated Web interface, using Foundation for Apps: http://foundation.zurb.com/apps/docs/
 
@@ -46,7 +46,7 @@ If you start by cloning the repository, you'll need the following software:
   npm start
   ```
 
-  This will compile the Sass and assemble your Angular app.
+  This will compile the SaSS and assemble your Angular app.
 1. **Now go to `http://localhost:3000` in your browser to see it in action.**
 
   The first time you browse to the app, you'll see a login page.  Use your Fusion login and password.  To enable anonymous access, edit the `anonymous_access` keys in FUSION_CONFIG.js.

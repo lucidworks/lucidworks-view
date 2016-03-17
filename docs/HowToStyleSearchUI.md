@@ -1,20 +1,26 @@
-# How to style the Fusion Seed App.
+# How To Style Your Tiara
 
-The Fusion seed app uses Foundation for styling and general layout.
 
-Foundation for apps is a sass framework and AngularJs library for creating UIs.
+Since Tiara is built using Foundation for Apps, it shares the same cross-browser compatibility:
 
-There is documentation on how to utilize Foundation for Apps at this website.
-http://foundation.zurb.com/apps/docs
+>http://foundation.zurb.com/apps/docs/#!/compatibility
 
-Foundation for apps provides layout components and an easy way to utilize state
-routing.
+## Basic Styling
 
-It is mobile compatible and enables touch gestures for those on tablets or phones.
+* Set the logo and title
 
-Since the Fusion seed app is built using foundation for apps, it shares the same cross-browser compatibility
-http://foundation.zurb.com/apps/docs/#!/compatibility
+  Edit [`FUSION_CONFIG.js`](../FUSION_CONFIG.sample.js) and modify `search_app_title` and `logo_location`.
 
-The easiest way to interact with the styling of the fusion seed app is to use the [_settings.scss](../client/assets/scss/_settings.scss) file to alter settings such as colors, and markup. It is possible to completely turn off the styling of any sass component in this file.
+* Configure the stylesheet
 
-This file also contains settings for fusion seed app specific customizations such as the look and feel of the search box typeahead. 
+  Edit the [`_settings.scss`](../client/assets/scss/_settings.scss) file to customize stylesheet settings such as colors and markup.  You can also turn off the styling of any SaSS component in this file.
+
+  This file also contains settings for Tiara-specific customizations such as the look and feel of the search box type-ahead.
+
+## Advanced Styling
+
+For styling and general layout, Tiara uses Foundation for Apps, a SaSS framework and AngularJs library for creating UIs. It provides layout components and an easy way to utilize state routing.  It is also mobile-compatible and enables touch gestures for tablets or phones.
+
+The Foundation for Apps docs are here:
+
+>http://foundation.zurb.com/apps/docs
