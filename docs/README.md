@@ -1,13 +1,13 @@
 # Tiara Docs
 
-* (HowToStyleSearchUI.md)[How to Customize the Search UI]
+Also see [README.md](../README.md) for instructions on installing and running Tiara.
 
-  All about styling your Tiara.
+* [How To Style Your Tiara](HowToStyleSearchUI.md)
 
-* (Customizing_Documents.md)[Customizing Documents]
+  All about customizing Tiara's look and feel.
+
+* [Customizing Documents](Customizing_Documents.md)
 
   How to customize the templates that control how Tiara displays different document types in search results.
 
-* (HowToUseQueryBuilder.md)[How to Use QueryBuilder]
-
-  Laurel doesn't know what this is yet.
+* [How to Use QueryBuilder](HowToUseQueryBuilder.md)
