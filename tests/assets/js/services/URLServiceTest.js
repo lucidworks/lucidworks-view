@@ -1,4 +1,4 @@
-/*global ngDescribe, describe, it, expect, beforeEach*/
+/*global ngDescribe, describe, it, expect, spyOn, beforeEach*/
 ngDescribe({
   name: 'URLService',
   modules: 'fusionSeedApp.services',
@@ -7,7 +7,7 @@ ngDescribe({
     ng:{
       $location: {
         search: function(){
-          return {query: '(somerawquery:blah)'};
+          return {query: '(somerawquery:blah,blah:(0:one,1:(notarray:fine,array:(0:click,1:noclick))))'};
         }
       },
       $state: {
@@ -24,11 +24,11 @@ ngDescribe({
       spyOn(deps.QueryService, 'setQuery');
     });
 
-    it('getQueryFromUrl should make the proper calls', function(){
+    it('getQueryFromUrl should make the proper calls with proper parsing', function(){
       var stuff = deps.URLService.getQueryFromUrl();
       expect(deps.$location.search).toHaveBeenCalled();
-      expect(deps.$rison.parse).toHaveBeenCalledWith('(somerawquery:blah)');
-      expect(stuff).toEqual({somerawquery:'blah'});
+      expect(deps.$rison.parse).toHaveBeenCalledWith('(somerawquery:blah,blah:(0:one,1:(notarray:fine,array:(0:click,1:noclick))))');
+      expect(stuff).toEqual({somerawquery:'blah',blah:['one', {notarray: 'fine', array: ['click','noclick']}]});
     });
 
     it('setQuery should make the right calls as well', function(){
