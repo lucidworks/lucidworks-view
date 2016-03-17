@@ -2,14 +2,14 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.document_file', ['fusionSeedApp.services.signals'])
-    .directive('documentFile', documentFile);
+    .module('fusionSeedApp.components.document_EXAMPLE', ['fusionSeedApp.services.signals'])
+    .directive('documentExample', documentExample);
 
   /* @ngInject */
-  function documentFile() {
+  function documentExample() {
     var directive = {
       restrict: 'EA',
-      templateUrl: 'assets/components/document/document_file/document_file.html',
+      templateUrl: 'assets/components/document/document_EXAMPLE/document_EXAMPLE.html',
       scope: true,
       controller: Controller,
       controllerAs: 'vm',

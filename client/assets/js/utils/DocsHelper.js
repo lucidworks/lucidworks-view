@@ -6,11 +6,10 @@
   /**
    * DocsHelper
    *
-   * @param {Service} $log log
    * @param {Service} _    lodash
    * @return {Object}      The properties
    */
-  function DocsHelper($log, _) {
+  function DocsHelper(_) {
     'ngInject';
     return {
       populateFieldLabels: populateFieldLabels,

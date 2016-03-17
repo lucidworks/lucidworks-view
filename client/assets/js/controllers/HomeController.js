@@ -5,7 +5,7 @@
     .controller('HomeController', HomeController);
 
 
-  function HomeController($log, $scope, ConfigService, URLService, Orwell, AuthService, _, $timeout) {
+  function HomeController($scope, $log, ConfigService, QueryService, URLService, Orwell, AuthService, _, $timeout, $rootScope) {
 
     'ngInject';
     var hc = this; //eslint-disable-line
@@ -45,11 +45,7 @@
         updateStatus();
       });
 
-      //Force the set of query object after one digest cycle
-      $timeout(function(){
-        URLService.setQuery(query);
-      });
-
+      URLService.setQuery(query);
     }
 
     function updateStatus(){
@@ -69,8 +65,6 @@
      * Initializes a new search.
      */
     function doSearch() {
-      $log.info('Searching...');
-
       query = {
         q: hc.searchQuery,
         start: 0,

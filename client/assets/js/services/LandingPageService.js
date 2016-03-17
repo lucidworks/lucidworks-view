@@ -5,7 +5,7 @@
     .module('fusionSeedApp.services.landingPage', [])
     .factory('LandingPageService', LandingPageService);
 
-  function LandingPageService($log, Orwell, $window, ConfigService) {
+  function LandingPageService(Orwell, $window, ConfigService) {
     'ngInject';
 
     activate();
