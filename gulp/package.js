@@ -64,43 +64,38 @@ var os_target = buildTargets.mac;
 
 // Builds the entire app for deployment
 gulp.task('package', function(cb) {
-  sequence('clean:package', 'move:app', 'move:node', cb);
+  sequence('clean:package', ['download:node', 'move:app'], 'node:cleanup', cb);
 });
 
-gulp.task('download_node', function(cb){
+gulp.task('download:node', function(cb){
   os_target.name = argv.buildname ? argv.buildname: 'default';
   os_target.nodeVersion = argv.nodeVersion ? argv.nodeVersion: os_target.nodeVersion;
   os_target.os = argv.os ? argv.os: os_target.os;
   os_target.platform = argv.platform ? argv.platform: os_target.platform;
   os_target.extension = argv.extension ? argv.extension: os_target.extension;
   console.log(os_target);
-  gulpDownloadTarget(os_target, cb);
+  gulpDownloadTarget(os_target);
+  cb();
 });
 
-gulp.task('download_node_mac', function(cb){
+gulp.task('download:node:mac', function(cb){
   os_target = buildTargets.mac;
   gulpDownloadTarget(os_target);
   cb();
 });
-gulp.task('download_node_linux', function(cb){
+gulp.task('download:node:linux', function(cb){
   os_target = buildTargets.linux;
   gulpDownloadTarget(os_target);
   cb();
 });
-gulp.task('download_node_linux32', function(cb){
+gulp.task('download:node:linux32', function(cb){
   os_target = buildTargets.linux32;
   gulpDownloadTarget(os_target);
   cb();
 });
-gulp.task('download_node_sunos', function(cb){
+gulp.task('download:node:sunos', function(cb){
   os_target = buildTargets.sunos;
   gulpDownloadTarget(os_target);
-  cb();
-});
-
-gulp.task('move:node', ['download_node'], function(cb){
-  gulp.src('tmp/node/'+packageName(os_target)+'/*/**')
-    .pipe(gulp.dest('dist/lib/nodejs'));
   cb();
 });
 
@@ -140,7 +135,43 @@ gulp.task('move:tests', function(cb){
   cb();
 });
 
+gulp.task('node:cleanup', function(cb){
+  sequence('move:node', 'alias:npm');
+  cb();
+});
+
+gulp.task('move:node', function(cb){
+  gulp.src('tmp/node/'+packageName(os_target)+'/*/**')
+    .pipe(gulp.dest('dist/lib/nodejs'));
+  cb();
+});
+
+gulp.task('alias:npm', $.shell.task([
+    'ln -sf ../lib/node_modules/npm/bin/npm-cli.js dist/lib/nodejs/bin/npm',
+    'chmod +x dist/lib/nodejs/bin/npm',
+    'chmod +x dist/lib/nodejs/bin/node',
+    'chmod +x dist/lib/nodejs/lib/node_modules/npm/bin/npm'
+  ], {verbose: true})
+);
+
+// gulp.task('write:sh', function(cb){
+//   var shFile = ''
+//   string_src('tiara.sh', shFile)
+//    .pipe(gulp.dest('dist'));
+//   cb();
+// });
+
 ////////
+
+function string_src(filename, string) {
+  var src = require('stream').Readable({ objectMode: true });
+  src._read = function () {
+    this.push(new gutil.File({ cwd: "", base: "", path: filename, contents: new Buffer(string) }));
+    this.push(null);
+  };
+  return src;
+}
+
 /**
  * Download nodejs based on a target config.
  * @param  {object}   target The target config.
@@ -148,9 +179,11 @@ gulp.task('move:tests', function(cb){
  * @return {[type]}          [description]
  */
 function gulpDownloadTarget(target){
-  $.download(buildUrl(target))
-    .pipe($.gunzip())
-    .pipe($.untar())
+  var gunzip = ifExpression((target.extension === 'tar.gz'), $.gunzip, false);
+  var untar = ifExpression((target.extension === 'tar.gz'), $.untar, false);
+  return $.download(buildUrl(target))
+    .pipe(gunzip)
+    .pipe(untar)
     .pipe(gulp.dest('tmp/node'));
 }
 
