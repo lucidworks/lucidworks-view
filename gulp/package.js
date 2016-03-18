@@ -68,7 +68,7 @@ var os_target = buildTargets.mac;
 // Builds the entire app for deployment
 gulp.task('package', function(cb) {
   // sequence('clean:package', 'download:node', 'move:node', 'move:app', cb);
-  sequence('clean:package', ['download:node', 'move:app'], 'move:node', cb);
+  sequence('clean:package', ['download:node', 'move:app'], 'package:bashCommands', cb);
 });
 
 gulp.task('download:node', function(cb){
@@ -150,7 +150,7 @@ gulp.task('move:node', ['alias:npm'], function(cb){
   cb();
 });
 
-gulp.task('alias:npm', $.shell.task([
+gulp.task('package:bashCommands', $.shell.task([
     'mkdir -p tmp/node',
     'mkdir -p tmp/node/'+packageName(os_target),
     'mkdir -p tmp/tiara/lib/nodejs',
