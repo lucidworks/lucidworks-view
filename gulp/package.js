@@ -105,37 +105,37 @@ gulp.task('download:node:sunos', function(cb){
 
 gulp.task('move:app', ['move:bower', 'move:node_modules', 'move:client', 'move:docs', 'move:gulp', 'move:tests'], function(cb){
   gulp.src(fileLocations.main_components)
-  .pipe(gulp.dest('tmp/dist'));
+  .pipe(gulp.dest('tmp/tiara'));
   cb();
 });
 gulp.task('move:bower', function(cb){
   gulp.src(fileLocations.bower, {dot: true})
-  .pipe(gulp.dest('tmp/dist/bower_components'));
+  .pipe(gulp.dest('tmp/tiara/bower_components'));
   cb();
 });
 gulp.task('move:node_modules', function(cb){
   gulp.src(fileLocations.node_modules)
-  .pipe(gulp.dest('tmp/dist/node_modules'));
+  .pipe(gulp.dest('tmp/tiara/node_modules'));
   cb();
 });
 gulp.task('move:client', function(cb){
   gulp.src(fileLocations.client, {dot: true})
-  .pipe(gulp.dest('tmp/dist/client'));
+  .pipe(gulp.dest('tmp/tiara/client'));
   cb();
 });
 gulp.task('move:docs', function(cb){
   gulp.src(fileLocations.docs)
-  .pipe(gulp.dest('tmp/dist/docs'));
+  .pipe(gulp.dest('tmp/tiara/docs'));
   cb();
 });
 gulp.task('move:gulp', function(cb){
   gulp.src(fileLocations.gulp)
-  .pipe(gulp.dest('tmp/dist/gulp'));
+  .pipe(gulp.dest('tmp/tiara/gulp'));
   cb();
 });
 gulp.task('move:tests', function(cb){
   gulp.src(fileLocations.tests, {dot: true})
-  .pipe(gulp.dest('tmp/dist/tests'));
+  .pipe(gulp.dest('tmp/tiara/tests'));
   cb();
 });
 
@@ -144,24 +144,26 @@ gulp.task('node:cleanup', function(cb){
   cb();
 });
 
-gulp.task('move:node', function(cb){
+gulp.task('move:node', ['alias:npm'], function(cb){
   // gulp.src('tmp/node/'+packageName(os_target)+'/*/**')
-  //   .pipe(gulp.dest('tmp/dist/lib/nodejs'));
+  //   .pipe(gulp.dest('tmp/tiara/lib/nodejs'));
   cb();
 });
 
 gulp.task('alias:npm', $.shell.task([
-
-    'mkdir -p tmp/dist/lib/nodejs',
-    'mkdir -p tmp/dist/node_modules',
+    'mkdir -p tmp/node',
+    'mkdir -p tmp/node/'+packageName(os_target),
+    'mkdir -p tmp/tiara/lib/nodejs',
+    'curl -o tmp/node/'+packageName(os_target)+'.'+os_target.extension+' '+buildUrl(os_target),
+    'tar -xzf tmp/node/'+packageName(os_target)+'.'+os_target.extension+' -C tmp/tiara/lib/nodejs --strip-components=1',
+    // 'mkdir -p tmp/tiara/node_modules',
     'mkdir -p packages',
-    'cp -aR tmp/node/'+packageName(os_target)+'/. tmp/dist/lib/nodejs',
-    'cp -aR node_modules/. tmp/dist/node_modules',
-    'ln -sf ../lib/node_modules/npm/bin/npm-cli.js tmp/dist/lib/nodejs/bin/npm',
-    'chmod +x tmp/dist/lib/nodejs/bin/npm',
-    'chmod +x tmp/dist/lib/nodejs/bin/node',
-    'chmod +x tmp/dist/lib/nodejs/lib/node_modules/npm/bin/npm',
-    'mv tmp/dist tmp/tiara',
+    // 'cp -aR tmp/node/'+packageName(os_target)+'/. tmp/tiara/lib/nodejs',
+    // 'cp -aR node_modules/. tmp/tiara/node_modules',
+    'ln -sf ../lib/node_modules/npm/bin/npm-cli.js tmp/tiara/lib/nodejs/bin/npm',
+    'chmod +x tmp/tiara/lib/nodejs/bin/npm',
+    'chmod +x tmp/tiara/lib/nodejs/bin/node',
+    'chmod +x tmp/tiara/lib/nodejs/lib/node_modules/npm/bin/npm',
     'tar -zcf packages/tiara-'+os_target.os+'-'+os_target.platform+'.tar.gz tmp/tiara'
   ], {verbose: true})
 );
@@ -169,7 +171,7 @@ gulp.task('alias:npm', $.shell.task([
 // gulp.task('write:sh', function(cb){
 //   var shFile = ''
 //   string_src('tiara.sh', shFile)
-//    .pipe(gulp.dest('tmp/dist'));
+//    .pipe(gulp.dest('tmp/tiara'));
 //   cb();
 // });
 
@@ -191,12 +193,12 @@ function string_src(filename, string) {
  * @return {[type]}          [description]
  */
 function gulpDownloadTarget(target){
-  var gunzip = ifExpression((target.extension === 'tar.gz'), $.gunzip, false);
-  var untar = ifExpression((target.extension === 'tar.gz'), $.untar, false);
-  return $.download(buildUrl(target))
-    .pipe(gunzip)
-    .pipe(untar)
-    .pipe(gulp.dest('tmp/node'));
+  // var gunzip = ifExpression((target.extension === 'tar.gz'), $.gunzip, false);
+  // var untar = ifExpression((target.extension === 'tar.gz'), $.untar, false);
+  // return $.download(buildUrl(target))
+  //   .pipe(gunzip)
+  //   .pipe(untar)
+  //   .pipe(gulp.dest('tmp/node'));
 }
 
 function buildUrl(target){
