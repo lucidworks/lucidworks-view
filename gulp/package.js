@@ -48,8 +48,11 @@ var fileLocations = {
   gulp: ['gulp/**/*', '!gulp/package.js'],
   tests: ['tests/**/*'],
   main_components: [
+    '.bowerrc',
+    '.eslintrc',
+    '.gitignore',
+    '.sass-lint.yml',
     'bower.json',
-    'sass.yml',
     'FUSION_CONFIG.sample.js',
     'gulpfile.js',
     'karma.conf.js',
@@ -64,7 +67,8 @@ var os_target = buildTargets.mac;
 
 // Builds the entire app for deployment
 gulp.task('package', function(cb) {
-  sequence('clean:package', ['download:node', 'move:app'], 'node:cleanup', cb);
+  // sequence('clean:package', 'download:node', 'move:node', 'move:app', cb);
+  sequence('clean:package', ['download:node', 'move:app'], 'move:node', cb);
 });
 
 gulp.task('download:node', function(cb){
@@ -105,7 +109,7 @@ gulp.task('move:app', ['move:bower', 'move:node_modules', 'move:client', 'move:d
   cb();
 });
 gulp.task('move:bower', function(cb){
-  gulp.src(fileLocations.bower)
+  gulp.src(fileLocations.bower, {dot: true})
   .pipe(gulp.dest('dist/bower_components'));
   cb();
 });
@@ -115,7 +119,7 @@ gulp.task('move:node_modules', function(cb){
   cb();
 });
 gulp.task('move:client', function(cb){
-  gulp.src(fileLocations.client)
+  gulp.src(fileLocations.client, {dot: true})
   .pipe(gulp.dest('dist/client'));
   cb();
 });
@@ -130,7 +134,7 @@ gulp.task('move:gulp', function(cb){
   cb();
 });
 gulp.task('move:tests', function(cb){
-  gulp.src(fileLocations.tests)
+  gulp.src(fileLocations.tests, {dot: true})
   .pipe(gulp.dest('dist/tests'));
   cb();
 });
@@ -141,12 +145,15 @@ gulp.task('node:cleanup', function(cb){
 });
 
 gulp.task('move:node', function(cb){
-  gulp.src('tmp/node/'+packageName(os_target)+'/*/**')
-    .pipe(gulp.dest('dist/lib/nodejs'));
+  // gulp.src('tmp/node/'+packageName(os_target)+'/*/**')
+  //   .pipe(gulp.dest('dist/lib/nodejs'));
   cb();
 });
 
 gulp.task('alias:npm', $.shell.task([
+    'mkdir -p dist/lib/nodejs',
+    'mkdir -p dist/node_modules',
+    'cp -aR tmp/node/'+packageName(os_target)+'/. dist/lib/nodejs',
     'ln -sf ../lib/node_modules/npm/bin/npm-cli.js dist/lib/nodejs/bin/npm',
     'chmod +x dist/lib/nodejs/bin/npm',
     'chmod +x dist/lib/nodejs/bin/node',
