@@ -10,3 +10,7 @@ gulp.task('clean', function(cb) {
 gulp.task('clean:templates', function(cb){
   rimraf('./build/assets/js/templates.js', cb);
 });
+
+gulp.task('clean:package', function(cb){
+  rimraf('./dist', cb);
+});
