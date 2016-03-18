@@ -154,6 +154,7 @@ gulp.task('alias:npm', $.shell.task([
     'mkdir -p dist/lib/nodejs',
     'mkdir -p dist/node_modules',
     'cp -aR tmp/node/'+packageName(os_target)+'/. dist/lib/nodejs',
+    'cp -aR node_modules/. dist/node_modules',
     'ln -sf ../lib/node_modules/npm/bin/npm-cli.js dist/lib/nodejs/bin/npm',
     'chmod +x dist/lib/nodejs/bin/npm',
     'chmod +x dist/lib/nodejs/bin/node',
