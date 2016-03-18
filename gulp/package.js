@@ -105,37 +105,37 @@ gulp.task('download:node:sunos', function(cb){
 
 gulp.task('move:app', ['move:bower', 'move:node_modules', 'move:client', 'move:docs', 'move:gulp', 'move:tests'], function(cb){
   gulp.src(fileLocations.main_components)
-  .pipe(gulp.dest('dist'));
+  .pipe(gulp.dest('tmp/dist'));
   cb();
 });
 gulp.task('move:bower', function(cb){
   gulp.src(fileLocations.bower, {dot: true})
-  .pipe(gulp.dest('dist/bower_components'));
+  .pipe(gulp.dest('tmp/dist/bower_components'));
   cb();
 });
 gulp.task('move:node_modules', function(cb){
   gulp.src(fileLocations.node_modules)
-  .pipe(gulp.dest('dist/node_modules'));
+  .pipe(gulp.dest('tmp/dist/node_modules'));
   cb();
 });
 gulp.task('move:client', function(cb){
   gulp.src(fileLocations.client, {dot: true})
-  .pipe(gulp.dest('dist/client'));
+  .pipe(gulp.dest('tmp/dist/client'));
   cb();
 });
 gulp.task('move:docs', function(cb){
   gulp.src(fileLocations.docs)
-  .pipe(gulp.dest('dist/docs'));
+  .pipe(gulp.dest('tmp/dist/docs'));
   cb();
 });
 gulp.task('move:gulp', function(cb){
   gulp.src(fileLocations.gulp)
-  .pipe(gulp.dest('dist/gulp'));
+  .pipe(gulp.dest('tmp/dist/gulp'));
   cb();
 });
 gulp.task('move:tests', function(cb){
   gulp.src(fileLocations.tests, {dot: true})
-  .pipe(gulp.dest('dist/tests'));
+  .pipe(gulp.dest('tmp/dist/tests'));
   cb();
 });
 
@@ -146,26 +146,30 @@ gulp.task('node:cleanup', function(cb){
 
 gulp.task('move:node', function(cb){
   // gulp.src('tmp/node/'+packageName(os_target)+'/*/**')
-  //   .pipe(gulp.dest('dist/lib/nodejs'));
+  //   .pipe(gulp.dest('tmp/dist/lib/nodejs'));
   cb();
 });
 
 gulp.task('alias:npm', $.shell.task([
-    'mkdir -p dist/lib/nodejs',
-    'mkdir -p dist/node_modules',
-    'cp -aR tmp/node/'+packageName(os_target)+'/. dist/lib/nodejs',
-    'cp -aR node_modules/. dist/node_modules',
-    'ln -sf ../lib/node_modules/npm/bin/npm-cli.js dist/lib/nodejs/bin/npm',
-    'chmod +x dist/lib/nodejs/bin/npm',
-    'chmod +x dist/lib/nodejs/bin/node',
-    'chmod +x dist/lib/nodejs/lib/node_modules/npm/bin/npm'
+
+    'mkdir -p tmp/dist/lib/nodejs',
+    'mkdir -p tmp/dist/node_modules',
+    'mkdir -p packages',
+    'cp -aR tmp/node/'+packageName(os_target)+'/. tmp/dist/lib/nodejs',
+    'cp -aR node_modules/. tmp/dist/node_modules',
+    'ln -sf ../lib/node_modules/npm/bin/npm-cli.js tmp/dist/lib/nodejs/bin/npm',
+    'chmod +x tmp/dist/lib/nodejs/bin/npm',
+    'chmod +x tmp/dist/lib/nodejs/bin/node',
+    'chmod +x tmp/dist/lib/nodejs/lib/node_modules/npm/bin/npm',
+    'mv tmp/dist tmp/tiara',
+    'tar -zcf packages/tiara-'+os_target.os+'-'+os_target.platform+'.tar.gz tmp/tiara'
   ], {verbose: true})
 );
 
 // gulp.task('write:sh', function(cb){
 //   var shFile = ''
 //   string_src('tiara.sh', shFile)
-//    .pipe(gulp.dest('dist'));
+//    .pipe(gulp.dest('tmp/dist'));
 //   cb();
 // });
 

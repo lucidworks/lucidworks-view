@@ -4,7 +4,7 @@
 *.iml
 bower_components
 build
-dist
+packages
 node_modules
 npm-debug.log
 tmp
