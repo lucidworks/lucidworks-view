@@ -28,7 +28,7 @@
     "angucomplete-alt": "~2.2.0",
     "angular-sanitize": "~1.4.10",
     "angular-rison": "~0.0.13",
-    "angularjs-humanize": "^0.0.1"
+    "angularjs-humanize": "master"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.10"

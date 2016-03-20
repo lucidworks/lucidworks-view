@@ -20,12 +20,13 @@
 
   }
 
-  function Controller(Orwell, PaginateService, URLService) {
+  function Controller(Orwell, PaginateService, URLService, $filter) {
     'ngInject';
     var vm = this;
     vm.page = 0;
     vm.totalPages = 0;
     vm.getNormalizedPage = getNormalizedPage;
+    vm.getNormalizedPageFormatted = getNormalizedPageFormatted;
     vm.getLastPage = getLastPage;
     vm.gotoNextPage = gotoNextPage;
     vm.gotoPreviousPage = gotoPreviousPage;
@@ -42,6 +43,7 @@
         if (data.hasOwnProperty('response')) {
           vm.page = PaginateService.getCurrentPage();
           vm.totalPages = PaginateService.getTotalPages();
+          vm.totalPagesFormatted = $filter('humanizeNumberFormat')(vm.totalPages, 0);
           vm.showState =  pickPaginatorType();
         } else {
           vm.page = 0;
@@ -63,6 +65,10 @@
      */
     function getNormalizedPage() {
       return vm.page + 1;
+    }
+
+    function getNormalizedPageFormatted(){
+      return $filter('humanizeNumberFormat')(getNormalizedPage(), 0);
     }
 
     /**
