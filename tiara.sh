@@ -11,6 +11,6 @@ fi
 
 
 # Dirty ugly hack to make gulp work
-export PATH=$(pwd)/node_modules/.bin:$PATH
+export PATH=$(pwd)/lib/nodejs/bin:$PATH
 
 ./lib/nodejs/bin/npm $1 $2 $3
