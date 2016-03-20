@@ -6,6 +6,9 @@
     <h4 class="subheader" ng-if="::vm.doc.keywords"><field value="::vm.doc.keywords" highlight="::vm.highlight" maxlength="200" hkey="::keywords"></field></h4>
 
     <div class="large-8 xlarge-7 xx-large-6">
+      <p ng-if="::vm.doc.length_l">
+        size: <field value="::vm.doc.length_lFormatted"></field>
+      </p>
       <p ng-if="::vm.doc.mimeType_s">
         mimetype: <field value="::vm.doc.mimeType_s" highlight="::vm.highlight" maxlength="200"
                hkey="::mimeType_s"></field>
@@ -13,10 +16,6 @@
       <p ng-if="::vm.doc.owner_s">
         owner: <field value="::vm.doc.owner_s" highlight="::vm.highlight" maxlength="200"
                hkey="::owner_s"></field>
-      </p>
-      <p ng-if="::vm.doc.group_s">
-        group: <field value="::vm.doc.group_s" highlight="::vm.highlight" maxlength="200"
-               hkey="::group_s"></field>
       </p>
      </div>
   </div>

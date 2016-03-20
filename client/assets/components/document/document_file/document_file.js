@@ -31,6 +31,17 @@
 
     function activate() {
       vm.postSignal = SignalsService.postSignal;
+      vm.doc = processDocument(vm.doc);
+    }
+
+    function processDocument(doc) {
+      doc.length_lFormatted = bytesToHumanReadableSize(doc.length_l);
+      return doc;
+    }
+
+    function bytesToHumanReadableSize(bytes){
+      var i = Math.floor(Math.log(bytes) / Math.log(1024));
+      return !bytes && '0 Bytes' || (bytes / Math.pow(1024, i)).toFixed(2) + ' ' + ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'][i];
     }
   }
 })();
