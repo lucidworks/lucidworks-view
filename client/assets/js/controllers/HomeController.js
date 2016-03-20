@@ -5,7 +5,7 @@
     .controller('HomeController', HomeController);
 
 
-  function HomeController($scope, $log, ConfigService, QueryService, URLService, Orwell, AuthService, _, $timeout, $rootScope) {
+  function HomeController(ConfigService, URLService, Orwell, AuthService, _) {
 
     'ngInject';
     var hc = this; //eslint-disable-line
