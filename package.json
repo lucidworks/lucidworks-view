@@ -1,6 +1,6 @@
 {
   "name": "fusion-seed-app",
-  "version": "1.0.0",
+  "version": "1.0.0-alpha1",
   "description": "A simple seed application for Lucidworks Fusion",
   "repository": {
     "type": "git",
