@@ -1,7 +1,7 @@
 /*global ngDescribe, describe, it, expect, spyOn, beforeEach*/
 ngDescribe({
   name: 'URLService',
-  modules: 'fusionSeedApp.services',
+  modules: 'lucidworksView.services',
   inject: ['URLService', '$rison', '$state', '$location', 'QueryService'],
   mocks: {
     ng:{

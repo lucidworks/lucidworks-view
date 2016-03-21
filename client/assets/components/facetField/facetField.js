@@ -2,10 +2,10 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.facetField', [
-      'fusionSeedApp.services.config',
+    .module('lucidworksView.components.facetField', [
+      'lucidworksView.services.config',
       'foundation.core',
-      'fusionSeedApp.utils.queryBuilder',
+      'lucidworksView.utils.queryBuilder',
       'angular-humanize'
     ])
     .config(Config);

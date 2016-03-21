@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.paginate')
+    .module('lucidworksView.components.paginate')
     .directive('paginate', paginate);
 
   function paginate() {

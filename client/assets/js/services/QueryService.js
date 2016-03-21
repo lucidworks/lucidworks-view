@@ -1,6 +1,6 @@
 (function () {
-  angular.module('fusionSeedApp.services.query', ['fusionSeedApp.services.config',
-      'fusionSeedApp.services.queryData'
+  angular.module('lucidworksView.services.query', ['lucidworksView.services.config',
+      'lucidworksView.services.queryData'
     ])
     .config(Config)
     .constant('QUERY_OBJECT_DEFAULT', {

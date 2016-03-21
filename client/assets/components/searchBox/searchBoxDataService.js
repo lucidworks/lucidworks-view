@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.searchbox')
+    .module('lucidworksView.components.searchbox')
     .factory('SearchBoxDataService', SearchBoxDataService);
 
   function SearchBoxDataService($http, $q, ConfigService, ApiBase, QueryBuilder, QueryDataService){

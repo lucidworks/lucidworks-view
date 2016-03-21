@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.document_web', ['fusionSeedApp.services.signals'])
+    .module('lucidworksView.components.document_web', ['lucidworksView.services.signals'])
     .directive('documentWeb', documentWeb);
 
   /* @ngInject */

@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.landingpage', ['fusionSeedApp.services.landingPage'])
+    .module('lucidworksView.components.landingpage', ['lucidworksView.services.landingPage'])
     .directive('landingPage', landingPage);
 
   function landingPage() {

@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.services.url', ['rison'])
+    .module('lucidworksView.services.url', ['rison'])
     .constant('BLANK_QUERY', blankQuery)
     .constant('QUERY_PARAM', 'query')
     .factory('URLService', URLService);

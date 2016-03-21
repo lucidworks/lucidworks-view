@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.facetList', ['fusionSeedApp.services.config'])
+    .module('lucidworksView.components.facetList', ['lucidworksView.services.config'])
     .directive('facetList', facetList);
 
   function facetList() {

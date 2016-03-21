@@ -1,5 +1,5 @@
 // Module initialization
-angular.module('fusionSeedApp.controllers', [
-  'fusionSeedApp.controllers.home',
-  'fusionSeedApp.controllers.login'
+angular.module('lucidworksView.controllers', [
+  'lucidworksView.controllers.home',
+  'lucidworksView.controllers.login'
 ]);

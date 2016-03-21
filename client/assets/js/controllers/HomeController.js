@@ -1,7 +1,7 @@
 (function() {
   'use strict';
   angular
-    .module('fusionSeedApp.controllers.home', ['fusionSeedApp.services', 'angucomplete-alt', 'angular-humanize'])
+    .module('lucidworksView.controllers.home', ['lucidworksView.services', 'angucomplete-alt', 'angular-humanize'])
     .controller('HomeController', HomeController);
 
 

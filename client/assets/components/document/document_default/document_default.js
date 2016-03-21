@@ -1,6 +1,6 @@
 (function () {
-  angular.module('fusionSeedApp.components.document', ['fusionSeedApp.services.config',
-      'fusionSeedApp.utils.docs', 'fusionSeedApp.services.signals'
+  angular.module('lucidworksView.components.document', ['lucidworksView.services.config',
+      'lucidworksView.utils.docs', 'lucidworksView.services.signals'
     ])
     .directive('documentDefault', documentDefault);
 

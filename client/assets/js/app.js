@@ -3,7 +3,7 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp', [
+    .module('lucidworksView', [
       'ui.router',
       'ngAnimate',
       'ngSanitize',
@@ -18,9 +18,9 @@
       'rison',
 
       // Fusion Seed App
-      'fusionSeedApp.components',
-      'fusionSeedApp.services',
-      'fusionSeedApp.controllers'
+      'lucidworksView.components',
+      'lucidworksView.services',
+      'lucidworksView.controllers'
     ])
     .constant('_', window._) //eslint-disable-line
     .config(config)

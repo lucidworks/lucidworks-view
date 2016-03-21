@@ -2,8 +2,8 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.documentList', ['fusionSeedApp.services.config',
-      'ngOrwell', 'fusionSeedApp.services.landingPage'
+    .module('lucidworksView.components.documentList', ['lucidworksView.services.config',
+      'ngOrwell', 'lucidworksView.services.landingPage'
     ])
     .directive('documentList', documentList);
 

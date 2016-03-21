@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.facetField')
+    .module('lucidworksView.components.facetField')
     .directive('facetField', facetField);
 
   function facetField() {

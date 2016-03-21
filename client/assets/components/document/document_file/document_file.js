@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.document_file', ['fusionSeedApp.services.signals', 'angular-humanize'])
+    .module('lucidworksView.components.document_file', ['lucidworksView.services.signals', 'angular-humanize'])
     .directive('documentFile', documentFile);
 
   /* @ngInject */

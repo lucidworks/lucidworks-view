@@ -1,6 +1,6 @@
 (function () {
-  angular.module('fusionSeedApp.components.field', ['fusionSeedApp.services.config',
-      'fusionSeedApp.utils.docs'
+  angular.module('lucidworksView.components.field', ['lucidworksView.services.config',
+      'lucidworksView.utils.docs'
     ])
     .directive('field', fieldItem);
 

@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.document_jira')
+    .module('lucidworksView.components.document_jira')
     .directive('jiraIssue', jiraIssue);
 
   /* @ngInject */

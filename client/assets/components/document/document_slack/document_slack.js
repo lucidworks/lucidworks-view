@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.document_slack', ['fusionSeedApp.services.signals'])
+    .module('lucidworksView.components.document_slack', ['lucidworksView.services.signals'])
     .directive('documentSlack', documentSlack);
 
   /* @ngInject */

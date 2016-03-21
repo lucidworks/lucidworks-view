@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.services.landingPage', [])
+    .module('lucidworksView.services.landingPage', [])
     .factory('LandingPageService', LandingPageService);
 
   function LandingPageService(Orwell, $window, ConfigService) {

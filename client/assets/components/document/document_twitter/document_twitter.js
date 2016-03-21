@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.document_twitter', ['fusionSeedApp.services.signals'])
+    .module('lucidworksView.components.document_twitter', ['lucidworksView.services.signals'])
     .directive('documentTwitter', documentTwitter);
 
   /* @ngInject */

@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.services.authInterceptor', ['fusionSeedApp.services.config'])
+    .module('lucidworksView.services.authInterceptor', ['lucidworksView.services.config'])
     .factory('AuthInterceptor', AuthInterceptor);
 
 

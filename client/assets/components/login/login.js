@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.login', ['fusionSeedApp.services.auth',
+    .module('lucidworksView.components.login', ['lucidworksView.services.auth',
       'ui.router'
     ])
     .directive('login', login);

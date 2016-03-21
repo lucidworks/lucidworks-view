@@ -1,9 +1,9 @@
 (function () {
   angular
-    .module('fusionSeedApp.services.queryData', [
-      'fusionSeedApp.services.config',
-      'fusionSeedApp.services.apiBase',
-      'fusionSeedApp.utils.queryBuilder',
+    .module('lucidworksView.services.queryData', [
+      'lucidworksView.services.config',
+      'lucidworksView.services.apiBase',
+      'lucidworksView.utils.queryBuilder',
       'ngOrwell'
     ])
     .config(Config)

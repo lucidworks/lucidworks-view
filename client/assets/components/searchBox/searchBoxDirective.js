@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.searchbox')
+    .module('lucidworksView.components.searchbox')
     .directive('searchBox', searchbox);
 
   function searchbox() {

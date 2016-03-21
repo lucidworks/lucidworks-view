@@ -1,6 +1,6 @@
 (function () {
   angular
-    .module('fusionSeedApp.utils.docs', [])
+    .module('lucidworksView.utils.docs', [])
     .factory('DocsHelper', DocsHelper);
 
   /**

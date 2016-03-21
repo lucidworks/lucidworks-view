@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.controllers.login', ['fusionSeedApp.services.config'])
+    .module('lucidworksView.controllers.login', ['lucidworksView.services.config'])
     .controller('LoginController', LoginController);
 
   function LoginController(ConfigService) {

@@ -1,7 +1,7 @@
 (function () {
   'use strict';
   angular
-    .module('fusionSeedApp.services.config', [])
+    .module('lucidworksView.services.config', [])
 
     /** Default config options **/
     .constant('CONFIG_DEFAULT', {

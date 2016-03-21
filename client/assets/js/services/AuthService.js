@@ -2,8 +2,8 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.services.auth', ['fusionSeedApp.services.apiBase',
-      'fusionSeedApp.services.config'
+    .module('lucidworksView.services.auth', ['lucidworksView.services.apiBase',
+      'lucidworksView.services.config'
     ])
     .factory('AuthService', AuthService);
 

@@ -2,8 +2,8 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.services.signals', ['fusionSeedApp.services.apiBase',
-      'fusionSeedApp.services.config'
+    .module('lucidworksView.services.signals', ['lucidworksView.services.apiBase',
+      'lucidworksView.services.config'
     ])
     .factory('SignalsService', SignalsService);
 
