@@ -1,7 +1,7 @@
 {
-  "name": "fusion-seed-app",
+  "name": "lucidworks-view",
   "version": "1.0.0-alpha1",
-  "description": "A simple seed application for Lucidworks Fusion",
+  "description": "Lucidworks View: A easy to use Fusion powered UI for Search",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Lucidworks/fusion-seed-app.git"

@@ -1,10 +1,10 @@
 {
-  "name": "fusion-seed-app",
+  "name": "lucidworks-view",
   "version": "1.0.0-alpha1",
   "authors": [
     "Lucidworks"
   ],
-  "description": "Seed App for Fusion by Lucidworks.",
+  "description": "Lucidworks view: A easy to use Fusion powered UI for Search",
   "main": "gulpfile.js",
   "keywords": [
     "framework",
