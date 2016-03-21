@@ -9,7 +9,7 @@ var sequence        = require('run-sequence');
 
 // Builds your entire app once, without starting a server
 gulp.task('build', function(cb) {
-  sequence('clean', 'copy:configSample', 'writeDevConfig', 'copy:config', 'template:routes', ['copy', 'copy:components', 'copy:foundation', 'sass', 'uglify'], 'concat:components', cb);
+  sequence('clean', 'writeDevConfig', ['copy', 'copy:foundation', 'sass', 'uglify'], 'copy:templates', 'copy:config', cb);
 });
 
 // Copies everything in the client folder except templates, Sass, and JS
@@ -20,55 +20,27 @@ gulp.task('copy', function() {
     .pipe(gulp.dest('./build'));
 });
 
-// Generates routes for your templates
-gulp.task('template:routes', function() {
+// Copies your app's page templates and generates URLs for them
+gulp.task('copy:templates', function() {
   return gulp.src('./client/templates/**/*.html')
     .pipe(router({
       path: 'build/assets/js/routes.js',
       root: 'client'
     }))
-    .pipe($.htmlmin({
-      collapseWhitespace: true,
-      removeComments:true,
-      processScripts:['text/ng-template']
-    }))
-    .pipe($.ngHtml2js({
-      prefix: 'templates/',
-      moduleName: 'foundation',
-      declareModule: false
-    }))
-    .pipe($.concat('templates.js'))
-    .pipe(gulp.dest('./tmp'));
+    .pipe(gulp.dest('./build/templates'));
 });
 
-gulp.task('copy:components', function(cb) {
-  gulp.src(global.paths.components)
-    .pipe($.htmlmin({
-      collapseWhitespace: true,
-      removeComments:true,
-      processScripts:['text/ng-template']
-    }))
+// Compiles the Foundation for Apps directive partials into a single JavaScript file
+gulp.task('copy:foundation', function(cb) {
+  gulp.src('bower_components/foundation-apps/js/angular/components/**/*.html')
     .pipe($.ngHtml2js({
       prefix: 'components/',
       moduleName: 'foundation',
       declareModule: false
     }))
-    .pipe($.concat('components-templates.js'))
-    .pipe(gulp.dest('./tmp'));
-
-  cb();
-});
-
-gulp.task('concat:components', function(cb){
-  gulp.src(['./tmp/components-templates.js','./tmp/foundation-templates.js','./tmp/templates.js'])
-  .pipe($.concat('templates.js'))
-  .pipe(gulp.dest('./build/assets/js'));
-
-  cb();
-});
-
-// Compiles the Foundation for Apps directive partials into a single JavaScript file
-gulp.task('copy:foundation', function(cb) {
+    .pipe($.uglify())
+    .pipe($.concat('templates.js'))
+    .pipe(gulp.dest('./build/assets/js'));
 
   // Iconic SVG icons
   gulp.src('./bower_components/foundation-apps/iconic/**/*')
