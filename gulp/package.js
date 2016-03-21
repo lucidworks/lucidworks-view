@@ -104,52 +104,52 @@ gulp.task('package:setupTarget:sunos', function(cb){
 
 gulp.task('move:app', ['move:bower', /*'move:node_modules',*/ 'move:client', 'move:docs', 'move:gulp', 'move:tests'], function(cb){
   gulp.src(fileLocations.main_components)
-  .pipe(gulp.dest('tmp/tiara'));
+  .pipe(gulp.dest('tmp/lucidworks-view'));
   cb();
 });
 gulp.task('move:bower', function(cb){
   gulp.src(fileLocations.bower, {dot: true})
-  .pipe(gulp.dest('tmp/tiara/bower_components'));
+  .pipe(gulp.dest('tmp/lucidworks-view/bower_components'));
   cb();
 });
 gulp.task('move:node_modules', function(cb){
   gulp.src(fileLocations.node_modules)
-  .pipe(gulp.dest('tmp/tiara/node_modules'));
+  .pipe(gulp.dest('tmp/lucidworks-view/node_modules'));
   cb();
 });
 gulp.task('move:client', function(cb){
   gulp.src(fileLocations.client, {dot: true})
-  .pipe(gulp.dest('tmp/tiara/client'));
+  .pipe(gulp.dest('tmp/lucidworks-view/client'));
   cb();
 });
 gulp.task('move:docs', function(cb){
   gulp.src(fileLocations.docs)
-  .pipe(gulp.dest('tmp/tiara/docs'));
+  .pipe(gulp.dest('tmp/lucidworks-view/docs'));
   cb();
 });
 gulp.task('move:gulp', function(cb){
   gulp.src(fileLocations.gulp)
-  .pipe(gulp.dest('tmp/tiara/gulp'));
+  .pipe(gulp.dest('tmp/lucidworks-view/gulp'));
   cb();
 });
 gulp.task('move:tests', function(cb){
   gulp.src(fileLocations.tests, {dot: true})
-  .pipe(gulp.dest('tmp/tiara/tests'));
+  .pipe(gulp.dest('tmp/lucidworks-view/tests'));
   cb();
 });
 
 gulp.task('package:bashCommands', $.shell.task([
   'mkdir -p tmp/node',
   'mkdir -p tmp/node/'+packageName(os_target),
-  'mkdir -p tmp/tiara/lib/nodejs',
+  'mkdir -p tmp/lucidworks-view/lib/nodejs',
   'curl -o tmp/node/'+packageName(os_target)+'.'+os_target.extension+' '+buildUrl(os_target),
-  'tar -xzf tmp/node/'+packageName(os_target)+'.'+os_target.extension+' -C tmp/tiara/lib/nodejs --strip-components=1',
+  'tar -xzf tmp/node/'+packageName(os_target)+'.'+os_target.extension+' -C tmp/lucidworks-view/lib/nodejs --strip-components=1',
   'mkdir -p packages',
-  'chmod +x tmp/tiara/lib/nodejs/bin/npm',
-  'chmod +x tmp/tiara/lib/nodejs/bin/node',
-  'chmod +x tmp/tiara/lib/nodejs/lib/node_modules/npm/bin/npm',
-  'cd tmp/tiara && ./tiara.sh install',
-  'cd tmp && tar -zcf ../packages/tiara-'+os_target.os+'-'+os_target.platform+'-'+getVersion()+'.tar.gz tiara'
+  'chmod +x tmp/lucidworks-view/lib/nodejs/bin/npm',
+  'chmod +x tmp/lucidworks-view/lib/nodejs/bin/node',
+  'chmod +x tmp/lucidworks-view/lib/nodejs/lib/node_modules/npm/bin/npm',
+  'cd tmp/lucidworks-view && ./view.sh install',
+  'cd tmp && tar -zcf ../packages/lucidworks-view-'+os_target.os+'-'+os_target.platform+'-'+getVersion()+'.tar.gz lucidworks-view'
 ], {verbose: true}));
 
 ////////

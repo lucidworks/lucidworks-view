@@ -12,5 +12,5 @@ gulp.task('clean:templates', function(cb){
 });
 
 gulp.task('clean:package', function(cb){
-  rimraf('./tmp/tiara', cb);
+  rimraf('./tmp/lucidworks-view', cb);
 });
