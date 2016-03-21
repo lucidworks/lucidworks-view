@@ -1,7 +1,7 @@
-# How To Style Your Tiara
+# How To Style the UI
 
 
-Since Tiara is built using Foundation for Apps, it shares the same cross-browser compatibility:
+Since Lucidworks View is built using Foundation for Apps, it shares the same cross-browser compatibility (though we haven't tested all of these):
 
 >http://foundation.zurb.com/apps/docs/#!/compatibility
 
@@ -15,11 +15,11 @@ Since Tiara is built using Foundation for Apps, it shares the same cross-browser
 
   Edit [`_settings.scss`](../client/assets/scss/_settings.scss) to customize stylesheet settings such as colors and markup.  You can also turn off the styling of any SaSS component in this file.
 
-  This file also contains settings for Tiara-specific customizations such as the look and feel of the search box type-ahead.
+  This file also contains settings for View-specific customizations such as the look and feel of the search box type-ahead.
 
 ## Advanced Styling
 
-Tiara uses Foundation for Apps, a SaSS framework and AngularJs library for creating UIs. It provides layout components and an easy way to utilize state routing.  It is also mobile-compatible and enables touch gestures for tablets or phones.
+View uses Foundation for Apps, a SaSS framework and AngularJs library for creating UIs. It provides layout components and an easy way to utilize state routing.  It is also mobile-compatible and enables touch gestures for tablets or phones.
 
 The Foundation for Apps docs are here:
 

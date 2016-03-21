@@ -1,13 +1,13 @@
-# Tiara
-  Tiara is a consumer-facing front end for Lucidworks Fusion.  It provides a basic search interface with simple configuration, so you can quickly deliver a Fusion-based search solution with minimal development.  Tiara is powered by Fusion, Gulp, Angular, and libSaSS.
+# Lucidworks View
+  Lucidworks View is a consumer-facing front end for Lucidworks Fusion.  It provides a basic search interface with simple configuration, so you can quickly deliver a Fusion-based search solution with minimal development.  View is powered by Fusion, Gulp, Angular, and libSaSS.
 
-  You can also use Tiara as the basis for developing a more sophisticated Web interface, using Foundation for Apps: http://foundation.zurb.com/apps/docs/
+  You can also use View as the basis for developing a more sophisticated Web interface, using Foundation for Apps: http://foundation.zurb.com/apps/docs/
 
   If you need help setting up Fusion, see https://doc.lucidworks.com/.
 
 ## Requirements
 
-If you start from a tarball, all dependencies are included.
+If you downloaded a platform-specific package, all dependencies are included.
 
 If you start by cloning the repository, you'll need the following software:
 
@@ -38,16 +38,33 @@ If you start by cloning the repository, you'll need the following software:
   bower install
   ```
 
-  If prompted for a version for AngularJS, select 1.4.10.
-
 1. While you're working on your project, run:
 
+  * If you downloaded a tar package:
+
   ```bash
-  npm start
+  ./view.sh start
   ```
 
-  This will compile the SaSS and assemble your Angular app.
-1. **Now go to `http://localhost:3000` in your browser to see it in action.**
+  * If you cloned the repository:
+
+    ```bash
+    npm start
+    ```
+
+  This will compile the SaSS, assemble your Angular app, and create `FUSION_CONFIG.js` (if you haven't created it already).  You'll see output that tells you which port was selected:
+
+  ```
+  [BS] Access URLs:
+   ------------------------------------
+         Local: http://localhost:3000
+      External: http://<external IP>:3000
+   ------------------------------------
+   ```
+
+   The default is port 3000, but if that port is already in use then the app selects the next highest available port.
+
+1. **Now go to `http://localhost:<port>` in your browser to see it in action.**
 
   The first time you browse to the app, you'll see a login page.  Use your Fusion login and password.  To enable anonymous access, edit the `anonymous_access` keys in FUSION_CONFIG.js.
 
@@ -67,7 +84,7 @@ npm test
 
 ## Basic Configuration
 
-The first time you run `npm start`, FUSION_CONFIG.sample.js is copied to FUSION_CONFIG.js.  Modify this file to configure Tiara's basic options.  Documentation about the configuration keys is included in the file.
+The first time you run `npm start`, FUSION_CONFIG.sample.js is copied to FUSION_CONFIG.js.  Modify this file to configure View's basic options.  Documentation about the configuration keys is included in the file.
 
 At a minimum, you _must_ configure the `collection` key to match the name of your Fusion collection.
 
@@ -81,10 +98,10 @@ The title and logo for your interface are configured in FUSION_CONFIG.js as `sea
 
 CSS options are configured in the files in client/assets/scss.
 
-Templates for various regions of the UI are located in client/assets/components.
+Templates for various UI components are located in client/assets/components.
 
 Search results from different document types can use different templates.  The `client/assets/components/document` directory contains templates for some common document types, plus default templates for all others.  Data types correspond to Connectors in Fusion.  See (Customizing Documents)[docs/Customizing_Documents.md] for details about working with these.
 
 ## What's Next
 
-For more details about configuring and customizing Tiara, see the [docs](docs/) directory.
+For more details about configuring and customizing View, see the [docs](docs/) directory.

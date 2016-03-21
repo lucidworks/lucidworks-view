@@ -1,6 +1,6 @@
 # How to customize documents
 
-Tiara lets you customize the display of different document types, which correspond to datasources in Fusion.  It includes built-in templates to display some of the most common document types:
+Lucidworks View lets you customize the display of different document types, which correspond to datasources in Fusion.  It includes built-in templates to display some of the most common document types:
 
 - `document_file` (filesystem)
 - `document_jira` (repository)
@@ -36,6 +36,8 @@ You can add new document types by
   document_<mydoctype>.html
   document_<mydoctype>.js
   ```
+
+  See the `client/assets/components/document/document_EXAMPLE` directory for an example.
 
 1. Customize the templates as needed.
   At a minimum, you _must_ modify the following values in `document_<mydoctype>.js`:
