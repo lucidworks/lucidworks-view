@@ -1,24 +1,24 @@
 <article class="grid-block document row">
   <div class="detail vertical grid-content">
     <h3 class="subheader">
-      <a ng-href="{{::vm.doc.id}}" ng-click="vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank">
-        {{::vm.doc.text[0]}}
-      </a>
+        <field value="::vm.doc.text" highlight="vm.highlight" maxlength="200" hkey="text"></field>
     </h3>
     <h4 class="subheader" ng-if="::vm.doc.keywords"><field value="::vm.doc.keywords" highlight="::vm.highlight" maxlength="200" hkey="keywords"></field></h4>
 
     <div class="large-8 xlarge-7 xx-large-6">
       <p ng-if="vm.doc.username_s">
-        <field value="::vm.doc.username_s" highlight="::vm.highlight" maxlength="200"
-               hkey="username_s"></field>  (@<field value="::vm.doc.user_s" highlight="::vm.highlight" maxlength="200"
-                      hkey="user_s"></field>)
+        <field ng-if="::(vm.doc.user_s !== vm.doc.user_s)" value="::vm.doc.username_s" highlight="::vm.highlight" maxlength="200"
+               hkey="username_s"></field>  <span ng-if="::vm.doc.user_s">(@<field value="::vm.doc.user_s" highlight="::vm.highlight" maxlength="200"
+                      hkey="user_s"></field>)</span>
       </p>
       <p ng-if="::vm.doc.channel_s">
         channel: <field value="::vm.doc.channel_s" highlight="::vm.highlight" maxlength="200"
                hkey="channel_s"></field>
       </p>
       <p ng-if="::vm.doc.timestamp_tdt">
-        <field value="::vm.doc.timestamp_tdtFormatted"></field>
+        <a ng-href="{{::vm.doc.id}}" ng-click="vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank">
+          <field value="::vm.doc.timestamp_tdtFormatted"></field> UTC
+        </a>
       </p>
      </div>
   </div>

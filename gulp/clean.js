@@ -12,5 +12,5 @@ gulp.task('clean:templates', function(cb){
 });
 
 gulp.task('clean:package', function(cb){
-  rimraf('./dist', cb);
+  rimraf('./tmp/tiara', cb);
 });

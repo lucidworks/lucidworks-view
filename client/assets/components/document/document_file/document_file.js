@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.document_file', ['fusionSeedApp.services.signals'])
+    .module('fusionSeedApp.components.document_file', ['fusionSeedApp.services.signals', 'angular-humanize'])
     .directive('documentFile', documentFile);
 
   /* @ngInject */
@@ -23,7 +23,7 @@
 
   }
 
-  function Controller(SignalsService) {
+  function Controller(SignalsService, $filter) {
     'ngInject';
     var vm = this;
 
@@ -31,6 +31,13 @@
 
     function activate() {
       vm.postSignal = SignalsService.postSignal;
+      vm.doc = processDocument(vm.doc);
+    }
+
+    function processDocument(doc) {
+      doc.length_lFormatted = $filter('humanizeFilesize')(doc.length_l);
+      doc.lastModified_dtFormatted = $filter('date')(doc.lastModified_dt);
+      return doc;
     }
   }
 })();

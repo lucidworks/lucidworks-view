@@ -6,7 +6,9 @@ var argv            = require('yargs').argv;
 gulp.task('version', function(){
   return gulp.src(['package.json', 'bower.json'])
     .pipe($.jsonEditor(function(json) {
-      json.version = argv.version;
+      if(argv.version){
+        json.version = argv.version;
+      }
       return json; // must return JSON object.
     }))
     .pipe(gulp.dest('.'));

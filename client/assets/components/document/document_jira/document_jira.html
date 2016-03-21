@@ -2,7 +2,7 @@
   <div class="detail vertical grid-content">
     <h3 class="subheader">
       <a ng-href="{{::vm.doc.id}}" ng-click="vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank">
-        {{::vm.doc.name_s}}{{::vm.doc.summary_s}}
+        <field value="::vm.doc.name_s" highlight="::vm.highlight" maxlength="200" hkey="name_s"></field><field value="::vm.doc.summary_s" highlight="::vm.highlight" maxlength="200" hkey="summary_s"></field>
       </a>
     </h3>
     <h4 class="subheader" ng-if="::vm.doc.keywords"><field value="::vm.doc.keywords" highlight="::vm.highlight" maxlength="200" hkey="keywords"></field></h4>

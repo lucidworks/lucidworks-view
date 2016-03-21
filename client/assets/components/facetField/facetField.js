@@ -5,7 +5,8 @@
     .module('fusionSeedApp.components.facetField', [
       'fusionSeedApp.services.config',
       'foundation.core',
-      'fusionSeedApp.utils.queryBuilder'
+      'fusionSeedApp.utils.queryBuilder',
+      'angular-humanize'
     ])
     .config(Config);
 

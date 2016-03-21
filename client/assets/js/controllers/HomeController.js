@@ -1,11 +1,11 @@
 (function() {
   'use strict';
   angular
-    .module('fusionSeedApp.controllers.home', ['fusionSeedApp.services', 'angucomplete-alt'])
+    .module('fusionSeedApp.controllers.home', ['fusionSeedApp.services', 'angucomplete-alt', 'angular-humanize'])
     .controller('HomeController', HomeController);
 
 
-  function HomeController($scope, $log, ConfigService, QueryService, URLService, Orwell, AuthService, _, $timeout, $rootScope) {
+  function HomeController($filter, ConfigService, URLService, Orwell, AuthService, _) {
 
     'ngInject';
     var hc = this; //eslint-disable-line
@@ -38,6 +38,7 @@
       resultsObservable.addObserver(function(data) {
         if (data.hasOwnProperty('response')) {
           hc.numFound = data.response.numFound;
+          hc.numFoundFormatted = $filter('humanizeNumberFormat')(hc.numFound, 0);
           hc.lastQuery = data.responseHeader.params.q;
         } else {
           hc.numFound = 0;

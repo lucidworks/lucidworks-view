@@ -36,7 +36,7 @@
     }
 
     function processDocument(doc) {
-      doc.lastModified_dtFormatted = $filter('date')(vm.doc.lastModified_dt);
+      doc.lastModified_dtFormatted = $filter('date')(doc.lastModified_dt);
       return doc;
     }
   }

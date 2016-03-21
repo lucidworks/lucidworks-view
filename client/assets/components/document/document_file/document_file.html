@@ -1,23 +1,21 @@
 <article class="grid-block document row">
   <div class="detail vertical grid-content">
-    <h3 class="subheader">
-      <field value="vm.doc.id" maxlength="200"></field>
-    </h3>
-    <h4 class="subheader" ng-if="::vm.doc.keywords"><field value="::vm.doc.keywords" highlight="::vm.highlight" maxlength="200" hkey="::keywords"></field></h4>
-
+    <field class="subheader" value="::vm.doc.id" maxlength="200"></field>
     <div class="large-8 xlarge-7 xx-large-6">
-      <p ng-if="::vm.doc.mimeType_s">
+      <span ng-if="::vm.doc.length_l">
+        size: <field value="::vm.doc.length_lFormatted"></field>
+      </span>
+      <span ng-if="::vm.doc.mimeType_s">
         mimetype: <field value="::vm.doc.mimeType_s" highlight="::vm.highlight" maxlength="200"
-               hkey="::mimeType_s"></field>
-      </p>
-      <p ng-if="::vm.doc.owner_s">
+               hkey="mimeType_s"></field>
+      </span>
+      <span ng-if="::vm.doc.owner_s">
         owner: <field value="::vm.doc.owner_s" highlight="::vm.highlight" maxlength="200"
-               hkey="::owner_s"></field>
-      </p>
-      <p ng-if="::vm.doc.group_s">
-        group: <field value="::vm.doc.group_s" highlight="::vm.highlight" maxlength="200"
-               hkey="::group_s"></field>
-      </p>
+               hkey="owner_s"></field>
+      </span>
+      <span ng-if="::vm.doc.lastModified_dt">
+        last modified: <field value="::vm.doc.lastModified_dtFormatted"></field> UTC
+      </span>
      </div>
   </div>
 </article>
