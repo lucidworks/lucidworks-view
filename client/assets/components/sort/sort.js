@@ -2,11 +2,11 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.sort', [])
+    .module('lucidworksView.components.sort', [])
     .directive('sort', sort);
 
-  /* @ngInject */
   function sort() {
+    'ngInject';
     var directive = {
       restrict: 'E',
       templateUrl: 'assets/components/sort/sort.html',
@@ -21,7 +21,6 @@
 
   }
 
-  /* @ngInject */
   function Controller($scope, ConfigService, QueryService, URLService) {
     'ngInject';
     var vm = this;

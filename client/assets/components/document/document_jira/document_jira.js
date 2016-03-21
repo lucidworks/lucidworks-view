@@ -5,8 +5,8 @@
     .module('lucidworksView.components.document_jira', ['lucidworksView.services.signals'])
     .directive('documentJira', documentJira);
 
-  /* @ngInject */
   function documentJira() {
+    'ngInject';
     var directive = {
       restrict: 'EA',
       templateUrl: 'assets/components/document/document_jira/document_jira.html',

@@ -5,8 +5,8 @@
     .module('lucidworksView.components.document_EXAMPLE', ['lucidworksView.services.signals'])
     .directive('documentExample', documentExample);
 
-  /* @ngInject */
   function documentExample() {
+    'ngInject';
     var directive = {
       restrict: 'EA',
       templateUrl: 'assets/components/document/document_EXAMPLE/document_EXAMPLE.html',

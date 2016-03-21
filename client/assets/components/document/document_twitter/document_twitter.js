@@ -5,8 +5,8 @@
     .module('lucidworksView.components.document_twitter', ['lucidworksView.services.signals'])
     .directive('documentTwitter', documentTwitter);
 
-  /* @ngInject */
   function documentTwitter() {
+    'ngInject';
     var directive = {
       restrict: 'EA',
       templateUrl: 'assets/components/document/document_twitter/document_twitter.html',

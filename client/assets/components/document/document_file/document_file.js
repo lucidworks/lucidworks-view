@@ -5,8 +5,8 @@
     .module('lucidworksView.components.document_file', ['lucidworksView.services.signals', 'angular-humanize'])
     .directive('documentFile', documentFile);
 
-  /* @ngInject */
   function documentFile() {
+    'ngInject';
     var directive = {
       restrict: 'EA',
       templateUrl: 'assets/components/document/document_file/document_file.html',

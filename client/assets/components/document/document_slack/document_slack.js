@@ -5,8 +5,8 @@
     .module('lucidworksView.components.document_slack', ['lucidworksView.services.signals'])
     .directive('documentSlack', documentSlack);
 
-  /* @ngInject */
   function documentSlack() {
+    'ngInject';
     var directive = {
       restrict: 'EA',
       templateUrl: 'assets/components/document/document_slack/document_slack.html',

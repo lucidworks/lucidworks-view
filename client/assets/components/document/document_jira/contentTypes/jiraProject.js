@@ -5,8 +5,8 @@
     .module('lucidworksView.components.document_jira')
     .directive('jiraProject', jiraProject);
 
-  /* @ngInject */
   function jiraProject() {
+    'ngInject';
     var directive = {
       restrict: 'EA',
       templateUrl: 'assets/components/document/document_jira/contentTypes/jiraProject.html',
