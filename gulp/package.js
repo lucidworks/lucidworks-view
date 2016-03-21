@@ -150,15 +150,8 @@ gulp.task('package:bashCommands', $.shell.task([
   'chmod +x tmp/tiara/lib/nodejs/lib/node_modules/npm/bin/npm',
   'cd tmp/tiara && ./tiara.sh install',
   'cd tmp && tar -zcf ../packages/tiara-'+os_target.os+'-'+os_target.platform+'-'+getVersion()+'.tar.gz tiara'
-], {verbose: true})
-);
+], {verbose: true}));
 
-// gulp.task('write:sh', function(cb){
-//   var shFile = ''
-//   string_src('tiara.sh', shFile)
-//    .pipe(gulp.dest('tmp/tiara'));
-//   cb();
-// });
 
 ////////
 
