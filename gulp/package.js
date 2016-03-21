@@ -152,11 +152,11 @@ gulp.task('package:bashCommands', $.shell.task([
   'cd tmp && tar -zcf ../packages/tiara-'+os_target.os+'-'+os_target.platform+'-'+getVersion()+'.tar.gz tiara'
 ], {verbose: true}));
 
-
 ////////
 
 function getVersion(){
-  var packageJson = require('./package.json');
+  var fs = require('fs');
+  var packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
   return packageJson.version;
 }
 
