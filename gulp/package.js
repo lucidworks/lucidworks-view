@@ -139,18 +139,18 @@ gulp.task('move:tests', function(cb){
 });
 
 gulp.task('package:bashCommands', $.shell.task([
-    'mkdir -p tmp/node',
-    'mkdir -p tmp/node/'+packageName(os_target),
-    'mkdir -p tmp/tiara/lib/nodejs',
-    'curl -o tmp/node/'+packageName(os_target)+'.'+os_target.extension+' '+buildUrl(os_target),
-    'tar -xzf tmp/node/'+packageName(os_target)+'.'+os_target.extension+' -C tmp/tiara/lib/nodejs --strip-components=1',
-    'mkdir -p packages',
-    'chmod +x tmp/tiara/lib/nodejs/bin/npm',
-    'chmod +x tmp/tiara/lib/nodejs/bin/node',
-    'chmod +x tmp/tiara/lib/nodejs/lib/node_modules/npm/bin/npm',
-    'cd tmp/tiara && ./tiara.sh install',
-    'cd tmp && tar -zcf ../packages/tiara-'+os_target.os+'-'+os_target.platform+'.tar.gz tiara'
-  ], {verbose: true})
+  'mkdir -p tmp/node',
+  'mkdir -p tmp/node/'+packageName(os_target),
+  'mkdir -p tmp/tiara/lib/nodejs',
+  'curl -o tmp/node/'+packageName(os_target)+'.'+os_target.extension+' '+buildUrl(os_target),
+  'tar -xzf tmp/node/'+packageName(os_target)+'.'+os_target.extension+' -C tmp/tiara/lib/nodejs --strip-components=1',
+  'mkdir -p packages',
+  'chmod +x tmp/tiara/lib/nodejs/bin/npm',
+  'chmod +x tmp/tiara/lib/nodejs/bin/node',
+  'chmod +x tmp/tiara/lib/nodejs/lib/node_modules/npm/bin/npm',
+  'cd tmp/tiara && ./tiara.sh install',
+  'cd tmp && tar -zcf ../packages/tiara-'+os_target.os+'-'+os_target.platform+'-'+getVersion()+'.tar.gz tiara'
+], {verbose: true})
 );
 
 // gulp.task('write:sh', function(cb){
@@ -162,14 +162,11 @@ gulp.task('package:bashCommands', $.shell.task([
 
 ////////
 
-function string_src(filename, string) {
-  var src = require('stream').Readable({ objectMode: true });
-  src._read = function () {
-    this.push(new gutil.File({ cwd: "", base: "", path: filename, contents: new Buffer(string) }));
-    this.push(null);
-  };
-  return src;
+function getVersion(){
+  var packageJson = require('./package.json');
+  return packageJson.version;
 }
+
 
 function buildUrl(target){
   //Format https://nodejs.org/dist/v5.8.0/node-v5.8.0-darwin-x64.tar.gz
