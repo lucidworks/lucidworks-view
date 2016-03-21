@@ -36,6 +36,7 @@
 
     function processDocument(doc) {
       doc.length_lFormatted = $filter('humanizeFilesize')(doc.length_l);
+      doc.lastModified_dtFormatted = $filter('date')(doc.lastModified_dt);
       return doc;
     }
   }
