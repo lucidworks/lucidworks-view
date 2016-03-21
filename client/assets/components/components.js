@@ -9,9 +9,9 @@ angular.module('lucidworksView.components', [
   'lucidworksView.components.facetField',
   'lucidworksView.components.facetList',
   'lucidworksView.components.field',
+  'lucidworksView.components.landingpage',
   'lucidworksView.components.login',
   'lucidworksView.components.paginate',
   'lucidworksView.components.searchbox',
-  'lucidworksView.components.landingpage',
   'lucidworksView.components.sort'
 ]);
