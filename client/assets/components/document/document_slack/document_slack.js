@@ -36,7 +36,7 @@
     }
 
     function processDocument(doc) {
-      doc.timestamp_tdtFormatted = $filter('date')(vm.doc.timestamp_tdt, 'short');
+      doc.timestamp_tdtFormatted = $filter('date')(vm.doc.timestamp_tdt, 'M/d/yy h:mm:ss a');
       return doc;
     }
   }
