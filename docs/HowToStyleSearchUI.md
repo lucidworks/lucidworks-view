@@ -1,9 +1,11 @@
 # How To Style the UI
 
 
-Since Lucidworks View is built using Foundation for Apps, it shares the same cross-browser compatibility (though we haven't tested all of these):
+Since Lucidworks View is built using Foundation for Apps, it should work with the same browsers:
 
 >http://foundation.zurb.com/apps/docs/#!/compatibility
+
+However, we have not tested or designed our default interface for all of them.
 
 ## Basic Styling
 
