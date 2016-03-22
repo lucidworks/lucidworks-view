@@ -57,7 +57,7 @@
               facets.push(facet);
             });
             // only change facets list on finish.
-            vm.facets = facets;
+            vm.facets = _.concat(vm.facets, facets);
           }
         }
       });
