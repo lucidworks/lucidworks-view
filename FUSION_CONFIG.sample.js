@@ -116,7 +116,7 @@ appConfig = { //eslint-disable-line
   //
   // The HTML/Angular template is located in the following directory:
   //    your_project_directory/client/assets/components/document/document.html
-  fields_to_display:['title','id','name'],
+  fields_to_display:['title','id','name', '*'],
   field_display_labels: {
     'name': 'Document Name',
     //'id': 'Identification Number'
