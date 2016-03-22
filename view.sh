@@ -10,7 +10,7 @@ then
 fi
 
 
-# Dirty ugly hack to make gulp work
+# Put nodejs in the path for the duration of the script execution.
 export PATH=$(pwd)/lib/nodejs/bin:$PATH
 
 ./lib/nodejs/bin/npm $1 $2 $3
