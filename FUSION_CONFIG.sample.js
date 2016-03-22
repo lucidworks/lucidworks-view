@@ -105,7 +105,8 @@ appConfig = { //eslint-disable-line
   //
   // In order to add items to the list you must add the fields to
   // fields_to_display. You can change the label of any field by adding a
-  // field mapping in field_display_labels
+  // field mapping in field_display_labels. You can optionally use a wildcard '*'
+  // to display all fields.
   //
   // FLEXIBLE HTML FIELD DISPLAY
   //
