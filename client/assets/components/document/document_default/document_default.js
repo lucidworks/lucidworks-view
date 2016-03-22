@@ -40,17 +40,16 @@
      */
     function processDocument(doc) {
 
-      //Populate the additional fields to display
+      // Populate the additional fields to display
+
+      // Get fields from config service.
       var fieldsToDisplay = ConfigService.getFieldsToDisplay();
-      $log.debug('fieldsToDisplayPre', fieldsToDisplay);
+      // parse any wildcards in the config.
       fieldsToDisplay = DocsHelper.parseWildcards(fieldsToDisplay, doc);
-      $log.debug('fieldsToDisplayPost', fieldsToDisplay);
       doc.fieldsToDisplay = DocsHelper.populateFieldLabels(
         doc,
         DocsHelper.selectFields(doc, fieldsToDisplay)
       );
-      // doc.fieldsToDisplay = fieldsToDisplay;
-      $log.debug('fieldsToDisplayPopulated', doc.fieldsToDisplay);
 
       doc.lw_head = getField('head', doc) ?
         getField('head', doc) : 'Title Field Not Found';
