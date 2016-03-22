@@ -28,6 +28,12 @@
       return _.pick(document, fieldArray);
     }
 
+    /**
+     * Parse a fields list for a wildcard, if present return an array of all fields.
+     * @param  {array}  fieldsList List of fields and/or wildcards.
+     * @param  {object} doc        The document fields.
+     * @return {array}             A list of all applicable fields.
+     */
     function parseWildcards(fieldsList, doc){
       var wildcardId = _.indexOf(fieldsList, '*');
       if(wildcardId > -1){
