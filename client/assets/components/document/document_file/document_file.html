@@ -2,20 +2,20 @@
   <div class="detail vertical grid-content">
     <field class="subheader" value="::vm.doc.id" maxlength="200"></field>
     <div class="large-8 xlarge-7 xx-large-6">
-      <span ng-if="::vm.doc.length_l">
-        size: <field value="::vm.doc.length_lFormatted"></field>
-      </span>
-      <span ng-if="::vm.doc.mimeType_s">
-        mimetype: <field value="::vm.doc.mimeType_s" highlight="::vm.highlight" maxlength="200"
+      <div class="size" ng-if="::vm.doc.length_l">
+        <span class="doc-label">size:</span> <field value="::vm.doc.length_lFormatted"></field>
+      </div>
+      <div class="mimetype" ng-if="::vm.doc.mimeType_s">
+        <span class="doc-label">mimetype:</span> <field value="::vm.doc.mimeType_s" highlight="::vm.highlight" maxlength="200"
                hkey="mimeType_s"></field>
-      </span>
-      <span ng-if="::vm.doc.owner_s">
-        owner: <field value="::vm.doc.owner_s" highlight="::vm.highlight" maxlength="200"
+      </div>
+      <div class="owner" ng-if="::vm.doc.owner_s">
+        <span class="doc-label">owner:</span> <field value="::vm.doc.owner_s" highlight="::vm.highlight" maxlength="200"
                hkey="owner_s"></field>
-      </span>
-      <span ng-if="::vm.doc.lastModified_dt">
-        last modified: <field value="::vm.doc.lastModified_dtFormatted"></field> UTC
-      </span>
+      </div>
+      <div class="last-modified" ng-if="::vm.doc.lastModified_dt">
+        <span class="doc-label">last modified:</span> <field value="::vm.doc.lastModified_dtFormatted"></field> UTC
+      </div>
      </div>
   </div>
 </article>
