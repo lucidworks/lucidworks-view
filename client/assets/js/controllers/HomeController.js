@@ -46,8 +46,9 @@
         updateStatus();
       });
 
-      // Forcing the setting of query object (and making the query)
+      // Force set the query object to change (and making the query)
       // one digest cycle later than the digest cycle of the initial load-rendering
+      // This is needed or else URL does not load.
       $timeout(function(){
         URLService.setQuery(query);
       });
