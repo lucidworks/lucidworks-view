@@ -5,7 +5,7 @@
     .controller('HomeController', HomeController);
 
 
-  function HomeController($filter, ConfigService, URLService, Orwell, AuthService, _) {
+  function HomeController($filter, $timeout, ConfigService, URLService, Orwell, AuthService, _) {
 
     'ngInject';
     var hc = this; //eslint-disable-line
@@ -46,7 +46,9 @@
         updateStatus();
       });
 
-      URLService.setQuery(query);
+      $timeout(function(){
+        URLService.setQuery(query);
+      });
     }
 
     function updateStatus(){
