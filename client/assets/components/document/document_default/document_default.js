@@ -44,11 +44,12 @@
 
       // Get fields from config service.
       var fieldsToDisplay = ConfigService.getFieldsToDisplay();
-      // parse any wildcards in the config.
+      // Parse any wildcards in the config.
       fieldsToDisplay = DocsHelper.parseWildcards(fieldsToDisplay, doc);
+      // turn fields to display into a list of params.
       doc.fieldsToDisplay = DocsHelper.populateFieldLabels(
-        doc,
-        DocsHelper.selectFields(doc, fieldsToDisplay)
+        DocsHelper.selectFields(doc, fieldsToDisplay),
+        ConfigService.getFieldLabels()
       );
 
       doc.lw_head = getField('head', doc) ?

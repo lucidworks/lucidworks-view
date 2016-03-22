@@ -56,17 +56,17 @@
     /**
      * Returns human readable field names for a document
      *
-     * @param  {object} document [description]
-     * @param  {object} fieldMap [description]
-     * @return {[type]}          [description]
+     * @param  {object} document      The document objects to populate.
+     * @param  {object} fieldLabelMap The field to label map.
+     * @return {object}               A version of the document with populated labels.
      */
-    function populateFieldLabels(document, fieldMap) {
+    function populateFieldLabels(document, fieldLabelMap) {
       //TODO: populate the field names from the map
 
       var unzippedDocuments = _.chain(document)
         .map(function (value, key) {
-          return fieldMap.hasOwnProperty(key) ? {
-            key: fieldMap[key],
+          return fieldLabelMap.hasOwnProperty(key) ? {
+            key: fieldLabelMap[key],
             value: value
           } : {
             key: key,
