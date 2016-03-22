@@ -52,7 +52,7 @@ appConfig = { //eslint-disable-line
   // Search UI Title
   // This title appears in a number of places in the app, including page title.
   // In the header it is replaced by the logo if one is provided.
-  search_app_title: 'Fusion Seed App',
+  search_app_title: 'Luidworks View',
   // Specify the path to your logo relative to the root app folder.
   // Or use an empty string if you don't want to use a logo.
   logo_location: 'assets/img/logo/lucidworks-white.svg',
@@ -81,7 +81,7 @@ appConfig = { //eslint-disable-line
    *   your_project_directory/client/assets/components/document/document.html
    */
   //In search results, for each doc, display this field as the head field
-  head_field: 'title',
+  head_field: 'id',
   subhead_field: 'subtitle',
   description_field: 'description',
   //In search results, for each doc, use this field to generate link value when a user clicks on head_field
