@@ -5,7 +5,7 @@
     .controller('HomeController', HomeController);
 
 
-  function HomeController($filter, ConfigService, URLService, Orwell, AuthService, _) {
+  function HomeController($filter, $timeout, ConfigService, URLService, Orwell, AuthService, _) {
 
     'ngInject';
     var hc = this; //eslint-disable-line
@@ -46,7 +46,12 @@
         updateStatus();
       });
 
-      URLService.setQuery(query);
+      // Force set the query object to change one digest cycle later 
+      // than the digest cycle of the initial load-rendering
+      // The $timeout is needed or else the query to fusion is not made.
+      $timeout(function(){
+        URLService.setQuery(query);
+      });
     }
 
     function updateStatus(){
