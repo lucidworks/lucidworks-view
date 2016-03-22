@@ -22,6 +22,8 @@
     <p class="large-8 xlarge-7 xx-large-6">
       <field ng-if="::vm.doc.description" value="::vm.doc.description" highlight="::vm.highlight" maxlength="200"
              hkey="description"></field>
+     <field ng-if="::(!vm.doc.description && vm.doc.og_description)" value="::vm.doc.og_description" highlight="::vm.highlight" maxlength="200"
+            hkey="description"></field>
       <field ng-if="::vm.doc.content" value="::vm.doc.content" highlight="::vm.highlight" maxlength="200"
              hkey="content"></field>
   </div>
