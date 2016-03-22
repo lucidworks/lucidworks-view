@@ -11,13 +11,17 @@
              hkey="description_s"></field>
     </p>
     <div class="detail-row">
-      <field ng-if="::vm.doc.jira_content_type_s" value="::vm.doc.jira_content_type_s" highlight="vm.highlight" maxlength="200"
+      <div class="type" ng-if="::vm.doc.jira_content_type_s">
+        <field value="::vm.doc.jira_content_type_s" highlight="vm.highlight" maxlength="200"
              hkey="jira_content_type_s"></field>
-      <a ng-if="::vm.doc.parent_s" ng-href="{{::vm.doc.id}}" ng-click="vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank">
-       <field value="::vm.doc.key_s" highlight="::vm.highlight" maxlength="200" hkey="key_s"></field>
-      </a>
-      <span ng-if="::vm.doc.lastModified_dt">Last Modified: <field value="::vm.doc.lastModified_dtFormatted"></field></span>
-      <span ng-if="::vm.doc.assignee_s">Assigned to: <field value="::vm.doc.assignee_s" maxlength="200"></field></span>
+      </div>
+      <div class="key" ng-if="::vm.doc.parent_s">
+        <a ng-href="{{::vm.doc.id}}" ng-click="vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank">
+          <field value="::vm.doc.key_s" highlight="::vm.highlight" maxlength="200" hkey="key_s"></field>
+        </a>
+      </div>
+      <div class="last-modified" ng-if="::vm.doc.lastModified_dt"><span class="doc-label">Last Modified:</span> <field value="::vm.doc.lastModified_dtFormatted"></field></div>
+      <div class="assignee" ng-if="::vm.doc.assignee_s"><span class="doc-label">Assigned to:</span> <field value="::vm.doc.assignee_s" maxlength="200"></field></div>
     </div>
   </div>
 </div>
