@@ -46,6 +46,8 @@
         updateStatus();
       });
 
+      // Forcing the setting of query object (and making the query)
+      // one digest cycle later than the digest cycle of the initial load-rendering
       $timeout(function(){
         URLService.setQuery(query);
       });
