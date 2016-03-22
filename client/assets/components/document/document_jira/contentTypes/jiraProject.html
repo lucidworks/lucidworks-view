@@ -10,7 +10,7 @@
       <field value="::vm.doc.description_s" highlight="::vm.highlight" maxlength="200"
              hkey="description_s"></field>
     </p>
-    <p>
+    <div class="detail-row">
       <field ng-if="::vm.doc.jira_content_type_s" value="::vm.doc.jira_content_type_s" highlight="vm.highlight" maxlength="200"
              hkey="jira_content_type_s"></field>
       <a ng-if="::vm.doc.parent_s" ng-href="{{::vm.doc.id}}" ng-click="vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank">
@@ -18,6 +18,6 @@
       </a>
       <span ng-if="::vm.doc.lastModified_dt">Last Modified: <field value="::vm.doc.lastModified_dtFormatted"></field></span>
       <span ng-if="::vm.doc.lead_s">Lead: <field value="::vm.doc.lead_s" maxlength="200"></field></span>
-    </p>
-   </div>
+    </div>
+  </div>
 </div>
