@@ -14,6 +14,7 @@
     return {
       populateFieldLabels: populateFieldLabels,
       concatMultivaluedFields: concatMultivaluedFields,
+      parseWildcards: parseWildcards,
       selectFields: selectFields
     };
 
@@ -25,6 +26,25 @@
      */
     function selectFields(document, fieldArray) {
       return _.pick(document, fieldArray);
+    }
+
+    function parseWildcards(fieldsList, doc){
+      var wildcardId = _.indexOf(fieldsList, '*');
+      if(wildcardId > -1){
+        // Slice the list to just the fields before the first wildcard to order them first.
+        var fieldsBeforeWildcard = _.slice(fieldsList, 0, wildcardId);
+        // Add all existing fields to wildcard.
+        fieldsList = _.union(fieldsBeforeWildcard, Object.keys(doc));
+        // Remove the angular hashKey.
+        _.remove(fieldsList, function(n) {
+          switch(n){
+          case '$$hashKey':
+            return true;
+          }
+          return false;
+        });
+      }
+      return fieldsList;
     }
 
     /**

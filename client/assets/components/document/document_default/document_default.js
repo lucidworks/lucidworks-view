@@ -20,7 +20,7 @@
     };
   }
 
-  function Controller($scope, DocsHelper, ConfigService, SignalsService) {
+  function Controller($log, $scope, DocsHelper, ConfigService, SignalsService) {
     'ngInject';
     var vm = this;
     vm.postSignal = SignalsService.postSignal;
@@ -41,10 +41,16 @@
     function processDocument(doc) {
 
       //Populate the additional fields to display
+      var fieldsToDisplay = ConfigService.getFieldsToDisplay();
+      $log.debug('fieldsToDisplayPre', fieldsToDisplay);
+      fieldsToDisplay = DocsHelper.parseWildcards(fieldsToDisplay, doc);
+      $log.debug('fieldsToDisplayPost', fieldsToDisplay);
       doc.fieldsToDisplay = DocsHelper.populateFieldLabels(
-        DocsHelper.selectFields(doc, ConfigService.getFieldsToDisplay()),
-        ConfigService.getFieldLabels()
+        doc,
+        DocsHelper.selectFields(doc, fieldsToDisplay)
       );
+      // doc.fieldsToDisplay = fieldsToDisplay;
+      $log.debug('fieldsToDisplayPopulated', doc.fieldsToDisplay);
 
       doc.lw_head = getField('head', doc) ?
         getField('head', doc) : 'Title Field Not Found';
