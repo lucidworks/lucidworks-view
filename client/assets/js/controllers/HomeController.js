@@ -46,9 +46,9 @@
         updateStatus();
       });
 
-      // Force set the query object to change (and making the query)
-      // one digest cycle later than the digest cycle of the initial load-rendering
-      // This is needed or else URL does not load.
+      // Force set the query object to change one digest cycle later 
+      // than the digest cycle of the initial load-rendering
+      // The $timeout is needed or else the query to fusion is not made.
       $timeout(function(){
         URLService.setQuery(query);
       });
