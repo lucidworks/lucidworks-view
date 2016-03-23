@@ -23,7 +23,7 @@
     };
   }
 
-  function Controller($log) {
+  function Controller() {
     'ngInject';
     var fc = this;
 
@@ -39,7 +39,6 @@
       var result = field;
       var hasHighlight = false;
 
-      maxlength = parseInt(maxlength);
       if (highlight && Object.keys(highlight).length > 0) {
         if (highlight[highlightKey]) {
           result = highlight[highlightKey];
