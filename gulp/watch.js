@@ -26,5 +26,5 @@ gulp.task('watch', function(){
 });
 
 gulp.task('template:sequence', function(cb){
-  sequence('clean:templates', ['copy:components', 'template:routes'], 'concat:components', 'reloadBrowsers', cb);
+  sequence('clean:templates', ['copy:foundation', 'copy:templates' /*, 'template:routes'*/], /*'concat:components',*/ 'reloadBrowsers', cb);
 });
