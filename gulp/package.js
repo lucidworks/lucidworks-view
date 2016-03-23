@@ -9,37 +9,6 @@ var sequence        = require('run-sequence');
 
 var nodeversion     = 'v5.2.0';
 
-var buildTargets  = {
-  mac: {
-    name: 'mac',
-    nodeVersion: nodeversion,
-    os: 'darwin',
-    platform: 'x64',
-    extension: 'tar.gz'
-  },
-  linux: {
-    name: 'linux',
-    nodeVersion: nodeversion,
-    os: 'linux',
-    platform: 'x64',
-    extension: 'tar.gz'
-  },
-  linux32: {
-    name: 'linux32',
-    nodeVersion: nodeversion,
-    os: 'linux',
-    platform: 'x86',
-    extension: 'tar.gz'
-  },
-  sunos: {
-    name: 'sunos',
-    nodeVersion: nodeversion,
-    os: 'sunos',
-    platform: 'x86',
-    extension: 'tar.gz'
-  }
-};
-
 var fileLocations = {
   bower: ['bower_components/*/**'],
   node_modules: ['node_modules/*/**'],
@@ -66,43 +35,12 @@ var fileLocations = {
   ]
 };
 
-// default target
-var os_target = buildTargets.mac;
-
 // Builds the entire app for deployment
 gulp.task('package', function(cb) {
-  // sequence('clean:package', 'download:node', 'move:node', 'move:app', cb);
-  sequence('clean:package', ['package:setupTarget','move:app'], 'package:bashCommands', cb);
+  sequence('clean:package', ['move:app'], 'package:bashCommands', cb);
 });
 
-gulp.task('package:setupTarget', function(cb){
-  os_target.name = argv.buildname ? argv.buildname: 'default';
-  os_target.nodeVersion = argv.nodeVersion ? argv.nodeVersion: os_target.nodeVersion;
-  os_target.os = argv.os ? argv.os: os_target.os;
-  os_target.platform = argv.platform ? argv.platform: os_target.platform;
-  os_target.extension = argv.extension ? argv.extension: os_target.extension;
-  console.log(os_target);
-  cb();
-});
-
-gulp.task('package:setupTarget:mac', function(cb){
-  os_target = buildTargets.mac;
-  cb();
-});
-gulp.task('package:setupTarget:linux', function(cb){
-  os_target = buildTargets.linux;
-  cb();
-});
-gulp.task('package:setupTarget:linux32', function(cb){
-  os_target = buildTargets.linux32;
-  cb();
-});
-gulp.task('package:setupTarget:sunos', function(cb){
-  os_target = buildTargets.sunos;
-  cb();
-});
-
-gulp.task('move:app', ['move:bower', /*'move:node_modules',*/ 'move:client', 'move:docs', 'move:gulp', 'move:tests'], function(cb){
+gulp.task('move:app', ['move:bower', 'move:node_modules', 'move:client', 'move:docs', 'move:gulp', 'move:tests'], function(cb){
   gulp.src(fileLocations.main_components)
   .pipe(gulp.dest('tmp/lucidworks-view'));
   cb();
@@ -140,16 +78,16 @@ gulp.task('move:tests', function(cb){
 
 gulp.task('package:bashCommands', $.shell.task([
   'mkdir -p tmp/node',
-  'mkdir -p tmp/node/'+packageName(os_target),
+  'mkdir -p tmp/node/'+packageName(getOsTarget()),
   'mkdir -p tmp/lucidworks-view/lib/nodejs',
-  'curl -o tmp/node/'+packageName(os_target)+'.'+os_target.extension+' '+buildUrl(os_target),
-  'tar -xzf tmp/node/'+packageName(os_target)+'.'+os_target.extension+' -C tmp/lucidworks-view/lib/nodejs --strip-components=1',
+  'curl -o tmp/node/'+packageName(getOsTarget())+'.'+getOsTarget().extension+' '+buildUrl(getOsTarget()),
+  'tar -xzf tmp/node/'+packageName(getOsTarget())+'.'+getOsTarget().extension+' -C tmp/lucidworks-view/lib/nodejs --strip-components=1',
   'mkdir -p packages',
   'chmod +x tmp/lucidworks-view/lib/nodejs/bin/npm',
   'chmod +x tmp/lucidworks-view/lib/nodejs/bin/node',
   'chmod +x tmp/lucidworks-view/lib/nodejs/lib/node_modules/npm/bin/npm',
-  'cd tmp/lucidworks-view && ./view.sh install',
-  'cd tmp && tar -zcf ../packages/lucidworks-view-'+os_target.os+'-'+os_target.platform+'-'+getVersion()+'.tar.gz lucidworks-view'
+  // 'cd tmp/lucidworks-view && ./view.sh install',
+  'cd tmp && tar -zcf ../packages/lucidworks-view-'+getOsTarget().os+'-'+getOsTarget().platform+'-'+getVersion()+'.tar.gz lucidworks-view'
 ], {verbose: true}));
 
 ////////
@@ -168,6 +106,56 @@ function buildUrl(target){
 
 function packageName(target){
   return 'node-'+target.nodeVersion+'-'+target.os+'-'+target.platform;
+}
+
+function getOsTarget(){
+  var buildTargets  = {
+    mac: {
+      name: 'mac',
+      nodeVersion: nodeversion,
+      os: 'darwin',
+      platform: 'x64',
+      extension: 'tar.gz'
+    },
+    linux: {
+      name: 'linux',
+      nodeVersion: nodeversion,
+      os: 'linux',
+      platform: 'x64',
+      extension: 'tar.gz'
+    },
+    linux32: {
+      name: 'linux32',
+      nodeVersion: nodeversion,
+      os: 'linux',
+      platform: 'x86',
+      extension: 'tar.gz'
+    },
+    sunos: {
+      name: 'sunos',
+      nodeVersion: nodeversion,
+      os: 'sunos',
+      platform: 'x64',
+      extension: 'tar.gz'
+    },
+    sunos32: {
+      name: 'sunos',
+      nodeVersion: nodeversion,
+      os: 'sunos',
+      platform: 'x86',
+      extension: 'tar.gz'
+    }
+  };
+  var os_target = argv.buildTarget ? buildTargets[argv.buildTarget] : {};
+
+  // individual overrides.
+  os_target.name = argv.buildname ? argv.buildname: os_target.name;
+  os_target.nodeVersion = argv.nodeVersion ? argv.nodeVersion: os_target.nodeVersion;
+  os_target.os = argv.os ? argv.os: os_target.os;
+  os_target.platform = argv.platform ? argv.platform: os_target.platform;
+  os_target.extension = argv.extension ? argv.extension: os_target.extension;
+  console.log(os_target);
+  return os_target;
 }
 
 /**
