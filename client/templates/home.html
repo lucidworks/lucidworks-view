@@ -28,7 +28,7 @@ controller: HomeController as hc
     </span>
     <!-- Mobile Search bar -->
     <ul class="left menu-bar primary condense">
-      <li class="show-for-small-only">
+      <li ng-if="hc.showFacets" class="show-for-small-only">
         <a zf-toggle="sidebar"><img
           zf-iconic=""
           icon="menu"

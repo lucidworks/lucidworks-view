@@ -40,13 +40,16 @@
           hc.numFound = data.response.numFound;
           hc.numFoundFormatted = $filter('humanizeNumberFormat')(hc.numFound, 0);
           hc.lastQuery = data.responseHeader.params.q;
+          // Make sure you check for all the supported facets before for empty-ness
+          // before toggling the `showFacets` flag
+          hc.showFacets = !_.isEmpty(data.facet_counts.facet_fields);
         } else {
           hc.numFound = 0;
         }
         updateStatus();
       });
 
-      // Force set the query object to change one digest cycle later 
+      // Force set the query object to change one digest cycle later
       // than the digest cycle of the initial load-rendering
       // The $timeout is needed or else the query to fusion is not made.
       $timeout(function(){
