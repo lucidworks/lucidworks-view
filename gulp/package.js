@@ -37,7 +37,7 @@ var fileLocations = {
 
 // Builds the entire app for deployment
 gulp.task('package', function(cb) {
-  if(!argv.buildTarget || !(argv.buildname && argv.os && argv.platform && argv.extension)){
+  if(!argv.buildTarget && !(argv.buildname && argv.os && argv.platform && argv.extension)){
     console.log('\nTo use package you need to use a valid buildTarget parameter.\n  Ex: gulp build --buildTarget=mac\n  Possible build targets: {mac, linux, linux32, sunos, sunos32}\n\nOR all of these parameters:\nbuildname, buildTarget, os, platform, extension\n  Ex: gulp build --buildname=mac --os=darwin --platform=x64 --extension=tar.gz\n');
     cb();
   } else {
@@ -88,10 +88,10 @@ gulp.task('package:bashCommands', $.shell.task([
   'curl -o tmp/node/'+packageName(getOsTarget())+'.'+getOsTarget().extension+' '+buildUrl(getOsTarget()),
   'tar -xzf tmp/node/'+packageName(getOsTarget())+'.'+getOsTarget().extension+' -C tmp/lucidworks-view/lib/nodejs --strip-components=1',
   'mkdir -p packages',
+  'mkdir -p packages/'+getVersion(),
   'chmod +x tmp/lucidworks-view/lib/nodejs/bin/npm',
   'chmod +x tmp/lucidworks-view/lib/nodejs/bin/node',
   'chmod +x tmp/lucidworks-view/lib/nodejs/lib/node_modules/npm/bin/npm',
-  // 'cd tmp/lucidworks-view && ./view.sh install',
   'cd tmp && tar -zcf ../packages/'+getVersion()+'/lucidworks-view-'+getOsTarget().os+'-'+getOsTarget().platform+'-'+getVersion()+'.tar.gz lucidworks-view'
 ], {verbose: true}));
 
