@@ -56,6 +56,9 @@
         }
 
         function failure(err) {
+          queryResultsObservable.setContent({
+            numFound: 0
+          });
           deferred.reject(err.data);
         }
 

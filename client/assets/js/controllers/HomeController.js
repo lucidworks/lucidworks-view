@@ -5,12 +5,13 @@
     .controller('HomeController', HomeController);
 
 
-  function HomeController($filter, $timeout, ConfigService, URLService, Orwell, AuthService, _) {
+  function HomeController($filter, $log, $scope, $timeout, ConfigService, QueryService, URLService, Orwell, AuthService, _) {
 
     'ngInject';
     var hc = this; //eslint-disable-line
     var resultsObservable;
     var query;
+    var sorting, sortingOptionWatch;
 
     hc.searchQuery = '*:*';
 
@@ -28,6 +29,7 @@
       hc.logoLocation = ConfigService.config.logo_location;
       hc.status = 'loading';
       hc.lastQuery = '';
+      hc.sorting = {};
 
       query = URLService.getQueryFromUrl();
       //Setting the query object... also populating the the view model
@@ -44,9 +46,15 @@
           hc.numFound = 0;
         }
         updateStatus();
+
+        // Initializing sorting
+        sorting = hc.sorting;
+        sorting.switchSort = switchSort;
+        createSortList();
+
       });
 
-      // Force set the query object to change one digest cycle later 
+      // Force set the query object to change one digest cycle later
       // than the digest cycle of the initial load-rendering
       // The $timeout is needed or else the query to fusion is not made.
       $timeout(function(){
@@ -79,6 +87,36 @@
       };
 
       URLService.setQuery(query);
+    }
+
+    /**
+     * Creates a sorting list from ConfigService
+     */
+    function createSortList(){
+      var sortOptions = [{label:'default sort', type:'default', order:'', active: true}];
+      _.forEach(ConfigService.config.sort_fields, function(value){
+        sortOptions.push({label: value, type: 'text', order: 'asc', active: false});
+        sortOptions.push({label: value, type: 'text', order: 'desc', active: false});
+      });
+      sorting.sortOptions = sortOptions;
+      sorting.selectedSort = sorting.sortOptions[0];
+    }
+
+    /**
+     * Switches sort parameter in the page
+     */
+    function switchSort(sort){
+      sorting.selectedSort = sort;
+      var query = QueryService.getQueryObject();
+      switch(sort.type) {
+      case 'text':
+        query.sort = sort.label+' '+sort.order;
+        URLService.setQuery(query);
+        break;
+      default:
+        delete query.sort;
+        URLService.setQuery(query);
+      }
     }
 
     /**

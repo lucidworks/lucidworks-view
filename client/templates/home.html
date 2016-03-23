@@ -67,7 +67,19 @@ controller: HomeController as hc
       </div>
     </span>
     <span class="right">
-      <sort></sort>
+      <!-- TODO: Not working as of now -->
+      <!-- <sort></sort> -->
+      <!-- Hence disabled -->
+      <span zf-action-sheet="" ng-if="hc.sorting.sortOptions.length > 1">
+        <zf-as-button>
+          <span class="button secondary sort-button" style="margin: 0;">Sort <img zf-iconic="" icon="arrow_down" data-direction="top" size="small" /></span>
+        </zf-as-button>
+        <span zf-as-content="" position="bottom"><ul class="block-list">
+          <li ng-repeat="sort in ::hc.sorting.sortOptions">
+            <label for="{{::(sort.label + sort.order)}}" ng-click="hc.sorting.switchSort(sort);">{{sort.label}}<span ng-if="sort.order">&nbsp;{{sort.order}}</span></label>
+          </li>
+        </ul></span>
+      </span>
     </span>
   </div>
 
