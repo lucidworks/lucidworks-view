@@ -26,3 +26,8 @@
     text-align: center;
   }
 }
+
+.label.secondary{
+  @extend %label;
+  @include label-style($secondary-color, isitlight($secondary-color));
+}
