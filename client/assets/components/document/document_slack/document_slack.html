@@ -2,7 +2,8 @@
   <div class="detail vertical grid-content">
     <div class="large-8 xlarge-7 xx-large-6">
       <blockquote class="text">
-          <field value="::vm.doc.text" highlight="vm.highlight" maxlength="200" hkey="text"></field>
+          <!-- <field value="::vm.doc.text" highlight="vm.highlight" maxlength="200" hkey="text"></field> -->
+          <p>{{::vm.doc.text | limitTo:200}}...</p>
       </blockquote>
       <div class="detail-row">
         <div class="channel label secondary" ng-if="::vm.doc.channel_s">
