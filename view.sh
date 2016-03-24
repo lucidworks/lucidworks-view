@@ -11,6 +11,6 @@ fi
 
 
 # Put nodejs in the path for the duration of the script execution.
-export PATH=$(pwd)/lib/nodejs/bin:$PATH
+export PATH=$(pwd)/lib/nodejs/bin:$(pwd)/node_modules/.bin:$PATH
 
 ./lib/nodejs/bin/npm $1 $2 $3
