@@ -8,7 +8,7 @@
     .factory('URLService', URLService);
 
   var blankQuery = {
-    q: '*:*',
+    q: '*',
     start: 0
   };
 

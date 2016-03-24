@@ -13,7 +13,7 @@
     var query;
     var sorting;
 
-    hc.searchQuery = '*:*';
+    hc.searchQuery = '*';
 
     activate();
 
@@ -33,7 +33,7 @@
 
       query = URLService.getQueryFromUrl();
       //Setting the query object... also populating the the view model
-      hc.searchQuery = _.get(query,'q','*:*');
+      hc.searchQuery = _.get(query,'q','*');
 
       // Use an observable to get the contents of a queryResults after it is updated.
       resultsObservable = Orwell.getObservable('queryResults');
