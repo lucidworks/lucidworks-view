@@ -1,4 +1,3 @@
-/*global FastClick*/
 (function () {
   'use strict';
 
@@ -66,6 +65,5 @@
   function run($document, $rootScope, ConfigService) {
     'ngInject';
     $rootScope.title = ConfigService.config.search_app_title;
-    // FastClick.attach($document.body);
   }
 })();
