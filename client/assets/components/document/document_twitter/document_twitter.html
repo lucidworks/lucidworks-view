@@ -4,9 +4,9 @@
       <blockquote class="quote" lang="{{::vm.doc.userLang[0]}}" dir="ltr">
         <field value="::vm.doc.tweet[0]" highlight="::vm.highlight" hkey="tweet"></field>
       </blockquote>
-      <div>
-        &mdash; <a ng-href="http://twitter.com/{{::vm.doc.userScreenName[0]}}" ng-click="::vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank">@<field value="vm.doc.userScreenName" highlight="::vm.highlight" maxlength="200" hkey="{{::userScreenName}}"></field></a> <a
-          ng-href="https://twitter.com/{{::vm.doc.userScreenName[0]}}/status/{{::vm.doc.id}}" ng-click="vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank"><field value="::vm.doc.createdAtFormatted"></field></a>
+      <div class="link">
+        <a class="author" ng-href="http://twitter.com/{{::vm.doc.userScreenName}}" ng-click="::vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank">@<field value="vm.doc.userScreenName" highlight="::vm.highlight" maxlength="200" hkey="{{::userScreenName}}"></field></a>
+        <a class="timestamp" ng-href="https://twitter.com/{{::vm.doc.userScreenName}}/status/{{::vm.doc.id}}" ng-click="vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank"><field value="::vm.doc.createdAtFormatted"></field></a>
       </div>
     </div>
   </div>
