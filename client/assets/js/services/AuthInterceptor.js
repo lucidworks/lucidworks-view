@@ -23,14 +23,26 @@
         if(!tryingAnon) {
           //CASE: If there are usable anon creds, then try it out
           if(useAnonCreds()){
+            $log.info('Creating anonymous session with credentials from FUSION_CONFIG.js');
             getAnonSession().then(function(){
               //CASE: If anonymous session creation is successful, go home
+              $log.info('Created anonymous session');
               deferred.reject();
-              $state.go('home');
-            }).catch(function(err){
+              $state.go('home',{query:'(q:\'*:*\')'});
+            },function(err){
+              // TODO: Investigate why 201 is going to error handler...
+              // If it's the expected behaviour, figure out a better solution
+              //CASE: If anonymous login succeeded with a 201 response, go to `home`
+              if(err.status === 201){
+                $log.info('Created anonymous session');
+                $state.go('home',{query:'(q:\'*:*\')'});
+              }
               //CASE: If anonymous login failed, then go to login
+              else{
+                $log.info('Failed to create anonymous session');
+                $state.go('login');
+              }
               deferred.reject(err);
-              $state.go('login');
             });
           }
           else{

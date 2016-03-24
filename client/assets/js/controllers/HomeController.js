@@ -11,7 +11,7 @@
     var hc = this; //eslint-disable-line
     var resultsObservable;
     var query;
-    var sorting, sortingOptionWatch;
+    var sorting;
 
     hc.searchQuery = '*:*';
 
