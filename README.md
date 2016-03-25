@@ -72,13 +72,13 @@ If you start by cloning the repository, you'll need the following software:
 
 To run the compiling process once, without watching any files, use the `build` command:
 ```bash
-npm build
+npm run build
 ```
 
 ## Unit testing
 
 ```
-npm build
+npm run build
 npm test
 ```
 
@@ -100,7 +100,7 @@ CSS options are configured in the files in client/assets/scss.
 
 Templates for various UI components are located in client/assets/components.
 
-Search results from different document types can use different templates.  The `client/assets/components/document` directory contains templates for some common document types, plus default templates for all others.  Data types correspond to Connectors in Fusion.  See (Customizing Documents)[docs/Customizing_Documents.md] for details about working with these.
+Search results from different document types can use different templates.  The `client/assets/components/document` directory contains templates for some common document types, plus default templates for all others.  Data types correspond to Connectors in Fusion.  See [Customizing Documents](docs/Customizing_Documents.md) for details about working with these.
 
 ## What's Next
 

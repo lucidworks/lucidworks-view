@@ -33,6 +33,7 @@
       signals_pipeline: '_signals_ingest',
       signals_document_id: 'id',
       facets: [],
+      docs_per_page: 10,
       typeahead_use_query_profile: true,
       typeahead_query_pipeline_id: 'default',
       typeahead_query_profile_id: 'default',
