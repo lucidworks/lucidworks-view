@@ -14,3 +14,7 @@ gulp.task('clean:templates', function(cb){
 gulp.task('clean:package', function(cb){
   rimraf('./tmp/lucidworks-view', cb);
 });
+
+gulp.task('clean:tar', function(cb){
+  rimraf('./packages', cb);
+});
