@@ -36,20 +36,6 @@ var fileLocations = {
   ]
 };
 
-var shellCommands = [
-  'mkdir -p tmp/node',
-  'mkdir -p tmp/node/'+packageName(getOsTarget()),
-  'mkdir -p tmp/lucidworks-view/lib/nodejs',
-  'curl -o tmp/node/'+packageName(getOsTarget())+'.'+getOsTarget().extension+' '+buildUrl(getOsTarget()),
-  'tar -xzf tmp/node/'+packageName(getOsTarget())+'.'+getOsTarget().extension+' -C tmp/lucidworks-view/lib/nodejs --strip-components=1',
-  'mkdir -p packages',
-  'mkdir -p packages/'+getVersion(),
-  'chmod +x tmp/lucidworks-view/lib/nodejs/bin/npm',
-  'chmod +x tmp/lucidworks-view/lib/nodejs/bin/node',
-  'chmod +x tmp/lucidworks-view/lib/nodejs/lib/node_modules/npm/bin/npm',
-  'cd tmp/; tar -cpzf ../packages/'+getVersion()+'/lucidworks-view-'+getOsTarget().os+'-'+getOsTarget().platform+'-'+getVersion()+'.tar.gz lucidworks-view/.'
-];
-
 // Copies the entire built-app for deployment but doesn't tarball
 gulp.task('cook', function(cb) {
   sequence('clean:package', 'move:app', cb);
@@ -100,6 +86,19 @@ gulp.task('move:tests', function(cb){
 });
 
 gulp.task('package:bashCommands', function(cb){
+  var shellCommands = [
+    'mkdir -p tmp/node',
+    'mkdir -p tmp/node/'+packageName(getOsTarget()),
+    'mkdir -p tmp/lucidworks-view/lib/nodejs',
+    'curl -o tmp/node/'+packageName(getOsTarget())+'.'+getOsTarget().extension+' '+buildUrl(getOsTarget()),
+    'tar -xzf tmp/node/'+packageName(getOsTarget())+'.'+getOsTarget().extension+' -C tmp/lucidworks-view/lib/nodejs --strip-components=1',
+    'mkdir -p packages',
+    'mkdir -p packages/'+getVersion(),
+    'chmod +x tmp/lucidworks-view/lib/nodejs/bin/npm',
+    'chmod +x tmp/lucidworks-view/lib/nodejs/bin/node',
+    'chmod +x tmp/lucidworks-view/lib/nodejs/lib/node_modules/npm/bin/npm',
+    'cd tmp/; tar -cpzf ../packages/'+getVersion()+'/lucidworks-view-'+getOsTarget().os+'-'+getOsTarget().platform+'-'+getVersion()+'.tar.gz lucidworks-view/.'
+  ];
   for(var index = 0; index < shellCommands.length; index++){
     var command = shellCommands[index];
     console.log(command);
