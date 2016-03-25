@@ -37,6 +37,8 @@
 
     function processDocument(doc) {
       doc.timestamp_tdtFormatted = $filter('date')(vm.doc.timestamp_tdt, 'M/d/yy h:mm:ss a');
+      // For multivalued fields
+      doc.text = _.isArray(doc.text)?_.join(doc.text,' '):doc.text;
       return doc;
     }
   }

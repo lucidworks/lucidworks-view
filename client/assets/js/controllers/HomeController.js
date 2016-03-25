@@ -11,9 +11,9 @@
     var hc = this; //eslint-disable-line
     var resultsObservable;
     var query;
-    var sorting, sortingOptionWatch;
+    var sorting;
 
-    hc.searchQuery = '*:*';
+    hc.searchQuery = '*';
 
     activate();
 
@@ -33,7 +33,7 @@
 
       query = URLService.getQueryFromUrl();
       //Setting the query object... also populating the the view model
-      hc.searchQuery = _.get(query,'q','*:*');
+      hc.searchQuery = _.get(query,'q','*');
 
       // Use an observable to get the contents of a queryResults after it is updated.
       resultsObservable = Orwell.getObservable('queryResults');
@@ -42,6 +42,9 @@
           hc.numFound = data.response.numFound;
           hc.numFoundFormatted = $filter('humanizeNumberFormat')(hc.numFound, 0);
           hc.lastQuery = data.responseHeader.params.q;
+          // Make sure you check for all the supported facets before for empty-ness
+          // before toggling the `showFacets` flag
+          hc.showFacets = !_.isEmpty(data.facet_counts.facet_fields);
         } else {
           hc.numFound = 0;
         }

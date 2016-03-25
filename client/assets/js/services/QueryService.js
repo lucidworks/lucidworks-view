@@ -4,7 +4,7 @@
     ])
     .config(Config)
     .constant('QUERY_OBJECT_DEFAULT', {
-      q: '*:*',
+      q: '*',
       start: 0,
       rows: 10,
       // Do not override the return of JSON
