@@ -47,7 +47,6 @@ var shellCommands = [
   'chmod +x tmp/lucidworks-view/lib/nodejs/bin/npm',
   'chmod +x tmp/lucidworks-view/lib/nodejs/bin/node',
   'chmod +x tmp/lucidworks-view/lib/nodejs/lib/node_modules/npm/bin/npm',
-  'ls -al tmp/lucidworks-view',
   'cd tmp/; tar -cpzf ../packages/'+getVersion()+'/lucidworks-view-'+getOsTarget().os+'-'+getOsTarget().platform+'-'+getVersion()+'.tar.gz lucidworks-view/.'
 ];
 
