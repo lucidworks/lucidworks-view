@@ -71,14 +71,10 @@ gulp.task('move:app', ['move:bower', 'move:node_modules', 'move:client', 'move:d
   cb();
 });
 gulp.task('move:bower', function(cb){
-  // gulp.src(fileLocations.bower, {dot: true})
-  // .pipe(gulp.dest('tmp/lucidworks-view/bower_components'));
   child_process.execSync('mkdir -p tmp/lucidworks-view/bower_components; cp -r bower_components tmp/lucidworks-view/');
   cb();
 });
 gulp.task('move:node_modules', function(cb){
-  // gulp.src(fileLocations.node_modules)
-  // .pipe(gulp.dest('tmp/lucidworks-view/node_modules'));
   child_process.execSync('mkdir -p tmp/lucidworks-view/node_modules; cp -r node_modules tmp/lucidworks-view/');
   cb();
 });
