@@ -127,7 +127,7 @@ appConfig = { //eslint-disable-line
   /**
    * Number of documents shown per search, if not defined will default to 10.
    */
-  // number_of_docs: 10,
+  // docs_per_page: 10,
 
   /**
    * Landing pages
