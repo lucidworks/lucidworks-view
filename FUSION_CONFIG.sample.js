@@ -60,25 +60,27 @@ appConfig = { //eslint-disable-line
   /**
    * Document display
    * Fusion seed app is set up to get you started with the following field types.
-   *
-   * Optionally for each data type you can turn on the ability to display all fields
-   * in a simple list.
+   * web, local file, jira, slack, and twitter.
    *
    * Customizing document display.
    * You can add your own document displays with Fusion Seed App. You will have to
    * write an html template and add a new directive for your document type.
+   * @see https://github.com/lucidworks/lucidworks-view/blob/master/docs/Customizing_Documents.md
+   *
+   * If you want to edit an existing template for a datasource you can edit the html for that document type in the
+   * client/assets/components/document folder.
    */
 
   /**
-   * Fallback Document display
+   * Default Document display
    *
    * This applies only to document displays that are not handled by the handful of
    * document templates used above.
    *
    * These parameters change the fields that are displayed in the fallback document display.
    * You can also add additional fields by editing the document template.
-   * Document template is located at:
-   *   your_project_directory/client/assets/components/document/document.html
+   * Default Document template is located at:
+   *   your_project_directory/client/assets/components/document/document_default/document_default.html
    */
   //In search results, for each doc, display this field as the head field
   head_field: 'id',
@@ -89,7 +91,7 @@ appConfig = { //eslint-disable-line
   //In search results, display a image in each doc page (leave empty for no image).
   image_field: 'image',
 
-  // ADDING ADDITIONAL FIELDS TO DOCUMENTS
+  // ADDING ADDITIONAL FIELDS TO DEFAULT DOCUMENTS
   //
   // There are 2 ways to add additional fields to the ui.
   // You can either use settings to create a simple list of values with field
