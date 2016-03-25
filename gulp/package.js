@@ -49,7 +49,7 @@ var shellCommands = [
   'chmod +x tmp/lucidworks-view/lib/nodejs/node/bin/node',
   'chmod +x tmp/lucidworks-view/lib/nodejs/node/lib/node_modules/npm/bin/npm',
   'ls -al tmp/lucidworks-view',
-  'cd tmp/; tar -cf ../packages/'+getVersion()+'/lucidworks-view-'+getOsTarget().os+'-'+getOsTarget().platform+'-'+getVersion()+'.tar lucidworks-view/.'
+  'cd tmp/; tar -cpzf ../packages/'+getVersion()+'/lucidworks-view-'+getOsTarget().os+'-'+getOsTarget().platform+'-'+getVersion()+'.tar.gz lucidworks-view/.'
 ];
 
 // Copies the entire built-app for deployment but doesn't tarball
