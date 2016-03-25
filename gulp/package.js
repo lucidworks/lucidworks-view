@@ -6,6 +6,7 @@ var $               = require('gulp-load-plugins')();
 var gulp            = require('gulp');
 var argv            = require('yargs').argv;
 var sequence        = require('run-sequence');
+var child_process   = require('child_process');
 
 var nodeversion     = 'v5.2.0';
 
@@ -35,13 +36,18 @@ var fileLocations = {
   ]
 };
 
-// Builds the entire app for deployment
-gulp.task('package', function(cb) {
+// Copies the entire built-app for deployment but doesn't tarball
+gulp.task('cook', function(cb) {
+  sequence('clean:package', 'move:app', cb);
+});
+
+//Tarballs
+gulp.task('package', function(cb){
   if(!argv.buildTarget && !(argv.buildname && argv.os && argv.platform && argv.extension)){
-    console.log('\nTo use package you need to use a valid buildTarget parameter.\n  Ex: gulp build --buildTarget=mac\n  Possible build targets: {mac, linux, linux32, sunos, sunos32}\n\nOR all of these parameters:\nbuildname, buildTarget, os, platform, extension\n  Ex: gulp build --buildname=mac --os=darwin --platform=x64 --extension=tar.gz\n');
+    console.log('\nTo use package you need to use a valid buildTarget parameter.\n  Ex: gulp package --buildTarget=mac\n  Possible build targets: {mac, linux, linux32, sunos, sunos32}\n\nOR all of these parameters:\nbuildname, buildTarget, os, platform, extension\n  Ex: gulp build --buildname=mac --os=darwin --platform=x64 --extension=tar.gz\n');
     cb();
   } else {
-    sequence('clean:package', ['move:app'], 'package:bashCommands', cb);
+    sequence('package:bashCommands', cb);
   }
 });
 
@@ -51,13 +57,11 @@ gulp.task('move:app', ['move:bower', 'move:node_modules', 'move:client', 'move:d
   cb();
 });
 gulp.task('move:bower', function(cb){
-  gulp.src(fileLocations.bower, {dot: true})
-  .pipe(gulp.dest('tmp/lucidworks-view/bower_components'));
+  child_process.execSync('mkdir -p tmp/lucidworks-view/bower_components; cp -r bower_components tmp/lucidworks-view/');
   cb();
 });
 gulp.task('move:node_modules', function(cb){
-  gulp.src(fileLocations.node_modules)
-  .pipe(gulp.dest('tmp/lucidworks-view/node_modules'));
+  child_process.execSync('mkdir -p tmp/lucidworks-view/node_modules; cp -r node_modules tmp/lucidworks-view/');
   cb();
 });
 gulp.task('move:client', function(cb){
@@ -81,19 +85,27 @@ gulp.task('move:tests', function(cb){
   cb();
 });
 
-gulp.task('package:bashCommands', $.shell.task([
-  'mkdir -p tmp/node',
-  'mkdir -p tmp/node/'+packageName(getOsTarget()),
-  'mkdir -p tmp/lucidworks-view/lib/nodejs',
-  'curl -o tmp/node/'+packageName(getOsTarget())+'.'+getOsTarget().extension+' '+buildUrl(getOsTarget()),
-  'tar -xzf tmp/node/'+packageName(getOsTarget())+'.'+getOsTarget().extension+' -C tmp/lucidworks-view/lib/nodejs --strip-components=1',
-  'mkdir -p packages',
-  'mkdir -p packages/'+getVersion(),
-  'chmod +x tmp/lucidworks-view/lib/nodejs/bin/npm',
-  'chmod +x tmp/lucidworks-view/lib/nodejs/bin/node',
-  'chmod +x tmp/lucidworks-view/lib/nodejs/lib/node_modules/npm/bin/npm',
-  'cd tmp && tar -zcf ../packages/'+getVersion()+'/lucidworks-view-'+getOsTarget().os+'-'+getOsTarget().platform+'-'+getVersion()+'.tar.gz lucidworks-view'
-], {verbose: true}));
+gulp.task('package:bashCommands', function(cb){
+  var shellCommands = [
+    'mkdir -p tmp/node',
+    'mkdir -p tmp/node/'+packageName(getOsTarget()),
+    'mkdir -p tmp/lucidworks-view/lib/nodejs',
+    'curl -o tmp/node/'+packageName(getOsTarget())+'.'+getOsTarget().extension+' '+buildUrl(getOsTarget()),
+    'tar -xzf tmp/node/'+packageName(getOsTarget())+'.'+getOsTarget().extension+' -C tmp/lucidworks-view/lib/nodejs --strip-components=1',
+    'mkdir -p packages',
+    'mkdir -p packages/'+getVersion(),
+    'chmod +x tmp/lucidworks-view/lib/nodejs/bin/npm',
+    'chmod +x tmp/lucidworks-view/lib/nodejs/bin/node',
+    'chmod +x tmp/lucidworks-view/lib/nodejs/lib/node_modules/npm/bin/npm',
+    'cd tmp/; tar -cpzf ../packages/'+getVersion()+'/lucidworks-view-'+getOsTarget().os+'-'+getOsTarget().platform+'-'+getVersion()+'.tar.gz lucidworks-view/.'
+  ];
+  for(var index = 0; index < shellCommands.length; index++){
+    var command = shellCommands[index];
+    console.log(command);
+    console.log(child_process.execSync(command).toString('utf8'));
+  }
+  cb();
+});
 
 ////////
 
