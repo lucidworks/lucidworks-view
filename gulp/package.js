@@ -75,13 +75,13 @@ gulp.task('move:app', ['move:bower', 'move:node_modules', 'move:client', 'move:d
 gulp.task('move:bower', function(cb){
   // gulp.src(fileLocations.bower, {dot: true})
   // .pipe(gulp.dest('tmp/lucidworks-view/bower_components'));
-  child_process.execSync('mkdir -p tmp/lucidworks-view/bower_components; cp -r bower_components/ tmp/lucidworks-view/bower_components/');
+  child_process.execSync('mkdir -p tmp/lucidworks-view/bower_components; cp -r bower_components tmp/lucidworks-view/');
   cb();
 });
 gulp.task('move:node_modules', function(cb){
   // gulp.src(fileLocations.node_modules)
   // .pipe(gulp.dest('tmp/lucidworks-view/node_modules'));
-  child_process.execSync('mkdir -p tmp/lucidworks-view/node_modules; cp -r node_modules/ tmp/lucidworks-view/node_modules/');
+  child_process.execSync('mkdir -p tmp/lucidworks-view/node_modules; cp -r node_modules tmp/lucidworks-view/');
   cb();
 });
 gulp.task('move:client', function(cb){
@@ -106,11 +106,12 @@ gulp.task('move:tests', function(cb){
 });
 
 gulp.task('package:bashCommands', function(cb){
-  console.log(cb);
   for(var index = 0; index < shellCommands.length; index++){
     var command = shellCommands[index];
+    console.log(command);
     console.log(child_process.execSync(command).toString('utf8'));
   }
+  cb();
 });
 
 ////////
