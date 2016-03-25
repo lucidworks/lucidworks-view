@@ -16,7 +16,7 @@ gulp.task('browsersync', ['build'], function() {
     proxyMiddleware('/api', {
       target: fusionConfig.host+':'+fusionConfig.port
     }),
-    historyFallback({ index: openPath+'/index.html' })
+    historyFallback({ index: '/' + openPath + '/index.html' })
   ];
 
   browserSync.init({

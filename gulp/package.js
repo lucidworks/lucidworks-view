@@ -41,20 +41,19 @@ var shellCommands = [
   'mkdir -p tmp/node/'+packageName(getOsTarget()),
   'mkdir -p tmp/lucidworks-view/lib/nodejs',
   'curl -o tmp/node/'+packageName(getOsTarget())+'.'+getOsTarget().extension+' '+buildUrl(getOsTarget()),
-  'tar -xzf tmp/node/'+packageName(getOsTarget())+'.'+getOsTarget().extension+' -C tmp/lucidworks-view/lib/nodejs',
-  'mv tmp/lucidworks-view/lib/nodejs/'+packageName(getOsTarget())+' tmp/lucidworks-view/lib/nodejs/node',
+  'tar -xzf tmp/node/'+packageName(getOsTarget())+'.'+getOsTarget().extension+' -C tmp/lucidworks-view/lib/nodejs --strip-components=1',
   'mkdir -p packages',
   'mkdir -p packages/'+getVersion(),
-  'chmod +x tmp/lucidworks-view/lib/nodejs/node/bin/npm',
-  'chmod +x tmp/lucidworks-view/lib/nodejs/node/bin/node',
-  'chmod +x tmp/lucidworks-view/lib/nodejs/node/lib/node_modules/npm/bin/npm',
+  'chmod +x tmp/lucidworks-view/lib/nodejs/bin/npm',
+  'chmod +x tmp/lucidworks-view/lib/nodejs/bin/node',
+  'chmod +x tmp/lucidworks-view/lib/nodejs/lib/node_modules/npm/bin/npm',
   'ls -al tmp/lucidworks-view',
   'cd tmp/; tar -cpzf ../packages/'+getVersion()+'/lucidworks-view-'+getOsTarget().os+'-'+getOsTarget().platform+'-'+getVersion()+'.tar.gz lucidworks-view/.'
 ];
 
 // Copies the entire built-app for deployment but doesn't tarball
 gulp.task('cook', function(cb) {
-  sequence('clean:package', 'clean:tar', 'move:app', cb);
+  sequence('clean:package', 'move:app', cb);
 });
 
 //Tarballs
