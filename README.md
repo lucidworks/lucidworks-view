@@ -79,7 +79,7 @@ npm run build
 
 ```
 npm run build
-npm run test
+npm test
 ```
 
 ## Basic Configuration
