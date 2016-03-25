@@ -72,14 +72,14 @@ If you start by cloning the repository, you'll need the following software:
 
 To run the compiling process once, without watching any files, use the `build` command:
 ```bash
-npm build
+npm run build
 ```
 
 ## Unit testing
 
 ```
-npm build
-npm test
+npm run build
+npm run test
 ```
 
 ## Basic Configuration
