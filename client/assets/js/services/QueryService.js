@@ -6,7 +6,6 @@
     .constant('QUERY_OBJECT_DEFAULT', {
       q: '*',
       start: 0,
-      rows: 10,
       // Do not override the return of JSON
       wt: 'json'
     })
@@ -56,7 +55,7 @@
         if (ConfigService.config.query_debug) {
           $log.debug('query', query);
         }
-        queryObject = _.assign({}, queryObject, query);
+        queryObject = _.assign({}, queryObject, query, {rows: ConfigService.config.docs_per_page});
         queryObservable.setContent(queryObject);
 
       }

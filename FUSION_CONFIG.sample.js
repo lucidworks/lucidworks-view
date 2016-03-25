@@ -125,6 +125,11 @@ appConfig = { //eslint-disable-line
   },
 
   /**
+   * Number of documents shown per page, if not defined will default to 10.
+   */
+  // docs_per_page: 10,
+
+  /**
    * Landing pages
    *
    * Fusion allows mapping of specific queries links (or other data) with it's
