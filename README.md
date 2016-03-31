@@ -8,7 +8,8 @@
 ## Requirements
 
 If you downloaded a platform-specific package, all dependencies are included.
-You can download here https://github.com/lucidworks/lucidworks-view/releases
+
+You can download a platform-specific package here https://github.com/lucidworks/lucidworks-view/releases
 
 If you start by cloning the repository, you'll need the following software:
 
