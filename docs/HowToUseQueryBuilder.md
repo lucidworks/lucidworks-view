@@ -11,7 +11,7 @@ An object when passed through `objectToURLString` will return a string:
 
 * object:
 
-  ```
+  ```javascript
   {aa: 'abcd', bb: 'defg'}
   ```
 
@@ -73,7 +73,7 @@ The `registerTransformer` function allows you to register any transformers you w
 
 Here's an example of registering a transformer:
 
-```
+```javascript
 QueryBuilderProvider.registerTransformer('wrapper', 'fq:field', fqFieldWrapper);
 function fqFieldWrapper(data){
   return '('+data+')';
@@ -82,7 +82,7 @@ function fqFieldWrapper(data){
 
 Now every time an object has that transformer it will be output with that wrapper.
 
-```
+```javascript
 {fq: [{
   key: 'name',
   value: 'value',
