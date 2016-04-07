@@ -58,7 +58,7 @@ The `getDocType` method specifies the data field that the app uses to select a t
 
 1. Open ```client/assets/components/documentList/documentList.js``` and locate this section:
 
-  ```
+  ```javascript
   /**
    * Get the document type for the document.
    * @param  {object} doc Document object
