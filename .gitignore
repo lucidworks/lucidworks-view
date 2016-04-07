@@ -12,3 +12,4 @@ tmp
 FUSION_CONFIG.js
 FUSION_CONFIG.*.js
 !FUSION_CONFIG.sample.js
+.jira-prefix
