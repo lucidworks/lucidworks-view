@@ -1,4 +1,6 @@
-== 1.0.0 - Initial release (paper tiara)
+CHANGELOG
+
+**1.0.0 - Initial release (paper tiara) - April 6, 2016**
 
 The first release of Lucidworks view
 
