@@ -42,9 +42,9 @@ If you start by cloning the repository, you'll need the following software:
 
   * If you downloaded a tar package:
 
-  ```bash
-  ./view.sh start
-  ```
+    ```bash
+    ./view.sh start
+    ```
 
   * If you cloned the repository:
 
