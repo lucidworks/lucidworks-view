@@ -19,11 +19,17 @@ gulp.task('browsersync', ['build'], function() {
     historyFallback({ index: '/' + openPath + '/index.html' })
   ];
 
+  var browserSyncConfig = {
+    baseDir: './build/',
+    middleware: middleware
+  };
+
+  if(fusionConfig.use_https === true){
+    browserSyncConfig['https'] = true;
+  }
+
   browserSync.init({
-    server: {
-      baseDir: './build/',
-      middleware: middleware
-    }
+    server: browserSyncConfig
   });
 
   // gulp.watch("app/scss/*.scss", ['sass']);

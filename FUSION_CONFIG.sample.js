@@ -20,6 +20,7 @@ appConfig = { //eslint-disable-line
    */
   host: 'http://localhost',
   port:'8764',
+  use_https: false,
 
   /**
    * The name of the realm to connect with
