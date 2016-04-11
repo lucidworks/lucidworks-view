@@ -55,6 +55,7 @@ appConfig = { //eslint-disable-line
   search_app_title: 'Lucidworks View',
   // Specify the path to your logo relative to the root app folder.
   // Or use an empty string if you don't want to use a logo.
+  // This file is relative to the client folder of your app.
   logo_location: 'assets/img/logo/lucidworks-white.svg',
 
   /**
