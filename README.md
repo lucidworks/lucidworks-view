@@ -1,5 +1,5 @@
 # Lucidworks View
-  Lucidworks View is a consumer-facing front end for Lucidworks Fusion.  It provides a basic search interface with simple configuration, so you can quickly deliver a Fusion-based search solution with minimal development.  View is powered by Fusion, Gulp, Angular, and libSaSS.
+  [Lucidworks View](https://lucidworks.com/products/view/) is a consumer-facing front end for Lucidworks Fusion.  It provides a basic search interface with simple configuration, so you can quickly deliver a Fusion-based search solution with minimal development.  View is powered by Fusion, Gulp, Angular, and libSaSS.
 
   You can also use View as the basis for developing a more sophisticated Web interface, using Foundation for Apps: http://foundation.zurb.com/apps/docs/
 
