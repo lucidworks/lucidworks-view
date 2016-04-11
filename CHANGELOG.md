@@ -6,9 +6,11 @@ The first release of Lucidworks view
 
 Contains out of the box support for:
 
-- Landing pages
-- Fusion Field facets
-- Document display templates -- slack, twitter, jira, web, file, default
-- color and logo customization
-- authentication
-- signals
+Landing pages
+Fusion Field facets
+Document display templates -- Slack, Twitter, JIRA, web, local file, default
+Color and logo customization
+Authentication
+Signals
+Typeahead
+Sorting
