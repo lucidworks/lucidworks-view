@@ -8,7 +8,8 @@ Contains out of the box support for:
 
 Landing pages
 - Fusion Field facets
-- Document display templates -- Slack, Twitter, JIRA, web, local file, default
+- Document display templates
+  - Slack, Twitter, JIRA, web, local file, default
 - Color and logo customization
 - Authentication
 - Signals
