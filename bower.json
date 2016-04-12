@@ -13,7 +13,7 @@
     "apps"
   ],
   "license": "Apache-2.0",
-  "homepage": "https://github.com/lucidworks/fusion-seed-app",
+  "homepage": "https://github.com/lucidworks/lucidworks-view",
   "ignore": [
     "**/.*",
     "node_modules",
