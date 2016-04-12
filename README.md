@@ -22,7 +22,7 @@ If you start by cloning the repository, you'll need the following software:
 1. Clone the repository, where `app` is the name of your app:
 
   ```bash
-  git clone https://github.com/LucidWorks/lucidworks-seed-app app
+  git clone https://github.com/LucidWorks/lucidworks-view app
   ```
 
 1. Change into the directory:
