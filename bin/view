@@ -1,0 +1,30 @@
+#!/bin/bash
+#
+# Run the Fusion API web app in Jetty
+
+BIN=`dirname "${BASH_SOURCE-$0}"`
+SCRIPT=`basename "${BASH_SOURCE-$0}"`
+export VIEW_HOME=`cd "${BIN}/.."; pwd`
+SERVICE_NAME="Lucidworks View"
+VAR_DIR="$VIEW_HOME/var"
+LOG_DIR="$VIEW_HOME/var/log"
+PID_FILE="$VAR_DIR/view.pid"
+export PATH=$(pwd)/lib/nodejs/bin:$PATH
+
+HTTP_PORT=3000
+
+set -e
+
+function do_run() {
+  mkdir -p "$LOG_DIR"
+
+  report_port
+  write_pid_file
+
+  set -x
+  exec "$VIEW_HOME/lib/nodejs/bin/node" "$VIEW_HOME/node_modules/gulp/bin/gulp.js"
+}
+
+. "$VIEW_HOME/bin/base.sh"
+
+main "$@"

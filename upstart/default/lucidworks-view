@@ -1,0 +1,6 @@
+# lucidworks-view upstart configuration file
+
+VIEW_HOME=/opt/lucidworks/view
+VIEW_USER=lucidworks
+
+ENABLED=1
