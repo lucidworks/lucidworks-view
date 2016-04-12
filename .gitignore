@@ -6,3 +6,4 @@ build
 .sass-cache
 tmp
 FUSION_CONFIG.js
+packages/

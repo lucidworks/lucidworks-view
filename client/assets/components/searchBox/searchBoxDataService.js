@@ -15,6 +15,7 @@
     ////////////
 
     function getTypeaheadResults(query){
+      $log.info(query);
       var deferred = $q.defer();
 
       var queryString = QueryBuilder.objectToURLString(query);
