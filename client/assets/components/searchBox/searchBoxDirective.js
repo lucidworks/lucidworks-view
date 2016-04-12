@@ -45,7 +45,7 @@
       var deferred = $q.defer();
 
       SearchBoxDataService
-        .getTypeaheadResults(QueryService.getQueryObject())
+        .getTypeaheadResults({q: ta.query, wt: 'json'})
         .then(function (resp) {
           if(resp.hasOwnProperty('response')) {
             var objectToResolve = {
