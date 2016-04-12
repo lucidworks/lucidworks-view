@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.landingpage', ['fusionSeedApp.services.landingPage'])
+    .module('lucidworksView.components.landingpage', ['lucidworksView.services.landingPage'])
     .directive('landingPage', landingPage);
 
   function landingPage() {
@@ -17,7 +17,7 @@
 
   }
 
-  function Controller($log, $scope, Orwell, LandingPageService) {
+  function Controller($scope, Orwell, LandingPageService) {
     'ngInject';
     var lp = this;
     lp.landingPages = false;

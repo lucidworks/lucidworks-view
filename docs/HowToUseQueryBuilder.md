@@ -2,80 +2,96 @@
 
 Query builder creates query strings from an object.
 
-### First level of a query object:
-this is where you can define different options which will be joined
+## First level of a query object
+
+This is where you can define different options which will be joined
 together by standard query syntax.
 
-An object when passed through objectToURLString will return a string:
+An object when passed through `objectToURLString` will return a string:
 
-object
-```
-{aa: 'abcd', bb: 'defg'}
-```
-string
-```
-aa=abcd&bb=defg
-```
-What makes query builder so powerful is when you dig a bit deeper,
+* object:
 
-### Second level of a query object and beyond
-Acceptable types: ```string```, ```array```, ```key value object```
+  ```javascript
+  {aa: 'abcd', bb: 'defg'}
+  ```
 
-- ```array```
- -  each element is run through the reducer.
-- ```string```
- - Will be concatenated to the query string
-- ```key value object```
- - A key and value pair that will be concatenated together.
- - The values in a key value pair can contain an array string or even another key value object, allowing you to nest as many as you need to create your query.
+* string:
+
+  ```
+  aa=abcd&bb=defg
+  ```
+
+## Second level of a query object and beyond
+
+Acceptable types:
+
+* string
+
+  Will be concatenated to the query string.
+
+* array
+
+  Each element is run through the reducer.
+
+* key value object
+
+ A key/value pair that will be concatenated together.
+
+ The values in a key/value pair can contain an array, a string, or even another key value object, allowing you to nest as many as you need to create your query.
 
 ## Transformers
-types: ```preEncodeWrapper```, ```encode```, ```wrapper```, ```keyValue```, ```join```,
 
-Transformers enable you to extend query builder. by using different syntax to join or mutate data.
+Transformers enable you to extend query builder by using different syntax to join or mutate data.
 
-Each step runs in order, transforming the data at each step.
+Transformers are called on each step of a reduction of a key value object.  Each step runs in order, transforming the data at each step:
 
-Transformers are called on each step of a reduction of a key value object.
-
-1. preEncodeWrapper (default = no transformation)
+1. `preEncodeWrapper`
   - Wraps the output before encode is run.
-  - Ex: used in facetField for adding inner quotes to a value.
-2. encode (default = no transformation)
+  - Ex: Used in `facetField` for adding inner quotes to a value.
+  - default = no transformation
+2. `encode`
   - encodes the data into another format.
-  - Ex: used in facetField to encode the value into a uri encoded component.
-3. wrapper (default = no transformation)
-  - wraps the data after encode has been called.
-  - Ex. in facetField adds braces around a value
-4. keyValue (default = '=')
-  - The joins the key value the rest of the query
-  - joins a key and a value.
-  - Ex. in facetField it joins a key and a value with ':'
-5. join (default = '')
-  - Joins the key value to the rest of the query string.
-  - Ex. in faceField it joins a the key value with ''
+  - Ex: Used in `facetField` to encode the value into a URI-encoded component.
+  - default = no transformation
+3. `wrapper`
+  - Wraps the data after `encode` has been called.
+  - Ex. In `facetField`, adds braces around a value.
+  - default = no transformation
+4. `keyValue`
+  - Joins a key and a value.
+  - Ex. In `facetField`, it joins a key and a value with `:`.
+  - default = '='
+5. `join`
+  - Joins the key/value to the rest of the query string.
+  - Ex. In `facetField`, it joins a the key value with ''.
+  - default = ''
 
 ### Writing your own transformers
-You can add transformers in a service or in module config. Just inject QueryBuilderProvider or QueryBuilder.
+You can add transformers in a service or in a module configuration. Just inject `QueryBuilderProvider` or `QueryBuilder`.
 
-The registerTransformer function allows you to register any transformers you want for use. These are then used in a keyvalue object and are triggered via the 'transformer' property of a key value object.
+The `registerTransformer` function allows you to register any transformers you want for use. These are then used in a key/value object and are triggered via the `transformer` property of a key/value object.
 
-Example registering a transformer
-```
+Here's an example of registering a transformer:
+
+```javascript
 QueryBuilderProvider.registerTransformer('wrapper', 'fq:field', fqFieldWrapper);
 function fqFieldWrapper(data){
   return '('+data+')';
 }
 ```
+
 Now every time an object has that transformer it will be output with that wrapper.
-```
+
+```javascript
 {fq: [{
   key: 'name',
   value: 'value',
   transformer: 'fq:field'
 }]}
 ```
+
 if the above object just had that one transformer it would produce the string.
+
 ```
  fq=name(value)
 ```

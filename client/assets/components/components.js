@@ -1,11 +1,17 @@
-angular.module('fusionSeedApp.components', [
-  'fusionSeedApp.components.document',
-  'fusionSeedApp.components.documentList',
-  'fusionSeedApp.components.facetField',
-  'fusionSeedApp.components.facetList',
-  'fusionSeedApp.components.login',
-  'fusionSeedApp.components.paginate',
-  'fusionSeedApp.components.searchbox',
-  'fusionSeedApp.components.landingpage',
-  'fusionSeedApp.components.sort'
+angular.module('lucidworksView.components', [
+  'lucidworksView.components.document',
+  'lucidworksView.components.document_file',
+  'lucidworksView.components.document_jira',
+  'lucidworksView.components.document_slack',
+  'lucidworksView.components.document_twitter',
+  'lucidworksView.components.document_web',
+  'lucidworksView.components.documentList',
+  'lucidworksView.components.facetField',
+  'lucidworksView.components.facetList',
+  'lucidworksView.components.field',
+  'lucidworksView.components.landingpage',
+  'lucidworksView.components.login',
+  'lucidworksView.components.paginate',
+  'lucidworksView.components.searchbox',
+  'lucidworksView.components.sort'
 ]);

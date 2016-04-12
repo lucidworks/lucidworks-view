@@ -1,3 +1,10 @@
+@import "document_default/document_default";
+@import "document_file/document_file";
+@import "document_jira/document_jira";
+@import "document_slack/document_slack";
+@import "document_twitter/document_twitter";
+@import "document_web/document_web";
+// @import "document_EXAMPLE/document_EXAMPLE";
 .document {
   //Style your document here
   .head-field{

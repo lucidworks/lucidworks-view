@@ -1,11 +1,11 @@
-/*global FastClick*/
 (function () {
   'use strict';
 
   angular
-    .module('fusionSeedApp', [
+    .module('lucidworksView', [
       'ui.router',
       'ngAnimate',
+      'ngSanitize',
 
       // Foundation
       'foundation',
@@ -17,9 +17,9 @@
       'rison',
 
       // Fusion Seed App
-      'fusionSeedApp.components',
-      'fusionSeedApp.services',
-      'fusionSeedApp.controllers'
+      'lucidworksView.components',
+      'lucidworksView.services',
+      'lucidworksView.controllers'
     ])
     .constant('_', window._) //eslint-disable-line
     .config(config)
@@ -65,6 +65,5 @@
   function run($document, $rootScope, ConfigService) {
     'ngInject';
     $rootScope.title = ConfigService.config.search_app_title;
-    // FastClick.attach($document.body);
   }
 })();

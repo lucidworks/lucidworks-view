@@ -2,12 +2,12 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.services.auth', ['fusionSeedApp.services.apiBase',
-      'fusionSeedApp.services.config'
+    .module('lucidworksView.services.auth', ['lucidworksView.services.apiBase',
+      'lucidworksView.services.config'
     ])
     .factory('AuthService', AuthService);
 
-  function AuthService($q, $log, $http, ApiBase, ConfigService) {
+  function AuthService($q, $log, $http, $rootScope, ApiBase, ConfigService) {
     'ngInject';
     var config = ConfigService.config;
     var realmName = config.connection_realm;

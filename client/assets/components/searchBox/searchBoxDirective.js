@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.searchbox')
+    .module('lucidworksView.components.searchbox')
     .directive('searchBox', searchbox);
 
   function searchbox() {
@@ -20,7 +20,7 @@
     };
   }
 
-  function Controller($log, $scope, $q, ConfigService, QueryService,
+  function Controller($scope, $q, ConfigService, QueryService,
     SearchBoxDataService) {
     'ngInject';
     var ta = this;
@@ -33,7 +33,7 @@
     function selectedSomething(object) {
       if (object) {
         var newValue = object.originalObject[ta.typeaheadField];
-        ta.query = _.isArray(newValue)?newValue[0]:newValue;;
+        ta.query = _.isArray(newValue)?newValue[0]:newValue;
       }
     }
 

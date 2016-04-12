@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.facetField')
+    .module('lucidworksView.components.facetField')
     .directive('facetField', facetField);
 
   function facetField() {
@@ -21,7 +21,7 @@
     };
   }
 
-  function Controller(ConfigService, QueryService, LinkService, QueryDataService, Orwell, FoundationApi) {
+  function Controller(ConfigService, QueryService, URLService, QueryDataService, Orwell, FoundationApi, $filter) {
     'ngInject';
     var vm = this;
     vm.facetCounts = [];
@@ -105,6 +105,7 @@
           result[result.length - 1] = {
             title: result[result.length - 1],
             amount: value,
+            amountFormatted: $filter('humanizeNumberFormat')(value, 0),
             hash: FoundationApi.generateUuid(),
             active: isFacetActive(vm.facetName, result[result.length - 1])
           };
@@ -164,7 +165,7 @@
      */
     function updateFacetQuery(query){
       query.start = 0;
-      LinkService.setQuery(query);
+      URLService.setQuery(query);
     }
 
     /**

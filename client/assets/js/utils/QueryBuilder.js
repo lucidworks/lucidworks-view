@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.utils.queryBuilder', [])
+    .module('lucidworksView.utils.queryBuilder', [])
     .provider('QueryBuilder', QueryBuilder);
 
   function QueryBuilder() {

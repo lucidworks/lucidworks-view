@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.login', ['fusionSeedApp.services.auth',
+    .module('lucidworksView.components.login', ['lucidworksView.services.auth',
       'ui.router'
     ])
     .directive('login', login);
@@ -19,7 +19,7 @@
 
   }
 
-  function Controller($log, ConfigService, Orwell, AuthService, $state) {
+  function Controller(ConfigService, Orwell, AuthService, $state) {
     'ngInject';
     var vm = this;
     vm.username = '';

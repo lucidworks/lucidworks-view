@@ -1,7 +1,7 @@
 (function () {
   'use strict';
   angular
-    .module('fusionSeedApp.services.config', [])
+    .module('lucidworksView.services.config', [])
 
     /** Default config options **/
     .constant('CONFIG_DEFAULT', {
@@ -33,6 +33,7 @@
       signals_pipeline: '_signals_ingest',
       signals_document_id: 'id',
       facets: [],
+      docs_per_page: 10,
       typeahead_use_query_profile: true,
       typeahead_query_pipeline_id: 'default',
       typeahead_query_profile_id: 'default',

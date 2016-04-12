@@ -9,7 +9,7 @@ var sequence        = require('run-sequence');
 
 // Builds your entire app once, without starting a server
 gulp.task('build', function(cb) {
-  sequence('clean', 'writeDevConfig', ['copy', 'copy:foundation', 'sass', 'uglify'], 'copy:templates', 'copy:config', cb);
+  sequence('clean', 'copy:config', 'writeDevConfig', ['copy', 'copy:foundation', 'sass', 'uglify'], 'copy:templates', cb);
 });
 
 // Copies everything in the client folder except templates, Sass, and JS

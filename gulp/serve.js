@@ -16,19 +16,14 @@ gulp.task('browsersync', ['build'], function() {
     proxyMiddleware('/api', {
       target: fusionConfig.host+':'+fusionConfig.port
     }),
-    historyFallback({ index: '/'+openPath+'/index.html' })
+    historyFallback({ index: '/' + openPath + '/index.html' })
   ];
 
   browserSync.init({
     server: {
       baseDir: './build/',
       middleware: middleware
-    },
-    files: [
-      openPath + '/**/*.html',
-      openPath + '/**/*.css',
-      openPath + '/**/*.js'
-    ]
+    }
   });
 
   // gulp.watch("app/scss/*.scss", ['sass']);

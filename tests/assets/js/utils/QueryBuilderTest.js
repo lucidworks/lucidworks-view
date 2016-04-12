@@ -1,7 +1,7 @@
 /*global ngDescribe, describe, it, expect, angular*/
 ngDescribe({
   name: 'QueryBuilder',
-  modules: 'fusionSeedApp.utils.queryBuilder',
+  modules: 'lucidworksView.utils.queryBuilder',
   inject: ['QueryBuilder'],
   tests: function (deps) {
     describe('urls should be created from objects.', function(){

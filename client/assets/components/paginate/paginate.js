@@ -1,7 +1,7 @@
 (function () {
   'use strict';
   // Initialize module.
-  angular.module('fusionSeedApp.components.paginate', ['fusionSeedApp.services.config',
-    'fusionSeedApp.services.link'
+  angular.module('lucidworksView.components.paginate', ['lucidworksView.services.config',
+    'lucidworksView.services.url', 'angular-humanize'
   ]);
 })();

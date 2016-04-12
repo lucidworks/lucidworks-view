@@ -37,8 +37,8 @@ appConfig = { //eslint-disable-line
    * to use anonymous access.
    */
   anonymous_access: {
-    username: 'admin',
-  //  password: 'password123'
+    username: 'search-user',
+  //  password: 'search-user-password-here'
   },
 
   // The name of your collection
@@ -52,21 +52,39 @@ appConfig = { //eslint-disable-line
   // Search UI Title
   // This title appears in a number of places in the app, including page title.
   // In the header it is replaced by the logo if one is provided.
-  search_app_title: 'Fusion Seed App',
+  search_app_title: 'Lucidworks View',
   // Specify the path to your logo relative to the root app folder.
   // Or use an empty string if you don't want to use a logo.
+  // This file is relative to the client folder of your app.
   logo_location: 'assets/img/logo/lucidworks-white.svg',
 
   /**
    * Document display
+   * Fusion seed app is set up to get you started with the following field types.
+   * web, local file, jira, slack, and twitter.
    *
-   * These parameters change the field that is displayed in the document.
+   * Customizing document display.
+   * You can add your own document displays with Fusion Seed App. You will have to
+   * write an html template and add a new directive for your document type.
+   * @see https://github.com/lucidworks/lucidworks-view/blob/master/docs/Customizing_Documents.md
+   *
+   * If you want to edit an existing template for a datasource you can edit the html for that document type in the
+   * client/assets/components/document folder.
+   */
+
+  /**
+   * Default Document display
+   *
+   * This applies only to document displays that are not handled by the handful of
+   * document templates used above.
+   *
+   * These parameters change the fields that are displayed in the fallback document display.
    * You can also add additional fields by editing the document template.
-   * Document template is located at:
-   *   your_project_directory/client/assets/components/document/document.html
+   * Default Document template is located at:
+   *   your_project_directory/client/assets/components/document/document_default/document_default.html
    */
   //In search results, for each doc, display this field as the head field
-  head_field: 'title',
+  head_field: 'id',
   subhead_field: 'subtitle',
   description_field: 'description',
   //In search results, for each doc, use this field to generate link value when a user clicks on head_field
@@ -74,7 +92,7 @@ appConfig = { //eslint-disable-line
   //In search results, display a image in each doc page (leave empty for no image).
   image_field: 'image',
 
-  // ADDING ADDITIONAL FIELDS TO DOCUMENTS
+  // ADDING ADDITIONAL FIELDS TO DEFAULT DOCUMENTS
   //
   // There are 2 ways to add additional fields to the ui.
   // You can either use settings to create a simple list of values with field
@@ -90,7 +108,8 @@ appConfig = { //eslint-disable-line
   //
   // In order to add items to the list you must add the fields to
   // fields_to_display. You can change the label of any field by adding a
-  // field mapping in field_display_labels
+  // field mapping in field_display_labels. You can optionally use a wildcard '*'
+  // to display all fields.
   //
   // FLEXIBLE HTML FIELD DISPLAY
   //
@@ -101,12 +120,17 @@ appConfig = { //eslint-disable-line
   //
   // The HTML/Angular template is located in the following directory:
   //    your_project_directory/client/assets/components/document/document.html
-  fields_to_display:['title','id','name'],
+  fields_to_display:['title','id','name', '*'],
   field_display_labels: {
     'name': 'Document Name',
     //'id': 'Identification Number'
     // you can add as many lines of labels as you want
   },
+
+  /**
+   * Number of documents shown per page, if not defined will default to 10.
+   */
+  // docs_per_page: 10,
 
   /**
    * Landing pages

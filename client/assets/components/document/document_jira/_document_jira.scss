@@ -1,0 +1,18 @@
+.document-jira {
+  margin-bottom: .75rem;
+  .detail-row{
+    padding: .5rem 0;
+  }
+  .type, .key, .last-modified, .assignee, .lead{
+    display:inline-block;
+    padding-right: .25rem;
+  }
+  .type {
+    font-weight: bold;
+  }
+  .doc-label{
+    font-style: italic;
+    padding-right: .25rem;
+  }
+
+}

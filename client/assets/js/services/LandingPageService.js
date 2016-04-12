@@ -2,10 +2,10 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.services.landingPage', [])
+    .module('lucidworksView.services.landingPage', [])
     .factory('LandingPageService', LandingPageService);
 
-  function LandingPageService($log, Orwell, $window, ConfigService) {
+  function LandingPageService(Orwell, $window, ConfigService) {
     'ngInject';
 
     activate();

@@ -1,7 +1,7 @@
 /*global ngDescribe, describe, it, expect*/
 ngDescribe({
   name: 'QueryService',
-  modules: 'fusionSeedApp.services',
+  modules: 'lucidworksView.services',
   inject: ['ConfigService', 'QueryDataService', 'ApiBase', '$httpBackend'],
   http:{
     get:{

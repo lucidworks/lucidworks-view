@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.facetList', ['fusionSeedApp.services.config'])
+    .module('lucidworksView.components.facetList', ['lucidworksView.services.config'])
     .directive('facetList', facetList);
 
   function facetList() {
@@ -20,7 +20,7 @@
 
   }
 
-  function Controller(ConfigService, Orwell, $log) {
+  function Controller(ConfigService, Orwell) {
     'ngInject';
     var vm = this;
     var resultsObservable = Orwell.getObservable('queryResults');
@@ -57,7 +57,7 @@
               facets.push(facet);
             });
             // only change facets list on finish.
-            vm.facets = facets;
+            vm.facets = _.concat(vm.facets, facets);
           }
         }
       });

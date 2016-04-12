@@ -1,11 +1,11 @@
 (function () {
   'use strict';
   // Initialize module.
-  angular.module('fusionSeedApp.components.searchbox', [
-    'fusionSeedApp.services.apiBase',
-    'fusionSeedApp.services.config',
-    'fusionSeedApp.services.query',
-    'fusionSeedApp.services.queryData',
+  angular.module('lucidworksView.components.searchbox', [
+    'lucidworksView.services.apiBase',
+    'lucidworksView.services.config',
+    'lucidworksView.services.query',
+    'lucidworksView.services.queryData',
     'angucomplete-alt'
   ]);
 })();

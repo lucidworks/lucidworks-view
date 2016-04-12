@@ -1,9 +1,9 @@
 (function () {
   angular
-    .module('fusionSeedApp.services.queryData', [
-      'fusionSeedApp.services.config',
-      'fusionSeedApp.services.apiBase',
-      'fusionSeedApp.utils.queryBuilder',
+    .module('lucidworksView.services.queryData', [
+      'lucidworksView.services.config',
+      'lucidworksView.services.apiBase',
+      'lucidworksView.utils.queryBuilder',
       'ngOrwell'
     ])
     .config(Config)
@@ -21,8 +21,7 @@
 
     /////////////
 
-    function $get($log, $q, $http, ConfigService, ApiBase, Orwell,
-      QueryBuilder) {
+    function $get($q, $http, ConfigService, ApiBase, Orwell, QueryBuilder) {
       'ngInject';
       var queryResultsObservable = Orwell.getObservable('queryResults');
       return {
@@ -57,6 +56,9 @@
         }
 
         function failure(err) {
+          queryResultsObservable.setContent({
+            numFound: 0
+          });
           deferred.reject(err.data);
         }
 

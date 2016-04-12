@@ -1,20 +1,20 @@
 (function () {
   angular
-    .module('fusionSeedApp.utils.docs', [])
+    .module('lucidworksView.utils.docs', [])
     .factory('DocsHelper', DocsHelper);
 
   /**
    * DocsHelper
    *
-   * @param {Service} $log log
    * @param {Service} _    lodash
    * @return {Object}      The properties
    */
-  function DocsHelper($log, _) {
+  function DocsHelper(_) {
     'ngInject';
     return {
       populateFieldLabels: populateFieldLabels,
       concatMultivaluedFields: concatMultivaluedFields,
+      parseWildcards: parseWildcards,
       selectFields: selectFields
     };
 
@@ -29,19 +29,44 @@
     }
 
     /**
+     * Parse a fields list for a wildcard, if present return an array of all fields.
+     * @param  {array}  fieldsList List of fields and/or wildcards.
+     * @param  {object} doc        The document fields.
+     * @return {array}             A list of all applicable fields.
+     */
+    function parseWildcards(fieldsList, doc){
+      var wildcardId = _.indexOf(fieldsList, '*');
+      if(wildcardId > -1){
+        // Slice the list to just the fields before the first wildcard to order them first.
+        var fieldsBeforeWildcard = _.slice(fieldsList, 0, wildcardId);
+        // Add all existing fields to wildcard.
+        fieldsList = _.union(fieldsBeforeWildcard, Object.keys(doc));
+        // Remove the angular hashKey.
+        _.remove(fieldsList, function(n) {
+          switch(n){
+          case '$$hashKey':
+            return true;
+          }
+          return false;
+        });
+      }
+      return fieldsList;
+    }
+
+    /**
      * Returns human readable field names for a document
      *
-     * @param  {object} document [description]
-     * @param  {object} fieldMap [description]
-     * @return {[type]}          [description]
+     * @param  {object} document      The document objects to populate.
+     * @param  {object} fieldLabelMap The field to label map.
+     * @return {object}               A version of the document with populated labels.
      */
-    function populateFieldLabels(document, fieldMap) {
+    function populateFieldLabels(document, fieldLabelMap) {
       //TODO: populate the field names from the map
 
       var unzippedDocuments = _.chain(document)
         .map(function (value, key) {
-          return fieldMap.hasOwnProperty(key) ? {
-            key: fieldMap[key],
+          return fieldLabelMap.hasOwnProperty(key) ? {
+            key: fieldLabelMap[key],
             value: value
           } : {
             key: key,

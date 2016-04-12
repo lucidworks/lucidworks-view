@@ -1,0 +1,19 @@
+.document-slack {
+  margin: 1rem 0;
+  .text, .user, .channel, .timestamp{
+    display: inline-block;
+    padding-right: .25rem;
+  }
+  .text {
+    color: $dark-color;
+    margin-bottom: .5rem;
+  }
+  .channel, .timestamp .field{
+    margin-right: .25rem;
+  }
+  .doc-field {
+    font-weight: bold;
+    display:inline-block;
+    padding: 0 .25rem 0 0;
+  }
+}

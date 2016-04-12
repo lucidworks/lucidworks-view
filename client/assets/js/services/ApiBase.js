@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.services.apiBase', [])
+    .module('lucidworksView.services.apiBase', [])
     .provider('ApiBase', ApiBase);
 
 

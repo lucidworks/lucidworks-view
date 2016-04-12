@@ -2,11 +2,11 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.sort', [])
+    .module('lucidworksView.components.sort', [])
     .directive('sort', sort);
 
-  /* @ngInject */
   function sort() {
+    'ngInject';
     var directive = {
       restrict: 'E',
       templateUrl: 'assets/components/sort/sort.html',
@@ -21,8 +21,7 @@
 
   }
 
-  /* @ngInject */
-  function Controller($log, $scope, ConfigService, QueryService, LinkService) {
+  function Controller($scope, ConfigService, QueryService, URLService) {
     'ngInject';
     var vm = this;
     vm.switchSort = switchSort;
@@ -55,17 +54,16 @@
 
     function switchSort(sort){
       var query = QueryService.getQueryObject();
-      $log.debug('sort', sort);
       switch(sort.type) {
       case 'text':
         if(angular.isUndefined(query.sort)){
           query.sort = sort.label+'%20'+sort.order;
-          LinkService.setQuery(query);
+          URLService.setQuery(query);
         }
         break;
       default:
         delete query.sort;
-        LinkService.setQuery(query);
+        URLService.setQuery(query);
       }
     }
   }

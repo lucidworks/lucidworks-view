@@ -1,5 +1,5 @@
 /*eslint-env node*/
-// FOUNDATION FOR APPS TEMPLATE GULPFILE
+// FUSION SEED APP GULPFILE
 // -------------------------------------
 // This file processes all of the assets in the "client" folder, combines them with the Foundation for Apps assets, and outputs the finished files in the "build" folder as a finished app.
 
@@ -47,13 +47,16 @@ global.paths = {
     'bower_components/hammerjs/hammer.js',
     'bower_components/angular/angular.js',
     'bower_components/angular-animate/angular-animate.js',
+    'bower_components/angular-sanitize/angular-sanitize.js',
     'bower_components/angular-ui-router/release/angular-ui-router.js',
     'bower_components/angucomplete-alt/angucomplete-alt.js',
     'bower_components/angular-rison/dist/angular-rison.js',
     'bower_components/foundation-apps/js/vendor/**/*.js',
     'bower_components/foundation-apps/js/angular/**/*.js',
     '!bower_components/foundation-apps/js/angular/app.js',
-    'bower_components/ng-orwell/Orwell.js'
+    'bower_components/ng-orwell/Orwell.js',
+    'bower_components/humanize/humanize.js',
+    'bower_components/angularjs-humanize/src/angular-humanize.js'
   ],
   // These files are for your app's JavaScript
   appJS: [
@@ -62,6 +65,10 @@ global.paths = {
     'client/assets/js/controllers/*.js',
     'client/assets/js/utils/**/*.js',
     'client/assets/components/**/*.js'
+  ],
+  components: [
+    'client/assets/components/**/*.html',
+    'bower_components/foundation-apps/js/angular/components/**/*.html'
   ],
   configJS: [
     './FUSION_CONFIG.js'

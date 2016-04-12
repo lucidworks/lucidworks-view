@@ -1,20 +1,28 @@
-# How to style the Fusion Seed App.
+# How To Style the UI
 
-The Fusion seed app uses Foundation for styling and general layout.
 
-Foundation for apps is a sass framework and AngularJs library for creating UIs.
+Since Lucidworks View is built using Foundation for Apps, it should work with the same browsers:
 
-There is documentation on how to utilize Foundation for Apps at this website.
-http://foundation.zurb.com/apps/docs
+>http://foundation.zurb.com/apps/docs/#!/compatibility
 
-Foundation for apps provides layout components and an easy way to utilize state
-routing.
+However, we have not tested or designed our default interface for all of them.
 
-It is mobile compatible and enables touch gestures for those on tablets or phones.
+## Basic Styling
 
-Since the Fusion seed app is built using foundation for apps, it shares the same cross-browser compatibility
-http://foundation.zurb.com/apps/docs/#!/compatibility
+* Set the logo and title
 
-The easiest way to interact with the styling of the fusion seed app is to use the [_settings.scss](../client/assets/scss/_settings.scss) file to alter settings such as colors, and markup. It is possible to completely turn off the styling of any sass component in this file.
+  Edit [`FUSION_CONFIG.js`](../FUSION_CONFIG.sample.js) and modify `search_app_title` and `logo_location`.
 
-This file also contains settings for fusion seed app specific customizations such as the look and feel of the search box typeahead. 
+* Configure the stylesheet
+
+  Edit [`_settings.scss`](../client/assets/scss/_settings.scss) to customize stylesheet settings such as colors and markup.  You can also turn off the styling of any SaSS component in this file.
+
+  This file also contains settings for View-specific customizations such as the look and feel of the search box type-ahead.
+
+## Advanced Styling
+
+View uses Foundation for Apps, a SaSS framework and AngularJs library for creating UIs. It provides layout components and an easy way to utilize state routing.  It is also mobile-compatible and enables touch gestures for tablets or phones.
+
+The Foundation for Apps docs are here:
+
+>http://foundation.zurb.com/apps/docs

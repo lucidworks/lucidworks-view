@@ -1,4 +1,4 @@
-angular.module('fusionSeedApp.utils', [
-  'fusionSeedApp.utils.queryBuilder',
-  'fusionSeedApp.utils.docs'
+angular.module('lucidworksView.utils', [
+  'lucidworksView.utils.queryBuilder',
+  'lucidworksView.utils.docs'
 ]);

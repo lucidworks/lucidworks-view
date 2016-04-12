@@ -1,0 +1,4 @@
+<article class="grid-block document document-jira row" ng-switch="vm.doc.jira_content_type_s">
+  <jira-project ng-switch-when="PROJECT" doc="vm.doc" highlight="vm.highlight"></jira-project>
+  <jira-issue ng-switch-default doc="vm.doc" highlight="vm.highlight"></jira-issue>
+</article>

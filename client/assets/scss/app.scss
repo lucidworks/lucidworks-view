@@ -26,3 +26,13 @@
     text-align: center;
   }
 }
+
+.label.secondary{
+  @extend %label;
+  @include label-style($secondary-color, isitlight($secondary-color));
+}
+
+.sort-button svg.iconic-sm {
+  height: 16px;
+  width: 16px;
+}

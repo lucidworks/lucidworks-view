@@ -1,12 +1,12 @@
 // Module initialization
-angular.module('fusionSeedApp.services', [
-  'fusionSeedApp.services.apiBase',
-  'fusionSeedApp.services.auth',
-  'fusionSeedApp.services.authInterceptor',
-  'fusionSeedApp.services.config',
-  'fusionSeedApp.services.landingPage',
-  'fusionSeedApp.services.link',
-  'fusionSeedApp.services.query',
-  'fusionSeedApp.services.queryData',
-  'fusionSeedApp.services.signals'
+angular.module('lucidworksView.services', [
+  'lucidworksView.services.apiBase',
+  'lucidworksView.services.auth',
+  'lucidworksView.services.authInterceptor',
+  'lucidworksView.services.config',
+  'lucidworksView.services.landingPage',
+  'lucidworksView.services.query',
+  'lucidworksView.services.queryData',
+  'lucidworksView.services.signals',
+  'lucidworksView.services.url'
 ]);
