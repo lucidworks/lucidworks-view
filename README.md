@@ -66,7 +66,7 @@ If you start by cloning the repository, you'll need the following software:
 
 1. **Now go to `http://localhost:<port>` in your browser to see it in action.**
 
-  The first time you browse to the app, you'll see a login page.  Use your Fusion login and password.  To enable anonymous access, edit the `anonymous_access` keys in FUSION_CONFIG.js.
+  The first time you browse to the app, you'll see a login page.  Use your Fusion username and password.  To enable anonymous access, edit the `anonymous_access` keys in FUSION_CONFIG.js.
 
   When you change FUSION_CONFIG.js or any file in the `client` folder, the appropriate Gulp task will run to build new files. This uses [`browser-sync`](https://www.browsersync.io/) for instant reload upon change of source files. Visit `http://localhost:3001` (or whatever your terminal shows as the browser-sync UI) for the `browser-sync` dashboard.
 
