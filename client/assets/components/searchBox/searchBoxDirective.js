@@ -38,7 +38,6 @@
     }
 
     function updateSearchQuery(inputString) {
-      $log.info(inputString);
       ta.query = inputString;
     }
 
