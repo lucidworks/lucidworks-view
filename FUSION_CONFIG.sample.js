@@ -135,7 +135,7 @@ appConfig = { //eslint-disable-line
   /**
    * Landing pages
    *
-   * Fusion allows mapping of specific queries links (or other data) with it's
+   * Fusion allows mapping of specific queries links (or other data) with its
    * landing pages QueryPipeline stage.
    *
    * Default: Do not redirect but show a list of urls that a user can go to.
@@ -181,7 +181,7 @@ appConfig = { //eslint-disable-line
   typeahead_query_pipeline_id: 'default',
   typeahaed_query_profile_id: 'default',
   typeahead_fields: ['id'],
-  // The request handler defines how typeahead gets it's results.
+  // The request handler defines how typeahead gets its results.
   // It is recommended to use suggest as it is more performant.
   // It will require some additional configuration.
   // @see https://lucidworks.com/blog/2016/02/04/fusion-plus-solr-suggesters-search-less-typing/
