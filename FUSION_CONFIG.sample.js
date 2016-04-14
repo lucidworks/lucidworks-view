@@ -179,7 +179,7 @@ appConfig = { //eslint-disable-line
    */
   typeahead_use_query_profile: true,
   typeahead_query_pipeline_id: 'default',
-  typeahaed_query_profile_id: 'default',
+  typeahead_query_profile_id: 'default',
   typeahead_fields: ['id'],
   // The request handler defines how typeahead gets its results.
   // It is recommended to use suggest as it is more performant.
