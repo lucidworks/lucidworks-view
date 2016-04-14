@@ -33,9 +33,36 @@
           <p class="subheader">Try searching on a different term or using different facets to refine your search</p>
         </div>
       </div>
+
       <landing-page></landing-page>
-      <document-list></document-list>
-      <paginate></paginate>
+
+      <div ng-if="hc.data.result">
+        <document-list></document-list>
+        <paginate></paginate>
+      </div>
+
+      <div ng-if="hc.data.grouped">
+        <pre>{{hc.data.grouped}}</pre>
+        <div ng-repeat="(group,group_data) in hc.data.grouped">
+          <h2>{{group}}</h2>
+          <div ng-if="group_data.groups" ng-repeat="g in group_data.groups">
+            <!-- this is a group.field, iterate each field values results, then docs within -->
+            <h3>{{g.groupValue}} ({{g.doclist.numFound}})</h3>
+            <ul ng-repeat="doc in g.doclist.docs">
+               <li>{{doc.id}}: {{doc.name}}</li>
+            </ul>
+          </div>
+          <div ng-if="group_data.doclist">
+            ({{group_data.doclist.numFound}})
+            <ul  ng-repeat="doc in group_data.doclist.docs">
+              <!-- this is a group.query result, iterate each doc -->
+              <li>{{doc.id}}: {{doc.name}}</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
     </div>
   </div>
 
