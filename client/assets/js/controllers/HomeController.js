@@ -44,7 +44,10 @@
           hc.lastQuery = data.responseHeader.params.q;
           // Make sure you check for all the supported facets before for empty-ness
           // before toggling the `showFacets` flag
-          hc.showFacets = !_.isEmpty(data.facet_counts.facet_fields);
+          if(_.has(data, 'facet_counts'){
+            hc.showFacets = !_.isEmpty(data.facet_counts.facet_fields);
+          })
+
         } else {
           hc.numFound = 0;
         }
