@@ -7,10 +7,10 @@ gulp.task('watch', function(){
   gulp.watch(['./client/assets/scss/**/*', './scss/**/*'], ['sass', 'reloadBrowsers']);
 
   // Watch JavaScript
-  gulp.watch(['./client/assets/js/**/*', './js/**/*'], ['jslint:app','uglify:app', 'reloadBrowsers']);
+  gulp.watch(['./client/assets/js/**/*', './js/**/*'], ['jslint:app','compressJS:app', 'reloadBrowsers']);
 
   // Watch Components
-  gulp.watch(['./client/assets/components/**/*.{scss,js}'], ['uglify:app', 'copy', 'sass', 'reloadBrowsers']);
+  gulp.watch(['./client/assets/components/**/*.{scss,js}'], ['compressJS:app', 'copy', 'sass', 'reloadBrowsers']);
 
   // Watch static files
   gulp.watch(['./client/**/*.*', '!./client/templates/**/*.*', '!./client/assets/{scss,js}/**/*.*'], ['copy', 'reloadBrowsers']);

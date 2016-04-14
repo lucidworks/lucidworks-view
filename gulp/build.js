@@ -9,7 +9,7 @@ var sequence        = require('run-sequence');
 
 // Builds your entire app once, without starting a server
 gulp.task('build', function(cb) {
-  sequence('clean', 'copy:config', 'writeDevConfig', ['copy', 'copy:foundation', 'sass', 'uglify'], 'copy:templates', cb);
+  sequence('clean', 'copy:config', 'writeDevConfig', ['copy', 'copy:foundation', 'sass', 'compressJS'], 'copy:templates', cb);
 });
 
 // Copies everything in the client folder except templates, Sass, and JS
@@ -50,9 +50,9 @@ gulp.task('copy:foundation', function(cb) {
 });
 
 // Compiles and copies the Foundation for Apps JavaScript, as well as your app's custom JS
-gulp.task('uglify', ['uglify:foundation', 'uglify:app']);
+gulp.task('compressJS', ['compressJS:foundation', 'compressJS:app']);
 
-gulp.task('uglify:foundation', function() {
+gulp.task('compressJS:foundation', function() {
   var uglify = $.if(global.isProduction, $.uglify()
     .on('error', function (e) {
       console.log(e);
@@ -64,7 +64,7 @@ gulp.task('uglify:foundation', function() {
     .pipe(gulp.dest('./build/assets/js/'));
 });
 
-gulp.task('uglify:app', function() {
+gulp.task('compressJS:app', function() {
   var uglify = $.if(global.isProduction, $.uglify()
     .on('error', function (e) {
       console.log(e);
