@@ -15,7 +15,9 @@
   "author": "Joshua Ellinger <joshua.ellinger@lucidworks.com>",
   "contributors": [
     "Joshua Ellinger <joshua.ellinger@lucidworks.com>",
-    "Arjit Dasgupta <arjit.dasgupta@lucidworks.com>"
+    "Arjit Dasgupta <arjit.dasgupta@lucidworks.com>",
+    "Ariel Isaacs <ariel.isaacs@lucidworks.com>",
+    "Josh Lipps <josh.lipps@lucidworks.com>"
   ],
   "license": "Apache-2.0",
   "bugs": {
