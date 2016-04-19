@@ -105,3 +105,7 @@ Search results from different document types can use different templates.  The `
 ## What's Next
 
 For more details about configuring and customizing View, see the [docs](docs/) directory.
+
+## Contributions
+
+View is open source! Pull requests welcome. This is a great way to give back to the community and help others build a better search app.
