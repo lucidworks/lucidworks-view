@@ -1,4 +1,5 @@
 <div id="documentList">
+  testing1
   <div ng-repeat="doc in vm.docs" ng-switch="::vm.getDocType(doc)">
     <!-- <document-example ng-switch-when="string_matching_data_connector" doc="vm.decorateDocument(doc)" bind="doc" highlight="vm.highlighting"></document-example> -->
     <document-file ng-switch-when="lucid.anda/file" doc="vm.decorateDocument(doc)" bind="doc" highlight="vm.highlighting"></document-file>
@@ -8,5 +9,6 @@
     <document-twitter ng-switch-when="lucid.twitter.stream/twitter_stream" bind="doc" doc="vm.decorateDocument(doc)" highlight="vm.highlighting"></document-twitter>
     <document-web ng-switch-when="lucid.anda/web" doc="vm.decorateDocument(doc)" bind="doc" highlight="vm.highlighting"></document-web>
     <document-default ng-switch-default doc="vm.decorateDocument(doc)" bind="doc" highlight="vm.highlighting"></document-default>
+
   </div>
 </div>
