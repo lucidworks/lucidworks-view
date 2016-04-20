@@ -27,7 +27,6 @@
     var vm = this;
     vm.docs = [];
     vm.highlighting = {};
-    console.log('llllll')
     vm.getDocType = getDocType;
     vm.decorateDocument = decorateDocument;
 
@@ -44,7 +43,6 @@
         vm.getDoctype = getDocType;
         $anchorScroll('topOfMainContent');
       });
-      console.log(vm.highlighting, 'highlighting');
     }
 
     /**
