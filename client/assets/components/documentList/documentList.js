@@ -36,7 +36,6 @@
 
     function activate() {
       var resultsObservable = Orwell.getObservable('queryResults');
-
       resultsObservable.addObserver(function (data) {
         vm.docs = parseDocuments(data);
         vm.highlighting = parseHighlighting(data);
@@ -92,19 +91,28 @@
       if (data.hasOwnProperty('highlighting')){
         $log.debug(_.has(data, 'highlighting'));
         _.each(data.highlighting, function(value, key){
+          console.log(data.highlighting)
           var vals = {};
           if (value) {
+            console.log(value);
             _.each(Object.keys(value), function (key) {
+              console.log('kay', key);
               var val = value[key];
+              $log.debug("Has High:");
+              $log.debug(val);
               _.each(val, function(high){
                 vals[key] = $sce.trustAsHtml(high);
               });
             });
-            highlighting[key] = vals;
+            $log.debug('vallueeee', vals)
+            vm.highlighting[key] = vals;
           }
         });
       }
-      return highlighting;
+      else{
+        vm.highlighting = {};
+      }
+      return vm.highlighting;
     }
   }
 })();

@@ -26,7 +26,7 @@
   function Controller(SignalsService, $log) {
     'ngInject';
     var vm = this;
-    $log.debug(vm.highlight, 'highlight');
+    $log.debug(vm.highlight, 'picked uppp');
 
     activate();
 
@@ -35,7 +35,6 @@
     function activate() {
       $log.debug(vm.doc);
       vm.postSignal = SignalsService.postSignal;
-      console.log('vmmmmmmmm')
     }
   }
 })();
