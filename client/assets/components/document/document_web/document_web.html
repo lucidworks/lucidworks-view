@@ -1,17 +1,17 @@
 <article class="grid-block document row">
   <div class="detail vertical grid-content" >
-    highlight:::::
-    {{vm.highlight}}
+    <!-- highlight:::::
+    {{vm.highlight}} -->
     <!-- show head field linked with a title. -->
     <h3 class="head-field" ng-if="::vm.doc.title">
       <a ng-href="{{vm.doc.url[0]}}" ng-click="::vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank">
-        <field value="::vm.doc.title" highlight="::vm.highlight" maxlength="200" hkey="title"></field>
+        <field value="::vm.doc.title" highlight="vm.highlight[doc.id]" maxlength="200" hkey="title"></field>
       </a>
     </h3>
     <!-- show head field without a title. -->
     <h3 class="head-field" ng-if="::(!vm.doc.title && !!vm.doc.url)">
       <a ng-href="{{::vm.doc.url[0]}}" ng-click="vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank">
-        <field value="::vm.doc.url" highlight="::vm.highlight" maxlength="200" hkey="url"></field>
+        <field value="::vm.doc.url" highlight="::vm.highlight[doc.id]" maxlength="200" hkey="url"></field>
       </a>
     </h3>
     <h3 class="subheader" ng-if="::(!vm.doc.title && !vm.doc.url)">
