@@ -30,7 +30,7 @@
     activate();
 
     function activate() {
-      vm.postSignal = SignalsService.postSignal;
+      vm.postSignal = SignalsService.postClickSignal;
       vm.doc = processDocument(vm.doc);
     }
 

@@ -32,7 +32,7 @@
     /////////
 
     function activate() {
-      vm.postSignal = SignalsService.postSignal;
+      vm.postSignal = SignalsService.postClickSignal;
     }
   }
 })();
