@@ -46,7 +46,7 @@
     }
 
     function processGap(date, gap) {
-      return gap;//TODO:
+      return gap;//TODO: calculate out the actual value
     }
 
     /**
@@ -74,9 +74,6 @@
         var start = facet_bucket.start;
         var end = facet_bucket.end;
         var gap = facet_bucket.gap;
-
-
-        console.log(facet_bucket);
         var range_facets = [];
         if (facet_bucket.counts.length > 0) {
           var new_facet_bucket = [];
@@ -89,8 +86,8 @@
               if (facet_bucket.counts[i].indexOf('Z') != -1) {
                 //we have a date
                 var date = new Date(Date.parse(facet_bucket.counts[i]));
-                console.log(monthNames);
-                lower = monthNames[date.getMonth()] + " " + date.getDay();
+                console.log(date.getDay());
+                lower = monthNames[date.getMonth()] + " " + date.getDate();
                 upper = processGap(date, gap);
               } else {
                 lower = facet_bucket.counts[i];
