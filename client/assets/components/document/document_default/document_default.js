@@ -31,6 +31,7 @@
 
     function activate() {
       vm.doc = processDocument(DocsHelper.concatMultivaluedFields(vm.doc));
+      console.log(vm.doc, 'docccc');
     }
 
     /**

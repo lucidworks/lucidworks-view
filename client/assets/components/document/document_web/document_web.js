@@ -23,9 +23,10 @@
 
   }
 
-  function Controller(SignalsService) {
+  function Controller(SignalsService, $log) {
     'ngInject';
     var vm = this;
+    $log.debug(vm.doc, 'ind doc')
 
     activate();
 
@@ -33,6 +34,7 @@
 
     function activate() {
       vm.postSignal = SignalsService.postSignal;
+      console.log('vmmmmmmmm')
     }
   }
 })();

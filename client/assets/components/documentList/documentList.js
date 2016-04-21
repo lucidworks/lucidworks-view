@@ -22,7 +22,7 @@
   }
 
 
-  function Controller($sce, $anchorScroll, Orwell, SignalsService) {
+  function Controller($sce, $anchorScroll, Orwell, SignalsService, $log) {
     'ngInject';
     var vm = this;
     vm.docs = [];
@@ -78,6 +78,7 @@
       if (data.hasOwnProperty('response')) {
         docs = data.response.docs;
       }
+      $log.debug(docs);
       return docs;
     }
 
@@ -89,6 +90,7 @@
     function parseHighlighting(data) {
       var highlighting = {};
       if (data.hasOwnProperty('highlighting')){
+        $log.debug(_.has(data, 'highlighting'));
         _.each(data.highlighting, function(value, key){
           var vals = {};
           if (value) {
