@@ -28,7 +28,13 @@
             hkey="description"></field>
       <field ng-if="::vm.doc.content" value="::vm.doc.content" highlight="::vm.highlight" maxlength="200"
              hkey="content"></field>
-      <field ng-if="::vm.doc.body" value="::vm.doc.body" highlight="::vm.highlight" maxlength="200" hkey="content"></field>
+
+             <!-- Other fields -->
+      <div ng-if="vm.doc.title">Title: {{vm.doc.title}}</div>
+      <br/><br/>
+      <div ng-if="vm.doc.body">Body: {{vm.doc.body}}</div>
+
+      <!-- <field ng-if="::vm.doc.body" value="::vm.doc.body" highlight="::vm.highlight" maxlength="200" hkey="content"></field> -->
     </p>
   </div>
 </article>

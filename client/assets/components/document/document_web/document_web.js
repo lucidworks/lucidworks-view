@@ -26,13 +26,14 @@
   function Controller(SignalsService, $log) {
     'ngInject';
     var vm = this;
-    $log.debug(vm.doc, 'ind doc')
+    $log.debug(vm.highlight, 'highlight');
 
     activate();
 
     /////////
 
     function activate() {
+      $log.debug(vm.doc);
       vm.postSignal = SignalsService.postSignal;
       console.log('vmmmmmmmm')
     }

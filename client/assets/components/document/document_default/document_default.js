@@ -31,7 +31,9 @@
 
     function activate() {
       vm.doc = processDocument(DocsHelper.concatMultivaluedFields(vm.doc));
-      console.log(vm.doc, 'docccc');
+      $log.debug(vm.doc, 'docccc');
+      $log.debug(vm.highlight, 'highlight???')
+
     }
 
     /**
