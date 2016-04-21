@@ -5,7 +5,7 @@
     .module('lucidworksView.components.facetRange', [
       'lucidworksView.services.config',
       'foundation.core',
-      'fusionSeedApp.utils.queryBuilder'
+      'lucidworksView.utils.queryBuilder'
     ])
     .config(Config);
 

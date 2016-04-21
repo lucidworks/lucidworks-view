@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('fusionSeedApp.components.facetRange')
+    .module('lucidworksView.components.facetRange')
     .directive('facetRange', facetRange);
 
   function facetRange() {
