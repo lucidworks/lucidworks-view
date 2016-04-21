@@ -21,7 +21,7 @@
     };
   }
 
-  function Controller(ConfigService, QueryService, QueryDataService, Orwell, FoundationApi, LinkService) {
+  function Controller(ConfigService, QueryService, QueryDataService, Orwell, FoundationApi) {
     'ngInject';
     var vm = this;
     console.log("in frd");
@@ -45,13 +45,6 @@
       parseRangeFacets(resultsObservable.getContent());
     }
 
-    var monthNames = [
-      "Jan", "Feb", "Mar",
-      "Apr", "May", "June", "July",
-      "Aug", "Sept", "Oct",
-      "Nov", "Dec"
-    ];
-
     function processGap(date, gap) {
       return gap;//TODO:
     }
@@ -65,6 +58,13 @@
       if (!data.hasOwnProperty('facet_counts')) return;
       // Determine if facet exists.
       var facetRanges = data.facet_counts.facet_ranges;
+      var monthNames = [
+        "Jan", "Feb", "Mar",
+        "Apr", "May", "June", "July",
+        "Aug", "Sept", "Oct",
+        "Nov", "Dec"
+      ];
+
       //console.log("facetRanges");
       //console.log(vm.facetName);
       //console.log(facetRanges);
@@ -85,10 +85,11 @@
             if (i % 2 == 0) {
               var lower = "";//may be a date
               var upper = "";
+              console.log(facet_bucket);
               if (facet_bucket.counts[i].indexOf('Z') != -1) {
                 //we have a date
                 var date = new Date(Date.parse(facet_bucket.counts[i]));
-
+                console.log(monthNames);
                 lower = monthNames[date.getMonth()] + " " + date.getDay();
                 upper = processGap(date, gap);
               } else {
@@ -111,7 +112,7 @@
         //put this on first
         if (facet_bucket.after > 0) {
           var after_bucket = {};
-          after_bucket.name= "After";
+          after_bucket.name = "After";
           after_bucket.label = '(' + facet_bucket.after + ')';
           after_bucket.hash = FoundationApi.generateUuid();
           after_bucket.fq = vm.facetName + ':"[' + upper + " TO *]";
@@ -124,7 +125,7 @@
 
         if (facet_bucket.before > 0) {
           var before_bucket = {};
-          before_bucket.name= "Before";
+          before_bucket.name = "Before";
           before_bucket.label = '(' + facet_bucket.before + ')';
           before_bucket.hash = FoundationApi.generateUuid();
           before_bucket.fq = vm.facetName + ':"[*  TO ' + upper + "]";
@@ -209,7 +210,8 @@
      */
     function updateFacetQuery(query) {
       query.start = 0;
-      LinkService.setQuery(query);
+      //TODO
+      console.log("do something")
     }
 
     /**

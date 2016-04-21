@@ -7,8 +7,8 @@
                placeholder="{{vm.facetLabel ? vm.facetLabel : vm.facetName}} filter">
       </li>
       <li ng-repeat="facet in vm.facetCounts | filter: vm.facetFilter">
-        <input type="checkbox" id="{{facet.hash}}" ng-model="facet.active" ng-click="vm.toggleFacet(facet)">
-        <label for="{{facet.hash}}">{{facet.name}} <span>{{facet.label}}</span></label>
+        <input type="checkbox" id="{{::facet.hash}}" ng-model="facet.active" ng-click="vm.toggleFacet(facet)">
+        <label for="{{::facet.hash}}">{{facet.name}} <span>{{facet.label}}</span></label>
       </li>
     </ul>
   </div>

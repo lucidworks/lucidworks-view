@@ -44,6 +44,7 @@
           }
           // Keep a list of facet names and only reflow facets based on changes to this list.
           var facetFields = Object.keys(resultFacets);
+          console.log(facetFields);
           if (!_.isEqual(vm.facetNames[facetType], facetFields)) {
             vm.facetNames[facetType] = facetFields;
             var facets = [];
