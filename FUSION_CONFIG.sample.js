@@ -56,6 +56,7 @@ appConfig = { //eslint-disable-line
   search_app_title: 'Lucidworks View',
   // Specify the path to your logo relative to the root app folder.
   // Or use an empty string if you don't want to use a logo.
+  // This file is relative to the client folder of your app.
   logo_location: 'assets/img/logo/lucidworks-white.svg',
 
   /**
@@ -135,7 +136,7 @@ appConfig = { //eslint-disable-line
   /**
    * Landing pages
    *
-   * Fusion allows mapping of specific queries links (or other data) with it's
+   * Fusion allows mapping of specific queries links (or other data) with its
    * landing pages QueryPipeline stage.
    *
    * Default: Do not redirect but show a list of urls that a user can go to.
@@ -179,9 +180,9 @@ appConfig = { //eslint-disable-line
    */
   typeahead_use_query_profile: true,
   typeahead_query_pipeline_id: 'default',
-  typeahaed_query_profile_id: 'default',
+  typeahead_query_profile_id: 'default',
   typeahead_fields: ['id'],
-  // The request handler defines how typeahead gets it's results.
+  // The request handler defines how typeahead gets its results.
   // It is recommended to use suggest as it is more performant.
   // It will require some additional configuration.
   // @see https://lucidworks.com/blog/2016/02/04/fusion-plus-solr-suggesters-search-less-typing/

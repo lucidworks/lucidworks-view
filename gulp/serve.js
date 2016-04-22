@@ -37,7 +37,11 @@ gulp.task('browsersync', ['build'], function() {
 });
 
 //Reloads all the browsers
-gulp.task('reloadBrowsers', browserSync.reload);
+gulp.task('reloadBrowsers', function(cb){
+  browserSync.reload();
+  //callback so sequences are aware when this is done
+  cb();
+});
 
 gulp.task('serve', ['browsersync', 'watch']);
 

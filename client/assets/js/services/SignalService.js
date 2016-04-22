@@ -24,9 +24,9 @@
             query: QueryService.getQueryObject().q,
             docId: docId
           },
-          type: ConfigService.config.signalType,
+          type: ConfigService.config.signal_type,
           timestamp: date.toISOString(),
-          pipeline: ConfigService.config.signalsPipeline
+          pipeline: ConfigService.config.signals_pipeline
         }];
       // set content header
 
@@ -53,7 +53,7 @@
      * @return {string|Number}     The document ID value
      */
     function getSignalsDocumentId(doc) {
-      var documentIdField = ConfigService.config.signalsDocumentId;
+      var documentIdField = ConfigService.config.signals_document_id;
       if (doc.hasOwnProperty(documentIdField)) {
         return doc[documentIdField];
       }

@@ -1,5 +1,5 @@
 # Lucidworks View
-  Lucidworks View is a consumer-facing front end for Lucidworks Fusion.  It provides a basic search interface with simple configuration, so you can quickly deliver a Fusion-based search solution with minimal development.  View is powered by Fusion, Gulp, Angular, and libSaSS.
+  [Lucidworks View](https://lucidworks.com/products/view/) is a consumer-facing front end for Lucidworks Fusion.  It provides a basic search interface with simple configuration, so you can quickly deliver a Fusion-based search solution with minimal development.  View is powered by Fusion, Gulp, Angular, and libSaSS.
 
   You can also use View as the basis for developing a more sophisticated Web interface, using Foundation for Apps: http://foundation.zurb.com/apps/docs/
 
@@ -7,7 +7,7 @@
 
 ## Requirements
 
-If you downloaded a [platform-specific package](https://github.com/lucidworks/lucidworks-view/releases), all dependencies are included.
+If you downloaded a [platform-specific package](https://github.com/lucidworks/lucidworks-view/releases), all dependencies are included. Skip to Get Started step 4.
 
 If you start by cloning the repository, you'll need the following software:
 
@@ -22,7 +22,7 @@ If you start by cloning the repository, you'll need the following software:
 1. Clone the repository, where `app` is the name of your app:
 
   ```bash
-  git clone https://github.com/LucidWorks/lucidworks-seed-app app
+  git clone https://github.com/lucidworks/lucidworks-view app
   ```
 
 1. Change into the directory:
@@ -66,7 +66,7 @@ If you start by cloning the repository, you'll need the following software:
 
 1. **Now go to `http://localhost:<port>` in your browser to see it in action.**
 
-  The first time you browse to the app, you'll see a login page.  Use your Fusion login and password.  To enable anonymous access, edit the `anonymous_access` keys in FUSION_CONFIG.js.
+  The first time you browse to the app, you'll see a login page.  Use your Fusion username and password.  To enable anonymous access, edit the `anonymous_access` keys in FUSION_CONFIG.js.
 
   When you change FUSION_CONFIG.js or any file in the `client` folder, the appropriate Gulp task will run to build new files. This uses [`browser-sync`](https://www.browsersync.io/) for instant reload upon change of source files. Visit `http://localhost:3001` (or whatever your terminal shows as the browser-sync UI) for the `browser-sync` dashboard.
 
