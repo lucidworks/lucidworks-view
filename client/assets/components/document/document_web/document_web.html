@@ -33,6 +33,8 @@
       <!-- From searchhub -->
      <field ng-if="vm.doc.content" value="vm.doc.content" highlight="vm.highlight" maxlength="200"
             hkey="content"></field>
+
+
      <field ng-if="vm.doc.body" value="vm.doc.body" highlight="vm.highlight[doc.id]" maxlength="200" hkey="body"></field>
 
              <!-- Other fields -->

@@ -34,7 +34,6 @@
 
     function activate() {
       $log.debug(vm.doc, vm.highlight);
-
       vm.postSignal = SignalsService.postSignal;
     }
   }

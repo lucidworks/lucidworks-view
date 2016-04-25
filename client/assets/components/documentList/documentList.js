@@ -91,12 +91,12 @@
       if (data.hasOwnProperty('highlighting')){
         $log.debug(_.has(data, 'highlighting'));
         _.each(data.highlighting, function(value, key){
-          console.log(data.highlighting)
           var vals = {};
           if (value) {
             console.log(value);
             _.each(Object.keys(value), function (key) {
               console.log('kay', key);
+              $log.debug('value', value)
               var val = value[key];
               $log.debug("Has High:");
               $log.debug(val);
@@ -112,6 +112,7 @@
       else{
         vm.highlighting = {};
       }
+      console.log('finalll?', vm.highlighting);
       return vm.highlighting;
     }
   }
