@@ -7,29 +7,49 @@
     ])
     .factory('SignalsService', SignalsService);
 
-  function SignalsService(ApiBase, ConfigService, $http, $q, QueryService) {
+  function SignalsService(ApiBase, ConfigService, $http, $q, $log, QueryService) {
     'ngInject';
     var service = {
-      postSignal: postSignal,
+      postClickSignal: postClickSignal,
+      postSignalData: postSignalData,
       getSignalsDocumentId: getSignalsDocumentId
     };
 
     return service;
-
-    function postSignal(docId) {
-      var deferred = $q.defer(),
-        date = new Date(),
+    //Helper method for document click events
+    function postClickSignal(docId, query, filterQueries, weight, type) {
+      if (!query){
+        query = QueryService.getQueryObject().q;
+      }
+      if (!type){
+        type = ConfigService.config.signal_type;
+      }
+      var date = new Date(),
         data = [{
           params: {
-            query: QueryService.getQueryObject().q,
+            query: query,
             docId: docId
           },
-          type: ConfigService.config.signalType,
+// <<<<<<< HEAD
+//           type: type,
+// =======
+          type: ConfigService.config.signal_type,
+// >>>>>>> origin/develop
           timestamp: date.toISOString(),
-          pipeline: ConfigService.config.signalsPipeline
+          pipeline: ConfigService.config.signals_pipeline
         }];
-      // set content header
+      if (filterQueries){
+        data['params']['filterQueries'] = filterQueries;
+      }
+      if (weight){
+        data['params']['weight'] = weight;
+      }
+      return postSignalData(data);
+    }
 
+    //Use if you want to post a raw signal where you have control of every signal entry.  See postClickSignal for an example data structure
+    function postSignalData(data) {
+      var deferred = $q.defer();
       $http
         .post(ApiBase.getEndpoint() + 'api/apollo/signals/' + ConfigService.config.collection,
           data)
@@ -53,7 +73,7 @@
      * @return {string|Number}     The document ID value
      */
     function getSignalsDocumentId(doc) {
-      var documentIdField = ConfigService.config.signalsDocumentId;
+      var documentIdField = ConfigService.config.signals_document_id;
       if (doc.hasOwnProperty(documentIdField)) {
         return doc[documentIdField];
       }

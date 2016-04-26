@@ -13,7 +13,7 @@
       controller: Controller,
       controllerAs: 'vm',
       bindToController: {
-        doc: '=bind',
+        doc: '=',
         highlight: '='
       },
       replace: true
@@ -23,7 +23,7 @@
   function Controller($log, $scope, DocsHelper, ConfigService, SignalsService) {
     'ngInject';
     var vm = this;
-    vm.postSignal = SignalsService.postSignal;
+    vm.postSignal = SignalsService.postClickSignal;
 
     activate();
 

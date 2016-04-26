@@ -14,7 +14,7 @@
       controller: Controller,
       controllerAs: 'vm',
       bindToController: {
-        doc: '=bind',
+        doc: '=',
         highlight: '='
       }
     };
@@ -31,7 +31,7 @@
     activate();
 
     function activate() {
-      vm.postSignal = SignalsService.postSignal;
+      vm.postSignal = SignalsService.postClickSignal;
       vm.doc = processDocument(vm.doc);
     }
 
