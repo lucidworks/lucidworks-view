@@ -87,7 +87,6 @@
      * @return {object}      The highlighting results.
      */
     function parseHighlighting(data) {
-      var highlighting = {};
       if (data.hasOwnProperty('highlighting')){
         $log.debug(_.has(data, 'highlighting'));
         _.each(data.highlighting, function(value, key){

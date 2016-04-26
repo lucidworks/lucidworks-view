@@ -6,14 +6,18 @@
         <span class="doc-label">size:</span> <field value="::vm.doc.length_lFormatted"></field>
       </div>
       <div class="mimetype" ng-if="::vm.doc.mimeType_s">
-        <span class="doc-label">mimetype:</span> <field value="::vm.doc.mimeType_s" highlight="::vm.highlight" maxlength="200"
+        <span class="doc-label">mimetype:</span> <field value="::vm.doc.mimeType_s" highlight="::vm.highlight[doc.id]" maxlength="200"
                hkey="mimeType_s"></field>
       </div>
       <div class="owner" ng-if="::vm.doc.owner_s">
-        <span class="doc-label">owner:</span> <field value="::vm.doc.owner_s" highlight="::vm.highlight" maxlength="200"
+        <span class="doc-label">owner:</span> <field value="::vm.doc.owner_s" highlight="::vm.highlight[doc.id]" maxlength="200"
                hkey="owner_s"></field>
       </div>
       <div class="last-modified" ng-if="::vm.doc.lastModified_dt">
+        <span class="doc-label">last modified:</span> <field value="::vm.doc.lastModified_dtFormatted"></field> UTC
+      </div>
+
+      <div class="last-modified">
         <span class="doc-label">last modified:</span> <field value="::vm.doc.lastModified_dtFormatted"></field> UTC
       </div>
      </div>
