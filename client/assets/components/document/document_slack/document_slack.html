@@ -3,6 +3,7 @@
     <div class="large-8 xlarge-7 xx-large-6">
       <blockquote class="text">
           <field value="::vm.doc.text_t" highlight="vm.highlight[doc.id]" maxlength="200" hkey="text_t"></field>
+          <!-- <p>{{::vm.doc.text | limitTo:200}}...</p> -->
       </blockquote>
       <div class="detail-row">
         <div class="channel label secondary" ng-if="::vm.doc.channel_s">

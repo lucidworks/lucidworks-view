@@ -24,11 +24,11 @@
     <!-- <h4 class="subheader" ng-if="::vm.doc.body"><field value="::vm.doc.body" highlight="::vm.highlight" maxlength="200" hkey="keywords"></field></h4> -->
 
     <p class="large-8 xlarge-7 xx-large-6">
-      <field ng-if="::vm.doc.description" value="::vm.doc.description" highlight="::vm.highlight" maxlength="200"
+      <field ng-if="::vm.doc.description" value="::vm.doc.description" highlight="::vm.highlight[doc.id]" maxlength="200"
              hkey="description"></field>
-     <field ng-if="::(!vm.doc.description && vm.doc.og_description)" value="::vm.doc.og_description" highlight="::vm.highlight" maxlength="200"
+     <field ng-if="::(!vm.doc.description && vm.doc.og_description)" value="::vm.doc.og_description" highlight="::vm.highlight[doc.id]" maxlength="200"
             hkey="description"></field>
-      <field ng-if="::vm.doc.content" value="::vm.doc.content" highlight="::vm.highlight" maxlength="200"
+      <field ng-if="::vm.doc.content" value="::vm.doc.content" highlight="::vm.highlight[doc.id]" maxlength="200"
              hkey="content"></field>
       <!-- From searchhub -->
      <field ng-if="vm.doc.content" value="vm.doc.content" highlight="vm.highlight" maxlength="200"
