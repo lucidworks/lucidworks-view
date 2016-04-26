@@ -42,7 +42,7 @@ appConfig = { //eslint-disable-line
   },
 
   // The name of your collection
-  collection: 'jira2',
+  collection: 'MyCollection',
 
   // Please specify a pipeline or profile that you want to leverage with this UI.
   query_pipeline_id: 'default',
