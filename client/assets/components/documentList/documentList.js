@@ -88,22 +88,16 @@
      */
     function parseHighlighting(data) {
       if (data.hasOwnProperty('highlighting')){
-        $log.debug(_.has(data, 'highlighting'));
         _.each(data.highlighting, function(value, key){
           var vals = {};
           if (value) {
             _.each(Object.keys(value), function (key) {
-              $log.debug('value', value);
+              $log.debug('highlight', value);
               var val = value[key];
-
-              $log.debug('Has Highlight:');
-              $log.debug(val);
               _.each(val, function(high){
-                $log.debug(val[key]);
                 vals[key] = $sce.trustAsHtml(high);
               });
             });
-            $log.debug('value', vals);
             vm.highlighting[key] = vals;
           }
         });
