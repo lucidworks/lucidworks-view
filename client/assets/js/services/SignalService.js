@@ -30,7 +30,11 @@
             query: query,
             docId: docId
           },
-          type: type,
+// <<<<<<< HEAD
+//           type: type,
+// =======
+          type: ConfigService.config.signal_type,
+// >>>>>>> origin/develop
           timestamp: date.toISOString(),
           pipeline: ConfigService.config.signals_pipeline
         }];

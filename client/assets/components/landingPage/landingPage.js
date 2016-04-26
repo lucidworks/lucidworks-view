@@ -27,7 +27,7 @@
     resultsObservable.addObserver(function (data) {
       var landing_pages = LandingPageService.getLandingPagesFromData(data);
       if (angular.isArray(landing_pages)) {
-        lp.landingPages = landing_pages;
+        lp.landingPages = _.uniq(landing_pages);
       } else {
         lp.landingPages = false;
       }
