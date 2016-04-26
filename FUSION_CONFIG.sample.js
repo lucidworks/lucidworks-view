@@ -42,7 +42,7 @@ appConfig = { //eslint-disable-line
   },
 
   // The name of your collection
-  collection: 'MyCollection',
+  collection: 'jira2',
 
   // Please specify a pipeline or profile that you want to leverage with this UI.
   query_pipeline_id: 'default',
@@ -120,7 +120,7 @@ appConfig = { //eslint-disable-line
   //
   // The HTML/Angular template is located in the following directory:
   //    your_project_directory/client/assets/components/document/document.html
-  fields_to_display:*,
+  fields_to_display:['title','id','name', '*'],
   field_display_labels: {
     'name': 'Document Name',
     //'id': 'Identification Number'

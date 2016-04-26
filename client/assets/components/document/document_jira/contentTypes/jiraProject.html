@@ -7,9 +7,9 @@
   </h3>
 
   <div class="large-8 xlarge-7 xx-large-6">
-    <p ng-if="::vm.doc.description_s">
-      <field value="::vm.doc.description_s" highlight="::vm.highlight[doc.id]" maxlength="200"
-             hkey="description_s"></field>
+    <p ng-if="::vm.doc.content_txt">
+      <field value="::vm.doc.content_txt" highlight="::vm.highlight[doc.id]" maxlength="200"
+             hkey="content_txt"></field>
     </p>
     <div class="detail-row">
       <div class="type" ng-if="::vm.doc.jira_content_type_s">
