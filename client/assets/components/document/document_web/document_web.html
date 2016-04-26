@@ -1,7 +1,5 @@
 <article class="grid-block document row">
   <div class="detail vertical grid-content" >
-    <!-- highlight:::::
-    {{vm.highlight}} -->
     <!-- show head field linked with a title. -->
     <h3 class="head-field" ng-if="::vm.doc.title">
       <a ng-href="{{vm.doc.url[0]}}" ng-click="::vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank">
@@ -31,7 +29,7 @@
       <field ng-if="::vm.doc.content" value="::vm.doc.content" highlight="::vm.highlight[doc.id]" maxlength="200"
              hkey="content"></field>
       <!-- From searchhub -->
-     <field ng-if="vm.doc.content" value="vm.doc.content" highlight="vm.highlight" maxlength="200"
+     <field ng-if="vm.doc.content" value="vm.doc.content" highlight="vm.highlight[doc.id]" maxlength="200"
             hkey="content"></field>
 
 

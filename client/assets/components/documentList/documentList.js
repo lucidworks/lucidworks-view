@@ -93,18 +93,16 @@
         _.each(data.highlighting, function(value, key){
           var vals = {};
           if (value) {
-            console.log(value);
             _.each(Object.keys(value), function (key) {
-              console.log('kay', key);
-              $log.debug('value', value)
+              $log.debug('value', value);
               var val = value[key];
-              $log.debug("Has High:");
+              $log.debug('Has Highlight:');
               $log.debug(val);
               _.each(val, function(high){
                 vals[key] = $sce.trustAsHtml(high);
               });
             });
-            $log.debug('vallueeee', vals)
+            $log.debug('value', vals);
             vm.highlighting[key] = vals;
           }
         });
@@ -112,7 +110,6 @@
       else{
         vm.highlighting = {};
       }
-      console.log('finalll?', vm.highlighting);
       return vm.highlighting;
     }
   }

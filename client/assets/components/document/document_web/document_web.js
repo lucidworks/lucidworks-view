@@ -26,7 +26,6 @@
   function Controller(SignalsService, $log) {
     'ngInject';
     var vm = this;
-    // $log.debug(vm.highlight, 'picked uppp');
 
     activate();
 
