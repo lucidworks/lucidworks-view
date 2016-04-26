@@ -22,7 +22,7 @@
   }
 
 
-  function Controller($sce, $anchorScroll, Orwell, SignalsService) {
+  function Controller($sce, $log, $anchorScroll, Orwell, SignalsService) {
     'ngInject';
     var vm = this;
     vm.docs = [];
