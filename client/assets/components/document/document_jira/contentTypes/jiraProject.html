@@ -2,7 +2,7 @@
   <h3 class="subheader">
 
     <a ng-href="{{::vm.doc.id}}" ng-click="vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank">
-      <field value="::vm.doc.name_s" highlight="vm.highlight" maxlength="200" hkey="name_s"></field>
+      <field value="::vm.doc.name_s" highlight="vm.highlight[doc.id]" maxlength="200" hkey="name_s"></field>
     </a>
   </h3>
 

@@ -9,7 +9,7 @@
     <!-- show head field without a title. -->
     <h3 class="head-field" ng-if="::(!vm.doc.title && !!vm.doc.url)">
       <a ng-href="{{::vm.doc.url[0]}}" ng-click="vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank">
-        <field value="::vm.doc.url" highlight="::vm.highlight[doc.id]" maxlength="200" hkey="url"></field>
+        <field value="::vm.doc.url" highlight="vm.highlight[vm.doc.id]" maxlength="200" hkey="url"></field>
       </a>
     </h3>
     <h3 class="subheader" ng-if="::(!vm.doc.title && !vm.doc.url)">
@@ -26,14 +26,14 @@
              hkey="description"></field>
      <field ng-if="::(!vm.doc.description && vm.doc.og_description)" value="::vm.doc.og_description" highlight="::vm.highlight[doc.id]" maxlength="200"
             hkey="description"></field>
-      <field ng-if="::vm.doc.content" value="::vm.doc.content" highlight="::vm.highlight[doc.id]" maxlength="200"
-             hkey="content"></field>
+    <field ng-if="::vm.doc.content_txt" value="::vm.doc.content_txt" highlight="::vm.highlight[doc.id]" maxlength="200"
+             hkey="content_txt"></field>
       <!-- From searchhub -->
-     <field ng-if="vm.doc.content" value="vm.doc.content" highlight="vm.highlight[doc.id]" maxlength="200"
-            hkey="content"></field>
+     <!-- <field ng-if="vm.doc.content" value="vm.doc.content" highlight="vm.highlight[doc.id]" maxlength="200"
+            hkey="content"></field> -->
 
 
-     <field ng-if="vm.doc.body" value="vm.doc.body" highlight="vm.highlight[doc.id]" maxlength="200" hkey="body"></field>
+     <field ng-if="vm.doc.body" value="vm.doc.body" highlight="::vm.highlight[doc.id]" maxlength="200" hkey="body"></field>
 
              <!-- Other fields -->
 

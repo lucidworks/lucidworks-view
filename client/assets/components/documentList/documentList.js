@@ -95,9 +95,11 @@
             _.each(Object.keys(value), function (key) {
               $log.debug('value', value);
               var val = value[key];
+
               $log.debug('Has Highlight:');
               $log.debug(val);
               _.each(val, function(high){
+                $log.debug(val[key]);
                 vals[key] = $sce.trustAsHtml(high);
               });
             });
