@@ -10,12 +10,20 @@ var proxyMiddleware = require('http-proxy-middleware');
 gulp.task('browsersync', ['build'], function() {
   var fusionConfig    = require('../tmp/fusion_config');
   var openPath = getOpenPath();
+
+  var proxyConfig = {
+    target: fusionConfig.host+':'+fusionConfig.port
+  };
+
+  // Allow self signed proxys to pass through with setting.
+  if(fusionConfig.proxy_allow_self_signed_cert === true) {
+    proxyConfig['secure'] = false;
+  }
+
   // build middleware.
   var middleware = [
     log(),
-    proxyMiddleware('/api', {
-      target: fusionConfig.host+':'+fusionConfig.port
-    }),
+    proxyMiddleware('/api', proxyConfig),
     historyFallback({ index: '/' + openPath + '/index.html' })
   ];
 
@@ -31,7 +39,7 @@ gulp.task('browsersync', ['build'], function() {
       browserSyncConfig['https'] = {
         key: fusionConfig.https.key,
         cert: fusionConfig.https.cert
-      }
+      };
     }
   }
 
