@@ -26,6 +26,12 @@ gulp.task('browsersync', ['build'], function() {
 
   if(fusionConfig.use_https === true){
     browserSyncConfig['https'] = true;
+    if(fusionConfig.hasOwnProperty('https') && fusionConfig.https.hasOwnProperty('key') && fusionConfig.https.hasOwnProperty('cert')){
+      browserSyncConfig['https'] = {
+        key: fusionConfig.https.key,
+        cert: fusionConfig.https.cert
+      }
+    }
   }
 
   browserSync.init({
