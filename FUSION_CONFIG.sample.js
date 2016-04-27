@@ -26,7 +26,7 @@ appConfig = { //eslint-disable-line
     key: 'path/to/your/server.key',
     cert: 'path/to/your/server.crt'
   },
-  use_https: true,
+  use_https: false,
 
   /**
    * The name of the realm to connect with
