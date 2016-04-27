@@ -32,11 +32,7 @@
 
     function activate() {
       vm.postSignal = SignalsService.postClickSignal;
-      vm.doc = processDocument(vm.doc);
     }
 
-    function processDocument(doc) {
-      return doc;
-    }
   }
 })();

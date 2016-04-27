@@ -21,7 +21,6 @@
 
   }
 
-
   function Controller($sce, $log, $anchorScroll, Orwell, SignalsService) {
     'ngInject';
     var vm = this;
@@ -36,7 +35,6 @@
 
     function activate() {
       var resultsObservable = Orwell.getObservable('queryResults');
-
       resultsObservable.addObserver(function (data) {
         vm.docs = parseDocuments(data);
         vm.highlighting = parseHighlighting(data);
@@ -78,6 +76,7 @@
       if (data.hasOwnProperty('response')) {
         docs = data.response.docs;
       }
+      $log.debug(docs);
       return docs;
     }
 
@@ -87,22 +86,25 @@
      * @return {object}      The highlighting results.
      */
     function parseHighlighting(data) {
-      var highlighting = {};
       if (data.hasOwnProperty('highlighting')){
         _.each(data.highlighting, function(value, key){
           var vals = {};
           if (value) {
             _.each(Object.keys(value), function (key) {
+              $log.debug('highlight', value);
               var val = value[key];
               _.each(val, function(high){
                 vals[key] = $sce.trustAsHtml(high);
               });
             });
-            highlighting[key] = vals;
+            vm.highlighting[key] = vals;
           }
         });
       }
-      return highlighting;
+      else{
+        vm.highlighting = {};
+      }
+      return vm.highlighting;
     }
   }
 })();
