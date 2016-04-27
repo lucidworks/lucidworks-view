@@ -21,7 +21,8 @@ gulp.task('browsersync', ['build'], function() {
 
   var browserSyncConfig = {
     baseDir: './build/',
-    middleware: middleware
+    middleware: middleware,
+    ghostMode: false
   };
 
   if(fusionConfig.use_https === true){
