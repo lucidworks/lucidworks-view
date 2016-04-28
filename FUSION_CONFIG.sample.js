@@ -26,11 +26,11 @@ appConfig = { //eslint-disable-line
   proxy_allow_self_signed_cert: false, // Only turn on if you have a self signed proxy in front of fusion.
 
   // Serve View via https.
-  use_https: false,
-  https: {
-    // key: 'path/to/your/server.key',
-    // cert: 'path/to/your/server.crt'
-  },
+  // use_https: true,
+  // https: {
+  //   key: 'path/to/your/server.key',
+  //   cert: 'path/to/your/server.crt'
+  // },
 
   /**
    * The name of the realm to connect with
