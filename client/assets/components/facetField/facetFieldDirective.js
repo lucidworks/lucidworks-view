@@ -21,7 +21,7 @@
     };
   }
 
-  function Controller(ConfigService, QueryService, URLService, QueryDataService, Orwell, FoundationApi, $filter) {
+  function Controller(ConfigService, QueryService, URLService, QueryDataService, Orwell, FoundationApi, $filter, $log) {
     'ngInject';
     var vm = this;
     vm.facetCounts = [];
@@ -190,15 +190,18 @@
     }
 
     function addQueryFacet(query, key, title){
+      $log.debug('doing something for regular facets');
       if(!query.hasOwnProperty('fq')){
         query.fq = [];
       }
+      $log.debug(query);
       var keyObj = {
         key: key,
         values: [title],
         transformer: 'fq:field'
       };
       query.fq.push(keyObj);
+      $log.debug('final query', query)
       return query;
     }
 

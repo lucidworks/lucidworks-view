@@ -21,11 +21,11 @@
     };
   }
 
-  function Controller(ConfigService, QueryService, QueryDataService, Orwell, FoundationApi) {
+  function Controller(ConfigService, QueryService, QueryDataService, Orwell, FoundationApi, URLService, $log) {
     'ngInject';
     var vm = this;
-    console.log("in frd");
-    console.log(vm);
+    // console.log("in frd");
+    $log.debug(vm);
     vm.facetCounts = [];
     vm.toggleFacet = toggleFacet;
     var resultsObservable = Orwell.getObservable('queryResults');
@@ -59,15 +59,12 @@
       // Determine if facet exists.
       var facetRanges = data.facet_counts.facet_ranges;
       var monthNames = [
-        "Jan", "Feb", "Mar",
-        "Apr", "May", "June", "July",
-        "Aug", "Sept", "Oct",
-        "Nov", "Dec"
+        'Jan', 'Feb', 'Mar',
+        'Apr', 'May', 'June', 'July',
+        'Aug', 'Sept', 'Oct',
+        'Nov', 'Dec'
       ];
 
-      //console.log("facetRanges");
-      //console.log(vm.facetName);
-      //console.log(facetRanges);
       if (facetRanges.hasOwnProperty(vm.facetName)) {
         // Transform an array of values in format [‘aaaa’, 1234,’bbbb’,2345] into an array of objects.
         var facet_bucket = facetRanges[vm.facetName];
@@ -82,12 +79,12 @@
             if (i % 2 == 0) {
               var lower = "";//may be a date
               var upper = "";
-              console.log(facet_bucket);
-              if (facet_bucket.counts[i].indexOf('Z') != -1) {
+              // console.log(facet_bucket);
+              if (facet_bucket.counts[i].indexOf('Z') !== -1) {
                 //we have a date
                 var date = new Date(Date.parse(facet_bucket.counts[i]));
-                console.log(date.getDay());
-                lower = monthNames[date.getMonth()] + " " + date.getDate();
+                // console.log(date.getDay());
+                lower = monthNames[date.getMonth()] + ' ' + date.getDate();
                 upper = processGap(date, gap);
               } else {
                 lower = facet_bucket.counts[i];
@@ -98,7 +95,7 @@
               //TODO: fix this
               facet_line.name = facet_bucket[i];
               facet_line.hash = FoundationApi.generateUuid();
-              facet_line.fq = vm.facetName + ':"[' + lower + " TO " + upper + ']"';
+              facet_line.fq = vm.facetName + ':"[' + lower + ' TO ' + upper + ']"';
               facet_line.active = isFacetActive(vm.facetName, facet_line.name);
               range_facets.push(facet_line);
               //new_facet_bucket.push(facet_line);
@@ -109,7 +106,7 @@
         //put this on first
         if (facet_bucket.after > 0) {
           var after_bucket = {};
-          after_bucket.name = "After";
+          after_bucket.name = 'After';
           after_bucket.label = '(' + facet_bucket.after + ')';
           after_bucket.hash = FoundationApi.generateUuid();
           after_bucket.fq = vm.facetName + ':"[' + upper + " TO *]";
@@ -122,11 +119,11 @@
 
         if (facet_bucket.before > 0) {
           var before_bucket = {};
-          before_bucket.name = "Before";
+          before_bucket.name = 'Before';
           before_bucket.label = '(' + facet_bucket.before + ')';
           before_bucket.hash = FoundationApi.generateUuid();
           before_bucket.fq = vm.facetName + ':"[*  TO ' + upper + "]";
-          before_bucket.active = isFacetActive(vm.facetName, "Before");
+          before_bucket.active = isFacetActive(vm.facetName, 'Before');
           range_facets.push(before_bucket);
         } else {
 
@@ -207,7 +204,9 @@
      */
     function updateFacetQuery(query) {
       query.start = 0;
-      //TODO
+      //TODO;
+      // need to update the query
+      // URLService.setQuery(query);
       console.log("do something")
     }
 
@@ -227,8 +226,8 @@
         return false;
       }
       if (_.isEmpty(_.find(keyObj.values, function (data) {
-          return data === value;
-        }))) {
+        return data === value;
+      }))) {
         return false;
       }
       return true;
@@ -236,15 +235,24 @@
 
     //TODO: fix this
     function addRangeFacet(query, key, title) {
+      $log.debug('should do something', query);
+      $log.debug('key:::', key);
+      $log.debug('title:::', key)
+
       if (!query.hasOwnProperty('fq')) {
         query.fq = [];
+        $log.debug('properties');
       }
+
+      // ISSUE::values aren't being generated
+
       var keyObj = {
         key: key,
         values: [title],
         transformer: 'fq:field'
       };
       query.fq.push(keyObj);
+      $log.debug(query, 'new query???')
       return query;
     }
 
