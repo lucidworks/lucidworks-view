@@ -246,6 +246,7 @@
 
       // ISSUE::values aren't being generated
 
+// q=publishedOnDate:(%5B2016-02-28T00:00:00Z+TO+2016-02-28T00:00:00Z%2B1MONTH%5D)&json
       var keyObj = {
         key: key,
         values: [title],
