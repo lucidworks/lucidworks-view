@@ -9,7 +9,7 @@ then
   exit
 fi
 
-if ! [ -f "$1"];
+if [ -z "$1"];
 then
   echo "" >&2
   echo "Usage: view.sh <command>" >&2
