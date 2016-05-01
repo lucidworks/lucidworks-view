@@ -91,7 +91,8 @@
       }
       else if(isGrouped(data)){
         $log.debug(data, 'groupeeeddd');
-        vm.groupedResults = true;
+        vm.groupedResults = data.grouped
+        $log.debug('simple grouped', vm.groupedResults);
       }
       $log.debug('docsss', docs);
       return docs;

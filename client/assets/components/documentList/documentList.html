@@ -13,5 +13,13 @@
     <document-default ng-switch-default doc="vm.decorateDocument(doc)" bind="doc" highlight="vm.highlighting"></document-default>
 
   </div>
-  <div ng-if="vm.grouped">grouped results go here</div>
+  <div ng-if="vm.groupedResults" ng-repeat="(key, val) in vm.groupedResults">
+    <h1>{{key}}</h1>
+    <div ng-repeat="group in val.groups">
+      <h2 ng-if="group.groupValue">{{group.groupValue}}</h2>
+      <div ng-repeat="doc in group.doclist.docs">
+        <document-default  doc="vm.decorateDocument(doc)" bind="doc" highlight="vm.highlighting"></document-default>
+      </div>
+    </div>
+  </div>
 </div>

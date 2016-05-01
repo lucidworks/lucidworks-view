@@ -44,6 +44,7 @@
 
       // Get fields from config service.
       var fieldsToDisplay = ConfigService.getFieldsToDisplay();
+      $log.debug(fieldsToDisplay)
       // Parse any wildcards in the config.
       fieldsToDisplay = DocsHelper.parseWildcards(fieldsToDisplay, doc);
       // turn fields to display into a list of params.
