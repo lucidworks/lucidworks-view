@@ -5,7 +5,7 @@
     .controller('HomeController', HomeController);
 
 
-  function HomeController($filter, $timeout, ConfigService, QueryService, URLService, Orwell, AuthService, _) {
+  function HomeController($filter, $timeout, ConfigService, QueryService, URLService, Orwell, AuthService, _, $log) {
 
     'ngInject';
     var hc = this; //eslint-disable-line
@@ -30,6 +30,7 @@
       hc.status = 'loading';
       hc.lastQuery = '';
       hc.sorting = {};
+      hc.grouped = false;
 
       query = URLService.getQueryFromUrl();
       //Setting the query object... also populating the the view model
@@ -42,13 +43,21 @@
           hc.numFound = data.response.numFound;
           hc.numFoundFormatted = $filter('humanizeNumberFormat')(hc.numFound, 0);
           hc.lastQuery = data.responseHeader.params.q;
+          hasFacets();
           // Make sure you check for all the supported facets before for empty-ness
           // before toggling the `showFacets` flag
-          if(_.has(data, 'facet_counts')){
-            hc.showFacets = !_.isEmpty(data.facet_counts.facet_fields);
-          }
 
-        } else {
+
+        }
+        else if(_.has(data, 'grouped')){
+          $log.debug('grouped results', data);
+          hasFacets()
+          // hc.numFound = data.grouped[0].matches;
+          // $log.debug(numFound)
+          // // hc.numFoundFormatted = $filter('humanizeNumberFormat')(hc.numFound, 0);
+          // hc.lastQuery = data.responseHeader.params.q;
+        }
+        else {
           hc.numFound = 0;
         }
         updateStatus();
@@ -66,6 +75,12 @@
       $timeout(function(){
         URLService.setQuery(query);
       });
+    }
+
+    function hasFacets(data){
+      if(_.has(data, 'facet_counts')){
+        return hc.showFacets = !_.isEmpty(data.facet_counts.facet_fields);
+      }
     }
 
     function updateStatus(){
