@@ -50,11 +50,11 @@
           // before toggling the `showFacets` flag
         }
         else if(_.has(data, 'grouped')){
-          $log.debug('grouped results', data);
           hc.lastQuery = data.responseHeader.params.q;
           if(_.has(data, 'facet_counts')){
             return hc.showFacets = !_.isEmpty(data.facet_counts.facet_fields);
           }
+          // no num found for grouping since pagination doesn't work yet
           // hc.numFound = data.grouped[0].matches;
           // $log.debug(numFound)
           // // hc.numFoundFormatted = $filter('humanizeNumberFormat')(hc.numFound, 0);
