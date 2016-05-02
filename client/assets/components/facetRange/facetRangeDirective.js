@@ -21,10 +21,10 @@
     };
   }
 
-  function Controller(ConfigService, QueryService, QueryDataService, Orwell, FoundationApi, URLService, $log) {
+  function Controller(ConfigService, QueryService, QueryDataService, Orwell, FoundationApi, URLService, $log, $filter) {
     'ngInject';
     var vm = this;
-    vm.facetCounts = [];
+    vm.facetCounts = ['llll'];
     vm.toggleFacet = toggleFacet;
     var resultsObservable = Orwell.getObservable('queryResults');
     vm.facetCounts = [];
@@ -50,15 +50,24 @@
     }
 
     function parseFacets(data){
-      $log.debug(data);
       if(!_.has(data.facet_counts, 'facet_ranges')){
         return;
       }
       else{
-        $log.debug('have range facets');
-        $log.debug(vm.facetCounts)
-        var rangeFacets = data.facet_counts.facet_ranges
+        $log.debug(vm.facetCounts);
+        var rangeFacets = data.facet_counts.facet_ranges;
+        var facetList;
         $log.debug('range facets', rangeFacets);
+        _.each(rangeFacets, function(item){
+          facetList = arrayToObjectArray(item.counts);
+          _.each(facetList, function(facetObj){
+            facetObj['gap'] = item.gap;
+          })
+          $log.debug('newww', facetList);
+          // vm.facetCounts = newArray;
+        });
+        vm.facetCounts = facetList;
+        $log.debug(vm.facetCounts);
       }
     }
 
@@ -247,6 +256,23 @@
         return false;
       }
       return true;
+    }
+
+    function arrayToObjectArray(arr) {
+      return _.transform(arr, function (result, value, index) {
+        if (index % 2 === 1) {
+          result[result.length - 1] = {
+            title: result[result.length - 1],
+            amount: value,
+            date: Date.parse(result[result.length - 1]),
+            amountFormatted: $filter('humanizeNumberFormat')(value, 0),
+            hash: FoundationApi.generateUuid(),
+            active: isFacetActive(vm.facetName, result[result.length - 1])
+          };
+        } else {
+          result.push(value);
+        }
+      });
     }
 
     //TODO: fix this

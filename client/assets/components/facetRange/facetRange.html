@@ -1,6 +1,14 @@
 <section class="accordion-item" class="block-list" ng-class="{'is-active': vm.active}">
   <div class="accordion-title" ng-click="vm.active = !vm.active">{{vm.facetLabel ? vm.facetLabel : vm.facetName}}</div>
-  <div class="accordion-content">
+  <!-- {{vm.facetCounts}} -->
+  <div class="accordian-content">
+    hiiiii
+    <ul class="block-list">
+      <li ng-repeat = "facet in vm.facetCounts">
+        hiiii {{facet}}</li>
+    </ul>
+  </div>
+  <!-- <div class="accordion-content">
     <ul class="block-list">
       <li>
         <input type="text" ng-model="vm.facetFilter"
@@ -11,5 +19,5 @@
         <label for="{{::facet.hash}}">{{facet.name}} <span>{{facet.label}}</span></label>
       </li>
     </ul>
-  </div>
+  </div> -->
 </section>
