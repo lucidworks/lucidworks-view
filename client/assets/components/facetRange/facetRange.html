@@ -4,8 +4,8 @@
   <div class="accordian-content">
     hiiiii
     <ul class="block-list">
-      <li ng-repeat = "facet in vm.facetCounts">
-        hiiii {{facet}}</li>
+      <li ng-repeat = "facet in vm.facetCounts | orderBy: 'date':true">
+      {{facet.date | date:"MMM yyyy"}} {{facet.gap}}</li>
     </ul>
   </div>
   <!-- <div class="accordion-content">
