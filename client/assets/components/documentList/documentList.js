@@ -30,6 +30,8 @@
     vm.getDocType = getDocType;
     vm.groupedResults = false;
     vm.decorateDocument = decorateDocument;
+    vm.toggleGroupedResults = toggleGroupedResults;
+    vm.showGroupedResults = {};
 
     activate();
 
@@ -69,13 +71,11 @@
     }
 
     function isNotGrouped(data){
-      return _.has(data, 'response')
+      return _.has(data, 'response');
     }
-
     function isGrouped(data){
-      return _.has(data, 'grouped')
+      return _.has(data, 'grouped');
     }
-
     /**
      * Get the documents from
      * @param  {object} data The result data.
@@ -83,19 +83,32 @@
      */
     function parseDocuments(data){
       var docs = [];
-      $log.debug(data, 'dataaaa')
       if (isNotGrouped(data)) {
-
         docs = data.response.docs;
-        $log.debug(docs)
       }
       else if(isGrouped(data)){
-        $log.debug(data, 'groupeeeddd');
-        vm.groupedResults = data.grouped
-        $log.debug('simple grouped', vm.groupedResults);
+        vm.groupedResults = data.grouped;
+        parseGrouping(vm.groupedResults);
       }
-      $log.debug('docsss', docs);
       return docs;
+    }
+
+
+    function toggleGroupedResults(toggle){
+      vm.showGroupedResults[toggle] = !vm.showGroupedResults[toggle];
+    }
+
+    function parseGrouping(results){
+      _.each(results, function(item){
+        _.each(item.groups, function(group){
+          if(_.has(group, 'groupValue') && group.groupValue !== null){
+            vm.showGroupedResults[group.groupValue] = false;
+          }
+          else{
+            vm.showGroupedResults['noGroupedValue'] = true;
+          };
+        });
+      });
     }
 
     /**

@@ -43,15 +43,18 @@
           hc.numFound = data.response.numFound;
           hc.numFoundFormatted = $filter('humanizeNumberFormat')(hc.numFound, 0);
           hc.lastQuery = data.responseHeader.params.q;
-          hasFacets();
+          if(_.has(data, 'facet_counts')){
+            return hc.showFacets = !_.isEmpty(data.facet_counts.facet_fields);
+          }
           // Make sure you check for all the supported facets before for empty-ness
           // before toggling the `showFacets` flag
-
-
         }
         else if(_.has(data, 'grouped')){
           $log.debug('grouped results', data);
-          hasFacets()
+          hc.lastQuery = data.responseHeader.params.q;
+          if(_.has(data, 'facet_counts')){
+            return hc.showFacets = !_.isEmpty(data.facet_counts.facet_fields);
+          }
           // hc.numFound = data.grouped[0].matches;
           // $log.debug(numFound)
           // // hc.numFoundFormatted = $filter('humanizeNumberFormat')(hc.numFound, 0);
@@ -75,12 +78,6 @@
       $timeout(function(){
         URLService.setQuery(query);
       });
-    }
-
-    function hasFacets(data){
-      if(_.has(data, 'facet_counts')){
-        return hc.showFacets = !_.isEmpty(data.facet_counts.facet_fields);
-      }
     }
 
     function updateStatus(){
