@@ -28,7 +28,10 @@
     vm.docs = [];
     vm.highlighting = {};
     vm.getDocType = getDocType;
+    vm.groupedResults = false;
     vm.decorateDocument = decorateDocument;
+    vm.toggleGroupedResults = toggleGroupedResults;
+    vm.showGroupedResults = {};
 
     activate();
 
@@ -67,6 +70,12 @@
       return doc;
     }
 
+    function isNotGrouped(data){
+      return _.has(data, 'response');
+    }
+    function isGrouped(data){
+      return _.has(data, 'grouped');
+    }
     /**
      * Get the documents from
      * @param  {object} data The result data.
@@ -74,11 +83,32 @@
      */
     function parseDocuments(data){
       var docs = [];
-      if (data.hasOwnProperty('response')) {
+      if (isNotGrouped(data)) {
         docs = data.response.docs;
       }
-      $log.debug(docs);
+      else if(isGrouped(data)){
+        vm.groupedResults = data.grouped;
+        parseGrouping(vm.groupedResults);
+      }
       return docs;
+    }
+
+
+    function toggleGroupedResults(toggle){
+      vm.showGroupedResults[toggle] = !vm.showGroupedResults[toggle];
+    }
+
+    function parseGrouping(results){
+      _.each(results, function(item){
+        _.each(item.groups, function(group){
+          if(_.has(group, 'groupValue') && group.groupValue !== null){
+            vm.showGroupedResults[group.groupValue] = false;
+          }
+          else{
+            vm.showGroupedResults['noGroupedValue'] = true;
+          };
+        });
+      });
     }
 
     /**
