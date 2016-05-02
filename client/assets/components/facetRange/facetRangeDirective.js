@@ -54,7 +54,7 @@
         return;
       }
       else{
-        $log.debug(vm.facetCounts);
+        $log.debug(vm.facetCounts, 'has range facets');
         var rangeFacets = data.facet_counts.facet_ranges;
         var facetList;
         $log.debug('range facets', rangeFacets);
@@ -62,13 +62,23 @@
           facetList = arrayToObjectArray(item.counts);
           _.each(facetList, function(facetObj){
             facetObj['gap'] = item.gap;
-          })
-          $log.debug('newww', facetList);
-          // vm.facetCounts = newArray;
+          });
         });
         vm.facetCounts = facetList;
-        $log.debug(vm.facetCounts);
+        setActiveState();
+        $log.debug(vm.facetCounts, 'final range facets');
+
       }
+    }
+
+    function setActiveState(){
+      var active = true;
+      // If we have autoOpen set active to this state.
+      if (angular.isDefined(vm.facetAutoOpen) && vm.facetAutoOpen === 'false') {
+        active = false;
+      }
+      vm.active = active;
+      $log.debug('normal', vm.facetCounts)
     }
 
     /**
@@ -76,13 +86,11 @@
      * @param  {object} data The data from the observable.
      */
     function parseRangeFacets(data) {
-      $log.debug('data', data);
-      $log.debug('nameee', vm.facetName)
       // Exit early if there are no facets in the response.
       // if (!data.hasOwnProperty('facet_counts')) return;
       // Determine if facet exists.
       var facetRanges = data.facet_counts.facet_ranges;
-      $log.debug(facetRanges)
+      $log.debug(facetRanges);
       var monthNames = [
         'Jan', 'Feb', 'Mar',
         'Apr', 'May', 'June', 'July',
@@ -277,10 +285,6 @@
 
     //TODO: fix this
     function addRangeFacet(query, key, title) {
-      $log.debug('should do something', query);
-      $log.debug('key:::', key);
-      $log.debug('title:::', key)
-
       if (!query.hasOwnProperty('fq')) {
         query.fq = [];
         $log.debug('properties');
