@@ -11,6 +11,8 @@
 
   function Config(QueryBuilderProvider){
     'ngInject';
+
+    // I don't know if this is called, may be able to delete it
     // Register transformers because facet fields can have funky URL syntax.
     QueryBuilderProvider.registerTransformer('keyValue', 'fq:field', fqFieldkeyValueTransformer);
     QueryBuilderProvider.registerTransformer('encode', 'fq:field', fqFieldEncode);

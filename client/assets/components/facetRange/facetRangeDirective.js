@@ -14,9 +14,9 @@
       controller: Controller,
       controllerAs: 'vm',
       bindToController: {
-        facetName: '@facetName',
-        facetLabel: '@facetLabel',
-        facetAutoOpen: '@facetAutoOpen'
+        facetName: '@',
+        facetLabel: '@',
+        facetAutoOpen: '@'
       }
     };
   }
@@ -55,7 +55,7 @@
      */
     function parseRangeFacets(data) {
       // Exit early if there are no facets in the response.
-      if (!data.hasOwnProperty('facet_counts')) return;
+      // if (!data.hasOwnProperty('facet_counts')) return;
       // Determine if facet exists.
       var facetRanges = data.facet_counts.facet_ranges;
       var monthNames = [
@@ -64,8 +64,9 @@
         'Aug', 'Sept', 'Oct',
         'Nov', 'Dec'
       ];
-
+      $log.debug('ranggee', facetRanges)
       if (facetRanges.hasOwnProperty(vm.facetName)) {
+        $log.debug(vm.facetName, 'nammeeee')
         // Transform an array of values in format [‘aaaa’, 1234,’bbbb’,2345] into an array of objects.
         var facet_bucket = facetRanges[vm.facetName];
         var start = facet_bucket.start;
@@ -165,8 +166,11 @@
 
       // CASE: fq exists.
       if (!query.hasOwnProperty('fq')) {
+
         query = addRangeFacet(query, key, facet.title);
+        $log.debug('range facet', query)
       } else {
+        $log.debug('llll');
         // Remove the key object from the query.
         // We will re-add later if we need to.
         var keyArr = _.remove(query.fq, {key: key, transformer: 'fq:field'});
