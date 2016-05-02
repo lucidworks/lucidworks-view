@@ -24,11 +24,10 @@
   function Controller(ConfigService, QueryService, QueryDataService, Orwell, FoundationApi, URLService, $log) {
     'ngInject';
     var vm = this;
-    // console.log("in frd");
-    $log.debug(vm);
     vm.facetCounts = [];
     vm.toggleFacet = toggleFacet;
     var resultsObservable = Orwell.getObservable('queryResults');
+    vm.facetCounts = [];
 
     activate();
 
@@ -42,11 +41,25 @@
       // Add observer to update data when we get results back.
       resultsObservable.addObserver(parseRangeFacets);
       // initialize the facets.
-      parseRangeFacets(resultsObservable.getContent());
+      // parseRangeFacets(resultsObservable.getContent());
+      parseFacets(resultsObservable.getContent());
     }
 
     function processGap(date, gap) {
       return gap;//TODO: calculate out the actual value
+    }
+
+    function parseFacets(data){
+      $log.debug(data);
+      if(!_.has(data.facet_counts, 'facet_ranges')){
+        return;
+      }
+      else{
+        $log.debug('have range facets');
+        $log.debug(vm.facetCounts)
+        var rangeFacets = data.facet_counts.facet_ranges
+        $log.debug('range facets', rangeFacets);
+      }
     }
 
     /**
@@ -54,37 +67,36 @@
      * @param  {object} data The data from the observable.
      */
     function parseRangeFacets(data) {
+      $log.debug('data', data);
+      $log.debug('nameee', vm.facetName)
       // Exit early if there are no facets in the response.
       // if (!data.hasOwnProperty('facet_counts')) return;
       // Determine if facet exists.
       var facetRanges = data.facet_counts.facet_ranges;
+      $log.debug(facetRanges)
       var monthNames = [
         'Jan', 'Feb', 'Mar',
         'Apr', 'May', 'June', 'July',
         'Aug', 'Sept', 'Oct',
         'Nov', 'Dec'
       ];
-      $log.debug('ranggee', facetRanges)
-      if (facetRanges.hasOwnProperty(vm.facetName)) {
-        $log.debug(vm.facetName, 'nammeeee')
+      if (_.has(data.facet_counts, 'facet_ranges')) {
         // Transform an array of values in format [‘aaaa’, 1234,’bbbb’,2345] into an array of objects.
-        var facet_bucket = facetRanges[vm.facetName];
+        var facet_bucket = data.facet_counts.facet_ranges[vm.facetName];
         var start = facet_bucket.start;
         var end = facet_bucket.end;
         var gap = facet_bucket.gap;
         var range_facets = [];
         if (facet_bucket.counts.length > 0) {
-          var new_facet_bucket = [];
+          // var new_facet_bucket = [];
           for (var i = 0; i < facet_bucket.counts.length; i++) {
             var facet_line = {};
             if (i % 2 == 0) {
-              var lower = "";//may be a date
-              var upper = "";
-              // console.log(facet_bucket);
+              var lower = '';//may be a date
+              var upper = '';
               if (facet_bucket.counts[i].indexOf('Z') !== -1) {
                 //we have a date
                 var date = new Date(Date.parse(facet_bucket.counts[i]));
-                // console.log(date.getDay());
                 lower = monthNames[date.getMonth()] + ' ' + date.getDate();
                 upper = processGap(date, gap);
               } else {
@@ -130,9 +142,11 @@
 
         }
         vm.facetCounts = range_facets;
+        $log.debug('final facets', vm.facetCounts)
 
 
       }
+
 
       // Set inital active state
       var active = true;
@@ -168,9 +182,7 @@
       if (!query.hasOwnProperty('fq')) {
 
         query = addRangeFacet(query, key, facet.title);
-        $log.debug('range facet', query)
       } else {
-        $log.debug('llll');
         // Remove the key object from the query.
         // We will re-add later if we need to.
         var keyArr = _.remove(query.fq, {key: key, transformer: 'fq:field'});

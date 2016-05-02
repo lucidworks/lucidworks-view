@@ -58,7 +58,6 @@
             });
             // only change facets list on finish.
             vm.facets = _.concat(vm.facets, facets);
-            $log.debug(vm.facets);
           }
         }
       });

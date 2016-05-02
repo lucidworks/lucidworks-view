@@ -77,7 +77,6 @@
       if (data.hasOwnProperty('response')) {
         docs = data.response.docs;
       }
-      $log.debug(docs);
       return docs;
     }
 

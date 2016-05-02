@@ -86,6 +86,7 @@
         active = false;
       }
       vm.active = active;
+      $log.debug('normal', vm.facetCounts)
     }
 
     /**
@@ -190,11 +191,9 @@
     }
 
     function addQueryFacet(query, key, title){
-      $log.debug('doing something for regular facets');
       if(!query.hasOwnProperty('fq')){
         query.fq = [];
       }
-      $log.debug(query);
       var keyObj = {
         key: key,
         values: [title],
