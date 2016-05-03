@@ -34,7 +34,6 @@
 
     function activate() {
       vm.postSignal = SignalsService.postClickSignal;
-      $log.debug('doccc:::', vm.doc);
     }
   }
 })();
