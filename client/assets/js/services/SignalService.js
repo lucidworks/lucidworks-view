@@ -32,6 +32,7 @@
           timestamp: date.toISOString(),
           pipeline: ConfigService.config.signals_pipeline,
           params: {
+            docId: docId,
             query: QueryService.getQueryObject().q
           }
         };
