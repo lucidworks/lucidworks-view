@@ -23,7 +23,7 @@
 
   }
 
-  function Controller(SignalsService, $log) {
+  function Controller(SignalsService) {
     'ngInject';
     var vm = this;
 

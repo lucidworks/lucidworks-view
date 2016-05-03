@@ -21,14 +21,13 @@
 
   }
 
-  function Controller($sce, $log, $anchorScroll, Orwell, SignalsService) {
+  function Controller($sce, $log, $anchorScroll, Orwell) {
     'ngInject';
     var vm = this;
     vm.docs = [];
     vm.highlighting = {};
     vm.getDocType = getDocType;
     vm.groupedResults = false;
-    vm.decorateDocument = decorateDocument;
     vm.toggleGroupedResults = toggleGroupedResults;
     vm.showGroupedResults = {};
 
