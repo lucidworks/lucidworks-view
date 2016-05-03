@@ -39,7 +39,7 @@
     function activate() {
 
       // Add observer to update data when we get results back.
-      resultsObservable.addObserver(parseRangeFacets);
+      resultsObservable.addObserver(parseFacets);
       // initialize the facets.
       // parseRangeFacets(resultsObservable.getContent());
       parseFacets(resultsObservable.getContent());
@@ -50,10 +50,12 @@
     }
 
     function parseFacets(data){
+      $log.debug('datttaaa!!!!*****', data)
       if(!_.has(data.facet_counts, 'facet_ranges')){
         return;
       }
-      else{
+
+      if(_.has(data.facet_counts, 'facet_ranges')){
         $log.debug(vm.facetCounts, 'has range facets');
         var rangeFacets = data.facet_counts.facet_ranges;
         var facetList;
@@ -62,12 +64,10 @@
           facetList = arrayToObjectArray(item.counts);
           _.each(facetList, function(facetObj){
             facetObj['gap'] = item.gap;
-          });
+          })
         });
         vm.facetCounts = facetList;
         setActiveState();
-        $log.debug(vm.facetCounts, 'final range facets');
-
       }
     }
 
@@ -194,6 +194,7 @@
     function toggleFacet(facet) {
       var key = vm.facetName;
       var query = QueryService.getQueryObject();
+      $log.debug('querrryyyyyy122323', query)
 
       // CASE: fq exists.
       if (!query.hasOwnProperty('fq')) {
@@ -202,7 +203,7 @@
       } else {
         // Remove the key object from the query.
         // We will re-add later if we need to.
-        var keyArr = _.remove(query.fq, {key: key, transformer: 'fq:field'});
+        var keyArr = _.remove(query.fq, {key: key, transformer: 'fq:range'});
 
         // CASE: facet key exists in query.
         if (keyArr.length > 0) {
@@ -239,7 +240,8 @@
       query.start = 0;
       //TODO;
       // need to update the query
-      // URLService.setQuery(query);
+      $log.debug('querrryyyy', query)
+      URLService.setQuery(query);
       console.log("do something")
     }
 
@@ -296,12 +298,11 @@
       var keyObj = {
         key: key,
         values: [title],
-        transformer: 'fq:field'
+        transformer: 'fq:facetRange'
       };
       query.fq.push(keyObj);
       $log.debug(query, 'new query???')
       return query;
     }
-
   }
 })();
