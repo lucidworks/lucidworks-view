@@ -34,16 +34,16 @@
       _.defaults(defaults, params);
 
       var date = new Date(),
-        data = [{
+        data = {
           type: ConfigService.config.signal_type,
           timestamp: date.toISOString(),
           pipeline: ConfigService.config.signals_pipeline
-        }];
+        };
 
       // Add in params including defaults.
       data['params'] = defaults;
 
-      return postSignalData(data);
+      return postSignalData([data]);
     }
 
     //Use if you want to post a raw signal where you have control of every signal entry.  See postClickSignal for an example data structure
