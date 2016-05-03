@@ -1,6 +1,6 @@
 <div id="documentList">
   <div ng-repeat="doc in vm.docs" ng-switch="::vm.getDocType(doc)">
-    <!-- <document-example ng-switch-when="string_matching_data_connector" doc="vm.decorateDocument(doc)" bind="doc" highlight="vm.highlighting"></document-example> -->
+    <!-- <document-example ng-switch-when="string_matching_data_connector" doc="vm.decorateDocument(doc)" highlight="vm.highlighting"></document-example> -->
     <document-file ng-switch-when="lucid.anda/file" doc="vm.decorateDocument(doc)" highlight="vm.highlighting"></document-file>
     <document-jira ng-switch-when="lucid.anda/jira" doc="vm.decorateDocument(doc)" highlight="vm.highlighting"></document-jira>
     <document-slack ng-switch-when="lucid.slack/slack" doc="vm.decorateDocument(doc)" highlight="vm.highlighting"></document-slack>
@@ -16,6 +16,7 @@
       <h3 ng-if="group.groupValue" ng-click="vm.toggleGroupedResults(group.groupValue)">{{group.groupValue}}</h3>
       <!-- TODO refactor this -->
       <div ng-repeat="doc in group.doclist.docs" ng-switch="::vm.getDocType(doc)" ng-show="vm.showGroupedResults[group.groupValue] || vm.showGroupedResults['noGroupedValue']">
+        <!-- <document-example ng-switch-when="string_matching_data_connector" doc="vm.decorateDocument(doc)" highlight="vm.highlighting"></document-example> -->
         <document-file ng-switch-when="lucid.anda/file" doc="vm.decorateDocument(doc)"  highlight="vm.highlighting"></document-file>
         <document-jira ng-switch-when="lucid.anda/jira" doc="vm.decorateDocument(doc)" highlight="vm.highlighting"></document-jira>
         <document-slack ng-switch-when="lucid.slack/slack" doc="vm.decorateDocument(doc)" highlight="vm.highlighting"></document-slack>
