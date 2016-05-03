@@ -73,7 +73,10 @@
       if (doc.hasOwnProperty(documentIdField)) {
         return doc[documentIdField];
       }
-      return null;
+      else {
+        return null;
+      }
+
     }
   }
 })();
