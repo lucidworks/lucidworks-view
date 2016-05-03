@@ -64,12 +64,6 @@
      * @param  {object} doc Document object
      * @return {object}     Document object
      */
-    function decorateDocument(doc){
-      $log.debug('docccp', doc);
-      // doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(doc);
-      // $log.debug('daccc', doc);
-      return doc;
-    }
 
     function isNotGrouped(data){
       return _.has(data, 'response');
