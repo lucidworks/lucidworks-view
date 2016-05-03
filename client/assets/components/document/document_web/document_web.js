@@ -16,7 +16,6 @@
       bindToController: {
         doc: '=',
         highlight: '='
-        // bind: '='
       }
     };
 
