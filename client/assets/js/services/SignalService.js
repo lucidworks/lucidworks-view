@@ -28,13 +28,13 @@
     function postClickSignal(docId, options) {
       var date = new Date(),
         data = {
-          type: ConfigService.config.signal_type,
-          timestamp: date.toISOString(),
-          pipeline: ConfigService.config.signals_pipeline,
           params: {
             docId: docId,
             query: QueryService.getQueryObject().q
-          }
+          },
+          pipeline: ConfigService.config.signals_pipeline,
+          timestamp: date.toISOString(),
+          type: ConfigService.config.signal_type
         };
 
       _.defaultsDeep(data, options);
