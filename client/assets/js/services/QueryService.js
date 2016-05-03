@@ -31,7 +31,7 @@
 
       queryObservable.addObserver(function (query) {
         QueryDataService.getQueryResults(query);
-        
+
       });
 
       return {
@@ -53,7 +53,7 @@
       }
 
       function setQuery(query) {
-        $log.debug('query in service', query)
+        $log.debug('query in service', query);
         if (ConfigService.config.query_debug) {
           $log.debug('query', query);
         }

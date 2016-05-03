@@ -194,13 +194,16 @@
     function toggleFacet(facet) {
       var key = vm.facetName;
       var query = QueryService.getQueryObject();
-      $log.debug('querrryyyyyy122323', query)
+      $log.debug('querrryyyyyy122323', query);
+      $log.debug('facettt', facet);
 
       // CASE: fq exists.
       if (!query.hasOwnProperty('fq')) {
+        $log.debug('already in the query')
 
         query = addRangeFacet(query, key, facet.title);
       } else {
+        $log.debug('new querrryyyy')
         // Remove the key object from the query.
         // We will re-add later if we need to.
         var keyArr = _.remove(query.fq, {key: key, transformer: 'fq:range'});
@@ -238,11 +241,11 @@
      */
     function updateFacetQuery(query) {
       query.start = 0;
+      $log.debug('update facet query', query)
       //TODO;
       // need to update the query
-      $log.debug('querrryyyy', query)
       URLService.setQuery(query);
-      console.log("do something")
+
     }
 
     /**
@@ -253,19 +256,24 @@
      */
     function isFacetActive(key, value) {
       var query = QueryService.getQueryObject();
+      $log.debug('activeeeee', query)
       if (!query.hasOwnProperty('fq')) {
+        $log.debug('am i here')
         return false;
       }
-      var keyObj = _.find(query.fq, {key: key, transformer: 'fq:field'});
-      if (_.isEmpty(keyObj)) {
-        return false;
-      }
-      if (_.isEmpty(_.find(keyObj.values, function (data) {
-        return data === value;
-      }))) {
-        return false;
-      }
-      return true;
+  
+
+      // var keyObj = _.find(query.fq, {key: key, transformer: 'fq:range'});
+      // if (_.isEmpty(keyObj)) {
+      //   return false;
+      // }
+      // if (_.isEmpty(_.find(keyObj.values, function (data) {
+      //   return data === value;
+      // }))) {
+      //   return false;
+      // }
+      // $log.debug('lllooolllzzz', query)
+      // return true;
     }
 
     function arrayToObjectArray(arr) {
@@ -287,22 +295,23 @@
 
     //TODO: fix this
     function addRangeFacet(query, key, title) {
-      if (!query.hasOwnProperty('fq')) {
-        query.fq = [];
-        $log.debug('properties');
-      }
-
-      // ISSUE::values aren't being generated
-
-// q=publishedOnDate:(%5B2016-02-28T00:00:00Z+TO+2016-02-28T00:00:00Z%2B1MONTH%5D)&json
-      var keyObj = {
-        key: key,
-        values: [title],
-        transformer: 'fq:facetRange'
-      };
-      query.fq.push(keyObj);
-      $log.debug(query, 'new query???')
-      return query;
+      $log.debug('lllll')
+//       if (!query.hasOwnProperty('fq')) {
+//         query.fq = [];
+//         $log.debug('properties');
+//       }
+//
+//       // ISSUE::values aren't being generated
+//
+// // q=publishedOnDate:(%5B2016-02-28T00:00:00Z+TO+2016-02-28T00:00:00Z%2B1MONTH%5D)&json
+//       var keyObj = {
+//         key: key,
+//         values: [title],
+//         transformer: 'fq:facetRange'
+//       };
+//       query.fq.push(keyObj);
+//       $log.debug(query, 'new query???')
+//       return query;
     }
   }
 })();
