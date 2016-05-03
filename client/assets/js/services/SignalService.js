@@ -7,7 +7,7 @@
     ])
     .factory('SignalsService', SignalsService);
 
-  function SignalsService(ApiBase, ConfigService, $http, $q, $log, QueryService) {
+  function SignalsService(ApiBase, ConfigService, $http, $q, QueryService) {
     'ngInject';
     var service = {
       postClickSignal: postClickSignal,
