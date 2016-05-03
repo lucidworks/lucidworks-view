@@ -16,30 +16,33 @@
     };
 
     return service;
-    //Helper method for document click events
-    function postClickSignal(docId, query, filterQueries, weight, type) {
-      if (!query){
-        query = QueryService.getQueryObject().q;
-      }
-      if (!type){
-        type = ConfigService.config.signal_type;
-      }
+
+    /**
+     * Helper method to document click events.
+     * @param  {string} docId   The document id
+     * @param  {object} params  An object containing parameter overrides and options.
+     *   query         -  an override of the query to return to the signal.
+     *   type          -  the signal type to use for the signal
+     *
+     * @return {promise}
+     */
+    function postClickSignal(docId, params) {
+      var defaults = {
+        query: QueryService.getQueryObject().q,
+        type: ConfigService.config.signal_type
+      };
+      _.defaults(defaults, params);
+
       var date = new Date(),
         data = [{
-          params: {
-            query: query,
-            docId: docId
-          },
           type: ConfigService.config.signal_type,
           timestamp: date.toISOString(),
           pipeline: ConfigService.config.signals_pipeline
         }];
-      if (filterQueries){
-        data['params']['filterQueries'] = filterQueries;
-      }
-      if (weight){
-        data['params']['weight'] = weight;
-      }
+
+      // Add in params including defaults.
+      data['params'] = defaults;
+
       return postSignalData(data);
     }
 
