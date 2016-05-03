@@ -19,23 +19,22 @@
 
     /**
      * Helper method to document click events.
-     * @param  {string} docId   The document id
-     * @param  {object} params  An object containing parameter overrides and options.
-     *   query         -  an override of the query to return to the signal.
-     *   type          -  the signal type to use for the signal
+     * @param  {string} docId      The document id
+     * @param  {object} params     An object containing parameter overrides and options.
+     *   query -  an override of the query to return to the signal.
+     * @param  {string} signalType The type of signal.
      *
      * @return {promise}
      */
-    function postClickSignal(docId, params) {
+    function postClickSignal(docId, params, signalType) {
       var defaults = {
-        query: QueryService.getQueryObject().q,
-        type: ConfigService.config.signal_type
+        query: QueryService.getQueryObject().q
       };
       _.defaults(defaults, params);
 
       var date = new Date(),
         data = {
-          type: ConfigService.config.signal_type,
+          type: signalType ? signalType : ConfigService.config.signal_type,
           timestamp: date.toISOString(),
           pipeline: ConfigService.config.signals_pipeline
         };
