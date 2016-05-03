@@ -21,7 +21,7 @@
     };
   }
 
-  function Controller(ConfigService, QueryService, URLService, QueryDataService, Orwell, FoundationApi, $filter) {
+  function Controller(ConfigService, QueryService, URLService, QueryDataService, Orwell, FoundationApi, $filter, $log) {
     'ngInject';
     var vm = this;
     vm.facetCounts = [];
@@ -86,6 +86,7 @@
         active = false;
       }
       vm.active = active;
+      $log.debug('normal', vm.facetCounts)
     }
 
     /**
@@ -176,6 +177,7 @@
      */
     function isFacetActive(key, value){
       var query = QueryService.getQueryObject();
+      $log.debug('querrry normal', query)
       if(!query.hasOwnProperty('fq')){
         return false;
       }
@@ -199,6 +201,7 @@
         transformer: 'fq:field'
       };
       query.fq.push(keyObj);
+      $log.debug('final query', query)
       return query;
     }
 

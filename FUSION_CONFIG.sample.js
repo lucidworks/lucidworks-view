@@ -17,9 +17,20 @@ appConfig = { //eslint-disable-line
    * localhost is used here for same computer use only.
    * You will need to put a hostname or ip address here if you want to go to
    * view this app from another machine.
+   *
+   * To use https set the https server key and certificate. And set use_https to true.
    */
   host: 'http://localhost',
   port:'8764',
+
+  proxy_allow_self_signed_cert: false, // Only turn on if you have a self signed proxy in front of fusion.
+
+  // Serve View via https.
+  // use_https: true,
+  // https: {
+  //   key: 'path/to/your/server.key',
+  //   cert: 'path/to/your/server.crt'
+  // },
 
   /**
    * The name of the realm to connect with
@@ -135,7 +146,7 @@ appConfig = { //eslint-disable-line
   /**
    * Landing pages
    *
-   * Fusion allows mapping of specific queries links (or other data) with it's
+   * Fusion allows mapping of specific queries links (or other data) with its
    * landing pages QueryPipeline stage.
    *
    * Default: Do not redirect but show a list of urls that a user can go to.
@@ -179,9 +190,9 @@ appConfig = { //eslint-disable-line
    */
   typeahead_use_query_profile: true,
   typeahead_query_pipeline_id: 'default',
-  typeahaed_query_profile_id: 'default',
+  typeahead_query_profile_id: 'default',
   typeahead_fields: ['id'],
-  // The request handler defines how typeahead gets it's results.
+  // The request handler defines how typeahead gets its results.
   // It is recommended to use suggest as it is more performant.
   // It will require some additional configuration.
   // @see https://lucidworks.com/blog/2016/02/04/fusion-plus-solr-suggesters-search-less-typing/

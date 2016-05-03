@@ -1,0 +1,27 @@
+<section class="accordion-item" class="block-list" ng-class="{'is-active': vm.active}">
+  <div class="accordion-title" ng-click="vm.active = !vm.active">{{vm.facetLabel ? vm.facetLabel : vm.facetName}}</div>
+  <!-- {{vm.facetCounts}} -->
+  <div class="accordion-content">
+    <ul class="block-list">
+      <li>
+        <input type="text" placeholder="{{vm.facetLabel ? vm.facetLabel : vm.facetName}} filter"  ng-model="vm.facetFilter">
+      </li>
+      <li ng-repeat = "facet in vm.facetCounts | orderBy: 'date':true |filter: vm.facetFilter" ng-class="{'facet-active':facet.active}">
+        <input type="checkbox" id="{{::facet.hash}}" ng-model="facet.active" ng-click="vm.toggleFacet(facet)">
+        <label for="{{::facet.hash}}">  {{facet.date | date:"MMM yyyy"}} {{facet.gap}} <span>({{facet.amountFormatted}})</span></label>
+      </li>
+    </ul>
+  </div>
+  <!-- <div class="accordion-content">
+    <ul class="block-list">
+      <li>
+        <input type="text" ng-model="vm.facetFilter"
+               placeholder="{{vm.facetLabel ? vm.facetLabel : vm.facetName}} filter">
+      </li>
+      <li ng-repeat="facet in vm.facetCounts | filter: vm.facetFilter">
+        <input type="checkbox" id="{{::facet.hash}}" ng-model="facet.active" ng-click="vm.toggleFacet(facet)">
+        <label for="{{::facet.hash}}">{{facet.name}} <span>{{facet.label}}</span></label>
+      </li>
+    </ul>
+  </div> -->
+</section>

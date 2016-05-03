@@ -20,7 +20,7 @@
 
   }
 
-  function Controller(ConfigService, Orwell) {
+  function Controller(ConfigService, Orwell, $log) {
     'ngInject';
     var vm = this;
     var resultsObservable = Orwell.getObservable('queryResults');
@@ -58,6 +58,7 @@
             });
             // only change facets list on finish.
             vm.facets = _.concat(vm.facets, facets);
+            $log.debug('final facets', vm.facets);
           }
         }
       });
