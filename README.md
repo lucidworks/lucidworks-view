@@ -11,7 +11,7 @@ If you downloaded a [platform-specific package](https://github.com/lucidworks/lu
 
 If you start by cloning the repository, you'll need the following software:
 
-- [Node.js](http://nodejs.org): Use the installer for your OS.
+- [Node.js](http://nodejs.org): Use the installer for your OS. Use version 5.xxx.
 - [Git](http://git-scm.com/downloads) (if you're cloning the repo): Use the installer for your OS.
 - Windows users can also try [Git for Windows](http://git-for-windows.github.io/).
 - [Gulp](http://gulpjs.com/) and [Bower](http://bower.io): Run `npm install -g gulp bower`

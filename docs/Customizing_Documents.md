@@ -51,6 +51,7 @@ You can add new document types by
 1. Add the value of `module` to the list in ```client/assets/components/components.js```.
 
 1. Add the value of `directive` to ```client/assets/components/documentList/documentList.html```.
+  * You will need to add the value in 2 places in this file. Once in the first list, and once in the grouped results section, if you want the doc type to show up when you have regular and grouped results.
 
 ### Modifying the getDocType function
 
