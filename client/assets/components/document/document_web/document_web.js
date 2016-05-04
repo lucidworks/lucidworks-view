@@ -29,7 +29,6 @@
 
     activate();
 
-    /////////
 
     function activate() {
       vm.postSignal = SignalsService.postClickSignal;
