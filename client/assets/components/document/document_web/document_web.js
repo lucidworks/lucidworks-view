@@ -14,7 +14,7 @@
       controller: Controller,
       controllerAs: 'vm',
       bindToController: {
-        doc: '=bind',
+        doc: '=',
         highlight: '='
       }
     };
@@ -23,17 +23,15 @@
 
   }
 
-  function Controller(SignalsService, $log) {
+  function Controller(SignalsService) {
     'ngInject';
     var vm = this;
 
     activate();
 
-    /////////
 
     function activate() {
-      $log.debug(vm.doc, vm.highlight);
-      vm.postSignal = SignalsService.postSignal;
+      vm.postSignal = SignalsService.postClickSignal;
     }
   }
 })();

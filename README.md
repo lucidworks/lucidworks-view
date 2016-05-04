@@ -11,7 +11,7 @@ If you downloaded a [platform-specific package](https://github.com/lucidworks/lu
 
 If you start by cloning the repository, you'll need the following software:
 
-- [Node.js](http://nodejs.org): Use the installer for your OS.
+- [Node.js](http://nodejs.org): Use the installer for your OS. Use version 5.xxx.
 - [Git](http://git-scm.com/downloads) (if you're cloning the repo): Use the installer for your OS.
 - Windows users can also try [Git for Windows](http://git-for-windows.github.io/).
 - [Gulp](http://gulpjs.com/) and [Bower](http://bower.io): Run `npm install -g gulp bower`
@@ -105,3 +105,7 @@ Search results from different document types can use different templates.  The `
 ## What's Next
 
 For more details about configuring and customizing View, see the [docs](docs/) directory.
+
+## Contributions
+
+View is open source! Pull requests welcome. This is a great way to give back to the community and help others build a better search app.
