@@ -1,6 +1,6 @@
 {
   "name": "lucidworks-view",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Lucidworks View: Create custom user experiences for your Fusion-powered apps.",
   "repository": {
     "type": "git",
@@ -15,7 +15,9 @@
   "author": "Joshua Ellinger <joshua.ellinger@lucidworks.com>",
   "contributors": [
     "Joshua Ellinger <joshua.ellinger@lucidworks.com>",
-    "Arjit Dasgupta <arjit.dasgupta@lucidworks.com>"
+    "Arjit Dasgupta <arjit.dasgupta@lucidworks.com>",
+    "Ariel Isaacs <ariel.isaacs@lucidworks.com>",
+    "Josh Lipps <josh.lipps@lucidworks.com>"
   ],
   "license": "Apache-2.0",
   "bugs": {

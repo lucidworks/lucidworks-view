@@ -9,6 +9,16 @@ then
   exit
 fi
 
+if [ -z "$1"];
+then
+  echo "" >&2
+  echo "Usage: view.sh <command>" >&2
+  echo "" >&2
+  echo "where <command> is one of:" >&2
+  echo "    start, build" >&2
+  exit
+fi
+
 
 # Put nodejs in the path for the duration of the script execution.
 export PATH=$(pwd)/lib/nodejs/bin:$PATH

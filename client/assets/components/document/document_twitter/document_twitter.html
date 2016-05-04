@@ -2,7 +2,7 @@
   <div class="detail vertical grid-content">
     <div class="twitter-tweet" data-lang="{{::vm.doc.userLang[0]}}">
       <blockquote class="quote" lang="{{::vm.doc.userLang[0]}}" dir="ltr">
-        <field value="::vm.doc.tweet[0]" highlight="::vm.highlight" hkey="tweet"></field>
+        <field value="::vm.doc.tweet[0]" highlight="::vm.highlight[doc.id]" hkey="tweet[0]"></field>
       </blockquote>
       <div class="link">
         <a class="author" ng-href="http://twitter.com/{{::vm.doc.userScreenName}}" ng-click="::vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank">@<field value="vm.doc.userScreenName" highlight="::vm.highlight" maxlength="200" hkey="{{::userScreenName}}"></field></a>

@@ -31,12 +31,8 @@
     activate();
 
     function activate() {
-      vm.postSignal = SignalsService.postSignal;
-      vm.doc = processDocument(vm.doc);
+      vm.postSignal = SignalsService.postClickSignal;
     }
 
-    function processDocument(doc) {
-      return doc;
-    }
   }
 })();
