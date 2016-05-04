@@ -60,7 +60,11 @@
 
       doc.lw_description = getField('description', doc);
 
-      doc.lw_image = getField('image', doc);
+      var image = getField('image', doc);
+      // determine if image is base64 encoded and if so add appropriate prefix for img.src attribute
+      doc.lw_image = image ?
+        /^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$/.test(image) ?
+          ('data:image/png;base64,' + image) : image : null;
 
       doc.lw_url = getField('head_url', doc);
 
