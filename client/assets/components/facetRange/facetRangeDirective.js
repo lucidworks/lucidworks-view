@@ -30,39 +30,6 @@
     vm.facetCounts = [];
 
     activate();
-
-    //////////////
-    ///UTILS
-    /**
-     * Checks if the query object's queryObject.fq item matches the associated value
-     */
-    function doesValueMatch(objectValue, start){
-      return objectValue.values[0] === start;
-    }
-
-    /**
-     * Spits out range facet queryObject portion
-     */
-    function getRangeFacetObject(key, start, end){
-      return {
-        key: key,
-        values: getQueryObjectValues(start, end),
-        transformer: 'fq:range'
-      };
-    }
-
-    /**
-     * Spits out queryObject compatible value for range facet entity
-     */
-    function getQueryObjectValues(start, end){
-      return [
-        {
-          values: [start, end],
-          transformer: 'TO'
-        }
-      ];
-    }
-
     //////////////
 
     /**
@@ -234,6 +201,38 @@
         return false;
       }
       return true;
+    }
+
+    //////////////
+    ///UTILS
+    /**
+     * Checks if the query object's queryObject.fq item matches the associated value
+     */
+    function doesValueMatch(objectValue, start){
+      return objectValue.values[0] === start;
+    }
+
+    /**
+     * Spits out range facet queryObject portion
+     */
+    function getRangeFacetObject(key, start, end){
+      return {
+        key: key,
+        values: getQueryObjectValues(start, end),
+        transformer: 'fq:range'
+      };
+    }
+
+    /**
+     * Spits out queryObject compatible value for range facet entity
+     */
+    function getQueryObjectValues(start, end){
+      return [
+        {
+          values: [start, end],
+          transformer: 'TO'
+        }
+      ];
     }
   }
 })();
