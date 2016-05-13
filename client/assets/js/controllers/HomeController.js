@@ -5,7 +5,7 @@
     .controller('HomeController', HomeController);
 
 
-  function HomeController($filter, $timeout, ConfigService, QueryService, URLService, Orwell, AuthService, _) {
+  function HomeController($filter, $timeout, ConfigService, QueryService, URLService, Orwell, AuthService, _, $log) {
 
     'ngInject';
     var hc = this; //eslint-disable-line
@@ -30,29 +30,17 @@
       hc.status = 'loading';
       hc.lastQuery = '';
       hc.sorting = {};
+      hc.grouped = false;
 
       query = URLService.getQueryFromUrl();
       //Setting the query object... also populating the the view model
       hc.searchQuery = _.get(query,'q','*');
-
       // Use an observable to get the contents of a queryResults after it is updated.
       resultsObservable = Orwell.getObservable('queryResults');
       resultsObservable.addObserver(function(data) {
-        if (data.hasOwnProperty('response')) {
-          hc.numFound = data.response.numFound;
-          hc.numFoundFormatted = $filter('humanizeNumberFormat')(hc.numFound, 0);
-          hc.lastQuery = data.responseHeader.params.q;
-          // Make sure you check for all the supported facets before for empty-ness
-          // before toggling the `showFacets` flag
-          if(_.has(data, 'facet_counts')){
-            hc.showFacets = !_.isEmpty(data.facet_counts.facet_fields);
-          }
-
-        } else {
-          hc.numFound = 0;
-        }
+        // updateStatus();
+        checkResultsType(data);
         updateStatus();
-
         // Initializing sorting
         sorting = hc.sorting;
         sorting.switchSort = switchSort;
@@ -68,6 +56,36 @@
       });
     }
 
+    function checkResultsType(data){
+      if (data.hasOwnProperty('response')) {
+        hc.numFound = data.response.numFound;
+        hc.numFoundFormatted = $filter('humanizeNumberFormat')(hc.numFound, 0);
+        hc.lastQuery = data.responseHeader.params.q;
+        if(_.has(data, 'facet_counts')){
+          return hc.showFacets = !_.isEmpty(data.facet_counts.facet_fields);
+        }
+        // Make sure you check for all the supported facets before for empty-ness
+        // before toggling the `showFacets` flag
+      }
+      else if(_.has(data, 'grouped')){
+        hc.lastQuery = data.responseHeader.params.q;
+        $log.debug(data.grouped, 'grouppeeeddd');
+        var numFoundArray = [];
+        _.each(data.grouped, function(group){
+          numFoundArray.push(group.matches);
+        });
+        // For grouping, giving total number of documents found
+        hc.numFound = _.sum(numFoundArray);
+        hc.numFoundFormatted = $filter('humanizeNumberFormat')(hc.numFound, 0);
+        if(_.has(data, 'facet_counts')){
+          return hc.showFacets = !_.isEmpty(data.facet_counts.facet_fields);
+        }
+      }
+      else {
+        hc.numFound = 0;
+      }
+    }
+
     function updateStatus(){
       var status = '';
       if(hc.numFound === 0){
@@ -80,6 +98,8 @@
       }
       hc.status = status;
     }
+
+
 
     /**
      * Initializes a new search.

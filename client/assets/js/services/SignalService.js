@@ -10,26 +10,42 @@
   function SignalsService(ApiBase, ConfigService, $http, $q, QueryService) {
     'ngInject';
     var service = {
-      postSignal: postSignal,
+      postClickSignal: postClickSignal,
+      postSignalData: postSignalData,
       getSignalsDocumentId: getSignalsDocumentId
     };
 
     return service;
 
-    function postSignal(docId) {
-      var deferred = $q.defer(),
-        date = new Date(),
-        data = [{
+    /**
+     * Helper method to document click events.
+     * @param  {string} docId      The document id
+     * @param  {object} options     An object containing parameter overrides and options.
+     *   - The object can be any parameter which will be passed through, including parameters.
+     *     Ex: {type: 'custom', params: {filterQueries: ['something']}}
+     * @return {promise}
+     */
+    function postClickSignal(docId, options) {
+      var date = new Date(),
+        data = {
           params: {
-            query: QueryService.getQueryObject().q,
-            docId: docId
+            docId: docId,
+            query: QueryService.getQueryObject().q
           },
-          type: ConfigService.config.signal_type,
+          pipeline: ConfigService.config.signals_pipeline,
           timestamp: date.toISOString(),
-          pipeline: ConfigService.config.signals_pipeline
-        }];
-      // set content header
+          type: ConfigService.config.signal_type
+        };
 
+      _.defaultsDeep(data, options);
+
+
+      return postSignalData([data]);
+    }
+
+    //Use if you want to post a raw signal where you have control of every signal entry.  See postClickSignal for an example data structure
+    function postSignalData(data) {
+      var deferred = $q.defer();
       $http
         .post(ApiBase.getEndpoint() + 'api/apollo/signals/' + ConfigService.config.collection,
           data)
@@ -57,7 +73,10 @@
       if (doc.hasOwnProperty(documentIdField)) {
         return doc[documentIdField];
       }
-      return null;
+      else {
+        return null;
+      }
+
     }
   }
 })();
