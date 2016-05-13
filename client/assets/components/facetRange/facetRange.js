@@ -50,13 +50,5 @@
     function fqFieldWrapper(data){
       return '['+data+']';
     }
-
-    function localParenJoinTransformer(str, values) {
-      return QueryBuilderProvider.arrayJoinString(str, values, ' ');
-    }
-
-    function localParenWrapperTransformer(data) {
-      return '{!' + data + '}';
-    }
   }
 })();
