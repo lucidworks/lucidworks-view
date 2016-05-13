@@ -188,7 +188,6 @@
 
       }
       // Set the query and trigger the refresh.
-      $log.info('neq query', query);
       updateFacetQuery(query);
     }
 
