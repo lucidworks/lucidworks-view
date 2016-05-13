@@ -16,10 +16,6 @@
     QueryBuilderProvider.registerTransformer('encode', 'fq:range', fqFieldEncode);
     QueryBuilderProvider.registerTransformer('preEncodeWrapper', 'fq:range', fqFieldPreEncodeWrapper);
     QueryBuilderProvider.registerTransformer('wrapper', 'fq:range', fqFieldWrapper);
-
-    // // TODO properly implement transformer for localParens
-    QueryBuilderProvider.registerTransformer('join', 'localParens', localParenJoinTransformer);
-    QueryBuilderProvider.registerTransformer('wrapper', 'localParens', localParenWrapperTransformer);
     //
     // /**
     //  * Transformers.
