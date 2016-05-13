@@ -177,7 +177,6 @@
      */
     function isFacetActive(key, value){
       var query = QueryService.getQueryObject();
-      $log.debug('querrry normal', query)
       if(!query.hasOwnProperty('fq')){
         return false;
       }

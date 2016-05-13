@@ -11,9 +11,6 @@
 
   function Config(QueryBuilderProvider){
     'ngInject';
-    console.log('alsdfksfklsdfkjsflkslfkasdfklsjdf');
-
-    // I don't know if this is called, may be able to delete it
     // Register transformers because range facet fields can have funky URL syntax.
     QueryBuilderProvider.registerTransformer('keyValue', 'fq:range', fqFieldkeyValueTransformer);
     QueryBuilderProvider.registerTransformer('encode', 'fq:range', fqFieldEncode);
@@ -29,11 +26,11 @@
     //  *
     //  * These will transform the output of the query, when the query is created.
     //  */
+    //
 
     function fqFieldkeyValueTransformer(key, value) {
-      console.log('aslkdfjlsdfjkl');
       var escapedKey = QueryBuilderProvider.escapeSpecialChars(key);
-      return QueryBuilderProvider.keyValueString(escapedKey, value, ':');
+      return '+' + QueryBuilderProvider.keyValueString(escapedKey, value, ':');
     }
 
     function fqFieldEncode(data){
@@ -41,11 +38,11 @@
     }
 
     function fqFieldPreEncodeWrapper(data){
-      return '"'+data+'"';
+      return data;
     }
 
     function fqFieldWrapper(data){
-      return '('+data+')';
+      return '['+data+']';
     }
 
     function localParenJoinTransformer(str, values) {
