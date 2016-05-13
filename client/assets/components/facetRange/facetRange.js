@@ -16,6 +16,8 @@
     QueryBuilderProvider.registerTransformer('encode', 'fq:range', fqFieldEncode);
     QueryBuilderProvider.registerTransformer('preEncodeWrapper', 'fq:range', fqFieldPreEncodeWrapper);
     QueryBuilderProvider.registerTransformer('wrapper', 'fq:range', fqFieldWrapper);
+    QueryBuilderProvider.registerTransformer('join', 'TO', fqJoiner);
+    QueryBuilderProvider.registerTransformer('keyValue', 'TO', fqKeyValueBlank);
     //
     // /**
     //  * Transformers.
@@ -23,6 +25,14 @@
     //  * These will transform the output of the query, when the query is created.
     //  */
     //
+
+    function fqKeyValueBlank(key, value){
+      return value;
+    }
+
+    function fqJoiner(str, value){
+      return str + ' TO ' + value;
+    }
 
     function fqFieldkeyValueTransformer(key, value) {
       var escapedKey = QueryBuilderProvider.escapeSpecialChars(key);

@@ -24,7 +24,7 @@
   function Controller(ConfigService, QueryService, QueryDataService, Orwell, FoundationApi, URLService, $log, $filter) {
     'ngInject';
     var vm = this;
-    vm.facetCounts = ['llll'];
+    vm.facetCounts = [];
     vm.toggleFacet = toggleFacet;
     var resultsObservable = Orwell.getObservable('queryResults');
     vm.facetCounts = [];
@@ -36,8 +36,8 @@
     /**
      * Checks if the query object's queryObject.fq item matches the associated value
      */
-    function doesValueMatch(objectValue, value){
-      return _.trim(objectValue.split('TO')[0]) === value;
+    function doesValueMatch(objectValue, start){
+      return objectValue.values[0] === start;
     }
 
     /**
@@ -55,7 +55,12 @@
      * Spits out queryObject compatible value for range facet entity
      */
     function getQueryObjectValues(start, end){
-      return [start + ' TO ' + end];
+      return [
+        {
+          values: [start, end],
+          transformer: 'TO'
+        }
+      ];
     }
 
     //////////////
@@ -163,11 +168,11 @@
         if (keyArr.length > 0) {
           var keyObj = keyArr[0];
           var removed = _.remove(keyObj.values, function (value) {
-            return doesValueMatch(value, facet.title);
+            return doesValueMatch(value, facet.start);
           });
           // CASE: value didn't previously exist add to values.
           if (removed.length === 0) {
-            query.fq.push(getRangeFacetObject(key, facet.start, facet.end));
+            query.fq.push(getRangeFacetObject(key, facet.start));
           }
           // CASE: there are still values in facet attach keyobject back to query.
           if (keyObj.values.length > 0) {
@@ -183,6 +188,7 @@
 
       }
       // Set the query and trigger the refresh.
+      $log.info('neq query', query);
       updateFacetQuery(query);
     }
 
