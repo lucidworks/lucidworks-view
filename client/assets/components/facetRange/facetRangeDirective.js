@@ -172,7 +172,7 @@
           });
           // CASE: value didn't previously exist add to values.
           if (removed.length === 0) {
-            query.fq.push(getRangeFacetObject(key, facet.start));
+            query.fq.push(getRangeFacetObject(key, facet.start, facet.end));
           }
           // CASE: there are still values in facet attach keyobject back to query.
           if (keyObj.values.length > 0) {
