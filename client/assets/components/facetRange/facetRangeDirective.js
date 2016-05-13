@@ -81,7 +81,7 @@
     function transformObjectArray(arr, rangeFacetData){
       var end = rangeFacetData.end;
       return _.map(arr, function(item, index){
-        // TODO: Detect more data types and do proper splitting of the buckets
+        // TODO: Detect more data types and do proper display of the buckets
         var startOfRange = item.title;
         var endOfRange = (index + 1 >= arr.length)?end:arr[index + 1].title;
         return _.assign(item, {start: startOfRange, end: endOfRange});
@@ -123,17 +123,17 @@
       var query = QueryService.getQueryObject();
       // CASE: fq exists.
       if (!query.hasOwnProperty('fq')) {
-        query = addRangeFacet(query, key, facet.title);
+        query = addRangeFacet(query, key, facet.start, facet.end);
       } else {
         // Remove the key object from the query.
         // We will re-add later if we need to.
-        var keyArr = _.remove(query.fq, {key: key, transformer: 'fq:range'});
+        var keyArr = _.remove(query.fq, {key: key, transformer: 'fq:range', values: [facet.start + ' TO ' + facet.end]});
 
         // CASE: facet key exists in query.
         if (keyArr.length > 0) {
           var keyObj = keyArr[0];
           var removed = _.remove(keyObj.values, function (value) {
-            return value === facet.title;
+            return doesValueMatch(value, facet.title);
           });
           // CASE: value didn't previously exist add to values.
           if (removed.length === 0) {
@@ -153,7 +153,6 @@
 
       }
       // Set the query and trigger the refresh.
-      $log.info('new query', query);
       updateFacetQuery(query);
     }
 
@@ -167,12 +166,20 @@
     }
 
     function addRangeFacet(query, key, start, end) {
+      $log.info(end, 'end');
       if (!query.hasOwnProperty('fq')) {
         query.fq = [];
       }
       var keyObj = getRangeFacetObject(key, start, end);
       query.fq.push(keyObj);
       return query;
+    }
+
+    /**
+     * Checks if the query object's fq item matches the associated value
+     */
+    function doesValueMatch(objectValue, value){
+      return _.trim(objectValue.split('TO')[0]) === value;
     }
 
     function getRangeFacetObject(key, start, end){
@@ -190,19 +197,17 @@
      * @return {Boolean}       [description]
      */
     function isFacetActive(key, value) {
-      $log.info('keyvalue', key, value);
       var query = QueryService.getQueryObject();
       if (!query.hasOwnProperty('fq')) {
         return false;
       }
 
-      var keyObj = _.find(query.fq, {key: key, transformer: 'fq:range'});
-      $log.info(keyObj);
+      var keyObj = _.filter(query.fq, {key: key, transformer: 'fq:range'});
       if (_.isEmpty(keyObj)) {
         return false;
       }
-      if (_.isEmpty(_.find(keyObj.values, function (data) {
-        return data.indexOf(value) !== -1;
+      if (_.isEmpty(_.filter(keyObj, function (obj) {
+        return doesValueMatch(obj.values[0], value);
       }))) {
         return false;
       }

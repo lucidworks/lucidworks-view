@@ -86,7 +86,6 @@
         active = false;
       }
       vm.active = active;
-      $log.debug('normal', vm.facetCounts)
     }
 
     /**

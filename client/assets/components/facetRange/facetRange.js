@@ -30,7 +30,7 @@
 
     function fqFieldkeyValueTransformer(key, value) {
       var escapedKey = QueryBuilderProvider.escapeSpecialChars(key);
-      return '+' + QueryBuilderProvider.keyValueString(escapedKey, value, ':');
+      return QueryBuilderProvider.keyValueString(escapedKey, value, ':');
     }
 
     function fqFieldEncode(data){
@@ -53,16 +53,4 @@
       return '{!' + data + '}';
     }
   }
-
-  // http://localhost:8764/api/apollo/query-pipelines/lucidfind-default/collections/lucidfind/select?debug=true&echoParams=all&fl=*,score&fq=publishedOnDate:(%5B2016-03-02T00:00:00Z+TO+2016-03-02T00:00:00Z%2B1MONTH%5D)&json.nl=arrarr&q=*:*&rows=10&start=0&wt=json
-
-  // http://localhost:3002/api/apollo/collections/lucidfind/query-profiles/default/
-  // GOOD
-
-//   2016-03-02T00:00:00Z
-//   2016-03-02T00:00:00Z
-// select?debug=true&echoParams=all&fl=*,score&fq=publishedOnDate:(%5B2016-03-02T00:00:00Z+TO+2016-03-02T00:00:00Z%2B1MONTH%5D)&json.nl=arrarr&q=*:*&rows=10&start=0&wt=json
-// // NEEDSWORK
-//   select?q=*&start=0&wt=json&rows=10&fq=publishedOnDate:(%222016-03-02T00%3A00%3A00Z%22)
-
 })();
