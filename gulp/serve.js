@@ -29,8 +29,7 @@ gulp.task('browsersync', ['build'], function() {
 
   var browserSyncConfig = {
     baseDir: './build/',
-    middleware: middleware,
-    ghostMode: false
+    middleware: middleware
   };
 
   if(fusionConfig.use_https === true){
@@ -44,7 +43,8 @@ gulp.task('browsersync', ['build'], function() {
   }
 
   browserSync.init({
-    server: browserSyncConfig
+    server: browserSyncConfig,
+    ghostMode: false
   });
 
   // gulp.watch("app/scss/*.scss", ['sass']);
