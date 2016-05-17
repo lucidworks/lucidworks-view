@@ -61,9 +61,7 @@
         hc.numFound = data.response.numFound;
         hc.numFoundFormatted = $filter('humanizeNumberFormat')(hc.numFound, 0);
         hc.lastQuery = data.responseHeader.params.q;
-        if(_.has(data, 'facet_counts')){
-          hc.showFacets = checkForFacets(data);
-        }
+        hc.showFacets = checkForFacets(data);
         // Make sure you check for all the supported facets before for empty-ness
         // before toggling the `showFacets` flag
       }
