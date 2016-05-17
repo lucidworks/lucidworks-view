@@ -31,6 +31,10 @@
 
     function activate() {
       resultsObservable.addObserver(function (data) {
+        // Resetting the facet models
+        vm.facets = [];
+        vm.facetNames = {};
+
         // Exit early if there are no facets in the response.
         if (!data.hasOwnProperty('facet_counts')) return;
 
