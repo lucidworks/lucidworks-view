@@ -62,7 +62,7 @@
         hc.numFoundFormatted = $filter('humanizeNumberFormat')(hc.numFound, 0);
         hc.lastQuery = data.responseHeader.params.q;
         if(_.has(data, 'facet_counts')){
-          return hc.showFacets = !_.isEmpty(data.facet_counts.facet_fields);
+          return hc.showFacets = !_.isEmpty(data.facet_counts);
         }
         // Make sure you check for all the supported facets before for empty-ness
         // before toggling the `showFacets` flag
