@@ -83,7 +83,7 @@
     }
 
     // Checks from data if it has supported facet type.
-    // TODO: Refactor this to make sure it detects facet types for available modules.
+    // TODO: Refactor this to make sure it detects facet types from available modules.
     function checkForFacets(data){
       if(_.has(data, 'facet_counts')){
         return (!_.isEmpty(data.facet_counts.facet_fields)) || (!_.isEmpty(data.facet_counts.facet_ranges));
