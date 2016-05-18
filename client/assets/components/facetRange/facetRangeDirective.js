@@ -26,6 +26,9 @@
     var vm = this;
     vm.facetCounts = [];
     vm.toggleFacet = toggleFacet;
+    vm.toggleMore = toggleMore;
+    vm.getLimitAmount = getLimitAmount;
+    vm.more = false;
     var resultsObservable = Orwell.getObservable('queryResults');
     vm.facetCounts = [];
 
@@ -102,18 +105,6 @@
         vm.facetCounts = transformObjectArray(rangeFacetsObjects, rangeFacet);
         setActiveState();
       }
-    }
-
-    /**
-     * Sets the facet panel open
-     */
-    function setActiveState(){
-      var active = true;
-      // If we have autoOpen set active to this state.
-      if (angular.isDefined(vm.facetAutoOpen) && vm.facetAutoOpen === 'false') {
-        active = false;
-      }
-      vm.active = active;
     }
 
     /**
@@ -201,6 +192,36 @@
         return false;
       }
       return true;
+    }
+
+    /**
+     * Sets the facet panel open
+     */
+    function setActiveState(){
+      var active = true;
+      // If we have autoOpen set active to this state.
+      if (angular.isDefined(vm.facetAutoOpen) && vm.facetAutoOpen === 'false') {
+        active = false;
+      }
+      vm.active = active;
+    }
+
+    /**
+     * Toggles the more button for the facet.
+     */
+    function toggleMore(){
+      vm.more = !vm.more;
+    }
+
+   /**
+    * Gets the amount to limit by
+    * @return {integer|undefined} The amount to return or undefined.
+    */
+    function getLimitAmount(){
+      if(vm.more){
+        return undefined;
+      }
+      return 5;
     }
 
     //////////////
