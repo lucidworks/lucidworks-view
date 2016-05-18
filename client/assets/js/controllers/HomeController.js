@@ -61,9 +61,7 @@
         hc.numFound = data.response.numFound;
         hc.numFoundFormatted = $filter('humanizeNumberFormat')(hc.numFound, 0);
         hc.lastQuery = data.responseHeader.params.q;
-        if(_.has(data, 'facet_counts')){
-          return hc.showFacets = !_.isEmpty(data.facet_counts.facet_fields);
-        }
+        hc.showFacets = checkForFacets(data);
         // Make sure you check for all the supported facets before for empty-ness
         // before toggling the `showFacets` flag
       }
@@ -77,12 +75,21 @@
         // For grouping, giving total number of documents found
         hc.numFound = _.sum(numFoundArray);
         hc.numFoundFormatted = $filter('humanizeNumberFormat')(hc.numFound, 0);
-        if(_.has(data, 'facet_counts')){
-          return hc.showFacets = !_.isEmpty(data.facet_counts.facet_fields);
-        }
+        hc.showFacets = checkForFacets(data);
       }
       else {
         hc.numFound = 0;
+      }
+    }
+
+    // Checks from data if it has supported facet type.
+    // TODO: Refactor this to make sure it detects facet types from available modules.
+    function checkForFacets(data){
+      if(_.has(data, 'facet_counts')){
+        return (!_.isEmpty(data.facet_counts.facet_fields)) || (!_.isEmpty(data.facet_counts.facet_ranges));
+      }
+      else{
+        return false;
       }
     }
 
