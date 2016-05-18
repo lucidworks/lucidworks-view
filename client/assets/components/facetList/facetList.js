@@ -50,7 +50,7 @@
             //removing old fields
             _.forEach(oldFields, function(field){
               _.remove(tempFacets, function(item){
-                return item.name === field;
+                return item.name === field && item.type === facetType;
               });
             });
 
