@@ -86,6 +86,7 @@
         getTypeaheadConfig: getTypeaheadConfig,
         getTypeaheadRequestHandler: getTypeaheadRequestHandler,
         getTypeaheadField: getTypeaheadField,
+        getIfTypeaheadQueryProfile: getIfTypeaheadQueryProfile,
         getTypeaheadProfile: getTypeaheadProfile,
         getTypeaheadPipeline: getTypeaheadPipeline,
         getLandingPageRedirect: getLandingPageRedirect,
@@ -181,6 +182,10 @@
         return item.match(/^typeahead/);
       }).value();
       return _.pick(appConfig, onlyTypeAheadKeys);
+    }
+
+    function getIfTypeaheadQueryProfile() {
+      return appConfig.typeahead_use_query_profile;
     }
 
     function getTypeaheadPipeline(){

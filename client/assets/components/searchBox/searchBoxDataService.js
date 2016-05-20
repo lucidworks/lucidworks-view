@@ -19,7 +19,7 @@
 
       var queryString = QueryBuilder.objectToURLString(query);
 
-      var fullUrl = getQueryUrl(ConfigService.getIfQueryProfile()) + '?' + queryString;
+      var fullUrl = getQueryUrl(ConfigService.getIfTypeaheadQueryProfile()) + '?' + queryString;
 
       $http
         .get(fullUrl)
