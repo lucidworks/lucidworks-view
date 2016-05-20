@@ -68,7 +68,7 @@ global.paths = {
   ],
   components: [
     'client/assets/components/**/*.html',
-    'bower_components/foundation-apps/js/angular/components/**/*.html'
+    'bower_components/foundation-apps/js/angular/components/**/*.html',
   ],
   configJS: [
     './FUSION_CONFIG.js'

@@ -49,8 +49,23 @@ gulp.task('copy:foundation', function(cb) {
   cb();
 });
 
+// Compiles the document directives partials into a single JavaScript file
+gulp.task('copy:document-partials', function(cb) {
+  gulp.src('client/assets/components/document/templates/*.html')
+    .pipe($.concat('document.js'))
+    .pipe($.ngHtml2js({
+      prefix: 'components/',
+      moduleName: 'lucidworksView.components.document-partials',
+      declareModule: true
+    }))
+    .pipe($.uglify())
+    .pipe(gulp.dest('./build/assets/js'));
+
+  cb();
+});
+
 // Compiles and copies the Foundation for Apps JavaScript, as well as your app's custom JS
-gulp.task('uglify', ['uglify:foundation', 'uglify:app']);
+gulp.task('uglify', ['uglify:foundation', 'copy:document-partials', 'uglify:app']);
 
 gulp.task('uglify:foundation', function() {
   var uglify = $.if(global.isProduction, $.uglify()

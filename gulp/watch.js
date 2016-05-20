@@ -12,6 +12,9 @@ gulp.task('watch', function(){
   // Watch Components
   gulp.watch(['./client/assets/components/**/*'], ['components']);
 
+  // Watch Templates
+  gulp.watch(['./client/assets/components/document/templates/*.html'], ['template:sequence']);
+
   // Watch static files
   gulp.watch(['./client/**/*.*', '!./client/templates/**/*.*', '!./client/assets/{scss,js,components}/**/*.*'], ['staticfiles']);
 
@@ -34,7 +37,7 @@ gulp.task('staticfiles', function(cb){
 });
 
 gulp.task('template:sequence', function(cb){
-  sequence('clean:templates', ['copy:foundation', 'copy:templates' /*, 'template:routes'*/], /*'concat:components',*/ 'reloadBrowsers', cb);
+  sequence('clean:templates', ['copy:foundation', 'copy:document-partials', 'copy:templates' /*, 'template:routes'*/], /*'concat:components',*/ 'reloadBrowsers', cb);
 });
 
 gulp.task('javascript', function(cb){
