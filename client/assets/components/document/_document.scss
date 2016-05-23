@@ -1,10 +1,8 @@
-/* @import "document_default/document_default"; */
-@import "templates/document_file";
-@import "templates/document_jira";
-@import "templates/document_slack";
-@import "templates/document_twitter";
-@import "templates/document_web";
-/* @import "document_EXAMPLE/document_EXAMPLE"; */
+@import "styles/document_file";
+@import "styles/document_jira";
+@import "styles/document_slack";
+@import "styles/document_twitter";
+@import "styles/document_web";
 
 
 .document {
