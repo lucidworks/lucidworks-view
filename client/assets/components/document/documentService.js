@@ -11,10 +11,11 @@
      * @return {string}     [Template Id]
      */
     function getTemplateId(doc){
-      var templateId = _.reduce(DocumentConfig, function(result, item){
+      return _.reduce(DocumentConfig, function(result, item){
         var predicate = item[0];
         var templateId = item[1];
-        if(!result){
+        // If no predicate is `true` yet
+        if(result === 'document_default' || !result){
           if(_.isString(predicate) && !_.isFunction(predicate)){
             var fNv = splitFieldAndValue(predicate);
             if(doc[fNv.field] === fNv.value){
@@ -27,11 +28,10 @@
             }
           }
         }
-        else{
+        else {
           return result;
         }
-      }, null);
-      return templateId?templateId:'document_default';
+      }, 'document_default');
     }
 
     /**

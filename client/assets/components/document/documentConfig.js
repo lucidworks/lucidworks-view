@@ -22,7 +22,7 @@
        *
        * In this array, the first match of the predicate will be the final template that's chosen at the end
        *
-       * You can also want to inject helpers and things etc. to help writing predicate functions
+       * You can also want to inject helpers etc. to help writing predicate functions
        *
        * The template IDs will all be fetched from /client/components/document/templates/*.html
        * <script type="text/ng-template" id="document_id">...</script>; "document_id" the ID of that particular template
