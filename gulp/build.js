@@ -67,7 +67,7 @@ gulp.task('copy:foundation', function(cb) {
 // Compiles the document directives partials into a single JavaScript file
 gulp.task('copy:document-partials', function(cb) {
   gulp.src('client/assets/components/document/templates/*.html')
-    .pipe($.concat('documents.html'))
+    .pipe($.concat('document.html'))
     .pipe(gulp.dest('./build/templates/'));
 
   cb();
