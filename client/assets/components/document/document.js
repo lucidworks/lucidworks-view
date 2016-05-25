@@ -20,7 +20,7 @@
     };
   }
 
-  function Controller($log, $scope, $element, $compile, $templateCache, DocsHelper, DocumentService, ConfigService, SignalsService) {
+  function Controller($scope, $element, $compile, $templateCache, DocumentService, SignalsService) {
     'ngInject';
     var vm = this;
 
