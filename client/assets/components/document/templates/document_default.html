@@ -27,7 +27,7 @@
   every category in that result.
  -->
 <script type="text/ng-template" id="document_default">
-  <article ng-if="true" class="grid-block document row" ng-controller="documentDefaultController">
+  <article ng-if="true" ng-controller="documentDefaultController">
     <div class="image small-4 medium-2 grid-content" ng-class="::{hide:!vm.doc.lw_image}">
       <div zf-interchange="">
         <img media="small" ng-src="{{::vm.doc.lw_image}}">
