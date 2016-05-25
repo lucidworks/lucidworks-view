@@ -1,5 +1,5 @@
 <script type="text/ng-template" id="document_twitter">
-  <article class="grid-block document document-twitter row">
+  <article ng-controller="documentTwitterController" class="grid-block document document-twitter row">
     <div class="detail vertical grid-content">
       <div class="twitter-tweet" data-lang="{{::vm.doc.userLang[0]}}">
         <blockquote class="quote" lang="{{::vm.doc.userLang[0]}}" dir="ltr">
