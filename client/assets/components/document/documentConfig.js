@@ -30,6 +30,7 @@
        * Also if none of the predicates match, the default template i.e. `document_default` will be chosen.
        *
        */
+
       var map = [
         [function(doc){
           // Your code goes here
@@ -42,6 +43,8 @@
         ['_lw_data_source_type_s=>lucid.anda/jira','document_jira'],
         ['_lw_data_source_type_s=>lucid.anda/file','document_file']
       ];
+
+      map.default = 'document_default';
 
       return map;
     });
