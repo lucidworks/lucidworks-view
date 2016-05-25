@@ -4,7 +4,7 @@
     ])
     .controller('documentFileController', documentDefault);
 
-  function documentDefault($scope, DocsHelper, $filter){
+  function documentDefault($scope, $filter){
     'ngInject';
 
     var vm = $scope.$parent.vm;
