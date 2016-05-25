@@ -1,6 +1,4 @@
-<script type="text/ng-template" id="document_jira">
-  <article ng-controller="documentJiraController" class="document-jira" ng-switch="vm.doc.jira_content_type_s">
-    <jira-project ng-switch-when="PROJECT" doc="vm.doc" highlight="vm.highlight"></jira-project>
-    <jira-issue ng-switch-default doc="vm.doc" highlight="vm.highlight"></jira-issue>
-  </article>
-</script>
+<article ng-controller="documentJiraController" class="document-jira" ng-switch="vm.doc.jira_content_type_s">
+  <jira-project ng-switch-when="PROJECT" doc="vm.doc" highlight="vm.highlight"></jira-project>
+  <jira-issue ng-switch-default doc="vm.doc" highlight="vm.highlight"></jira-issue>
+</article>

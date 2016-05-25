@@ -1,6 +1,9 @@
 (function () {
   angular.module('lucidworksView.components.document', ['lucidworksView.services.config',
-      'lucidworksView.utils.docs', 'lucidworksView.services.signals', 'lucidworksView.components.document.controllers'
+      'lucidworksView.utils.docs',
+      'lucidworksView.services.signals',
+      'lucidworksView.components.document.controllers',
+      'lucidworksView.components.document-partials'
     ])
     .directive('document', docMain);
 

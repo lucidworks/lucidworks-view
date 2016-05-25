@@ -36,12 +36,12 @@
           // Your code goes here
           return false;
         }, 'document_EXAMPLE'],
-        ['_lw_data_source_type_s=>lucid.anda/web','document_web'],
-        ['_lw_data_source_type_s=>lucid.twitter.search/twitter_search','document_twitter'],
-        ['_lw_data_source_type_s=>lucid.twitter.stream/twitter_stream','document_twitter'],
-        ['_lw_data_source_type_s=>lucid.slack/slack','document_slack'],
-        ['_lw_data_source_type_s=>lucid.anda/jira','document_jira'],
-        ['_lw_data_source_type_s=>lucid.anda/file','document_file']
+        ['_lw_data_source_type_s=>lucid.anda/web','document_web.html'],
+        ['_lw_data_source_type_s=>lucid.twitter.search/twitter_search','document_twitter.html'],
+        ['_lw_data_source_type_s=>lucid.twitter.stream/twitter_stream','document_twitter.html'],
+        ['_lw_data_source_type_s=>lucid.slack/slack','document_slack.html'],
+        ['_lw_data_source_type_s=>lucid.anda/jira','document_jira.html'],
+        ['_lw_data_source_type_s=>lucid.anda/file','document_file.html']
       ];
 
       map.default = 'document_default';

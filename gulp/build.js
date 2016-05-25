@@ -49,26 +49,16 @@ gulp.task('copy:foundation', function(cb) {
   cb();
 });
 
-// // Compiles the document directives partials into a single JavaScript file
-// gulp.task('copy:document-partials', function(cb) {
-//   gulp.src('client/assets/components/document/templates/*.html')
-//     .pipe($.concat('document.js'))
-//     .pipe($.ngHtml2js({
-//       prefix: 'components/',
-//       moduleName: 'lucidworksView.components.document-partials',
-//       declareModule: true
-//     }))
-//     .pipe($.uglify())
-//     .pipe(gulp.dest('./build/assets/js'));
-//
-//   cb();
-// });
-
 // Compiles the document directives partials into a single JavaScript file
 gulp.task('copy:document-partials', function(cb) {
   gulp.src('client/assets/components/document/templates/*.html')
-    .pipe($.concat('document.html'))
-    .pipe(gulp.dest('./build/templates/'));
+    .pipe($.ngHtml2js({
+      moduleName: 'lucidworksView.components.document-partials',
+      declareModule: true
+    }))
+    .pipe($.concat('document-partials.js'))
+    .pipe($.uglify())
+    .pipe(gulp.dest('./build/assets/js'));
 
   cb();
 });
