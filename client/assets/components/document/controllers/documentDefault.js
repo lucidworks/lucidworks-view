@@ -4,14 +4,10 @@
     ])
     .controller('documentDefaultController', documentDefault);
 
-  function documentDefault($scope, $log, DocsHelper, ConfigService, SignalsService){
+  function documentDefault($scope, DocsHelper, ConfigService){
     'ngInject';
 
     var vm = $scope.$parent.vm;
-
-    vm.postSignal = SignalsService.postClickSignal;
-
-    $log.info(vm);
 
     activate();
 
