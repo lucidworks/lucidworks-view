@@ -14,7 +14,7 @@
       return _.reduce(DocumentConfig, function(result, item){
         var predicate = item[0];
         var templateId = item[1];
-        // If no predicate is `true` yet for doc
+        // If no predicate is `true` yet for doc then only do checks
         if(result === 'document_default' || !result){
           if(_.isString(predicate) && !_.isFunction(predicate)){
             var fNv = splitFieldAndValue(predicate);
