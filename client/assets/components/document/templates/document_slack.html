@@ -1,24 +1,26 @@
-<article ng-if="vm.doc._lw_data_source_type_s === 'lucid.slack/slack'" class="grid-block document document-slack row">
-  <div class="detail vertical grid-content">
-    <div class="large-8 xlarge-7 xx-large-6">
-      <blockquote class="text">
-          <field value="::vm.doc.text_t" highlight="vm.highlight[doc.id]" maxlength="200" hkey="text_t"></field>
-          <!-- <p>{{::vm.doc.text | limitTo:200}}...</p> -->
-      </blockquote>
-      <div class="detail-row">
-        <div class="channel label secondary" ng-if="::vm.doc.channel_s">
-          <field value="::vm.doc.channel_s" highlight="::vm.highlight[doc.id]" maxlength="200"
-                 hkey="channel_s"></field>
+<script type="text/ng-template" id="document_slack">
+  <article class="grid-block document document-slack row">
+    <div class="detail vertical grid-content">
+      <div class="large-8 xlarge-7 xx-large-6">
+        <blockquote class="text">
+            <field value="::vm.doc.text_t" highlight="vm.highlight[doc.id]" maxlength="200" hkey="text_t"></field>
+            <!-- <p>{{::vm.doc.text | limitTo:200}}...</p> -->
+        </blockquote>
+        <div class="detail-row">
+          <div class="channel label secondary" ng-if="::vm.doc.channel_s">
+            <field value="::vm.doc.channel_s" highlight="::vm.highlight[doc.id]" maxlength="200"
+                   hkey="channel_s"></field>
+          </div>
+          <div class="user" ng-if="::vm.doc.user_s">
+          @<field value="::vm.doc.user_s" highlight="::vm.highlight[doc.id]" maxlength="200" hkey="user_s"></field>
+          </div>
+          <div class="timestamp" ng-if="::vm.doc.timestamp_tdt">
+            <a ng-href="{{::vm.doc.id}}" ng-click="vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank">
+              <field value="::vm.doc.timestamp_tdtFormatted"></field> UTC
+            </a>
+          </div>
         </div>
-        <div class="user" ng-if="::vm.doc.user_s">
-        @<field value="::vm.doc.user_s" highlight="::vm.highlight[doc.id]" maxlength="200" hkey="user_s"></field>
-        </div>
-        <div class="timestamp" ng-if="::vm.doc.timestamp_tdt">
-          <a ng-href="{{::vm.doc.id}}" ng-click="vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank">
-            <field value="::vm.doc.timestamp_tdtFormatted"></field> UTC
-          </a>
-        </div>
-      </div>
-     </div>
-  </div>
-</article>
+       </div>
+    </div>
+  </article>
+</script>

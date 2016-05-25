@@ -20,15 +20,16 @@
     };
   }
 
-  function Controller($log, $scope, $element, $compile, $templateCache, DocsHelper, ConfigService, SignalsService) {
+  function Controller($log, $scope, $element, $compile, $templateCache, DocsHelper, DocumentService, ConfigService, SignalsService) {
     'ngInject';
     var vm = this;
 
     activate();
 
     function activate() {
-      // Do the template stuff here...
-      var template = $templateCache.get('components/document.js');
+      vm.postSignal = SignalsService.postClickSignal;
+
+      var template = $templateCache.get(DocumentService.getTemplateId(vm.doc));
       var newElem = angular.element(template);
       var compiled = $compile(newElem);
       compiled($scope);

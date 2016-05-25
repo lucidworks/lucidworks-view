@@ -2,7 +2,7 @@
   angular.module('lucidworksView.components.document.default', ['lucidworksView.services.config',
       'lucidworksView.utils.docs', 'lucidworksView.services.signals'
     ])
-    .controller('documentDefault', documentDefault);
+    .controller('documentDefaultController', documentDefault);
 
   function documentDefault($scope, $log, DocsHelper, ConfigService, SignalsService){
     'ngInject';

@@ -15,7 +15,8 @@
       populateFieldLabels: populateFieldLabels,
       concatMultivaluedFields: concatMultivaluedFields,
       parseWildcards: parseWildcards,
-      selectFields: selectFields
+      selectFields: selectFields,
+      getDocType: getDocType
     };
 
     /**
@@ -79,6 +80,12 @@
         blankDocument[pair.key] = pair.value;
       });
       return blankDocument;
+    }
+
+    function getDocType(doc){
+      if(_.has(doc, '_lw_data_source_type_s')){
+        return true;
+      }
     }
 
     /**

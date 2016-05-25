@@ -2,14 +2,14 @@
   'use strict';
 
   angular
-    .module('lucidworksView.components.document_jira')
-    .directive('jiraIssue', jiraIssue);
+    .module('lucidworksView.components.jiraProject',[])
+    .directive('jiraProject', jiraProject);
 
-  function jiraIssue() {
+  function jiraProject() {
     'ngInject';
     var directive = {
       restrict: 'EA',
-      templateUrl: 'assets/components/document/document_jira/contentTypes/jiraIssue.html',
+      templateUrl: 'assets/components/jiraProject/jiraProject.html',
       scope: true,
       controller: Controller,
       controllerAs: 'vm',
@@ -32,7 +32,11 @@
 
     function activate() {
       vm.postSignal = SignalsService.postClickSignal;
+      vm.doc = processDocument(vm.doc);
     }
 
+    function processDocument(doc) {
+      return doc;
+    }
   }
 })();
