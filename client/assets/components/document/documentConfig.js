@@ -8,24 +8,24 @@
        *
        * Syntax:
        *
-       * ['field_name=>raw_string_value','template_id'] will make sure if
-       * a document has a field `field_name` of the value `raw_string_value` the
-       * chosen template for that document will be `template_id`
+       * ['field_name=>raw_string_value','template_id'] will checkif
+       * a document has a field `field_name` of the value `raw_string_value`.
+       * If yes chosen template for that document will be `template_id.html`.
        *
        * You can have more advanced predicates, like...
        * [function(doc){
        *   return some_condition(doc);
-       * }, 'template_id']
+       * }, 'template_id.html']
        * the function will be called with the document as argument
        * and if the function returns `true`
        * the corresponding template will be chosen
        *
        * The first match of the predicate will be the final template that's chosen at the end
        *
-       * You can also inject helpers etc. to help writing predicate functions
+       * You can also inject helpers etc. with ngInject to help writing predicate functions
        *
        * The template IDs will all be fetched from /client/components/document/templates/*.html
-       * <script type="text/ng-template" id="document_id">...</script>; "document_id" the ID of that particular template
+       * The filename would be the document ID, i.e. shown below as set of default templates.
        *
        * Also if none of the predicates match, the default template i.e. `document_default` will be chosen.
        *
