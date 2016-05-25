@@ -1,7 +1,7 @@
 angular.module('lucidworksView.components.document.controllers', [
-  'lucidworksView.components.document.default',
-  'lucidworksView.components.document.file',
-  'lucidworksView.components.document.jira',
-  'lucidworksView.components.document.slack',
-  'lucidworksView.components.document.twitter'
+  'lucidworksView.components.document.controllers.default',
+  'lucidworksView.components.document.controllers.file',
+  'lucidworksView.components.document.controllers.jira',
+  'lucidworksView.components.document.controllers.slack',
+  'lucidworksView.components.document.controllers.twitter'
 ]);

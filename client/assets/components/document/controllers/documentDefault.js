@@ -1,5 +1,5 @@
 (function () {
-  angular.module('lucidworksView.components.document.default', ['lucidworksView.services.config',
+  angular.module('lucidworksView.components.document.controllers.default', ['lucidworksView.services.config',
       'lucidworksView.utils.docs', 'lucidworksView.services.signals'
     ])
     .controller('documentDefaultController', documentDefault);

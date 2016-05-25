@@ -1,5 +1,5 @@
 (function () {
-  angular.module('lucidworksView.components.document.jira', [])
+  angular.module('lucidworksView.components.document.controllers.jira', [])
     .controller('documentJiraController', documentDefault);
 
   function documentDefault($scope, $filter){

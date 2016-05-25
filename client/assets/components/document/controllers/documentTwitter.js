@@ -1,5 +1,5 @@
 (function () {
-  angular.module('lucidworksView.components.document.twitter', [])
+  angular.module('lucidworksView.components.document.controllers.twitter', [])
     .controller('documentTwitterController', documentDefault);
 
   function documentDefault($scope, $filter){

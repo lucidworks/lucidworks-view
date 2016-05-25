@@ -1,5 +1,5 @@
 (function () {
-  angular.module('lucidworksView.components.document.slack', [])
+  angular.module('lucidworksView.components.document.controllers.slack', [])
     .controller('documentSlackController', documentDefault);
 
   function documentDefault($scope, $filter){
