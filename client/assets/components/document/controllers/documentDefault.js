@@ -1,7 +1,6 @@
 (function () {
   angular.module('lucidworksView.components.document.controllers.default', ['lucidworksView.services.config',
-      'lucidworksView.utils.docs', 'lucidworksView.services.signals'
-    ])
+      'lucidworksView.utils.docs'])
     .controller('documentDefaultController', documentDefault);
 
   function documentDefault($scope, DocsHelper, ConfigService){

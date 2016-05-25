@@ -1,7 +1,5 @@
 (function () {
-  angular.module('lucidworksView.components.document.controllers.file', ['lucidworksView.services.config',
-      'lucidworksView.utils.docs', 'lucidworksView.services.signals'
-    ])
+  angular.module('lucidworksView.components.document.controllers.file', [])
     .controller('documentFileController', documentDefault);
 
   function documentDefault($scope, $filter){
