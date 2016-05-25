@@ -12,10 +12,12 @@
        * a document has a field `field_name` of the value `raw_string_value` the
        * chosen template for that document will be `template_id`
        *
+       * You can have more advanced predicates, like...
        * [function(doc){
        *   return some_condition(doc);
        * }, 'template_id']
-       * the function will be called and if the function returns `true`
+       * the function will be called with the document as argument
+       * and if the function returns `true`
        * the corresponding template will be chosen
        *
        * In this array, the first match of the predicate will be the final template that's chosen at the end
