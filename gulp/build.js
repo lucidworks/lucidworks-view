@@ -54,7 +54,10 @@ gulp.task('copy:document-partials', function(cb) {
   gulp.src('client/assets/components/document/*/*.html')
     .pipe($.ngHtml2js({
       moduleName: 'lucidworksView.components.document-partials',
-      declareModule: true
+      declareModule: true,
+      rename: function(templateUrl, templateFile){
+        return templateUrl.split('/')[1].replace('.html','');
+      }
     }))
     .pipe($.concat('document-partials.js'))
     .pipe($.uglify())
