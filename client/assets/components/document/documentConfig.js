@@ -35,16 +35,16 @@
         [function(doc){
           // Your code goes here
           return false;
-        }, 'document_EXAMPLE.html'],
-        ['_lw_data_source_type_s=>lucid.anda/web','document_web.html'],
-        ['_lw_data_source_type_s=>lucid.twitter.search/twitter_search','document_twitter.html'],
-        ['_lw_data_source_type_s=>lucid.twitter.stream/twitter_stream','document_twitter.html'],
-        ['_lw_data_source_type_s=>lucid.slack/slack','document_slack.html'],
-        ['_lw_data_source_type_s=>lucid.anda/jira','document_jira.html'],
-        ['_lw_data_source_type_s=>lucid.anda/file','document_file.html']
+        }, 'document_EXAMPLE/document_EXAMPLE.html'],
+        ['_lw_data_source_type_s=>lucid.anda/web','document_web/document_web.html'],
+        ['_lw_data_source_type_s=>lucid.twitter.search/twitter_search','document_twitter/document_twitter.html'],
+        ['_lw_data_source_type_s=>lucid.twitter.stream/twitter_stream','document_twitter/document_twitter.html'],
+        ['_lw_data_source_type_s=>lucid.slack/slack','document_slack/document_slack.html'],
+        ['_lw_data_source_type_s=>lucid.anda/jira','document_jira/document_jira.html'],
+        ['_lw_data_source_type_s=>lucid.anda/file','document_file/document_file.html']
       ];
 
-      map.default = 'document_default.html';
+      map.default = 'document_default/document_default.html';
 
       return map;
     });

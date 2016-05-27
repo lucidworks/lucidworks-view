@@ -51,7 +51,7 @@ gulp.task('copy:foundation', function(cb) {
 
 // Compiles the document directives partials into a single JavaScript file
 gulp.task('copy:document-partials', function(cb) {
-  gulp.src('client/assets/components/document/templates/*.html')
+  gulp.src('client/assets/components/document/*/*.html')
     .pipe($.ngHtml2js({
       moduleName: 'lucidworksView.components.document-partials',
       declareModule: true
