@@ -6,7 +6,8 @@
     'ngInject';
 
     /**
-     * [getTemplateId Returns a template-id that's appropriate for the supplied Solr document as configured in DocumentConfig]
+     * Get a template-id that is appropriate for the supplied Solr document as configured in DocumentConfig
+     * 
      * @param  {object} doc [Solr document]
      * @return {string}     [Template Id]
      */
