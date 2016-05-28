@@ -17,9 +17,10 @@
       var templateId = _.reduce(DocumentConfig, function(result, item){
         var predicate = item[0];
         var templateId = item[1];
-        // If no predicate is `true` yet for doc then only do checks
-        // TODO: Maybe make the string based predicate more smart and support regex and numbers?
+
         if(!result){
+          // If no predicate is `true` yet for doc then only do checks
+          // TODO: Maybe make the string based predicate more smart and support regex and numbers?
           if(_.isString(predicate) && !_.isFunction(predicate)){
             var fNv = splitFieldAndValue(predicate);
             if(doc[fNv.field] === fNv.value){
