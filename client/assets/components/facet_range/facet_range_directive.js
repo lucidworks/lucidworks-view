@@ -9,7 +9,7 @@
     'ngInject';
     return {
       restrict: 'EA',
-      templateUrl: 'assets/components/facetRange/facetRange.html',
+      templateUrl: 'assets/components/facet_range/facet_range.html',
       scope: true,
       controller: Controller,
       controllerAs: 'vm',

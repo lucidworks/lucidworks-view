@@ -9,7 +9,7 @@
     'ngInject';
     return {
       controller: Controller,
-      templateUrl: 'assets/components/landingPage/landingPage.html',
+      templateUrl: 'assets/components/landing_page/landing_page.html',
       controllerAs: 'lp',
       bindToController: true,
       scope: true

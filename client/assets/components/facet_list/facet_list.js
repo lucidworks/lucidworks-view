@@ -9,7 +9,7 @@
     'ngInject';
     var directive = {
       restrict: 'EA',
-      templateUrl: 'assets/components/facetList/facetList.html',
+      templateUrl: 'assets/components/facet_list/facet_list.html',
       scope: true,
       controller: Controller,
       controllerAs: 'vm',

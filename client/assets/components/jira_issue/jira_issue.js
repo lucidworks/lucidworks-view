@@ -9,7 +9,7 @@
     'ngInject';
     var directive = {
       restrict: 'EA',
-      templateUrl: 'assets/components/jiraIssue/jiraIssue.html',
+      templateUrl: 'assets/components/jira_issue/jira_issue.html',
       scope: true,
       controller: Controller,
       controllerAs: 'vm',

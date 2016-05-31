@@ -11,7 +11,7 @@
     'ngInject';
     return {
       restrict: 'EA',
-      templateUrl: 'assets/components/documentList/documentList.html',
+      templateUrl: 'assets/components/document_list/document_list.html',
       controller: Controller,
       controllerAs: 'vm',
       bindToController: {},

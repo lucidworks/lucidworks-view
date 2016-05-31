@@ -10,7 +10,7 @@
     return {
       restrict: 'EA',
       controller: Controller,
-      templateUrl: 'assets/components/searchBox/searchBox.html',
+      templateUrl: 'assets/components/search_box/search_box.html',
       scope: true,
       controllerAs: 'ta',
       bindToController: {
