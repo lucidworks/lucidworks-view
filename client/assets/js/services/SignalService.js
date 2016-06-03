@@ -31,16 +31,14 @@
         data = {
           params: {
             docId: docId,
-            // lw_browser: ClientStatsService.getBrowser(),
-            // lw_client_ip: ClientStatsService.getIP(),
-            lw_head_field: ConfigService.config.head_field,
-            lw_language: ClientStatsService.getBrowserLanguage(),
-            lw_platform: ClientStatsService.getBrowserPlatform(),
-            lw_userAgent: ClientStatsService.getBrowserUserAgent(),
-            // lw_userName: ClientStatsService.getUsername(),
-            query: QueryService.getQueryObject().q,
-            // source
-            // source_type
+            // browser: ClientStatsService.getBrowser(),
+            // client_ip: ClientStatsService.getIP(),
+            head_field: ConfigService.config.head_field,
+            language: ClientStatsService.getBrowserLanguage(),
+            platform: ClientStatsService.getBrowserPlatform(),
+            user_agent: ClientStatsService.getBrowserUserAgent(),
+            userName: ConfigService.getLoginCredentials().username || ConfigService.config.anonymous_access.username,
+            query: QueryService.getQueryObject().q
           },
           pipeline: ConfigService.config.signals_pipeline,
           timestamp: date.toISOString(),

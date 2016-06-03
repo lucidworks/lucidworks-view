@@ -12,9 +12,8 @@
       getBrowserLanguage: getBrowserLanguage,
       getBrowserPlatform: getBrowserPlatform,
       getBrowserUserAgent: getBrowserUserAgent,
-      getBrowser: getBrowser,
-      getIP: getIP,
-      getUsername: getUsername
+      getBrowser: getBrowser
+      // getIP: getIP,
     };
 
     /**
@@ -40,11 +39,5 @@
     function getBrowser(){
       return 'browsername';
     }
-
-    function getUsername(){
-      return 'username';
-    }
-
-
   }
 })();
