@@ -7,7 +7,7 @@
     ])
     .factory('SignalsService', SignalsService);
 
-  function SignalsService(ApiBase, ConfigService, $http, $q, QueryService) {
+  function SignalsService(ApiBase, ConfigService, $http, $q, QueryService, ClientStatsService) {
     'ngInject';
     var service = {
       postClickSignal: postClickSignal,
@@ -26,11 +26,21 @@
      * @return {promise}
      */
     function postClickSignal(docId, options) {
+
       var date = new Date(),
         data = {
           params: {
             docId: docId,
-            query: QueryService.getQueryObject().q
+            // lw_browser: ClientStatsService.getBrowser(),
+            // lw_client_ip: ClientStatsService.getIP(),
+            lw_head_field: ConfigService.config.head_field,
+            lw_language: ClientStatsService.getBrowserLanguage(),
+            lw_platform: ClientStatsService.getBrowserPlatform(),
+            lw_userAgent: ClientStatsService.getBrowserUserAgent(),
+            // lw_userName: ClientStatsService.getUsername(),
+            query: QueryService.getQueryObject().q,
+            // source
+            // source_type
           },
           pipeline: ConfigService.config.signals_pipeline,
           timestamp: date.toISOString(),

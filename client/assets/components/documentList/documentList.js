@@ -30,6 +30,7 @@
     vm.groupedResults = false;
     vm.toggleGroupedResults = toggleGroupedResults;
     vm.showGroupedResults = {};
+    vm.getDocPosition = getDocPosition;
 
     activate();
 
@@ -130,6 +131,16 @@
         vm.highlighting = {};
       }
       return vm.highlighting;
+    }
+
+    /**
+     * Get index of the doc in the returned documentList
+     * @param  {object} doc  Doc of which the index is required
+     * @param  {object} docs List of returned documents
+     * @return {number}      The index of the document in the documentList
+     */
+    function getDocPosition(doc, docs){
+      return _.findIndex(docs, doc);
     }
   }
 })();
