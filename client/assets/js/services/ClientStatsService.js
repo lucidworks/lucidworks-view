@@ -11,9 +11,7 @@
     return {
       getBrowserLanguage: getBrowserLanguage,
       getBrowserPlatform: getBrowserPlatform,
-      getBrowserUserAgent: getBrowserUserAgent,
-      getBrowser: getBrowser
-      // getIP: getIP,
+      getBrowserUserAgent: getBrowserUserAgent
     };
 
     /**
@@ -30,14 +28,6 @@
 
     function getBrowserUserAgent(){
       return $window.navigator.userAgent;
-    }
-
-    function getIP(){
-      return '127.0.0.1';
-    }
-
-    function getBrowser(){
-      return 'browsername';
     }
   }
 })();
