@@ -26,7 +26,6 @@
      * @return {promise}
      */
     function postClickSignal(docId, options) {
-
       var date = new Date(),
         data = {
           params: {

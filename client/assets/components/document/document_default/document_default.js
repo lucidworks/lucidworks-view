@@ -14,13 +14,14 @@
       controllerAs: 'vm',
       bindToController: {
         doc: '=',
+        position: '=',
         highlight: '='
       },
       replace: true
     };
   }
 
-  function Controller($log, $scope, DocsHelper, ConfigService, SignalsService) {
+  function Controller($log, $scope, DocsHelper, ConfigService, SignalsService, PaginateService) {
     'ngInject';
     var vm = this;
     vm.postSignal = SignalsService.postClickSignal;
@@ -31,6 +32,9 @@
 
     function activate() {
       vm.doc = processDocument(DocsHelper.concatMultivaluedFields(vm.doc));
+      vm.doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(vm.doc);
+      vm.doc.position = vm.position;
+      vm.doc.page = PaginateService.getNormalizedCurrentPage();
     }
 
     /**

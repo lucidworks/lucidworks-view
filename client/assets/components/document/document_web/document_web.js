@@ -15,6 +15,7 @@
       controllerAs: 'vm',
       bindToController: {
         doc: '=',
+        position: '=',
         highlight: '='
       }
     };
@@ -23,7 +24,7 @@
 
   }
 
-  function Controller(SignalsService) {
+  function Controller(SignalsService, PaginateService) {
     'ngInject';
     var vm = this;
 
@@ -32,6 +33,9 @@
 
     function activate() {
       vm.postSignal = SignalsService.postClickSignal;
+      vm.doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(vm.doc);
+      vm.doc.position = vm.position;
+      vm.doc.page = PaginateService.getNormalizedCurrentPage();
     }
   }
 })();

@@ -35,20 +35,12 @@
       vm.doc = processDocument(vm.doc);
       vm.doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(vm.doc);
       vm.doc.position = vm.position;
-      vm.doc.page = getNormalizedCurrentPage();
+      vm.doc.page = PaginateService.getNormalizedCurrentPage();
     }
 
     function processDocument(doc) {
       doc.createdAtFormatted = $filter('date')(doc.createdAt[0]);
       return doc;
-    }
-
-    /**
-     * Get the current page from PaginateService and normalize it wrt 1
-     * @return {number} [Normalized current page value]
-     */
-    function getNormalizedCurrentPage(){
-      return PaginateService.getCurrentPage() + 1;
     }
   }
 })();

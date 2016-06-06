@@ -13,7 +13,8 @@
         pageToStartRow: pageToStartRow,
         getRowsPerPage: getRowsPerPage,
         getCurrentPage: getCurrentPage,
-        getTotalPages: getTotalPages
+        getTotalPages: getTotalPages,
+        getNormalizedCurrentPage: getNormalizedCurrentPage
       };
 
     activate();
@@ -102,6 +103,15 @@
       if (getRowsPerPage() === 0 || startRow === 0) return 0;
       return Math.ceil(startRow / getRowsPerPage());
     }
+
+    /**
+     * Get the current page and normalize it wrt 1
+     * @return {integer} [Normalized current page value]
+     */
+    function getNormalizedCurrentPage(){
+      return getCurrentPage() + 1;
+    }
+
 
   }
 })();
