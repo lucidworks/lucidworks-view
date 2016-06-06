@@ -34,11 +34,11 @@
     function activate() {
       vm.postSignal = SignalsService.postClickSignal;
       vm.doc = processDocument(vm.doc);
-      vm.doc.position = vm.position;
     }
 
     function processDocument(doc) {
       doc.lastModified_dtFormatted = $filter('date')(doc.lastModified_dt);
+      doc.position = vm.position;
       return doc;
     }
   }

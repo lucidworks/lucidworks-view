@@ -32,9 +32,6 @@
 
     function activate() {
       vm.doc = processDocument(DocsHelper.concatMultivaluedFields(vm.doc));
-      vm.doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(vm.doc);
-      vm.doc.position = vm.position;
-      vm.doc.page = PaginateService.getNormalizedCurrentPage();
     }
 
     /**
@@ -66,6 +63,10 @@
       doc.lw_image = getField('image', doc);
 
       doc.lw_url = getField('head_url', doc);
+      
+      doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(doc);
+      doc.position = vm.position;
+      doc.page = PaginateService.getNormalizedCurrentPage();
 
       return doc;
     }

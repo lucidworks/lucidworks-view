@@ -33,11 +33,11 @@
     function activate() {
       vm.postSignal = SignalsService.postClickSignal;
       vm.doc = processDocument(vm.doc);
-      vm.doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(vm.doc);
-      vm.doc.page = PaginateService.getNormalizedCurrentPage();
     }
 
     function processDocument(doc) {
+      doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(doc);
+      doc.page = PaginateService.getNormalizedCurrentPage();
       return doc;
     }
   }
