@@ -1,0 +1,792 @@
+<!doctype html>
+<html class="no-js" lang="" ng-app="rulesApp" ng-controller="rulesController">
+<head>
+  <meta charset="utf-8">
+  <title>Rules Management</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+  <link rel="stylesheet" href="/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+  <link rel="stylesheet" href="/bower_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.css" />
+
+  <link rel="stylesheet" href="styles/vendor.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <script src="scripts/vendor/modernizr.js"></script>
+
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="scripts/RulesController.js"></script>
+
+</head>
+<body>
+<!--[if lt IE 10]>
+<p class="browsehappy">
+  You are using an <strong>outdated</strong>
+  browser. Please
+  <a href="http://browsehappy.com/">upgrade your browser</a>
+  to improve your experience.
+</p>
+<![endif]-->
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <a href="../" class="navbar-brand">Lucidworks View</a>
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar-main">
+      <ul class="nav navbar-nav">
+        <li>
+          <a href="#">Link #1</a>
+        </li>
+        <li>
+          <a href="#">Link #2</a>
+        </li>
+        <li>
+          <a href="#">Link #3</a>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            Dropdown
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="#">Action</a>
+            </li>
+            <li>
+              <a href="#">Another action</a>
+            </li>
+            <li>
+              <a href="#">Something else here</a>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li>
+              <a href="#">Separated link</a>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li>
+              <a href="#">One more separated link</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a href="#" target="_blank">Right item #1</a>
+        </li>
+        <li>
+          <a href="#" target="_blank">Right item #2</a>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-xs-12">
+      <h1>Adjust search wide</h1>
+      <p class="lead">Showcase</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- SIDEBAR -->
+    <div class="col-sm-2">
+      <a href="#addRule" data-toggle="modal" class="btn btn-lg btn-block btn-default lead-btn">
+        <i class="fa fa-plus"></i>
+        Add rule
+      </a>
+      <div class="list-group table-of-contents" id="accordion">
+        <a class="list-group-item" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true">Rules type</a>
+        <div id="collapseOne" class="collapse in" role="tabpanel">
+          <ul class="list-unstyled">
+            <li ng-repeat="f in facets"><a href="#">{{f[0]}} ({{f[1]}})</a></li>
+          </ul>
+        </div>
+        <a class="list-group-item" href="#status">Status</a>
+        <a class="list-group-item" href="#actuality">Actuality</a>
+        <a class="list-group-item" href="#tags">Tags</a>
+      </div>
+    </div>
+    <!-- /.SIDEBAR -->
+
+    <!-- MAIN -->
+    <div class="col-sm-10">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="btn-group checkbox-inside">
+            <div class="btn">
+              <div class="checkbox">
+                <label><input type="checkbox" id="selectAllBoxes" ng-click="checkUncheckAll(); resetFocus();"></label>
+              </div>
+            </div>
+            <a href="#" class="btn dropdown-toggle" data-toggle="dropdown">
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu with-states">
+              <li>
+                <a href="#">All</a>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <a href="#">None</a>
+              </li>
+              <!--
+              <li class="divider"></li>
+              <li>
+                <div class="btn-group btn-group-justified" role="group">
+                  <a class="btn btn-sm btn-link active" href="#">Active</a>
+                  <a class="btn btn-sm btn-link" href="#">Inactive</a>
+                </div>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <div class="btn-group btn-group-justified" role="group">
+                  <a class="btn btn-sm btn-link" href="#">Enabled</a>
+                  <a class="btn btn-sm btn-link" href="#">Disabled</a>
+                </div>
+              </li> -->
+            </ul>
+          </div>
+          <span class="small text-muted checkbox-inside-hint">{{getCheckedBoxesCount() + (getCheckedBoxesCount()==1 ? ' rule selected':' rules selected')}}</span>
+          <div class="btn-group">
+            <a href="#" class="btn btn-link dropdown-toggle" data-toggle="dropdown"  id="bulk-actions">
+              <i class="fa fa-clone"></i>
+              Bulk actions
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu with-states" id="bulk-dropdown">
+              <li>
+                <a href="#" ng-click="bulkRemoveRules()"><i class="fa fa-times"></i>Delete</a>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <a href="#" ng-click="bulkStatusEnabled()"><span class="status bg-active"></span>Enable</a>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <a href="#" ng-click="bulkStatusDisabled()"><span class="status bg-inactive"></span>Disable</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-sm-6 text-right">
+          <div class="btn-group btn-group-lg">
+            <a href="#" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+              <i class="mi-filter_list"></i>
+              Filter
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right with-states">
+              <li>
+                <div class="btn-group btn-group-justified filter-range" role="group">
+                  <div class="btn">
+                    <label for="filterStart" class="small text-muted text-uppercase">Start</label>
+                    <div class="datepicker-holder">
+                      <input type='text' class="form-control datepicker" id="filterStart" />
+                    </div>
+                  </div>
+                  <div class="btn text-left">
+                    <label for="filterEnd" class="small text-muted text-uppercase">End</label>
+                    <div class="datepicker-holder">
+                      <input type='text' class="form-control datepicker" id="filterEnd" />
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <label for="filterStart" class="small text-muted text-uppercase">Status</label>
+                <div class="btn-group btn-group-justified" role="group">
+                  <a class="btn btn-sm btn-link active" href="#">Active</a>
+                  <a class="btn btn-sm btn-link" href="#">Inactive</a>
+                </div>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <label for="filterStart" class="small text-muted text-uppercase">Actuality</label>
+                <div class="btn-group btn-group-justified" role="group">
+                  <a class="btn btn-sm btn-link" href="#">Enabled</a>
+                  <a class="btn btn-sm btn-link" href="#">Disabled</a>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <form class="form-inline" role="search">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search">
+              <button type="submit" class="btn-search"><i class="fa fa-search"></i></button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- TABLE -->
+      <table class="table table-bordered table-hover rules-list">
+        <!-- THEAD -->
+        <thead>
+        <tr>
+          <th></th>
+          <th>Status</th>
+          <th width="20%"><div class="column-header-holder"><span>Name <a href="#" class="text-muted"><i class="mi-filter_list"></i></a></span><a href="#" class="text-muted"><i class="fa fa-sort"></i></a></div></th>
+          <th width="40%">Trigger</th>
+          <th width="18%">Action</th>
+          <th><div class="column-header-holder">Created on<a href="#" class="text-muted"><i class="fa fa-sort"></i></a></div></th>
+          <th><div class="column-header-holder">Edited on<a href="#" class="text-muted"><i class="fa fa-sort"></i></a></div></th>
+          <th></th>
+        </tr>
+        </thead>
+        <!-- TBODY -->
+        <tbody>
+        <tr class="inactive" ng-repeat="rule in rules">
+          <td>
+            <div class="column-holder">
+              <div class="checkbox">
+                <label><input type="checkbox" class="ruleCheckbox" value="{{rule.id}}" ng-click="getCheckedBoxesCount(); resetFocus();"></label>
+              </div>
+            </div>
+          </td>
+          <td class="text-center">
+            <div class="column-holder">
+              <a href="#" class="status {{rule.status=='enabled'?'bg-active':'bg-inactive'}}" ng-click="changeStatus(rule.id)"></a>
+            </div>
+          </td>
+          <td>
+            <div class="column-holder">
+              <h2><span>#1</span>{{rule.id}}</h2>
+              <p class="lead">
+                <textarea rows="3" class="form-control disabledControl"
+                          ng-model="rule.description" disabled>{{rule.description}}</textarea>
+                <a href="#" class="column-more" ng-if="rule.description.length>38">&#x85;</a>
+              </p>
+            </div>
+          </td>
+          <td class="btn-bottom-holder">
+            <div class="column-holder">
+              <div class="row hor-gut-6px">
+                <!-- Trigger Types -->
+                <div class="col-xs-6">
+                  <form action="">
+                    <fieldset>
+                      <div class="form-group" ng-if="rule.search_terms">
+                        <label for="triggerKeywords" class="small text-muted text-uppercase">Keywords</label>
+                        <textarea rows="1" class="form-control disabledControl" id="triggerKeywords" ng-model="rule.search_terms" disabled>{{rule.search_terms}}</textarea>
+                      </div>
+                      <div class="form-group" ng-if="rule.category">
+                        <label for="triggerCategory" class="small text-muted text-uppercase">Category</label>
+                        <select class="form-control disabledControl" id="triggerCategory" ng-model="rule.category" disabled>
+                          <option value="1">Category #1</option>
+                          <option value="2">Category #2</option>
+                          <option value="3">Category #3</option>
+                          <option value="4">Category #4</option>
+                        </select>
+                      </div>
+                      <div class="form-group" ng-if="rule.tagList">
+                        <label for="triggerTags" class="small text-muted text-uppercase">Tags</label>
+                        <input type="text" class="form-control disabledControl" id="triggerTags" aria-describedby="triggerTags"  placeholder='Enter tags' ng-model="rule.tagList" disabled/>
+                      </div>
+                    </fieldset>
+                  </form>
+                </div>
+                <!-- Trigger Date and Time -->
+                <div class="col-xs-5">
+                  <form action="">
+                    <fieldset>
+                      <div class="form-group">
+                        <label for="triggerStart" class="small text-muted text-uppercase">Start</label>
+                        <div class="datepicker-holder">
+                          <input type='text' class="form-control  trigger-start {{rule.id}} disabledControl" id="triggerStart" ng-model="rule.triggerStart" disabled/>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="triggerEnd" class="small text-muted text-uppercase">End</label>
+                        <div class="datepicker-holder">
+                          <input type='text' class="form-control  trigger-end {{rule.id}} disabledControl" id="triggerEnd" ng-model="rule.triggerEnd" disabled/>
+                        </div>
+                      </div>
+                    </fieldset>
+                  </form>
+                </div>
+              </div>
+              <div class="btn-group btn-group-sm">
+                <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-plus"></i>
+                  Add trigger
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="#" ng-click="addTrigger(rule.id, 'search_terms')">KEYWORDS</a>
+                  </li>
+                  <li>
+                    <a href="#" ng-click="addTrigger(rule.id, 'category')">CATEGORY</a>
+                  </li>
+                  <li>
+                    <a href="#" ng-click="addTrigger(rule.id, 'tags')">TAGS</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <a href="#" class="column-more" ng-if="rule.search_terms && rule.category && rule.tagList">&#x85;</a>
+          </td>
+          <td class="btn-bottom-holder">
+            <div class="column-holder">
+              <form action="">
+                <fieldset>
+                  <div class="form-group" ng-if="rule.productList">
+                    <label for="actionProductList" class="small text-muted text-uppercase">Product List</label>
+                    <input type='text' class="form-control disabledControl" id="actionProductList" value="product list" ng-model="rule.productList" disabled/>
+                  </div>
+                  <div class="form-group" ng-if="rule.redirect">
+                    <label for="actionRedirect" class="small text-muted text-uppercase">Redirect</label>
+                    <input type='text' class="form-control disabledControl" id="actionRedirect" value="/screens/touch-technology" ng-model="rule.redirect" disabled/>
+                  </div>
+                  <div class="form-group" ng-if="rule.banner">
+                    <label for="actionBanner" class="small text-muted text-uppercase">Banner</label>
+                    <input type='text' class="form-control disabledControl" id="actionBanner" value="banner" ng-model="rule.banner" disabled/>
+                  </div>
+                  <div class="form-group" ng-if="rule.facetList">
+                    <label for="actionFacetList" class="small text-muted text-uppercase">Facet List</label>
+                    <input type='text' class="form-control disabledControl" id="actionFacetList" value="facetList" ng-model="rule.facetList" disabled/>
+                  </div>
+                  <div class="form-group" ng-if="rule.rankList">
+                    <label for="actionRankList" class="small text-muted text-uppercase">Rank List</label>
+                    <input type='text' class="form-control disabledControl" id="actionRankList" value="rankList" ng-model="rule.rankList" disabled/>
+                  </div>
+                  <div class="form-group" ng-if="rule.querySet">
+                    <label for="actionQuerySet" class="small text-muted text-uppercase">Query Set</label>
+                    <input type='text' class="form-control disabledControl" id="actionQuerySet" value="querySet" ng-model="rule.querySet" disabled/>
+                  </div>
+                </fieldset>
+              </form>
+              <div class="btn-group btn-group-sm">
+                <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-plus"></i>
+                  Add action
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="#" ng-click="addAction(rule.id, 'product_list')">Product List</a>
+                  </li>
+                  <li>
+                    <a href="#" ng-click="addAction(rule.id, 'redirect')">Redirect</a>
+                  </li>
+                  <li>
+                    <a href="#" ng-click="addAction(rule.id, 'banner')">Banner</a>
+                  </li>
+                  <li>
+                    <a href="#" ng-click="addAction(rule.id, 'facetList')">Facet List</a>
+                  </li>
+                  <li>
+                    <a href="#" ng-click="addAction(rule.id, 'rankList')">Rank List</a>
+                  </li>
+                  <li>
+                    <a href="#" ng-click="addAction(rule.id, 'querySet')">Query Set</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <a href="#" class="column-more" ng-if="checkActionCount(rule.id)>2">&#x85;</a>
+          </td>
+          <td>
+            <div class="column-holder">
+              <div class="form-group">
+                <label for="rule-1-created-date" class="small text-muted text-uppercase">Date</label>
+                <div class="datepicker-holder">
+                  <input type='text' class="form-control" id="rule-1-created-date" value="{{rule.createdAt | date: 'MM/dd/yyyy'}}" disabled />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="rule-1-created-Time" class="small text-muted text-uppercase">Time</label>
+                <div class="datepicker-holder">
+                  <input type='text' class="form-control" id="rule-1-created-Time" value="{{rule.createdAt | date: 'hh:mm a'}}" disabled />
+                </div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="column-holder">
+              <div class="form-group">
+                <label for="rule-1-edited-date" class="small text-muted text-uppercase">Date</label>
+                <div class="datepicker-holder">
+                  <input type='text' class="form-control" id="rule-1-edited-date" value="{{rule.updatedAt | date: 'MM/dd/yyyy'}}" disabled />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="rule-1-edited-Time" class="small text-muted text-uppercase">Time</label>
+                <div class="datepicker-holder">
+                  <input type='text' class="form-control" id="rule-1-edited-Time" value="{{rule.updatedAt | date: 'hh:mm a'}}" disabled />
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="text-nowrap inline-icons">
+            <div class="column-holder">
+              <a class="text-muted" href="#"><i class="fa fa-pencil"></i></a>
+              <a class="text-muted" href="#"><i class="fa fa-times" ng-click="removeRule(rule.id)"></i></a>
+              <a href="#" class="btn btn-sm btn-default btn-save" ng-click="updateRule(rule.id)"><i class="fa fa-check-circle"></i>Save</a>
+            </div>
+          </td>
+        </tr>
+<!--        <tr class="inactive" >
+          <td>
+            <div class="column-holder">
+              <div class="checkbox">
+                <label><input type="checkbox"></label>
+              </div>
+            </div>
+          </td>
+          <td class="text-center">
+            <div class="column-holder">
+              <a href="#" class="status bg-inactive"></a>
+            </div>
+          </td>
+          <td>
+            <div class="column-holder">
+              <h2><span>#2</span>{{rule.id}}</h2>
+              <p class="lead">Lorem ipsum dolor sit amet, elit tila consectetur</p>
+            </div>
+          </td>
+          <td class="btn-bottom-holder">
+            <div class="column-holder">
+              <div class="row hor-gut-6px">
+                &lt;!&ndash; Trigger Types &ndash;&gt;
+                <div class="col-xs-6">
+                  <form action="">
+                    <fieldset>
+                      <div class="form-group">
+                        <label for="triggerKeywords" class="small text-muted text-uppercase">Keywords</label>
+                        <input type="text" class="form-control" id="triggerTags1" aria-describedby="triggerTags"  placeholder='Enter tags' value="tag#1, tag_long#2, tags#3">
+                      </div>
+                    </fieldset>
+                  </form>
+                </div>
+                &lt;!&ndash; Trigger Date and Time &ndash;&gt;
+                <div class="col-xs-6">
+                  <form action="">
+                    <fieldset>
+                      <div class="form-group">
+                        <label for="triggerStart" class="small text-muted text-uppercase">Start</label>
+                        <div class="datepicker-holder">
+                          <input type='text' class="form-control datepicker" id="triggerStart" />
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="triggerEnd" class="small text-muted text-uppercase">End</label>
+                        <div class="datepicker-holder">
+                          <input type='text' class="form-control datepicker" id="triggerEnd" />
+                        </div>
+                      </div>
+                    </fieldset>
+                  </form>
+                </div>
+              </div>
+              <div class="btn-group btn-group-sm">
+                <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-plus"></i>
+                  add trigger
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="#">Dropdown link</a>
+                  </li>
+                  <li>
+                    <a href="#">Dropdown link</a>
+                  </li>
+                  <li>
+                    <a href="#">Dropdown link</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </td>
+          <td class="btn-bottom-holder">
+            <div class="column-holder">
+              <form action="">
+                <div class="form-group">
+                  <label for="actionProductList" class="small text-muted text-uppercase">Product List</label>
+                  <textarea rows="1" class="form-control" id="actionProductList">ident#1, id_item#2, id#3, id_item#4</textarea>
+                  <a href="#" class="btn btn-link btn-sm btn-file">
+                    <i class="fa fa-file-text"></i>
+                    Upload file
+                  </a>
+                </div>
+              </form>
+              <div class="btn-group btn-group-sm">
+                <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-plus"></i>
+                  add action
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="#">Dropdown link</a>
+                  </li>
+                  <li>
+                    <a href="#">Dropdown link</a>
+                  </li>
+                  <li>
+                    <a href="#">Dropdown link</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="column-holder">
+              <div class="form-group">
+                <label for="rule-1-created-date" class="small text-muted text-uppercase">Date</label>
+                <div class="datepicker-holder">
+                  <input type='text' class="form-control" id="rule-1-created-date" value="05/27/2016" disabled />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="rule-1-created-Time" class="small text-muted text-uppercase">Time</label>
+                <div class="datepicker-holder">
+                  <input type='text' class="form-control" id="rule-1-created-Time" value="12:00 AM" disabled />
+                </div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="column-holder">
+              <div class="form-group">
+                <label for="rule-1-edited-date" class="small text-muted text-uppercase">Date</label>
+                <div class="datepicker-holder">
+                  <input type='text' class="form-control" id="rule-1-edited-date" value="05/27/2016" disabled />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="rule-1-edited-Time" class="small text-muted text-uppercase">Time</label>
+                <div class="datepicker-holder">
+                  <input type='text' class="form-control" id="rule-1-edited-Time" value="12:22 AM" disabled />
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="text-nowrap inline-icons">
+            <div class="column-holder">
+              <a class="text-muted" href="#"><i class="fa fa-pencil"></i></a>
+              <a class="text-muted" href="#"><i class="fa fa-times"></i></a>
+            </div>
+          </td>
+        </tr>-->
+        </tbody>
+      </table>
+      <div class="row table-footer">
+        <div class="col-sm-6">
+          <p class="small text-nowrap"><span>{{rules.length || 0}}</span> of <span>{{rules.length || 0}}</span> rules</p>
+        </div>
+        <div class="col-sm-6 text-right">
+          <a href="#" class="btn btn-sm btn-link text-muted"><i class="fa fa-angle-left"></i>Previous</a>
+          <a href="#" class="btn btn-sm btn-link fa-right">Next <i class="fa fa-angle-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="addRule" data-show="true" class="modal fade add-rule">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <!-- <div class="modal-header">
+           <h4 class="modal-title">Source Code</h4>
+        </div> -->
+        <div class="modal-body">
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> -->
+          <div class="add-rule-wiz">
+            <ol class="list-inline">
+              <li>
+                <h4>Rule name</h4>
+                <div class="wiz-step">
+                  <form action="">
+                    <fieldset>
+                      <div class="form-group">
+                        <label for="addRuleName" class="small text-muted text-uppercase">Rule name</label>
+                        <input type='text' class="form-control" id="addRuleName" placeholder="Enter rule name" ng-model="currentRule.ruleName"/>
+                      </div>
+                      <div class="form-group">
+                        <label for="addRuleDescrition" class="small text-muted text-uppercase">Descrition</label>
+                        <textarea rows="1" class="form-control" id="addRuleDescrition" placeholder="Enter rule description" ng-model="currentRule.ruleDescription"></textarea>
+                      </div>
+                      <div class="form-group">
+                        <label for="rule-1-created-date" class="small text-muted text-uppercase">Date</label>
+                        <div class="datepicker-holder">
+                          <input type='text' class="form-control" id="rule-1-created-date" value="{{currentRule.currentDate | date: 'MM/dd/yyyy , hh:mm a'}}" disabled />
+                        </div>
+                      </div>
+                    </fieldset>
+                  </form>
+                </div>
+              </li>
+              <li>
+                <h4>Trigger</h4>
+                <div class="wiz-step">
+                  <form action="">
+                    <fieldset>
+                      <div class="form-group">
+                        <div class="row hor-gut-10px">
+                          <div class="col-sm-6">
+                            <label for="addTriggerStart" class="small text-muted text-uppercase">Start</label>
+                            <div class="datepicker-holder">
+                              <input type='text' class="form-control datepicker add-trigger-start" id="addTriggerStart" />
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <label for="addTriggerEnd" class="small text-muted text-uppercase">End</label>
+                            <div class="datepicker-holder">
+                              <input type='text' class="form-control datepicker add-trigger-end" id="addTriggerEnd" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group" ng-if="keywordsFlag">
+                        <label for="addTriggerKeywords" class="small text-muted text-uppercase">Keywords</label>
+                        <textarea rows="1" class="form-control" id="addTriggerKeywords" ng-model="currentRule.ruleKeywords"></textarea>
+                      </div>
+                      <div class="form-group" ng-if="categoryFlag">
+                        <label for="addTriggerCategory" class="small text-muted text-uppercase">Category</label>
+                        <select class="form-control" id="addTriggerCategory" ng-model="currentRule.ruleCategory">
+                          <option value="1">Category #1</option>
+                          <option value="2">Category #2</option>
+                          <option value="3">Category #3</option>
+                          <option value="4">Category #4</option>
+                        </select>
+                      </div>
+                      <div class="form-group" ng-if="tagsFlag">
+                        <label for="addTriggerTags" class="small text-muted text-uppercase">Tags</label>
+                        <input type="text" class="form-control" id="addTriggerTags" aria-describedby="triggerTags"  placeholder='Enter tags' ng-model="currentRule.ruleTagList"/>
+                      </div>
+                    </fieldset>
+                  </form>
+                  <div class="btn-group btn-group-sm">
+                    <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                      <i class="fa fa-plus"></i>
+                      Add trigger
+                      <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a href="#" ng-click="keywordsFlag = true">KEYWORDS</a>
+                      </li>
+                      <li>
+                        <a href="#" ng-click="categoryFlag = true">CATEGORY</a>
+                      </li>
+                      <li>
+                        <a href="#" ng-click="tagsFlag = true">TAGS</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <h4>Action</h4>
+                <div class="wiz-step">
+                  <form action="">
+                    <fieldset>
+                      <div class="form-group" ng-if="productListFlag">
+                        <label for="addActionProductList" class="small text-muted text-uppercase">Product List</label>
+                        <textarea rows="1" class="form-control" id="addActionProductList" value="product list" ng-model="currentRule.ruleProductList"></textarea>
+                      </div>
+                      <div class="form-group" ng-if="redirectFlag">
+                        <label for="addActionRedirect" class="small text-muted text-uppercase">Redirect</label>
+                        <input type='text' class="form-control" id="addActionRedirect" value="/screens/touch-technology" ng-model="currentRule.ruleRedirect"/>
+                      </div>
+                      <div class="form-group" ng-if="bannerFlag">
+                        <label for="addActionBanner" class="small text-muted text-uppercase">Banner</label>
+                        <input type='text' class="form-control" id="addActionBanner" value="banner" ng-model="currentRule.ruleBanner"/>
+                      </div>
+                      <div class="form-group" ng-if="facetListFlag">
+                        <label for="addActionFacetList" class="small text-muted text-uppercase">Facet List</label>
+                        <input type='text' class="form-control" id="addActionFacetList" value="facetList" ng-model="currentRule.ruleFacetList"/>
+                      </div>
+                      <div class="form-group" ng-if="rankListFlag">
+                        <label for="addActionRankList" class="small text-muted text-uppercase">Rank List</label>
+                        <input type='text' class="form-control" id="addActionRankList" value="rankList" ng-model="currentRule.ruleRankList"/>
+                      </div>
+                      <div class="form-group" ng-if="querySetFlag">
+                        <label for="addActionQuerySet" class="small text-muted text-uppercase">Query Set</label>
+                        <input type='text' class="form-control" id="addActionQuerySet" value="querySet" ng-model="currentRule.ruleQuerySet"/>
+                      </div>
+                    </fieldset>
+                    <a href="#" class="btn btn-default btn-sm btn-file">
+                      <i class="fa fa-file-text-o"></i>
+                      Upload file
+                    </a>
+                  </form>
+                  <div class="btn-group btn-group-sm">
+                    <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                      <i class="fa fa-plus"></i>
+                      Add action
+                      <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a href="#" ng-click="productListFlag = true">Product List</a>
+                      </li>
+                      <li>
+                        <a href="#" ng-click="redirectFlag = true">Redirect</a>
+                      </li>
+                      <li>
+                        <a href="#" ng-click="bannerFlag = true">Banner</a>
+                      </li>
+                      <li>
+                        <a href="#" ng-click="facetListFlag = true">Facet List</a>
+                      </li>
+                      <li>
+                        <a href="#" ng-click="rankListFlag = true">Rank List</a>
+                      </li>
+                      <li>
+                        <a href="#" ng-click="querySetFlag = true">Query Set</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <hr />
+          <button type="button" class="btn btn-link text-muted" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i> Cancel</button>
+          <button type="button" class="btn btn-default" aria-hidden="true" ng-click="addRule()"><i class="fa fa-plus"></i> Add rule</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="source-modal" class="modal fade">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="modal-title">Source Code</h4>
+        </div>
+        <div class="modal-body">
+          <pre></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="scripts/vendor.js"></script>
+<script src="scripts/plugins.js"></script>
+
+</body>
+</html>
