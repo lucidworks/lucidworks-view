@@ -282,11 +282,11 @@
                     <fieldset>
                       <div class="form-group" ng-if="rule.search_terms">
                         <label for="triggerKeywords" class="small text-muted text-uppercase">Keywords</label>
-                        <textarea rows="1" class="form-control disabledControl" id="triggerKeywords" ng-model="rule.search_terms" disabled>{{rule.search_terms}}</textarea>
+                        <textarea rows="1" class="form-control disabledControl" id="triggerKeywords" ng-model="rule.search_terms">{{rule.search_terms}}</textarea>
                       </div>
                       <div class="form-group" ng-if="rule.category">
                         <label for="triggerCategory" class="small text-muted text-uppercase">Category</label>
-                        <select class="form-control disabledControl" id="triggerCategory" ng-model="rule.category" disabled>
+                        <select class="form-control disabledControl" id="triggerCategory" ng-model="rule.category">
                           <option value="1">Category #1</option>
                           <option value="2">Category #2</option>
                           <option value="3">Category #3</option>
@@ -295,7 +295,7 @@
                       </div>
                       <div class="form-group" ng-if="rule.tagList">
                         <label for="triggerTags" class="small text-muted text-uppercase">Tags</label>
-                        <input type="text" class="form-control disabledControl" id="triggerTags" aria-describedby="triggerTags"  placeholder='Enter tags' ng-model="rule.tagList" disabled/>
+                        <input type="text" class="form-control disabledControl" id="triggerTags" aria-describedby="triggerTags"  placeholder='Enter tags' ng-model="rule.tagList"/>
                       </div>
                     </fieldset>
                   </form>
@@ -307,13 +307,13 @@
                       <div class="form-group">
                         <label for="triggerStart" class="small text-muted text-uppercase">Start</label>
                         <div class="datepicker-holder">
-                          <input type='text' class="form-control  trigger-start {{rule.id}} disabledControl" id="triggerStart" ng-model="rule.triggerStart" disabled/>
+                          <input type='text' class="form-control  trigger-start {{rule.id}} disabledControl" id="triggerStart" ng-model="rule.triggerStart"/>
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="triggerEnd" class="small text-muted text-uppercase">End</label>
                         <div class="datepicker-holder">
-                          <input type='text' class="form-control  trigger-end {{rule.id}} disabledControl" id="triggerEnd" ng-model="rule.triggerEnd" disabled/>
+                          <input type='text' class="form-control  trigger-end {{rule.id}} disabledControl" id="triggerEnd" ng-model="rule.triggerEnd"/>
                         </div>
                       </div>
                     </fieldset>
@@ -347,27 +347,27 @@
                 <fieldset>
                   <div class="form-group" ng-if="rule.productList">
                     <label for="actionProductList" class="small text-muted text-uppercase">Product List</label>
-                    <input type='text' class="form-control disabledControl" id="actionProductList" value="product list" ng-model="rule.productList" disabled/>
+                    <input type='text' class="form-control disabledControl" id="actionProductList" value="product list" ng-model="rule.productList"/>
                   </div>
                   <div class="form-group" ng-if="rule.redirect">
                     <label for="actionRedirect" class="small text-muted text-uppercase">Redirect</label>
-                    <input type='text' class="form-control disabledControl" id="actionRedirect" value="/screens/touch-technology" ng-model="rule.redirect" disabled/>
+                    <input type='text' class="form-control disabledControl" id="actionRedirect" value="/screens/touch-technology" ng-model="rule.redirect"/>
                   </div>
                   <div class="form-group" ng-if="rule.banner">
                     <label for="actionBanner" class="small text-muted text-uppercase">Banner</label>
-                    <input type='text' class="form-control disabledControl" id="actionBanner" value="banner" ng-model="rule.banner" disabled/>
+                    <input type='text' class="form-control disabledControl" id="actionBanner" value="banner" ng-model="rule.banner"/>
                   </div>
                   <div class="form-group" ng-if="rule.facetList">
                     <label for="actionFacetList" class="small text-muted text-uppercase">Facet List</label>
-                    <input type='text' class="form-control disabledControl" id="actionFacetList" value="facetList" ng-model="rule.facetList" disabled/>
+                    <input type='text' class="form-control disabledControl" id="actionFacetList" value="facetList" ng-model="rule.facetList"/>
                   </div>
                   <div class="form-group" ng-if="rule.rankList">
                     <label for="actionRankList" class="small text-muted text-uppercase">Rank List</label>
-                    <input type='text' class="form-control disabledControl" id="actionRankList" value="rankList" ng-model="rule.rankList" disabled/>
+                    <input type='text' class="form-control disabledControl" id="actionRankList" value="rankList" ng-model="rule.rankList"/>
                   </div>
                   <div class="form-group" ng-if="rule.querySet">
                     <label for="actionQuerySet" class="small text-muted text-uppercase">Query Set</label>
-                    <input type='text' class="form-control disabledControl" id="actionQuerySet" value="querySet" ng-model="rule.querySet" disabled/>
+                    <input type='text' class="form-control disabledControl" id="actionQuerySet" value="querySet" ng-model="rule.querySet"/>
                   </div>
                 </fieldset>
               </form>
@@ -723,10 +723,6 @@
                         <input type='text' class="form-control" id="addActionQuerySet" value="querySet" ng-model="currentRule.ruleQuerySet"/>
                       </div>
                     </fieldset>
-                    <a href="#" class="btn btn-default btn-sm btn-file">
-                      <i class="fa fa-file-text-o"></i>
-                      Upload file
-                    </a>
                   </form>
                   <div class="btn-group btn-group-sm">
                     <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -763,7 +759,7 @@
         <div class="modal-footer">
           <hr />
           <button type="button" class="btn btn-link text-muted" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i> Cancel</button>
-          <button type="button" class="btn btn-default" aria-hidden="true" ng-click="addRule()"><i class="fa fa-plus"></i> Add rule</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true" ng-click="addRule()"><i class="fa fa-plus"></i> Add rule</button>
         </div>
       </div>
     </div>
