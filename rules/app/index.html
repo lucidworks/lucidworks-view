@@ -31,7 +31,7 @@
 </p>
 <![endif]-->
 
-<div class="navbar navbar-default navbar-fixed-top">
+<!--<div class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
       <a href="../" class="navbar-brand">Lucidworks View</a>
@@ -90,14 +90,13 @@
 
     </div>
   </div>
-</div>
+</div>-->
 
 <div class="container">
 
   <div class="row">
     <div class="col-xs-12">
-      <h1>Adjust search wide</h1>
-      <p class="lead">Showcase</p>
+      <h1>Lucidworks Rules</h1>
     </div>
   </div>
 
@@ -112,7 +111,7 @@
         <a class="list-group-item" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true">Rules type</a>
         <div id="collapseOne" class="collapse in" role="tabpanel">
           <ul class="list-unstyled">
-            <li ng-repeat="f in facets"><a href="#">{{f[0]}} ({{f[1]}})</a></li>
+            <li ng-repeat="f in facets"><a href="#" ng-click="filterBy('type', f[0])">{{f[0]}} ({{f[1]}})</a></li>
           </ul>
         </div>
         <a class="list-group-item" href="#status">Status</a>
@@ -224,9 +223,9 @@
               </li>
             </ul>
           </div>
-          <form class="form-inline" role="search">
+          <form class="form-inline" role="search" ng-submit="search()">
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Search">
+              <input type="text" class="form-control" placeholder="Search" ng-model="searchQuery">
               <button type="submit" class="btn-search"><i class="fa fa-search"></i></button>
             </div>
           </form>
@@ -441,159 +440,15 @@
             </div>
           </td>
         </tr>
-<!--        <tr class="inactive" >
-          <td>
-            <div class="column-holder">
-              <div class="checkbox">
-                <label><input type="checkbox"></label>
-              </div>
-            </div>
-          </td>
-          <td class="text-center">
-            <div class="column-holder">
-              <a href="#" class="status bg-inactive"></a>
-            </div>
-          </td>
-          <td>
-            <div class="column-holder">
-              <h2><span>#2</span>{{rule.id}}</h2>
-              <p class="lead">Lorem ipsum dolor sit amet, elit tila consectetur</p>
-            </div>
-          </td>
-          <td class="btn-bottom-holder">
-            <div class="column-holder">
-              <div class="row hor-gut-6px">
-                &lt;!&ndash; Trigger Types &ndash;&gt;
-                <div class="col-xs-6">
-                  <form action="">
-                    <fieldset>
-                      <div class="form-group">
-                        <label for="triggerKeywords" class="small text-muted text-uppercase">Keywords</label>
-                        <input type="text" class="form-control" id="triggerTags1" aria-describedby="triggerTags"  placeholder='Enter tags' value="tag#1, tag_long#2, tags#3">
-                      </div>
-                    </fieldset>
-                  </form>
-                </div>
-                &lt;!&ndash; Trigger Date and Time &ndash;&gt;
-                <div class="col-xs-6">
-                  <form action="">
-                    <fieldset>
-                      <div class="form-group">
-                        <label for="triggerStart" class="small text-muted text-uppercase">Start</label>
-                        <div class="datepicker-holder">
-                          <input type='text' class="form-control datepicker" id="triggerStart" />
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="triggerEnd" class="small text-muted text-uppercase">End</label>
-                        <div class="datepicker-holder">
-                          <input type='text' class="form-control datepicker" id="triggerEnd" />
-                        </div>
-                      </div>
-                    </fieldset>
-                  </form>
-                </div>
-              </div>
-              <div class="btn-group btn-group-sm">
-                <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                  <i class="fa fa-plus"></i>
-                  add trigger
-                  <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li>
-                    <a href="#">Dropdown link</a>
-                  </li>
-                  <li>
-                    <a href="#">Dropdown link</a>
-                  </li>
-                  <li>
-                    <a href="#">Dropdown link</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </td>
-          <td class="btn-bottom-holder">
-            <div class="column-holder">
-              <form action="">
-                <div class="form-group">
-                  <label for="actionProductList" class="small text-muted text-uppercase">Product List</label>
-                  <textarea rows="1" class="form-control" id="actionProductList">ident#1, id_item#2, id#3, id_item#4</textarea>
-                  <a href="#" class="btn btn-link btn-sm btn-file">
-                    <i class="fa fa-file-text"></i>
-                    Upload file
-                  </a>
-                </div>
-              </form>
-              <div class="btn-group btn-group-sm">
-                <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                  <i class="fa fa-plus"></i>
-                  add action
-                  <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li>
-                    <a href="#">Dropdown link</a>
-                  </li>
-                  <li>
-                    <a href="#">Dropdown link</a>
-                  </li>
-                  <li>
-                    <a href="#">Dropdown link</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="column-holder">
-              <div class="form-group">
-                <label for="rule-1-created-date" class="small text-muted text-uppercase">Date</label>
-                <div class="datepicker-holder">
-                  <input type='text' class="form-control" id="rule-1-created-date" value="05/27/2016" disabled />
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="rule-1-created-Time" class="small text-muted text-uppercase">Time</label>
-                <div class="datepicker-holder">
-                  <input type='text' class="form-control" id="rule-1-created-Time" value="12:00 AM" disabled />
-                </div>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="column-holder">
-              <div class="form-group">
-                <label for="rule-1-edited-date" class="small text-muted text-uppercase">Date</label>
-                <div class="datepicker-holder">
-                  <input type='text' class="form-control" id="rule-1-edited-date" value="05/27/2016" disabled />
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="rule-1-edited-Time" class="small text-muted text-uppercase">Time</label>
-                <div class="datepicker-holder">
-                  <input type='text' class="form-control" id="rule-1-edited-Time" value="12:22 AM" disabled />
-                </div>
-              </div>
-            </div>
-          </td>
-          <td class="text-nowrap inline-icons">
-            <div class="column-holder">
-              <a class="text-muted" href="#"><i class="fa fa-pencil"></i></a>
-              <a class="text-muted" href="#"><i class="fa fa-times"></i></a>
-            </div>
-          </td>
-        </tr>-->
         </tbody>
       </table>
       <div class="row table-footer">
         <div class="col-sm-6">
-          <p class="small text-nowrap"><span>{{rules.length || 0}}</span> of <span>{{rules.length || 0}}</span> rules</p>
+          <p class="small text-nowrap"><span>{{rules.length || 0}}</span> of <span>{{rulesTotal}}</span> rules</p>
         </div>
         <div class="col-sm-6 text-right">
-          <a href="#" class="btn btn-sm btn-link text-muted"><i class="fa fa-angle-left"></i>Previous</a>
-          <a href="#" class="btn btn-sm btn-link fa-right">Next <i class="fa fa-angle-right"></i></a>
+          <a href="#" class="btn btn-sm btn-link text-muted" ng-click="prev()" ng-class="(pageNum <= 0) ? 'text-muted' : ''"><i class="fa fa-angle-left"></i>Previous</a>
+          <a href="#" class="btn btn-sm btn-link fa-right" ng-click="next()" ng-class="((pageNum + 1) * pageSize >= rulesTotal) ? 'text-muted' : ''">Next <i class="fa fa-angle-right"></i></a>
         </div>
       </div>
     </div>
