@@ -2,13 +2,9 @@
 <html class="no-js" lang="" ng-app="rulesApp" ng-controller="rulesController">
 <head>
   <meta charset="utf-8">
-  <title>Rules Management</title>
+  <title>Lucidworks Rules</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
   <link rel="stylesheet" href="/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
   <link rel="stylesheet" href="/bower_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.css" />
@@ -172,11 +168,11 @@
               </li>
               <li class="divider"></li>
               <li>
-                <a href="#" ng-click="bulkStatusEnabled()"><span class="status bg-active"></span>Enable</a>
+                <a href="#" ng-click="bulkStatus('enabled')"><span class="status bg-active"></span>Enable</a>
               </li>
               <li class="divider"></li>
               <li>
-                <a href="#" ng-click="bulkStatusDisabled()"><span class="status bg-inactive"></span>Disable</a>
+                <a href="#" ng-click="bulkStatus('disabled')"><span class="status bg-inactive"></span>Disable</a>
               </li>
             </ul>
           </div>

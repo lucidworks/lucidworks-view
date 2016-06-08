@@ -1,36 +1,51 @@
 var rulesApp = angular.module('rulesApp', []);
 
 function aaa() {
-  $('.bs-component [data-toggle="popover"]').popover();
-  $('.bs-component [data-toggle="tooltip"]').tooltip();
   moment().calendar();
   $(".datepicker").datetimepicker({defaultDate: "now"});
   autosize($("textarea"));
   $('[id^="triggerTags"]').tagsinput({tagClass: "label label-default"});
 
   function activate() {
-    $(this).closest("tr").toggleClass("inactive");
-    if ($(this).closest("tr").find(".disabledControl").is(':disabled'))
-      $(this).closest("tr").find(".disabledControl").prop('disabled', false);
-    else
-      $(this).closest("tr").find(".disabledControl").prop('disabled', true);
+    var row = $(this).closest("tr");
+
+    var active = row.hasClass("active");
+    console.log("make row active: " + active);
+    if (active) {
+      row.find(".disabledControl").prop('disabled', true);
+      row.removeClass("active");
+      row.addClass("inactive");
+    } else {
+      row.find(".disabledControl").prop('disabled', false);
+      row.removeClass("inactive");
+      row.addClass("active");
+    }
   }
 
-  $(".rules-list h2").on("click", activate);
-  $(".fa-pencil").on("click", activate);
-  $(".rules-list .btn-save").on("click", activate);
-  $('.trigger-start').on('focus', function () {
+  function setActivator(elsSelector) {
+    $(elsSelector).each(function (index, el) {
+      if (el && el.dataset["initilized"]) {
+        return;
+      }
+
+      el.dataset["initilized"] = true;
+      $(el).on("click", activate);
+    })
+  }
+
+  setActivator(".rules-list h2");
+  setActivator(".fa-pencil");
+  setActivator(".rules-list .btn-save");
+
+  function datePickerOnFocus() { // TODO why we need this function
     $(this).addClass('datepicker');
     $(".datepicker").datetimepicker();
     $(this).blur();
     $(this).focus();
-  });
-  $('.trigger-end').on('focus', function () {
-    $(this).addClass('datepicker');
-    $(".datepicker").datetimepicker();
-    $(this).blur();
-    $(this).focus();
-  });
+  }
+
+  $('.trigger-start').on('focus', datePickerOnFocus);
+  $('.trigger-end').on('focus', datePickerOnFocus);
 }
 
 rulesApp.controller('rulesController', function ($scope, $http) {
@@ -53,23 +68,6 @@ rulesApp.controller('rulesController', function ($scope, $http) {
     }
     return null;
   }
-
-  /*scope.currentDate = Date.now();
-   $scope.ruleName = '';
-   $scope.ruleDescription = '';
-
-   $scope.ruleStart = '';
-   $scope.ruleEnd = '';
-   $scope.ruleKeywords = '';
-   $scope.ruleCategory = '';
-   $scope.ruleTagList = '';
-
-   $scope.ruleProductList = '';
-   $scope.ruleRedirect = '';
-   $scope.ruleBanner = '';
-   $scope.ruleFacetList = '';
-   $scope.ruleRankList = '';
-   $scope.ruleQuerySet = ''; */
 
   $scope.currentRule = {
     currentDate: Date.now(),
@@ -112,12 +110,14 @@ rulesApp.controller('rulesController', function ($scope, $http) {
     $scope.rules = [rule].concat($scope.rules);
     $scope.rulesTotal += 1;
 
-    if ($scope.rules[$scope.rules.length - 1] == undefined)
+    if ($scope.rules[$scope.rules.length - 1] == undefined) {
       $scope.rules.pop();
+    }
 
     $http.post(vm.solrUrl + '/' + vm.rulesCollection + '/update/json/docs?commit=true', rule, c).then(function (response) {
       console.log("Rule '" + rule.id + "' created!");
     });
+
     setTimeout(aaa, 1000); // TODO all controls should be done as Angular directives
   };
 
@@ -125,12 +125,14 @@ rulesApp.controller('rulesController', function ($scope, $http) {
     var masterBox = document.getElementById('selectAllBoxes');
     var checkboxes = document.getElementsByClassName('ruleCheckbox');
     if (masterBox.checked) {
-      for (var i = 0, l = checkboxes.length; i < l; i++)
+      for (var i = 0; i < checkboxes.length; i++) {
         checkboxes[i].checked = true;
+      }
       $scope.checkedBoxesCount = checkboxes.length;
     } else {
-      for (var i = 0, l = checkboxes.length; i < l; i++)
+      for (var i = 0; i < checkboxes.length; i++) {
         checkboxes[i].checked = false;
+      }
       $scope.checkedBoxesCount = 0;
     }
   };
@@ -155,23 +157,12 @@ rulesApp.controller('rulesController', function ($scope, $http) {
     }
   };
 
-  $scope.bulkStatusEnabled = function () {
+  $scope.bulkStatus = function (status) {
     var ruleArray = document.getElementsByClassName('ruleCheckbox');
     for (var i = 0, l = ruleArray.length; i < l; i++) {
       if (ruleArray[i].checked) {
         var rule = $scope.rules[findIndexById(ruleArray[i].value)];
-        rule.status = 'enabled';
-        $scope.updateRule(ruleArray[i].value);
-      }
-    }
-  };
-
-  $scope.bulkStatusDisabled = function () {
-    var ruleArray = document.getElementsByClassName('ruleCheckbox');
-    for (var i = 0, l = ruleArray.length; i < l; i++) {
-      if (ruleArray[i].checked) {
-        var rule = $scope.rules[findIndexById(ruleArray[i].value)];
-        rule.status = 'disabled';
+        rule.status = status;
         $scope.updateRule(ruleArray[i].value);
       }
     }
@@ -257,6 +248,7 @@ rulesApp.controller('rulesController', function ($scope, $http) {
     var rule = $scope.rules[findIndexById(id)];
     if (rule.productList)
       actionCount++;
+
     if (rule.redirect)
       actionCount++;
     if (rule.banner)
@@ -289,6 +281,7 @@ rulesApp.controller('rulesController', function ($scope, $http) {
 
       console.log("Rules", $scope.rules);
       console.log("Facets", $scope.facets);
+
       setTimeout(aaa, 1000); // TODO all controls should be done as Angular directives
     });
   }
