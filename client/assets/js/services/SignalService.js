@@ -44,7 +44,6 @@
 
       _.defaultsDeep(data, options);
 
-
       return postSignalData([data]);
     }
 

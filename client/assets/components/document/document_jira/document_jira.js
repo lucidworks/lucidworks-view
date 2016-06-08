@@ -32,7 +32,7 @@
     activate();
 
     function activate() {
-      vm.postSignal = SignalsService.postClickSignal;
+      vm.postSignal = postSignal;
       vm.doc = processDocument(vm.doc);
     }
 
@@ -40,6 +40,17 @@
       doc.lastModified_dtFormatted = $filter('date')(doc.lastModified_dt);
       doc.position = vm.position;
       return doc;
+    }
+
+    function postSignal(doc, options){
+      var paramsObj = {
+        params: {
+          position: doc.position,
+          page: doc.page
+        }
+      };
+      _.defaultsDeep(paramsObj, options);
+      SignalsService.postClickSignal(doc.__signals_doc_id__, paramsObj);
     }
   }
 })();

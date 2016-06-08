@@ -31,9 +31,20 @@
     activate();
 
     function activate() {
-      vm.postSignal = SignalsService.postClickSignal;
+      vm.postSignal = postSignal;
       vm.doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(vm.doc);
       vm.doc.page = PaginateService.getNormalizedCurrentPage();
+    }
+
+    function postSignal(doc, options){
+      var paramsObj = {
+        params: {
+          position: doc.position,
+          page: doc.page
+        }
+      };
+      _.defaultsDeep(paramsObj, options);
+      SignalsService.postClickSignal(doc.__signals_doc_id__, paramsObj);
     }
 
   }

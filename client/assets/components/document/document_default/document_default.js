@@ -24,7 +24,7 @@
   function Controller($log, $scope, DocsHelper, ConfigService, SignalsService, PaginateService) {
     'ngInject';
     var vm = this;
-    vm.postSignal = SignalsService.postClickSignal;
+    vm.postSignal = postSignal;
 
     activate();
 
@@ -63,7 +63,7 @@
       doc.lw_image = getField('image', doc);
 
       doc.lw_url = getField('head_url', doc);
-      
+
       doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(doc);
       doc.position = vm.position;
       doc.page = PaginateService.getNormalizedCurrentPage();
@@ -83,6 +83,17 @@
         return doc[fieldName];
       }
       return null;
+    }
+
+    function postSignal(doc, options){
+      var paramsObj = {
+        params: {
+          position: doc.position,
+          page: doc.page
+        }
+      };
+      _.defaultsDeep(paramsObj, options);
+      SignalsService.postClickSignal(doc.__signals_doc_id__, paramsObj);
     }
 
   }

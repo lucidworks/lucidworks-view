@@ -31,7 +31,7 @@
     activate();
 
     function activate() {
-      vm.postSignal = SignalsService.postClickSignal;
+      vm.postSignal = postSignal;
       vm.doc = processDocument(vm.doc);
     }
 
@@ -41,6 +41,17 @@
       doc.position = vm.position;
       doc.page = PaginateService.getNormalizedCurrentPage();
       return doc;
+    }
+
+    function postSignal(doc, options){
+      var paramsObj = {
+        params: {
+          position: doc.position,
+          page: doc.page
+        }
+      };
+      _.defaultsDeep(paramsObj, options);
+      SignalsService.postClickSignal(doc.__signals_doc_id__, paramsObj);
     }
   }
 })();
