@@ -15,7 +15,6 @@
 
   <script src="bower_components/angular/angular.js"></script>
   <script src="scripts/RulesController.js"></script>
-
 </head>
 <body>
 <!--[if lt IE 10]>
@@ -260,7 +259,7 @@
           </td>
           <td>
             <div class="column-holder">
-              <h2><span>#1</span>{{rule.id}}</h2>
+              <h2 id="2"><span  ng-model="rule.idf">#{{rule.idNumb}}</span> <input type="text" class="form-control disabledControl rule-name" ng-model="rule.id"/></h2>
               <p class="lead">
                 <textarea rows="3" class="form-control disabledControl"
                           ng-model="rule.description" disabled>{{rule.description}}</textarea>
