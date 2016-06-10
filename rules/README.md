@@ -59,6 +59,9 @@
   ```
   
   
+1. Change credentials and the fusion access info in 'serverInfo' service (currently placed in RulesController.js) 
+
+
 1. Run application:
 
   ```bash
