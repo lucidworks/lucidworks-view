@@ -381,18 +381,14 @@
                   <div class="form-group" ng-if="rule.banner">
                     <label for="actionBanner" class="small text-muted text-uppercase">Banner</label>
                     <input type='text' class="form-control disabledControl" id="actionBanner" value="banner" ng-model="rule.banner"/>
-                  </div>
+                  </div><!--
                   <div class="form-group" ng-if="rule.facetList">
                     <label for="actionFacetList" class="small text-muted text-uppercase">Facet List</label>
                     <input type='text' class="form-control disabledControl" id="actionFacetList" value="facetList" ng-model="rule.facetList"/>
-                  </div>
+                  </div>-->
                   <div class="form-group" ng-if="rule.rankList">
                     <label for="actionRankList" class="small text-muted text-uppercase">Rank List</label>
                     <input type='text' class="form-control disabledControl" id="actionRankList" value="rankList" ng-model="rule.rankList"/>
-                  </div>
-                  <div class="form-group" ng-if="rule.querySet">
-                    <label for="actionQuerySet" class="small text-muted text-uppercase">Query Set</label>
-                    <input type='text' class="form-control disabledControl" id="actionQuerySet" value="querySet" ng-model="rule.querySet"/>
                   </div>
                 </fieldset>
               </form>
@@ -417,9 +413,6 @@
                   </li>
                   <li>
                     <a href="#" ng-click="addAction(rule.id, 'rankList')">Rank List</a>
-                  </li>
-                  <li>
-                    <a href="#" ng-click="addAction(rule.id, 'querySet')">Query Set</a>
                   </li>
                 </ul>
               </div>
@@ -491,10 +484,35 @@
           <div class="add-rule-wiz">
             <ol class="list-inline">
               <li>
-                <h4>Rule name</h4>
+                <h4>General</h4>
                 <div class="wiz-step">
                   <form action="">
                     <fieldset>
+                      <div class="form-group btn-group btn-group-sm">
+                        <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                          <i class="fa fa-plus"></i>
+                          Add action
+                          <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li ng-if="!flags.productListFlag">
+                            <a href="#" ng-click="flags.productListFlag = true">Product List</a>
+                          </li>
+                          <li ng-if="!flags.redirectFlag">
+                            <a href="#" ng-click="flags.redirectFlag = true">Redirect</a>
+                          </li>
+                          <li>
+                            <a href="#" ng-click="bannerList.push(' ')">Banner</a>
+                          </li>
+                          <li ng-if="!flags.facetListFlag">
+                            <a href="#" ng-click="flags.facetListFlag = true">Facet List</a>
+                          </li>
+                          <li ng-if="!flags.rankListFlag">
+                            <a href="#" ng-click="flags.rankListFlag = true">Rank List</a>
+                          </li>
+                        </ul>
+                      </div>
+
                       <div class="form-group">
                         <label for="addRuleName" class="small text-muted text-uppercase">Rule name</label>
                         <input type='text' class="form-control" id="addRuleName" placeholder="Enter rule name" ng-model="currentRule.ruleName"/>
@@ -601,39 +619,8 @@
                         <label for="addActionRankList" class="small text-muted text-uppercase">Rank List</label>
                         <input type='text' class="form-control" id="addActionRankList" value="rankList" ng-model="currentRule.ruleRankList"/>
                       </div>
-                      <div class="form-group" ng-if="flags.querySetFlag">
-                        <label for="addActionQuerySet" class="small text-muted text-uppercase">Query Set</label>
-                        <input type='text' class="form-control" id="addActionQuerySet" value="querySet" ng-model="currentRule.ruleQuerySet"/>
-                      </div>
                     </fieldset>
                   </form>
-                  <div class="btn-group btn-group-sm">
-                    <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                      <i class="fa fa-plus"></i>
-                      Add action
-                      <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li ng-if="!flags.productListFlag">
-                        <a href="#" ng-click="flags.productListFlag = true">Product List</a>
-                      </li>
-                      <li ng-if="!flags.redirectFlag">
-                        <a href="#" ng-click="flags.redirectFlag = true">Redirect</a>
-                      </li>
-                      <li>
-                        <a href="#" ng-click="bannerList.push(' ')">Banner</a>
-                      </li>
-                      <li ng-if="!flags.facetListFlag">
-                        <a href="#" ng-click="flags.facetListFlag = true">Facet List</a>
-                      </li>
-                      <li ng-if="!flags.rankListFlag">
-                        <a href="#" ng-click="flags.rankListFlag = true">Rank List</a>
-                      </li>
-                      <li ng-if="!flags.querySetFlag">
-                        <a href="#" ng-click="flags.querySetFlag = true">Query Set</a>
-                      </li>
-                    </ul>
-                  </div>
                 </div>
               </li>
             </ol>
