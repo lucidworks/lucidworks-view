@@ -338,12 +338,20 @@ rulesApp.controller('rulesController',
     $scope.search()
   };
 
+  $scope.hasNext = function () {
+    return ($scope.pageNum + 1) * $scope.pageSize < ($scope.rulesTotal || 0)
+  };
+
   $scope.next = function () {
-    $scope.search($scope.pageNum + 1);
+    if ($scope.hasNext()) {
+      $scope.search($scope.pageNum + 1);
+    }
   };
 
   $scope.prev = function () {
-    $scope.search($scope.pageNum - 1);
+    if ($scope.pageNum > 0) {
+      $scope.search($scope.pageNum - 1);
+    }
   };
 
   serverLoad.run($scope);
