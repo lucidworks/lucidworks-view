@@ -11,6 +11,7 @@
 
   <link rel="stylesheet" href="styles/vendor.css">
   <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/style.css">
   <script src="scripts/vendor/modernizr.js"></script>
 
   <script src="bower_components/angular/angular.js"></script>
@@ -105,8 +106,8 @@
       <div class="list-group table-of-contents" id="accordion">
         <a class="list-group-item" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true">Rules type</a>
         <div id="collapseOne" class="collapse in" role="tabpanel">
-          <ul class="list-unstyled">
-            <li ng-repeat="f in typeFacets"><a href="#" ng-click="filterBy('type', f[0])">{{f[0]}} ({{f[1]}})</a></li>
+          <ul class="list-unstyled data-links">
+            <li ng-repeat="f in typeFacets"><a data-quantity="{{f[1]}}" class="text-muted-light active" href="#" ng-click="filterBy('type', f[0])">{{f[0]}}</a></li>
           </ul>
         </div>
         <a class="list-group-item" href="#status">Status</a>
@@ -177,6 +178,27 @@
               <li>
                 <a href="#" ng-click="bulkStatus(false)"><span class="status bg-inactive"></span>Disable</a>
               </li>
+              <li class="divider"></li>
+              <li ng-repeat="f in tagsFacets">
+                <a class="text-muted-light active" href="#"><i class="fa fa-tag"></i>{{f[0]}}
+                  <span class="bulk-radio">
+                    <input type="radio" name="{{f[0]}}" ng-click="bulkAddTag(f[0], true)" id="tagOff"/>
+                    <label for="tagOff">Off</label>
+                  </span>
+                  <span class="bulk-radio">
+                    <input type="radio" name="{{f[0]}}" ng-click="bulkAddTag(f[0], false)" id="tagOn"/>
+                    <label for="tagOn">On</label>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <div class="complex-input mb-20">
+                  <span class="input-addon"><i class="fa fa-tag text-muted"></i></span>
+                  <form ng-submit="bulkAddTag(customTag, false, true)">
+                    <input type='text' class="form-control " id="addNewTag" placeholder="Add new tag" ng-model="customTag"/>
+                  </form>
+                </div>
+              </li>
             </ul>
           </div>
         </div>
@@ -208,17 +230,18 @@
               <li>
                 <label for="filterStart" class="small text-muted text-uppercase">Status</label>
                 <div class="btn-group btn-group-justified" role="group">
-                  <a class="btn btn-sm btn-link active" href="#">Active</a>
-                  <a class="btn btn-sm btn-link" href="#">Inactive</a>
+                  <a class="btn btn-sm btn-link" href="#">Enabled</a>
+                  <a class="btn btn-sm btn-link" href="#">Disabled</a>
                 </div>
               </li>
               <li class="divider"></li>
               <li>
-                <label for="filterStart" class="small text-muted text-uppercase">Actuality</label>
-                <div class="btn-group btn-group-justified" role="group">
-                  <a class="btn btn-sm btn-link" href="#">Enabled</a>
-                  <a class="btn btn-sm btn-link" href="#">Disabled</a>
-                </div>
+                <label for="filterStart" class="small text-muted text-uppercase">Tags</label>
+              </li>
+              <li ng-repeat="f in tagsFacets">
+                <a class="text-muted-light active" href="#"><i class="fa fa-tag"></i>{{f[0]}}
+                  <input type="checkbox" name="filterTagsCheckbox" ng-click="resetFocus();"/>
+                </a>
               </li>
             </ul>
           </div>
@@ -248,7 +271,7 @@
         </thead>
         <!-- TBODY -->
         <tbody>
-        <tr class="inactive" ng-repeat="rule in rules">
+        <tr class="inactive  {{rule.id}}" ng-repeat="rule in rules">
           <td>
             <div class="column-holder">
               <div class="checkbox">
@@ -305,13 +328,13 @@
                       <div class="form-group">
                         <label for="triggerStart" class="small text-muted text-uppercase">Start</label>
                         <div class="datepicker-holder">
-                          <input type='text' class="form-control  trigger-start {{rule.id}} disabledControl" id="triggerStart" ng-model="rule.triggerStart"/>
+                          <input type='text' class="form-control  trigger-start disabledControl" id="triggerStart" ng-model="rule.triggerStart"/>
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="triggerEnd" class="small text-muted text-uppercase">End</label>
                         <div class="datepicker-holder">
-                          <input type='text' class="form-control  trigger-end {{rule.id}} disabledControl" id="triggerEnd" ng-model="rule.triggerEnd"/>
+                          <input type='text' class="form-control  trigger-end disabledControl" id="triggerEnd" ng-model="rule.triggerEnd"/>
                         </div>
                       </div>
                     </fieldset>
@@ -492,27 +515,26 @@
                   <form action="">
                     <fieldset>
                       <div class="form-group">
-                        <div class="row hor-gut-10px">
+                        <div class="row hor-gut-10px" ng-repeat="triggerDate in triggerDates track by $index">
                           <div class="col-sm-6">
                             <label for="addTriggerStart" class="small text-muted text-uppercase">Start</label>
                             <div class="datepicker-holder">
-                              <input type='text' class="form-control datepicker add-trigger-start" id="addTriggerStart" />
+                              <input type='text' class="form-control datepicker add-trigger-start" id="addTriggerStart"/>
                             </div>
                           </div>
                           <div class="col-sm-6">
                             <label for="addTriggerEnd" class="small text-muted text-uppercase">End</label>
                             <div class="datepicker-holder">
-                              <input type='text' class="form-control datepicker add-trigger-end" id="addTriggerEnd" />
+                              <input type='text' class="form-control datepicker add-trigger-end" id="addTriggerEnd"/>
                             </div>
                           </div>
                         </div>
                       </div>
-
-                      <div class="form-group" ng-if="keywordsFlag">
+                      <div class="form-group" ng-if="flags.keywordsFlag">
                         <label for="addTriggerKeywords" class="small text-muted text-uppercase">Keywords</label>
                         <textarea rows="1" class="form-control" id="addTriggerKeywords" ng-model="currentRule.ruleKeywords"></textarea>
                       </div>
-                      <div class="form-group" ng-if="categoryFlag">
+                      <div class="form-group" ng-if="flags.categoryFlag">
                         <label for="addTriggerCategory" class="small text-muted text-uppercase">Category</label>
                         <select class="form-control" id="addTriggerCategory" ng-model="currentRule.ruleCategory">
                           <option value="1">Category #1</option>
@@ -521,7 +543,7 @@
                           <option value="4">Category #4</option>
                         </select>
                       </div>
-                      <div class="form-group" ng-if="tagsFlag">
+                      <div class="form-group" ng-if="flags.tagsFlag">
                         <label for="addTriggerTags" class="small text-muted text-uppercase">Tags</label>
                         <input type="text" class="form-control" id="addTriggerTags" aria-describedby="triggerTags"  placeholder='Enter tags' ng-model="currentRule.tags"/>
                       </div>
@@ -535,13 +557,16 @@
                     </a>
                     <ul class="dropdown-menu">
                       <li>
-                        <a href="#" ng-click="keywordsFlag = true">KEYWORDS</a>
+                        <a href="#" ng-click="triggerDates.push(' ')">ADD DATES</a>
+                      </li>
+                      <li ng-if="!flags.keywordsFlag">
+                        <a href="#" ng-click="flags.keywordsFlag = true">KEYWORDS</a>
                       </li><!--
                       <li>
                         <a href="#" ng-click="categoryFlag = true">CATEGORY</a>
                       </li>-->
-                      <li>
-                        <a href="#" ng-click="tagsFlag = true">TAGS</a>
+                      <li ng-if="!flags.tagsFlag">
+                        <a href="#" ng-click="flags.tagsFlag = true">TAGS</a>
                       </li>
                     </ul>
                   </div>

@@ -1,0 +1,15 @@
+.bulk-radio{
+  float: right;
+}
+ul#bulk-dropdown{
+  width: 250px;
+}
+ul.dropdown-menu>li input{
+  float: right;
+}
+ul.dropdown-menu>li input#addNewTag{
+  float:none;
+}
+.bulk-radio > label{
+  margin-right: 2px;
+}

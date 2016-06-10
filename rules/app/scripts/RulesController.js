@@ -73,6 +73,13 @@ rulesApp.controller('rulesController',
     return null;
   }
 
+  $scope.triggerDates = [];
+
+  $scope.flags = {
+    keywordsFlag : false,
+    tagsFlag : false
+  };
+
   $scope.currentRule = {
     currentDate: Date.now(),
     ruleName: '',
@@ -97,8 +104,8 @@ rulesApp.controller('rulesController',
       idNumb: $scope.currentRule.ruleNumber++,
       id: $scope.currentRule.ruleName,
       description: $scope.currentRule.ruleDescription,
-      triggerStart: document.getElementsByClassName('add-trigger-start')[0].value,
-      triggerEnd: document.getElementsByClassName('add-trigger-end')[0].value,
+      triggerStart: []/*document.getElementsByClassName('add-trigger-start')[0].value*/,
+      triggerEnd: []/*document.getElementsByClassName('add-trigger-end')[0].value*/,
       search_terms: $scope.currentRule.ruleKeywords,
       category: $scope.currentRule.ruleCategory,
       tags: $scope.currentRule.ruleTagList,
@@ -112,6 +119,15 @@ rulesApp.controller('rulesController',
       updatedAt: Date.now(),
       enabled: false
     };
+
+    var triggerStartArray = document.getElementsByClassName('add-trigger-start');
+    var triggerEndArray = document.getElementsByClassName('add-trigger-end');
+    for (var i = 0, l = triggerStartArray.length; i<l; i++){
+      rule.triggerStart.push(triggerStartArray[i]);
+    }
+    for (var i = 0, l = triggerEndArray.length; i<l; i++){
+      rule.triggerEnd.push(triggerEndArray[i]);
+    }
 
     $scope.rules = [rule].concat($scope.rules);
     $scope.rulesTotal += 1;
@@ -171,6 +187,39 @@ rulesApp.controller('rulesController',
     }
   };
 
+  /**
+   *
+   * @param tag {String} string with tag value
+   * @param remove {Boolean} true if we want to remove tag, otherwise add them
+   */
+  $scope.bulkAddTag = function(tag, remove, isNewTag){
+    var ruleArray = document.getElementsByClassName('ruleCheckbox');
+    for (var i = 0, l = ruleArray.length; i < l; i++) {
+      if (ruleArray[i].checked) {
+        var rule = $scope.rules[findIndexById(ruleArray[i].value)];
+        if (remove) {
+          var index = rule.tags.indexOf(tag);
+          if (index > -1) {
+            rule.tags.splice(index, 1);
+          } else {
+            console.log("error:index for tag '" + tag + "' not found");
+          }
+        } else {
+          rule.tags.push(tag);
+        }
+        var tagsInput = $('tr.' + rule.id + " #triggerTags");
+        tagsInput.tagsinput('removeAll');
+        if (rule.tags && rule.tags.length > 0) {
+          tagsInput.tagsinput('add', rule.tags.join(","));
+        }
+        if (isNewTag) {
+          $scope.tagsFacets.push([tag, 1]);
+        }
+        $scope.updateRule(ruleArray[i].value);
+      }
+    }
+  };
+
   $scope.getCheckedBoxesCount = function () {
     var checkedCount = document.querySelectorAll('input.ruleCheckbox:checked').length;
     var bulkActions = document.getElementById('bulk-actions');
@@ -183,6 +232,7 @@ rulesApp.controller('rulesController',
       bulkDropdown.style.visibility = 'visible';
     }
     $('[id^="triggerTags"]').tagsinput({tagClass: "label label-default"});
+    $('.datepicker').datetimepicker();
     return checkedCount;
   };
 
@@ -197,14 +247,14 @@ rulesApp.controller('rulesController',
 
     var rule = $scope.rules[findIndexById(id)];
     rule.updatedAt = Date.now();
-    rule.triggerStart = document.getElementsByClassName('trigger-start ' + rule.id)[0].value;
-    rule.triggerEnd = document.getElementsByClassName('trigger-end ' + rule.id)[0].value;
+    rule.triggerStart = $('tr.'+rule.id + ' trigger-start').value;
+    rule.triggerEnd = $('tr.'+rule.id + ' trigger-end').value;
+    rule.tags = $('tr.' + rule.id + ' #triggerTags')[0].value.split(',');
 
 
     delete rule._version_;
 
-    serverUpdate.update(id, rule);
-    serverUpdate.run();
+    serverUpdate.run(id, rule);
   };
 
   $scope.changeStatus = function (id) {
@@ -335,7 +385,8 @@ rulesApp.factory('serverLoad', ['$http', '$timeout', 'serverInfo',
         $scope.typeFacets = groupFacetsIntoPairs(response.data.facet_counts.facet_fields.type);
         $scope.tagsFacets = groupFacetsIntoPairs(response.data.facet_counts.facet_fields.tags);
 
-        console.log($scope.rules);
+        //console.log($scope.tagsFacets);
+        //console.log($scope.rules);
         $timeout(aaa, 1);
       });
     }
@@ -369,13 +420,9 @@ rulesApp.factory('serverDelete', ['$http', 'serverInfo', function($http, serverI
 }]);
 
 rulesApp.factory('serverUpdate', ['$http', 'serverInfo', function($http, serverInfo){
-  var id, rule;
   return {
-    update: function(x, y){
-      id = x;
-      rule = y;
-    },
-    run: function(){
+    run: function(id, rule){
+      console.log("updating rule: ", id, rule);
       $http.post(serverInfo.solrUrl + '/' + serverInfo.rulesCollection + '/update/json/docs?commit=true', rule, serverInfo.c).then(function(response) {
         console.log("Rule '" + id + "' updated!");
       });
