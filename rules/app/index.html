@@ -106,12 +106,16 @@
         <a class="list-group-item" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true">Rules type</a>
         <div id="collapseOne" class="collapse in" role="tabpanel">
           <ul class="list-unstyled">
-            <li ng-repeat="f in facets"><a href="#" ng-click="filterBy('type', f[0])">{{f[0]}} ({{f[1]}})</a></li>
+            <li ng-repeat="f in typeFacets"><a href="#" ng-click="filterBy('type', f[0])">{{f[0]}} ({{f[1]}})</a></li>
           </ul>
         </div>
         <a class="list-group-item" href="#status">Status</a>
-        <a class="list-group-item" href="#actuality">Actuality</a>
-        <a class="list-group-item" href="#tags">Tags</a>
+        <a class="list-group-item" role="button" data-toggle="collapse" href="#collapseTags" aria-expanded="true">Tags</a>
+        <div id="collapseTags" class="collapse in" role="tabpanel">
+          <ul class="list-unstyled data-links">
+            <li ng-repeat="f in tagsFacets"><a data-quantity="{{f[1]}}" class="text-muted-light active" href="#" ng-click="filterBy('tags', f[0])"><i class="fa fa-tag"></i>{{f[0]}}</a></li>
+          </ul>
+        </div>
       </div>
     </div>
     <!-- /.SIDEBAR -->
@@ -167,11 +171,11 @@
               </li>
               <li class="divider"></li>
               <li>
-                <a href="#" ng-click="bulkStatus('enabled')"><span class="status bg-active"></span>Enable</a>
+                <a href="#" ng-click="bulkStatus(true)"><span class="status bg-active"></span>Enable</a>
               </li>
               <li class="divider"></li>
               <li>
-                <a href="#" ng-click="bulkStatus('disabled')"><span class="status bg-inactive"></span>Disable</a>
+                <a href="#" ng-click="bulkStatus(false)"><span class="status bg-inactive"></span>Disable</a>
               </li>
             </ul>
           </div>
@@ -254,7 +258,7 @@
           </td>
           <td class="text-center">
             <div class="column-holder">
-              <a href="#" class="status {{rule.status=='enabled'?'bg-active':'bg-inactive'}}" ng-click="changeStatus(rule.id)"></a>
+              <a href="#" class="status {{!!rule.enabled?'bg-active':'bg-inactive'}}" ng-click="changeStatus(rule.id)"></a>
             </div>
           </td>
           <td>
@@ -287,9 +291,9 @@
                           <option value="4">Category #4</option>
                         </select>
                       </div>
-                      <div class="form-group" ng-if="rule.tagList">
+                      <div class="form-group" ng-if="rule.tags">
                         <label for="triggerTags" class="small text-muted text-uppercase">Tags</label>
-                        <input type="text" class="form-control disabledControl" id="triggerTags" aria-describedby="triggerTags"  placeholder='Enter tags' ng-model="rule.tagList"/>
+                        <input type="text" class="form-control disabledControl" id="triggerTags" aria-describedby="triggerTags"  placeholder='Enter tags' ng-model="rule.tags"/>
                       </div>
                     </fieldset>
                   </form>
@@ -323,17 +327,17 @@
                 <ul class="dropdown-menu">
                   <li>
                     <a href="#" ng-click="addTrigger(rule.id, 'search_terms')">KEYWORDS</a>
-                  </li>
-                  <li>
+                  </li><!--
+                  <li class="disable">
                     <a href="#" ng-click="addTrigger(rule.id, 'category')">CATEGORY</a>
-                  </li>
+                  </li>-->
                   <li>
                     <a href="#" ng-click="addTrigger(rule.id, 'tags')">TAGS</a>
                   </li>
                 </ul>
               </div>
             </div>
-            <a href="#" class="column-more" ng-if="rule.search_terms && rule.category && rule.tagList">&#x85;</a>
+            <a href="#" class="column-more" ng-if="rule.search_terms && rule.category && rule.tags">&#x85;</a>
           </td>
           <td class="btn-bottom-holder">
             <div class="column-holder">
@@ -439,7 +443,7 @@
       </table>
       <div class="row table-footer">
         <div class="col-sm-6">
-          <p class="small text-nowrap"><span>{{rules.length || 0}}</span> of <span>{{rulesTotal}}</span> rules</p>
+          <p class="small text-nowrap"><span>rules {{pageNum * pageSize}} - {{pageNum * pageSize + (rules.length || 0)}}</span> of <span>{{rulesTotal}}</span> </p>
         </div>
         <div class="col-sm-6 text-right">
           <a href="#" class="btn btn-sm btn-link text-muted" ng-click="prev()" ng-class="(pageNum <= 0) ? 'text-muted' : ''"><i class="fa fa-angle-left"></i>Previous</a>
@@ -519,7 +523,7 @@
                       </div>
                       <div class="form-group" ng-if="tagsFlag">
                         <label for="addTriggerTags" class="small text-muted text-uppercase">Tags</label>
-                        <input type="text" class="form-control" id="addTriggerTags" aria-describedby="triggerTags"  placeholder='Enter tags' ng-model="currentRule.ruleTagList"/>
+                        <input type="text" class="form-control" id="addTriggerTags" aria-describedby="triggerTags"  placeholder='Enter tags' ng-model="currentRule.tags"/>
                       </div>
                     </fieldset>
                   </form>
@@ -532,10 +536,10 @@
                     <ul class="dropdown-menu">
                       <li>
                         <a href="#" ng-click="keywordsFlag = true">KEYWORDS</a>
-                      </li>
+                      </li><!--
                       <li>
                         <a href="#" ng-click="categoryFlag = true">CATEGORY</a>
-                      </li>
+                      </li>-->
                       <li>
                         <a href="#" ng-click="tagsFlag = true">TAGS</a>
                       </li>
