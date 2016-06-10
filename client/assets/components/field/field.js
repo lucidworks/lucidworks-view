@@ -23,7 +23,7 @@
     };
   }
 
-  function Controller() {
+  function Controller($sanitize) {
     'ngInject';
     var fc = this;
 
@@ -36,7 +36,7 @@
     }
 
     function processField(field, highlightKey, highlight, maxlength) {
-      var result = field;
+      var result = $sanitize(_.escape(field));
       var hasHighlight = false;
 
       if (highlight && Object.keys(highlight).length > 0) {
