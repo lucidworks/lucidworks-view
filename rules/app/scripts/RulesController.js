@@ -74,10 +74,17 @@ rulesApp.controller('rulesController',
   }
 
   $scope.triggerDates = [];
+  $scope.bannerList = [];
 
   $scope.flags = {
     keywordsFlag : false,
-    tagsFlag : false
+    tagsFlag : false,
+    productListFlag : false,
+    redirectFlag : false,
+    bannerFlag : false,
+    facetListFlag : false,
+    rankListFlag : false,
+    querySetFlag : false
   };
 
   $scope.currentRule = {
@@ -91,7 +98,7 @@ rulesApp.controller('rulesController',
     ruleTagList: '',
     ruleProductList: '',
     ruleRedirect: '',
-    ruleBanner: '',
+    ruleBanner: [],
     ruleFacetList: '',
     ruleRankList: '',
     ruleQuerySet: '',
@@ -123,10 +130,10 @@ rulesApp.controller('rulesController',
     var triggerStartArray = document.getElementsByClassName('add-trigger-start');
     var triggerEndArray = document.getElementsByClassName('add-trigger-end');
     for (var i = 0, l = triggerStartArray.length; i<l; i++){
-      rule.triggerStart.push(triggerStartArray[i]);
+      rule.triggerStart.push(triggerStartArray[i].value);
     }
     for (var i = 0, l = triggerEndArray.length; i<l; i++){
-      rule.triggerEnd.push(triggerEndArray[i]);
+      rule.triggerEnd.push(triggerEndArray[i].value);
     }
 
     $scope.rules = [rule].concat($scope.rules);
