@@ -13,3 +13,27 @@ ul.dropdown-menu>li input#addNewTag{
 .bulk-radio > label{
   margin-right: 2px;
 }
+#modalBack{
+  display: none;
+  position: fixed;
+  z-index: 40000;
+  -webkit-overflow-scrolling: touch;
+  outline: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: block;}
+
+#innerWindow{
+  position: fixed;
+  width: 275px;
+  height: 210px;
+}
+.rule-name{
+  font-size: 18px!important;
+}
+table .col-xs-5, table .col-xs-6{
+  float: none;
+  width: 100%;
+}

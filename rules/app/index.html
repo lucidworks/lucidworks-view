@@ -236,7 +236,7 @@
               </li>
               <li class="divider"></li>
               <li>
-                <label for="filterStart" class="small text-muted text-uppercase">Tags</label>
+                <label for="filterStart" class="small text-muted text-uppercase" ng-if="tagsFacets.length>0">Tags</label>
               </li>
               <li ng-repeat="f in tagsFacets">
                 <a class="text-muted-light active" href="#"><i class="fa fa-tag"></i>{{f[0]}}
@@ -248,7 +248,6 @@
                 <button type="button" class="btn btn-link text-muted" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i> Cancel</button>
               </li>
             </ul>
-          </div>
           <form class="form-inline" role="search" ng-submit="search()">
             <div class="form-group">
               <input type="text" class="form-control" placeholder="Search" ng-model="searchQuery">
@@ -266,10 +265,10 @@
           <th></th>
           <th>Status</th>
           <th width="20%"><div class="column-header-holder"><span>Name <a href="#" class="text-muted"><i class="mi-filter_list"></i></a></span><a href="#" class="text-muted"><i class="fa fa-sort"></i></a></div></th>
-          <th width="40%">Trigger</th>
-          <th width="18%">Action</th>
-          <th><div class="column-header-holder">Created on<a href="#" class="text-muted"><i class="fa fa-sort"></i></a></div></th>
-          <th><div class="column-header-holder">Edited on<a href="#" class="text-muted"><i class="fa fa-sort"></i></a></div></th>
+          <th width="30%">Trigger</th>
+          <th width="28%">Action</th>
+          <th><div class="column-header-holder">Created on<a href="#" class="text-muted"></a></div></th>
+          <th><div class="column-header-holder">Edited on<a href="#" class="text-muted"></a></div></th>
           <th></th>
         </tr>
         </thead>
@@ -290,7 +289,7 @@
           </td>
           <td>
             <div class="column-holder">
-              <h2 id="2"><span  ng-model="rule.idf">#{{rule.idNumb}}</span> <input type="text" class="form-control disabledControl rule-name" ng-model="rule.id"/></h2>
+              <h2 id="2"><input type="text" class="form-control disabledControl rule-name" ng-model="rule.id"/></h2>
               <p class="lead">
                 <textarea rows="3" class="form-control disabledControl"
                           ng-model="rule.description" disabled>{{rule.description}}</textarea>
@@ -301,6 +300,25 @@
           <td class="btn-bottom-holder">
             <div class="column-holder">
               <div class="row hor-gut-6px">
+                <!-- Trigger Date and Time -->
+                <div class="col-xs-5" ng-repeat="ruledate in rule.triggerStart track by $index">
+                  <form action="">
+                    <fieldset>
+                      <div class="form-group">
+                        <label for="triggerStart" class="small text-muted text-uppercase">Start</label>
+                        <div class="datepicker-holder">
+                          <input type='text' class="form-control  trigger-start disabledControl" id="triggerStart" ng-model="rule.triggerStart[$index]"/>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="triggerEnd" class="small text-muted text-uppercase">End</label>
+                        <div class="datepicker-holder">
+                          <input type='text' class="form-control  trigger-end disabledControl" id="triggerEnd" ng-model="rule.triggerEnd[$index]"/>
+                        </div>
+                      </div>
+                    </fieldset>
+                  </form>
+                </div>
                 <!-- Trigger Types -->
                 <div class="col-xs-6">
                   <form action="">
@@ -309,7 +327,7 @@
                         <label for="triggerKeywords" class="small text-muted text-uppercase">Keywords</label>
                         <textarea rows="1" class="form-control disabledControl" id="triggerKeywords" ng-model="rule.search_terms">{{rule.search_terms}}</textarea>
                       </div>
-                      <div class="form-group" ng-if="rule.category">
+                      <!--<div class="form-group" ng-if="rule.category">
                         <label for="triggerCategory" class="small text-muted text-uppercase">Category</label>
                         <select class="form-control disabledControl" id="triggerCategory" ng-model="rule.category">
                           <option value="1">Category #1</option>
@@ -317,29 +335,10 @@
                           <option value="3">Category #3</option>
                           <option value="4">Category #4</option>
                         </select>
-                      </div>
+                      </div>-->
                       <div class="form-group" ng-if="rule.tags">
                         <label for="triggerTags" class="small text-muted text-uppercase">Tags</label>
-                        <input type="text" class="form-control disabledControl" id="triggerTags" aria-describedby="triggerTags"  placeholder='Enter tags' ng-model="rule.tags"/>
-                      </div>
-                    </fieldset>
-                  </form>
-                </div>
-                <!-- Trigger Date and Time -->
-                <div class="col-xs-5">
-                  <form action="">
-                    <fieldset>
-                      <div class="form-group">
-                        <label for="triggerStart" class="small text-muted text-uppercase">Start</label>
-                        <div class="datepicker-holder">
-                          <input type='text' class="form-control  trigger-start disabledControl" id="triggerStart" ng-model="rule.triggerStart"/>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="triggerEnd" class="small text-muted text-uppercase">End</label>
-                        <div class="datepicker-holder">
-                          <input type='text' class="form-control  trigger-end disabledControl" id="triggerEnd" ng-model="rule.triggerEnd"/>
-                        </div>
+                        <input type="text" class="form-control disabledControl triggerTags" id="triggerTags" aria-describedby="triggerTags"  placeholder='Enter tags' ng-model="rule.tags"/>
                       </div>
                     </fieldset>
                   </form>
@@ -352,6 +351,9 @@
                   <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
+                  <li>
+                    <a href="#" ng-click="rule.triggerStart.push(' '); rule.triggerEnd.push(' ')">ADD DATE</a>
+                  </li>
                   <li>
                     <a href="#" ng-click="addTrigger(rule.id, 'search_terms')">KEYWORDS</a>
                   </li><!--
@@ -491,24 +493,24 @@
                       <div class="form-group btn-group btn-group-sm">
                         <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                           <i class="fa fa-plus"></i>
-                          Add action
+                          Choose rule type
                           <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                          <li ng-if="!flags.productListFlag">
-                            <a href="#" ng-click="flags.productListFlag = true">Product List</a>
-                          </li>
-                          <li ng-if="!flags.redirectFlag">
-                            <a href="#" ng-click="flags.redirectFlag = true">Redirect</a>
+                          <li>
+                            <a href="#" ng-click="ruleType = 'Filter List'">Filter List</a>
                           </li>
                           <li>
-                            <a href="#" ng-click="bannerList.push(' ')">Banner</a>
+                            <a href="#" ng-click="ruleType = 'Block List'">Block list</a>
                           </li>
-                          <li ng-if="!flags.facetListFlag">
-                            <a href="#" ng-click="flags.facetListFlag = true">Facet List</a>
+                          <li>
+                            <a href="#" ng-click="ruleType = 'Boost List'">Boost list</a>
                           </li>
-                          <li ng-if="!flags.rankListFlag">
-                            <a href="#" ng-click="flags.rankListFlag = true">Rank List</a>
+                          <li>
+                            <a href="#" ng-click="ruleType = 'Banner'">Banner</a>
+                          </li>
+                          <li>
+                            <a href="#" ng-click="ruleType = 'Redirect'">Redirect</a>
                           </li>
                         </ul>
                       </div>
@@ -518,8 +520,8 @@
                         <input type='text' class="form-control" id="addRuleName" placeholder="Enter rule name" ng-model="currentRule.ruleName"/>
                       </div>
                       <div class="form-group">
-                        <label for="addRuleDescrition" class="small text-muted text-uppercase">Descrition</label>
-                        <textarea rows="1" class="form-control" id="addRuleDescrition" placeholder="Enter rule description" ng-model="currentRule.ruleDescription"></textarea>
+                        <label for="addRuleDescription" class="small text-muted text-uppercase">Description</label>
+                        <textarea rows="1" class="form-control" id="addRuleDescription" placeholder="Enter rule description" ng-model="currentRule.ruleDescription"></textarea>
                       </div>
                       <div class="form-group">
                         <label for="rule-1-created-date" class="small text-muted text-uppercase">Date</label>
@@ -567,7 +569,7 @@
                       </div>
                       <div class="form-group" ng-if="flags.tagsFlag">
                         <label for="addTriggerTags" class="small text-muted text-uppercase">Tags</label>
-                        <input type="text" class="form-control" id="addTriggerTags" aria-describedby="triggerTags"  placeholder='Enter tags' ng-model="currentRule.tags"/>
+                        <input type="text" class="form-control triggerTags" id="addTriggerTags" aria-describedby="triggerTags"  placeholder='Enter tags' ng-model="currentRule.ruleTags"/>
                       </div>
                     </fieldset>
                   </form>
@@ -595,29 +597,29 @@
                 </div>
               </li>
               <li>
-                <h4>Action</h4>
+                <h4>{{ruleType}}</h4>
                 <div class="wiz-step">
                   <form action="">
                     <fieldset>
-                      <div class="form-group" ng-if="flags.productListFlag">
-                        <label for="addActionProductList" class="small text-muted text-uppercase">Product List</label>
-                        <textarea rows="1" class="form-control" id="addActionProductList" value="product list" ng-model="currentRule.ruleProductList"></textarea>
+                      <div class="form-group" ng-if="ruleType == 'Filter List'">
+                        <label for="filter-list" class="small text-muted text-uppercase">Filter List</label>
+                        <textarea rows="1" class="form-control" id="filter-list" value="filter list" ng-model="currentRule.ruleFilterList"></textarea>
                       </div>
-                      <div class="form-group" ng-if="flags.redirectFlag">
-                        <label for="addActionRedirect" class="small text-muted text-uppercase">Redirect</label>
-                        <input type='text' class="form-control" id="addActionRedirect" value="/screens/touch-technology" ng-model="currentRule.ruleRedirect"/>
+                      <div class="form-group" ng-if="ruleType == 'Block List'">
+                        <label for="block-list" class="small text-muted text-uppercase">Block List</label>
+                        <input type='text' class="form-control" id="block-list" value="/screens/touch-technology" ng-model="currentRule.ruleBlockList"/>
                       </div>
-                      <div class="form-group" ng-repeat="banner in bannerList track by $index">
+                      <div class="form-group" ng-if="ruleType == 'Banner'" ng-repeat="banner in bannerList track by $index">
                         <label for="addActionBanner" class="small text-muted text-uppercase">Banner</label>
                         <input type='text' class="form-control" id="addActionBanner" value="banner" ng-model="currentRule.ruleBanner[$index]"/>
                       </div>
-                      <div class="form-group" ng-if="flags.facetListFlag">
-                        <label for="addActionFacetList" class="small text-muted text-uppercase">Facet List</label>
-                        <input type='text' class="form-control" id="addActionFacetList" value="facetList" ng-model="currentRule.ruleFacetList"/>
+                      <div class="form-group" ng-if="ruleType == 'Boost List'">
+                        <label for="boost-list" class="small text-muted text-uppercase">Boost List</label>
+                        <input type='text' class="form-control" id="boost-list" value="boost list" ng-model="currentRule.ruleBoostList"/>
                       </div>
-                      <div class="form-group" ng-if="flags.rankListFlag">
-                        <label for="addActionRankList" class="small text-muted text-uppercase">Rank List</label>
-                        <input type='text' class="form-control" id="addActionRankList" value="rankList" ng-model="currentRule.ruleRankList"/>
+                      <div class="form-group" ng-if="ruleType == 'Redirect'">
+                        <label for="redirect" class="small text-muted text-uppercase">Redirect</label>
+                        <input type='text' class="form-control" id="redirect" value="redirect" ng-model="currentRule.ruleRedirect"/>
                       </div>
                     </fieldset>
                   </form>
@@ -648,7 +650,7 @@
       </div>
     </div>
   </div>
-
+  </div>
 </div>
 
 <script src="scripts/vendor.js"></script>

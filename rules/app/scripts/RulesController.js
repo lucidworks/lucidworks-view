@@ -4,7 +4,7 @@ function aaa() {
   moment().calendar();
   $(".datepicker").datetimepicker({defaultDate: "now"});
   autosize($("textarea"));
-  $('[id^="triggerTags"]').tagsinput({tagClass: "label label-default"});
+  $('.triggerTags').tagsinput({tagClass: "label label-default"});
 
   $('.disabledControl').prop('disabled', true);
 
@@ -78,14 +78,16 @@ rulesApp.controller('rulesController',
 
   $scope.flags = {
     keywordsFlag : false,
-    tagsFlag : false,
+    tagsFlag : false/*,
     productListFlag : false,
     redirectFlag : false,
     bannerFlag : false,
     facetListFlag : false,
     rankListFlag : false,
-    querySetFlag : false
+    querySetFlag : false*/
   };
+
+  $scope.ruleType = 'Choose rule type';
 
   $scope.currentRule = {
     currentDate: Date.now(),
@@ -95,13 +97,12 @@ rulesApp.controller('rulesController',
     ruleEnd: '',
     ruleKeywords: '',
     ruleCategory: '',
-    ruleTagList: '',
-    ruleProductList: '',
-    ruleRedirect: '',
+    ruleTags: '',
+    ruleFilterList: '',
+    ruleBlockList: '',
+    ruleBoostList: '',
     ruleBanner: [],
-    ruleFacetList: '',
-    ruleRankList: '',
-    ruleQuerySet: '',
+    ruleRedirect: '',
     ruleNumber: 1
   };
 
@@ -115,17 +116,26 @@ rulesApp.controller('rulesController',
       triggerEnd: []/*document.getElementsByClassName('add-trigger-end')[0].value*/,
       search_terms: $scope.currentRule.ruleKeywords,
       category: $scope.currentRule.ruleCategory,
-      tags: $scope.currentRule.ruleTagList,
-      productList: $scope.currentRule.ruleProductList,
-      redirect: $scope.currentRule.ruleRedirect,
+      tags: $scope.currentRule.ruleTags,
+      filterList: $scope.currentRule.ruleFilterList,
+      blockList: $scope.currentRule.ruleBlockList,
+      boostList: $scope.currentRule.ruleBoostList,
       banner: $scope.currentRule.ruleBanner,
-      facetList: $scope.currentRule.ruleFacetList,
-      rankList: $scope.currentRule.ruleRankList,
-      querySet: $scope.currentRule.ruleQuerySet,
+      redirect: $scope.currentRule.ruleRedirect,
       createdAt: Date.now(),
       updatedAt: Date.now(),
       enabled: false
     };
+
+
+    var ruleName = $('#addRuleName')[0];
+    if (ruleName.value==''){        //TODO prevent modal window from closing
+      ruleName.placeholder = 'Rule name is required';
+      return;
+    }
+    if ($scope.ruleType == 'Choose rule type'){
+      return;
+    }
 
     var triggerStartArray = document.getElementsByClassName('add-trigger-start');
     var triggerEndArray = document.getElementsByClassName('add-trigger-end');
@@ -134,6 +144,11 @@ rulesApp.controller('rulesController',
     }
     for (var i = 0, l = triggerEndArray.length; i<l; i++){
       rule.triggerEnd.push(triggerEndArray[i].value);
+    }
+
+    var triggerTags = $('#addTriggerTags')[0];
+    if (triggerTags!= undefined){
+      rule.tags = triggerTags.value.split(',');
     }
 
     $scope.rules = [rule].concat($scope.rules);
@@ -214,7 +229,7 @@ rulesApp.controller('rulesController',
         } else {
           rule.tags.push(tag);
         }
-        var tagsInput = $('tr.' + rule.id + " #triggerTags");
+        var tagsInput = $('tr.' + rule.id + " .triggerTags");
         tagsInput.tagsinput('removeAll');
         if (rule.tags && rule.tags.length > 0) {
           tagsInput.tagsinput('add', rule.tags.join(","));
@@ -238,7 +253,7 @@ rulesApp.controller('rulesController',
       bulkActions.removeAttribute('disabled');
       bulkDropdown.style.visibility = 'visible';
     }
-    $('[id^="triggerTags"]').tagsinput({tagClass: "label label-default"});
+    $('.triggerTags').tagsinput({tagClass: "label label-default"});
     $('.datepicker').datetimepicker();
     return checkedCount;
   };
@@ -254,9 +269,14 @@ rulesApp.controller('rulesController',
 
     var rule = $scope.rules[findIndexById(id)];
     rule.updatedAt = Date.now();
-    rule.triggerStart = $('tr.'+rule.id + ' trigger-start').value;
-    rule.triggerEnd = $('tr.'+rule.id + ' trigger-end').value;
-    rule.tags = $('tr.' + rule.id + ' #triggerTags')[0].value.split(',');
+
+    var triggerStartArray = $('tr.'+rule.id + ' trigger-start');
+    var triggerEndArray = $('tr.'+rule.id + ' trigger-end');
+    for (var i = 0, l = triggerStartArray; i<l; i++){
+      rule.triggerStart[i] = triggerStartArray[i].value;
+      rule.triggerEnd[i] = triggerEndArray[i].value;
+    }
+    rule.tags = $('tr.' + rule.id + ' .triggerTags')[0].value.split(',');
 
 
     delete rule._version_;
