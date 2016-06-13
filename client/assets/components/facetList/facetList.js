@@ -20,12 +20,13 @@
 
   }
 
-  function Controller(ConfigService, Orwell) {
+  function Controller(ConfigService, Orwell, LocalParamsService) {
     'ngInject';
     var vm = this;
     var resultsObservable = Orwell.getObservable('queryResults');
     vm.facets = [];
     vm.facetNames = {};
+    vm.facetLocalParams = {};
 
     activate();
 
@@ -33,6 +34,7 @@
       resultsObservable.addObserver(function (data) {
         // Exit early if there are no facets in the response.
         if (!data.hasOwnProperty('facet_counts')) return;
+        vm.facetLocalParams = LocalParamsService.getLocalParams(data.responseHeader.params);
 
         // Iterate through each facet type.
         _.forEach(data.facet_counts, resultFacetParse);
@@ -40,6 +42,8 @@
         function resultFacetParse(resultFacets, facetType){
           // Keep a list of facet names and only reflow facets based on changes to this list.
           var facetFields = Object.keys(resultFacets);
+          console.log(vm.facetLocalParams);
+          console.log(facetType);
           if (!_.isEqual(vm.facetNames[facetType], facetFields)) {
             var oldFields = _.difference(vm.facetNames[facetType], facetFields);
             var newFields = _.difference(facetFields, vm.facetNames[facetType]);
@@ -63,6 +67,7 @@
                 autoOpen: true,
                 label: ConfigService.getFieldLabels()[value]||value
               };
+              console.log('newfacet', facet);
               newFacets.push(facet);
             });
 

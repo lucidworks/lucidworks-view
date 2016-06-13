@@ -120,6 +120,7 @@
      * @param  {object} facet The facet object
      */
     function toggleFacet(facet) {
+      console.log('facet', facet);
       var key = vm.facetName;
       var query = QueryService.getQueryObject();
 
