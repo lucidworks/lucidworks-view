@@ -683,16 +683,16 @@
                         <textarea rows="5" placeholder="Please write a comma separated list of product ids" class="form-control actionTextArea" id="filter-list" value="filter list" ng-model="currentRule.ruleIds" ng-list=","></textarea>
                       </div>
                       <div class="form-group" ng-if="currentRule.ruleType == 'block_ids'">
-                        <textarea rows="5" class="form-control actionTextArea" id="block-list" value="/screens/touch-technology" ng-model="currentRule.ruleIds" ng-list=","></textarea>
+                        <textarea rows="5" placeholder="Please write a comma separated list of product ids" class="form-control actionTextArea" id="block-list" value="/screens/touch-technology" ng-model="currentRule.ruleIds" ng-list=","></textarea>
                       </div>
                       <div class="form-group" ng-if="currentRule.ruleType == 'banner'">
-                        <input type='text' class="form-control" id="banner" value="banner" ng-model="currentRule.ruleBanner"/>
+                        <input type='text' placeholder="Please write banner value here" class="form-control" id="banner" value="banner"  ng-model="currentRule.ruleBanner"/>
                       </div>
                       <div class="form-group" ng-if="currentRule.ruleType == 'boost_ids'">
-                        <textarea rows="5" class="form-control actionTextArea" id="boost-list" value="boost list" ng-model="currentRule.ruleIds" ng-list=","></textarea>
+                        <textarea rows="5" placeholder="Please write a comma separated list of product ids" class="form-control actionTextArea" id="boost-list" value="boost list" ng-model="currentRule.ruleIds" ng-list=","></textarea>
                       </div>
                       <div class="form-group" ng-if="currentRule.ruleType == 'redirect'">
-                        <input type='text' class="form-control" id="redirect" value="redirect" ng-model="currentRule.ruleRedirect"/>
+                        <input type='text' placeholder="Please write redirect value here" class="form-control" id="redirect" value="redirect" ng-model="currentRule.ruleRedirect"/>
                       </div>
                       <!--<div ng-if="ruleType!='Choose rule type'">
                         <textarea rows="5" class="form-control" id="actionTextArea" ></textarea>
