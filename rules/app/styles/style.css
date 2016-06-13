@@ -37,3 +37,6 @@ table .col-xs-5, table .col-xs-6{
   float: none;
   width: 100%;
 }
+#actionTextArea{
+  resize: vertical!important;
+}

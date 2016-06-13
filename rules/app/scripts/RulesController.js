@@ -180,6 +180,7 @@ rulesApp.controller('rulesController',
 
   $scope.flags = {
     keywordsFlag : false,
+    categoryFlag : false,
     tagsFlag : false
   };
 
@@ -192,9 +193,10 @@ rulesApp.controller('rulesController',
     ruleStart: '',
     ruleEnd: '',
     ruleKeywords: '',
-    ruleCategory: '',
+    ruleCategoryType: '',
+    ruleCategoryValue: '',
     ruleTags: '',
-    ruleFilterList: '',
+    ruleFilterList: '',  //TODO
     ruleBlockList: '',
     ruleBoostList: '',
     ruleBanner: [],
@@ -213,9 +215,9 @@ rulesApp.controller('rulesController',
       triggerStart: []/*document.getElementsByClassName('add-trigger-start')[0].value*/,
       triggerEnd: []/*document.getElementsByClassName('add-trigger-end')[0].value*/,
       search_terms: $scope.currentRule.ruleKeywords,
-      category: $scope.currentRule.ruleCategory,
+      category_id: $scope.currentRule.ruleCategory,
       tags: $scope.currentRule.ruleTags,
-      filterList: $scope.currentRule.ruleFilterList,
+      filterList: $scope.currentRule.ruleFilterList,  //TODO
       blockList: $scope.currentRule.ruleBlockList,
       boostList: $scope.currentRule.ruleBoostList,
       banner: $scope.currentRule.ruleBanner,
@@ -226,16 +228,20 @@ rulesApp.controller('rulesController',
     };
 
     var ruleName = $('#addRuleName')[0];
-    if (ruleName.value==''){        //TODO prevent modal window from closing
+    var addRuleButton = $('#addRuleButton');
+    addRuleButton.removeAttr('data-dismiss');
+    if (ruleName.value==''){
       ruleName.placeholder = 'Rule name is required';
       return;
     }
     if ($scope.ruleType == 'Choose rule type'){
+      //$('#chooseRuleType>option')[0].html('Rule type is required');
       return;
     }
+    addRuleButton.attr('data-dismiss', 'modal');
 
-    var triggerStartArray = document.getElementsByClassName('add-trigger-start');
-    var triggerEndArray = document.getElementsByClassName('add-trigger-end');
+    var triggerStartArray = $('.add-trigger-start');
+    var triggerEndArray = $('.add-trigger-end');
     for (var i = 0, l = triggerStartArray.length; i<l; i++){
       rule.triggerStart.push(triggerStartArray[i].value);
     }
@@ -261,8 +267,8 @@ rulesApp.controller('rulesController',
   };
 
   $scope.checkUncheckAll = function () {
-    var masterBox = document.getElementById('selectAllBoxes');
-    var checkboxes = document.getElementsByClassName('ruleCheckbox');
+    var masterBox = $('#selectAllBoxes');
+    var checkboxes = $('.ruleCheckbox');
     if (masterBox.checked) {
       for (var i = 0; i < checkboxes.length; i++) {
         checkboxes[i].checked = true;
@@ -281,13 +287,13 @@ rulesApp.controller('rulesController',
     $scope.rules.splice(findIndexById(id), 1);
     $scope.rulesTotal -= 1;
 
-    serverDelete.update(id);
+    serverDelete.update(id);  //TODO
     serverDelete.run();
   };
 
   $scope.bulkRemoveRules = function () {
-    var ruleArray = document.getElementsByClassName('ruleCheckbox');
-    var masterBox = document.getElementById('selectAllBoxes');
+    var ruleArray = $('.ruleCheckbox');
+    var masterBox = $('#selectAllBoxes');
     masterBox.checked = false;
     for (var i = 0, l = ruleArray.length; i < l; i++) {
       if (ruleArray[i].checked)
@@ -296,7 +302,7 @@ rulesApp.controller('rulesController',
   };
 
   $scope.bulkStatus = function (enabled) {
-    var ruleArray = document.getElementsByClassName('ruleCheckbox');
+    var ruleArray = $('.ruleCheckbox');
     for (var i = 0, l = ruleArray.length; i < l; i++) {
       if (ruleArray[i].checked) {
         var rule = $scope.rules[findIndexById(ruleArray[i].value)];
@@ -312,7 +318,7 @@ rulesApp.controller('rulesController',
    * @param remove {Boolean} true if we want to remove tag, otherwise add them
    */
   $scope.bulkAddTag = function(tag, remove, isNewTag){
-    var ruleArray = document.getElementsByClassName('ruleCheckbox');
+    var ruleArray = $('.ruleCheckbox');
     for (var i = 0, l = ruleArray.length; i < l; i++) {
       if (ruleArray[i].checked) {
         var rule = $scope.rules[findIndexById(ruleArray[i].value)];
@@ -341,14 +347,14 @@ rulesApp.controller('rulesController',
 
   $scope.getCheckedBoxesCount = function () {
     var checkedCount = document.querySelectorAll('input.ruleCheckbox:checked').length;
-    var bulkActions = document.getElementById('bulk-actions');
-    var bulkDropdown = document.getElementById('bulk-dropdown');
+    var bulkActions = $('#bulk-actions');
+    var bulkDropdown = $('#bulk-dropdown');
     if (checkedCount == 0) {
-      bulkActions.setAttribute('disabled', 'disabled');
-      bulkDropdown.style.visibility = 'hidden';
+      bulkActions.attr('disabled', 'disabled');
+      bulkDropdown.css('visibility', 'hidden');
     } else {
-      bulkActions.removeAttribute('disabled');
-      bulkDropdown.style.visibility = 'visible';
+      bulkActions.removeAttr('disabled');
+      bulkDropdown.css('visibility', 'visible');
     }
     $('.triggerTags').tagsinput({tagClass: "label label-default"});
     $('.datepicker').datetimepicker();
@@ -356,7 +362,7 @@ rulesApp.controller('rulesController',
   };
 
   $scope.resetFocus = function () {
-    var bulkActions = document.getElementById('bulk-actions');
+    var bulkActions = $('#bulk-actions');
     bulkActions.focus();
     bulkActions.blur();
   };
@@ -395,7 +401,7 @@ rulesApp.controller('rulesController',
     } else if (name == 'tags') {
       rule.tags = rule.tags || ["t1"];
     } else if (name == 'category') {
-      rule.category = rule.category || "cat";
+      rule.category_id = rule.category_id || "cat";
     }
   };
 
