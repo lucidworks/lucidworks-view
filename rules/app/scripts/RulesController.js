@@ -382,7 +382,12 @@ rulesApp.controller('rulesController',
       rule.triggerStart[i] = triggerStartArray[i].value;
       rule.triggerEnd[i] = triggerEndArray[i].value;
     }
-    rule.tags = $('tr.' + rule.id + ' .triggerTags')[0].value.split(',');
+    if ($('tr.' + rule.id + ' .triggerTags').length!=0) {
+      rule.tags = $('tr.' + rule.id + ' .triggerTags')[0].value.split(',');
+    }
+    if ($('tr.' + rule.id + ' .actionProductList').length!=0) {
+      rule.ids = $('tr.' + rule.id + ' .actionProductList')[0].value.split(',');
+    }
 
     delete rule._version_;
 

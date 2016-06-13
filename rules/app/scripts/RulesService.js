@@ -28,6 +28,12 @@ rulesApp.factory('RulesService', ['$http',
         });
       },
 
+      getProductFileds: function(callback){
+        callback({data: {
+
+        }})
+      },
+
       search: function(filter, callback){
         var url = appHost + "/api/apollo/query-pipelines/" + rulesCollection + "-default/collections/" + rulesCollection + "/select?" +
           "wt=json&fl=*&json.nl=arrarr" + filter.toUrlString();
