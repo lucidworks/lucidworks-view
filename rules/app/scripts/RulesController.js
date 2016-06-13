@@ -165,6 +165,14 @@ rulesApp.controller('rulesController',
            ['$scope', '$http', '$timeout', 'RulesService',
     function($scope, $http, $timeout, rulesService) {
 
+      $scope.types = {
+        filter_ids: "Filter List",
+        block_ids: "Block List",
+        boost_ids: "Boost List",
+        redirect: "Redirect",
+        banner: "Banner"
+      };
+
   function findIndexById(id) {
     for (var i = 0; i < $scope.rules.length; i++) {
       var r = $scope.rules[i];
@@ -176,7 +184,6 @@ rulesApp.controller('rulesController',
   }
 
   $scope.triggerDates = [];
-  $scope.bannerList = [];
 
   $scope.flags = {
     keywordsFlag : false,
@@ -184,10 +191,9 @@ rulesApp.controller('rulesController',
     tagsFlag : false
   };
 
-  $scope.ruleType = 'Choose rule type';
-
   $scope.currentRule = {
     currentDate: Date.now(),
+    ruleType: '',
     ruleName: '',
     ruleDescription: '',
     ruleStart: '',
@@ -196,12 +202,7 @@ rulesApp.controller('rulesController',
     ruleCategoryType: '',
     ruleCategoryValue: '',
     ruleTags: '',
-    ruleFilterList: '',  //TODO
-    ruleBlockList: '',
-    ruleBoostList: '',
-    ruleBanner: [],
-    ruleRedirect: '',
-    ruleNumber: 1
+    ruleIds: []
   };
 
   $scope.filter = Filter;
@@ -209,19 +210,15 @@ rulesApp.controller('rulesController',
   $scope.addRule = function () {
 
     var rule = {
-      idNumb: $scope.currentRule.ruleNumber++,
+      type: $scope.currentRule.ruleType,
       id: $scope.currentRule.ruleName,
       description: $scope.currentRule.ruleDescription,
-      triggerStart: []/*document.getElementsByClassName('add-trigger-start')[0].value*/,
-      triggerEnd: []/*document.getElementsByClassName('add-trigger-end')[0].value*/,
+      triggerStart: [],
+      triggerEnd: [],
       search_terms: $scope.currentRule.ruleKeywords,
-      category_id: $scope.currentRule.ruleCategory,
+      category_id: [$scope.currentRule.ruleCategoryType, $scope.currentRule.ruleCategoryValue],
       tags: $scope.currentRule.ruleTags,
-      filterList: $scope.currentRule.ruleFilterList,  //TODO
-      blockList: $scope.currentRule.ruleBlockList,
-      boostList: $scope.currentRule.ruleBoostList,
-      banner: $scope.currentRule.ruleBanner,
-      redirect: $scope.currentRule.ruleRedirect,
+      ids: $scope.currentRule.ruleIds,
       createdAt: Date.now(),
       updatedAt: Date.now(),
       enabled: false
@@ -252,6 +249,13 @@ rulesApp.controller('rulesController',
     var triggerTags = $('#addTriggerTags')[0];
     if (triggerTags!= undefined){
       rule.tags = triggerTags.value.split(',');
+    }
+    rule.search_terms = rule.search_terms.split(',');
+    if ($scope.currentRule.ruleType=='banner' && $scope.currentRule.ruleBanner){
+      rule.banner = $scope.currentRule.ruleBanner;
+    }
+    if ($scope.currentRule.ruleType=='redirect'&& $scope.currentRule.ruleRedirect){
+      rule.redirect = $scope.currentRule.ruleRedirect;
     }
 
     $scope.rules = [rule].concat($scope.rules);
@@ -287,8 +291,7 @@ rulesApp.controller('rulesController',
     $scope.rules.splice(findIndexById(id), 1);
     $scope.rulesTotal -= 1;
 
-    serverDelete.update(id);  //TODO
-    serverDelete.run();
+    RulesService.delete(id);
   };
 
   $scope.bulkRemoveRules = function () {

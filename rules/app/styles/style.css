@@ -37,6 +37,10 @@ table .col-xs-5, table .col-xs-6{
   float: none;
   width: 100%;
 }
-#actionTextArea{
+.actionTextArea{
   resize: vertical!important;
+}
+.addTriggerCategory, .triggerCategory{
+  display: inline-block;
+  width: 49%;
 }
