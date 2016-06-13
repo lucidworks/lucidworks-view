@@ -46,10 +46,13 @@
     }
 
     function localParamJoinTransformer(str, values) {
+      console.log('localParamJoinTransformer', str, values);
       return QueryBuilderProvider.arrayJoinString(str, values, ' ');
     }
 
     function localParamWrapperTransformer(data) {
+      // var tagName = 'ex=dc';
+      // console.log('localParamWrapperTransformer', data, tagName);
       return '{!' + data + '}';
     }
   }

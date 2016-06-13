@@ -199,6 +199,9 @@
         transformer: 'fq:field',
         tag: vm.facetTag
       };
+      if(keyObj.tag){
+        keyObj.transformer = ['localParams', 'fq:field'];
+      }
       query.fq.push(keyObj);
       $log.debug('final query', query);
       return query;

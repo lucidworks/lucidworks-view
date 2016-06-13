@@ -263,6 +263,14 @@
      * @return {function}                          The transformer function.
      */
     function getTransformerFn(type, key, defaultTransformer){
+      if(_.isArray(key)){
+        for(var i=0;i<key.length;i++){
+          if(QueryDataTransformers[type].hasOwnProperty(key[i])){
+            return QueryDataTransformers[type][key[i]];
+          }
+          return defaultTransformer;
+        }
+      }
       return QueryDataTransformers[type].hasOwnProperty(key) ? QueryDataTransformers[type][key] : defaultTransformer;
     }
 
