@@ -220,8 +220,7 @@ rulesApp.controller('rulesController',
       tags: $scope.currentRule.ruleTags,
       ids: $scope.currentRule.ruleIds,
       createdAt: Date.now(),
-      updatedAt: Date.now(),
-      enabled: false
+      updatedAt: Date.now()
     };
 
     var ruleName = $('#addRuleName')[0];

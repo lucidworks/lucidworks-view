@@ -388,18 +388,13 @@
                         <textarea rows="1" class="form-control disabledControl" id="triggerKeywords" ng-model="rule.search_terms">{{rule.search_terms}}</textarea>
                       </div>
                       <div class="form-group" ng-if="rule.category_id">
-                        <label for="triggerCategory" class="small text-muted text-uppercase">Category</label>
-                        <select class="form-control disabledControl triggerCategory" ng-model="rule.category_id[0]">
-                          <option value="1">ID</option>
-                          <option value="2">Name</option>
-                          <option value="3">???</option>
+                        <label class="small text-muted text-uppercase">Field Value</label>
+                        <select class="form-control addTriggerCategory" ng-model="currentRule.ruleCategoryType">
+                          <option value="CategoryID" selected>CategoryID</option>
+                          <option value="Brand-sort">Brand-sort</option>
+                          <option value="ProductType">ProductType</option>
                         </select>
-                        <select class="form-control disabledControl triggerCategory" ng-model="rule.category_id[1]">
-                          <option value="1">Category #1</option>
-                          <option value="2">Category #2</option>
-                          <option value="3">Category #3</option>
-                          <option value="4">Category #4</option>
-                        </select>
+                        <input class="form-control disabledControl triggerCategory" ng-model="rule.category_id[1]" />
                       </div>
                       <div class="form-group" ng-if="rule.tags">
                         <label for="triggerTags" class="small text-muted text-uppercase">Tags</label>
@@ -423,7 +418,7 @@
                     <a href="#" ng-click="addTrigger(rule.id, 'search_terms')">KEYWORDS</a>
                   </li>
                   <li ng-if="!rule.category_id">
-                    <a href="#" ng-click="addTrigger(rule.id, 'category')">CATEGORY</a>
+                    <a href="#" ng-click="addTrigger(rule.id, 'category')">Filed Value</a>
                   </li>
                   <li ng-if="!rule.tags">
                     <a href="#" ng-click="addTrigger(rule.id, 'tags')">TAGS</a>
@@ -632,18 +627,13 @@
                         <textarea rows="1" class="form-control" id="addTriggerKeywords" ng-model="currentRule.ruleKeywords"></textarea>
                       </div>
                       <div class="form-group" ng-if="flags.categoryFlag">
-                        <label class="small text-muted text-uppercase">Category</label>
+                        <label class="small text-muted text-uppercase">Field Value</label>
                         <select class="form-control addTriggerCategory" ng-model="currentRule.ruleCategoryType">
-                          <option value="ID">ID</option>
-                          <option value="Name">Name</option>
-                          <option value="Something else">???</option>
+                          <option value="CategoryID" selected>CategoryID</option>
+                          <option value="Brand-sort">Brand-sort</option>
+                          <option value="ProductType">ProductType</option>
                         </select>
-                        <select class="form-control addTriggerCategory" ng-model="currentRule.ruleCategoryValue">
-                          <option value="1">Category #1</option>
-                          <option value="2">Category #2</option>
-                          <option value="3">Category #3</option>
-                          <option value="4">Category #4</option>
-                        </select>
+                        <input class="form-control addTriggerCategory" ng-model="currentRule.ruleCategoryValue"/>
                       </div>
                       <div class="form-group" ng-if="flags.tagsFlag">
                         <label for="addTriggerTags" class="small text-muted text-uppercase">Tags</label>
@@ -665,7 +655,7 @@
                         <a href="#" ng-click="flags.keywordsFlag = true">KEYWORDS</a>
                       </li>
                       <li ng-if="!flags.categoryFlag">
-                        <a href="#" ng-click="flags.categoryFlag = true">CATEGORY</a>
+                        <a href="#" ng-click="flags.categoryFlag = true">FIELD VALUE</a>
                       </li>
                       <li ng-if="!flags.tagsFlag">
                         <a href="#" ng-click="flags.tagsFlag = true">TAGS</a>
