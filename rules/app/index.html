@@ -383,13 +383,13 @@
                 <div class="col-xs-6">
                   <form action="">
                     <fieldset>
-                      <div class="form-group" ng-if="rule.search_terms">
+                      <div class="form-group" ng-if="rule.search_terms[0]">
                         <label for="triggerKeywords" class="small text-muted text-uppercase">Keywords</label>
                         <textarea rows="1" class="form-control disabledControl" id="triggerKeywords" ng-model="rule.search_terms">{{rule.search_terms}}</textarea>
                       </div>
-                      <div class="form-group" ng-if="rule.category_id">
+                      <div class="form-group" ng-if="rule.category_id[0]">
                         <label class="small text-muted text-uppercase">Field Value</label>
-                        <select class="form-control addTriggerCategory" ng-model="currentRule.ruleCategoryType">
+                        <select class="form-control addTriggerCategory" ng-model="rule.category_id[0]">
                           <option value="CategoryID" selected>CategoryID</option>
                           <option value="Brand-sort">Brand-sort</option>
                           <option value="ProductType">ProductType</option>

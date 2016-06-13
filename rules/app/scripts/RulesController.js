@@ -408,7 +408,7 @@ rulesApp.controller('rulesController',
     } else if (name == 'tags') {
       rule.tags = rule.tags || ["t1"];
     } else if (name == 'category') {
-      rule.category_id = rule.category_id || "cat";
+      rule.category_id = rule.category_id || ["field","value"];
     }
   };
 
