@@ -1,4 +1,115 @@
-var rulesApp = angular.module('rulesApp', []);
+"use strict";
+
+var rulesApp = angular.module('rulesApp');
+
+var Filter = (function () {
+
+  var facets = {
+    type: {name: "Rules type"},
+    tags: {name: "Tags"}
+  };
+
+  return {
+
+    values: {
+      query: "",
+      pageSize: 10,
+      pageNum: 0,
+
+      startDate: null,
+      endDate: null,
+      status: null,
+
+      facets: {}
+    },
+
+    rulesFrom: function () {
+      return this.values.pageNum * this.values.pageSize;
+    },
+
+    rulesTo: function () {
+      return (this.values.pageNum + 1) * this.values.pageSize
+    },
+
+    filterBy: function (field, value) {
+      this.values.facets[field] = {};
+      this.values.facets[field][value] = true;
+
+      /*var filter = this.values.facets.find(
+            function (f) { return f[0] === field;});
+
+      if (!filter) {
+        this.values.facets.push([field, value]);
+      }*/
+
+      /*var facet = this.values.facets[field];
+      if (!facet) {
+        throw "Wrong facet name '" + facet + "'";
+      }
+
+      for (var i = 0; i < facet.length; i++) {
+        if(facet[i][0] === value) {
+          facet[2] = true;
+          return;
+        }
+      }
+
+      console.log("Facet value '" + field + " - " + value + "' not found in ", facet);*/
+    },
+
+    hasNext: function (rulesTotal) {
+      return (this.values.pageNum + 1) * this.values.pageSize < (rulesTotal || 0)
+    },
+
+    next: function () {
+      this.values.pageNum += 1;
+      return this.values.pageNum;
+    },
+
+    hasPrev : function () {
+      return this.values.pageNum > 0;
+    },
+
+    prev: function () {
+      this.values.pageNum -= 1;
+      return this.values.pageNum;
+    },
+
+    toUrlString : function () {
+      var res = "";
+      res += "&q=" + (this.values.query || '*');
+      res += "&facet=true";
+
+      for (var f in facets) {
+        res += "&facet.field=" + f;
+      }
+
+      res += "&start=" + this.values.pageNum * this.values.pageSize;
+      res += "&rows=" + this.values.pageSize;
+
+      var filterQuery = [];
+      for (var key in this.values.facets) {
+        var facet = this.values.facets[key];
+        for (var name in facet) {
+          if (facet[name]) {
+            filterQuery.push(key + ":" + name);
+          }
+        }
+      }
+
+      if (filterQuery.length > 0) {
+        res += "&fq=" + filterQuery.join(" ");
+      }
+
+/*      if (this.values.facets.length > 0) {
+        res += "&fq=" + this.values.facets.map(
+            function (f) {return f[0] + ":" + f[1].trim()}).join(" ");
+      }*/
+
+      return res;
+    }
+  }
+})();
 
 function aaa() {
   moment().calendar();
@@ -51,17 +162,8 @@ function aaa() {
 }
 
 rulesApp.controller('rulesController',
-           ['$scope', '$http', '$timeout', 'serverLoad', 'serverAdd', 'serverDelete', 'serverUpdate', 'serverSearch',
-    function($scope, $http, $timeout, serverLoad, serverAdd, serverDelete, serverUpdate, serverSearch) {
-  //var vm = this;
-  //
-  //vm.query = "*";
-  //vm.facetField = "type";
-  //
-  //vm.appHost = "http://localhost:8764";
-  //vm.solrUrl = vm.appHost + "/api/apollo/solr";
-  //vm.rulesCollection = "bsb_products_rules";
-  //var c = {headers: {'Authorization': 'Basic ' + btoa('admin:123qweasdzxc')}};
+           ['$scope', '$http', '$timeout', 'RulesService',
+    function($scope, $http, $timeout, rulesService) {
 
   function findIndexById(id) {
     for (var i = 0; i < $scope.rules.length; i++) {
@@ -78,13 +180,7 @@ rulesApp.controller('rulesController',
 
   $scope.flags = {
     keywordsFlag : false,
-    tagsFlag : false/*,
-    productListFlag : false,
-    redirectFlag : false,
-    bannerFlag : false,
-    facetListFlag : false,
-    rankListFlag : false,
-    querySetFlag : false*/
+    tagsFlag : false
   };
 
   $scope.ruleType = 'Choose rule type';
@@ -106,6 +202,8 @@ rulesApp.controller('rulesController',
     ruleNumber: 1
   };
 
+  $scope.filter = Filter;
+
   $scope.addRule = function () {
 
     var rule = {
@@ -126,7 +224,6 @@ rulesApp.controller('rulesController',
       updatedAt: Date.now(),
       enabled: false
     };
-
 
     var ruleName = $('#addRuleName')[0];
     if (ruleName.value==''){        //TODO prevent modal window from closing
@@ -159,7 +256,7 @@ rulesApp.controller('rulesController',
       $scope.rules.pop();
     }
 
-    serverAdd.run(rule);
+    rulesService.add(rule);
     $timeout(aaa, 1);
   };
 
@@ -235,7 +332,7 @@ rulesApp.controller('rulesController',
           tagsInput.tagsinput('add', rule.tags.join(","));
         }
         if (isNewTag) {
-          $scope.tagsFacets.push([tag, 1]);
+          $scope.facets.tags.push([tag, 1]);
         }
         $scope.updateRule(ruleArray[i].value);
       }
@@ -272,16 +369,16 @@ rulesApp.controller('rulesController',
 
     var triggerStartArray = $('tr.'+rule.id + ' trigger-start');
     var triggerEndArray = $('tr.'+rule.id + ' trigger-end');
+
     for (var i = 0, l = triggerStartArray; i<l; i++){
       rule.triggerStart[i] = triggerStartArray[i].value;
       rule.triggerEnd[i] = triggerEndArray[i].value;
     }
     rule.tags = $('tr.' + rule.id + ' .triggerTags')[0].value.split(',');
 
-
     delete rule._version_;
 
-    serverUpdate.run(id, rule);
+    rulesService.update(id, rule);
   };
 
   $scope.changeStatus = function (id) {
@@ -338,144 +435,40 @@ rulesApp.controller('rulesController',
     return actionCount;
   };
 
-  serverLoad.run($scope);
-  $timeout(aaa, 1);
-
-  $scope.pageSize = 10;
-  $scope.pageNum = 0;
-  $scope.searchQuery = "*";
-
   $scope.search = function (pageNum) {
     console.log("searching (" + pageNum + ")...");
-    $scope.pageNum = (pageNum || 0);
+    $scope.filter.values.pageNum = (pageNum || 0);
 
-    var url = "/api/apollo/query-pipelines/bsb_products_rules-default/collections/bsb_products_rules/" +
-      "select?fl=*,score&echoParams=all&wt=json&json.nl=arrarr&facet=true&facet.field=type" +
-      "&start=" + $scope.pageNum * $scope.pageSize + "&rows=" + $scope.pageSize +
-      "&q=" + $scope.searchQuery + "&debug=true";
+    rulesService.search($scope.filter, function(response) {
+      console.log("Rules loaded: ");
+      $scope.rules = response.data.response.docs;
+      $scope.rulesTotal = response.data.response.numFound;
 
-    serverSearch.run(url, $scope);
-  };
+      $scope.facets = response.data.facet_counts.facet_fields;
 
-  $scope.filterBy = function (field, value) {
-    if ($scope.searchQuery.trim() === "*") {
-      $scope.searchQuery = '';
-    }
-    $scope.searchQuery = field + ':' + value + ' ' + $scope.searchQuery;
-    $scope.search()
-  };
-
-  $scope.hasNext = function () {
-    return ($scope.pageNum + 1) * $scope.pageSize < ($scope.rulesTotal || 0)
+      console.log($scope.rules);
+      $timeout(aaa, 1);
+    });
   };
 
   $scope.next = function () {
-    if ($scope.hasNext()) {
-      $scope.search($scope.pageNum + 1);
+    if ($scope.filter.hasNext($scope.rulesTotal)) {
+      $scope.search($scope.filter.next());
     }
   };
 
   $scope.prev = function () {
-    if ($scope.pageNum > 0) {
-      $scope.search($scope.pageNum - 1);
+    // TODO change logic
+    if ($scope.filter.hasPrev()) {
+      $scope.search($scope.filter.prev());
     }
   };
 
-  serverLoad.run($scope);
-  $timeout(aaa, 1);
-}]);
-
-rulesApp.factory('serverInfo', function(){
-  return {
-    query : "*",
-    facetField : "type",
-    appHost : "http://localhost:8764",
-    solrUrl : "http://localhost:8764/api/apollo/solr",
-    rulesCollection : "bsb_products_rules",
-    c : { headers: { 'Authorization': 'Basic ' + btoa('admin:123qweasdzxc')}}
+  $scope.filterBy = function (key, value) {
+    $scope.filter.filterBy(key, value);
+    $scope.search();
   };
-});
 
-function groupFacetsIntoPairs(ff) {
-  var f = [];
-  for (var i = 0; i < (ff.length / 2); i++) {
-    f.push([ff[2*i], ff[2*i+1]]);
-  }
-
-  return f;
-}
-
-rulesApp.factory('serverLoad', ['$http', '$timeout', 'serverInfo',
-    function($http, $timeout, serverInfo){
-
-  var url = serverInfo.solrUrl + '/' + serverInfo.rulesCollection + '/select/?wt=json&q=' + serverInfo.query
-    + '&fl=*,name&facet=true&facet.field=type&facet.field=tags';
-
-  return {
-    run: function($scope){
-      $http.get(url, serverInfo.c).then(function(response) {
-        $scope.rules = response.data.response.docs;
-        $scope.rulesTotal = response.data.response.numFound;
-
-        $scope.typeFacets = groupFacetsIntoPairs(response.data.facet_counts.facet_fields.type);
-        $scope.tagsFacets = groupFacetsIntoPairs(response.data.facet_counts.facet_fields.tags);
-
-        //console.log($scope.tagsFacets);
-        //console.log($scope.rules);
-        $timeout(aaa, 1);
-      });
-    }
-  };
-}]);
-
-rulesApp.factory('serverAdd', ['$http', 'serverInfo', function($http, serverInfo){
-
-  return {
-    run: function(rule){
-      $http.post(serverInfo.solrUrl + '/' + serverInfo.rulesCollection + '/update/json/docs?commit=true', rule, serverInfo.c).then(function(response) {
-        console.log("Rule '" + rule.id + "' created!");
-      });
-    }
-  };
-}]);
-
-rulesApp.factory('serverDelete', ['$http', 'serverInfo', function($http, serverInfo){
-  var id;
-
-  return {
-    update: function(x){
-      id = x
-    },
-    run: function(){
-      $http.post(serverInfo.solrUrl + '/' + serverInfo.rulesCollection + '/update?commit=true', {'delete': {id: id}}, serverInfo.c).then(function(response) {
-        console.log("Rule '" + id + "' deleted!");
-      });
-    }
-  };
-}]);
-
-rulesApp.factory('serverUpdate', ['$http', 'serverInfo', function($http, serverInfo){
-  return {
-    run: function(id, rule){
-      console.log("updating rule: ", id, rule);
-      $http.post(serverInfo.solrUrl + '/' + serverInfo.rulesCollection + '/update/json/docs?commit=true', rule, serverInfo.c).then(function(response) {
-        console.log("Rule '" + id + "' updated!");
-      });
-    }
-  }
-}]);
-
-rulesApp.factory('serverSearch', ['$http', 'serverInfo', function($http, serverInfo){
-  return {
-
-    run: function(url, $scope){
-      $http.get(serverInfo.appHost + url, serverInfo.c).then(function (response) {
-        console.log("search complete: ");
-
-        $scope.rules = response.data.response.docs;
-        $scope.rulesTotal = response.data.response.numFound;
-      });
-    }
-  }
+  $scope.search();
 }]);
 

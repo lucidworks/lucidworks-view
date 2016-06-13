@@ -15,6 +15,7 @@
   <script src="scripts/vendor/modernizr.js"></script>
 
   <script src="bower_components/angular/angular.js"></script>
+  <script src="scripts/RulesService.js"></script>
   <script src="scripts/RulesController.js"></script>
 </head>
 <body>
@@ -107,14 +108,14 @@
         <a class="list-group-item" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true">Rules type</a>
         <div id="collapseOne" class="collapse in" role="tabpanel">
           <ul class="list-unstyled data-links">
-            <li ng-repeat="f in typeFacets"><a data-quantity="{{f[1]}}" class="text-muted-light active" href="#" ng-click="filterBy('type', f[0])">{{f[0]}}</a></li>
+            <li ng-repeat="f in facets.type"><a data-quantity="{{f[1]}}" class="text-muted-light active" href="#" ng-click="filterBy('type', f[0])">{{f[0]}}</a></li>
           </ul>
         </div>
         <a class="list-group-item" href="#status">Status</a>
         <a class="list-group-item" role="button" data-toggle="collapse" href="#collapseTags" aria-expanded="true">Tags</a>
         <div id="collapseTags" class="collapse in" role="tabpanel">
           <ul class="list-unstyled data-links">
-            <li ng-repeat="f in tagsFacets"><a data-quantity="{{f[1]}}" class="text-muted-light active" href="#" ng-click="filterBy('tags', f[0])"><i class="fa fa-tag"></i>{{f[0]}}</a></li>
+            <li ng-repeat="f in facets.tags"><a data-quantity="{{f[1]}}" class="text-muted-light active" href="#" ng-click="filterBy('tags', f[0])"><i class="fa fa-tag"></i>{{f[0]}}</a></li>
           </ul>
         </div>
       </div>
@@ -179,7 +180,7 @@
                 <a href="#" ng-click="bulkStatus(false)"><span class="status bg-inactive"></span>Disable</a>
               </li>
               <li class="divider"></li>
-              <li ng-repeat="f in tagsFacets">
+              <li ng-repeat="f in facets.tags">
                 <a class="text-muted-light active" href="#"><i class="fa fa-tag"></i>{{f[0]}}
                   <span class="bulk-radio">
                     <input type="radio" name="{{f[0]}}" ng-click="bulkAddTag(f[0], true)" id="tagOff"/>
@@ -236,21 +237,21 @@
               </li>
               <li class="divider"></li>
               <li>
-                <label for="filterStart" class="small text-muted text-uppercase" ng-if="tagsFacets.length>0">Tags</label>
+                <label for="filterStart" class="small text-muted text-uppercase" ng-if="facets.tags.length > 0">Tags</label>
               </li>
-              <li ng-repeat="f in tagsFacets">
+              <li ng-repeat="f in facets.tags">
                 <a class="text-muted-light active" href="#"><i class="fa fa-tag"></i>{{f[0]}}
-                  <input type="checkbox" name="filterTagsCheckbox" ng-click="resetFocus();"/>
+                  <input type="checkbox" name="filterTagsCheckbox" ng-model="filter.values.facets.tags[f[0]]" />
                 </a>
               </li>
               <li>
-                <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true" ><i class="mi-filter_list"></i> Apply</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true" ng-click="search()" ><i class="mi-filter_list"></i> Apply</button>
                 <button type="button" class="btn btn-link text-muted" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i> Cancel</button>
               </li>
             </ul>
           <form class="form-inline" role="search" ng-submit="search()">
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Search" ng-model="searchQuery">
+              <input type="text" class="form-control" placeholder="Search" ng-model="filter.values.query">
               <button type="submit" class="btn-search"><i class="fa fa-search"></i></button>
             </div>
           </form>
@@ -264,7 +265,7 @@
         <tr>
           <th></th>
           <th>Status</th>
-          <th width="20%"><div class="column-header-holder"><span>Name <a href="#" class="text-muted"><i class="mi-filter_list"></i></a></span><a href="#" class="text-muted"><i class="fa fa-sort"></i></a></div></th>
+          <th width="20%"><div class="column-header-holder"><span>General </span></div></th>
           <th width="30%">Trigger</th>
           <th width="28%">Action</th>
           <th><div class="column-header-holder">Created on<a href="#" class="text-muted"></a></div></th>
@@ -284,7 +285,7 @@
           </td>
           <td class="text-center">
             <div class="column-holder">
-              <a href="#" class="status {{!!rule.enabled?'bg-active':'bg-inactive'}}" ng-click="changeStatus(rule.id)"></a>
+              <a href="#" class="status {{rule.enabled === false ? 'bg-inactive':'bg-active'}}" ng-click="changeStatus(rule.id)"></a>
             </div>
           </td>
           <td>
@@ -465,11 +466,11 @@
       </table>
       <div class="row table-footer">
         <div class="col-sm-6">
-          <p class="small text-nowrap"><span>rules {{pageNum * pageSize}} - {{pageNum * pageSize + (rules.length || 0)}}</span> of <span>{{rulesTotal}}</span> </p>
+          <p class="small text-nowrap"><span>Rules {{filter.rulesFrom()}} - {{filter.rulesTo()}}</span> of <span>{{rulesTotal}}</span> </p>
         </div>
         <div class="col-sm-6 text-right">
-          <a href="#" class="btn btn-sm btn-link text-muted" ng-click="prev()" ng-class="(pageNum <= 0) ? 'text-muted' : ''" ><i class="fa fa-angle-left"></i>Previous</a>
-          <a href="#" class="btn btn-sm btn-link fa-right" ng-click="next()" ng-class="((pageNum + 1) * pageSize >= (rulesTotal || 0)) ? 'text-muted' : ''">Next <i class="fa fa-angle-right"></i></a>
+          <a href="javascript:void(0)" class="btn btn-sm btn-link" ng-click="prev()" ng-class="filter.hasPrev() ? '' : 'text-muted'" ><i class="fa fa-angle-left"></i>Previous</a>
+          <a href="javascript:void(0)" class="btn btn-sm btn-link fa-right" ng-click="next()" ng-class="filter.hasNext(rulesTotal) ? '' : 'text-muted'">Next <i class="fa fa-angle-right"></i></a>
         </div>
       </div>
     </div>
