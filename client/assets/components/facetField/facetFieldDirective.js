@@ -16,7 +16,8 @@
       bindToController: {
         facetName: '@facetName',
         facetLabel: '@facetLabel',
-        facetAutoOpen: '@facetAutoOpen'
+        facetAutoOpen: '@facetAutoOpen',
+        facetTag: '@facetTag'
       }
     };
   }
@@ -39,7 +40,6 @@
      * Activate the controller.
      */
     function activate() {
-
       // Add observer to update data when we get results back.
       resultsObservable.addObserver(parseFacets);
       // initialize the facets.
@@ -120,7 +120,6 @@
      * @param  {object} facet The facet object
      */
     function toggleFacet(facet) {
-      console.log('facet', facet);
       var key = vm.facetName;
       var query = QueryService.getQueryObject();
 
@@ -197,7 +196,8 @@
       var keyObj = {
         key: key,
         values: [title],
-        transformer: 'fq:field'
+        transformer: 'fq:field',
+        tag: vm.facetTag
       };
       query.fq.push(keyObj);
       $log.debug('final query', query)

@@ -66,7 +66,6 @@
                 label: ConfigService.getFieldLabels()[value]||value,
                 tag: LocalParamsService.getLocalParamTag(vm.facetLocalParams[facetType.split('_')[1].slice(0,-1)], value) || null
               };
-              console.log('newfacet', facet);
               newFacets.push(facet);
             });
 

@@ -66,9 +66,8 @@
     }
 
     function getLocalParamTag(paramsObj, facetValue) {
-      console.log(paramsObj, facetValue);
       if(_.has(paramsObj[facetValue], 'localParams.ex')){
-        return paramsObj[facetValue].localParams.ex;
+        return paramsObj[facetValue].localParams.ex.join(',');
       }
     }
 
