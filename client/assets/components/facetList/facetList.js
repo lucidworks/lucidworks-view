@@ -42,8 +42,6 @@
         function resultFacetParse(resultFacets, facetType){
           // Keep a list of facet names and only reflow facets based on changes to this list.
           var facetFields = Object.keys(resultFacets);
-          console.log(vm.facetLocalParams);
-          console.log(facetType);
           if (!_.isEqual(vm.facetNames[facetType], facetFields)) {
             var oldFields = _.difference(vm.facetNames[facetType], facetFields);
             var newFields = _.difference(facetFields, vm.facetNames[facetType]);
@@ -65,7 +63,8 @@
                 name: value,
                 type: facetType,
                 autoOpen: true,
-                label: ConfigService.getFieldLabels()[value]||value
+                label: ConfigService.getFieldLabels()[value]||value,
+                tag: LocalParamsService.getLocalParamTag(vm.facetLocalParams[facetType.split('_')[1].slice(0,-1)], value) || null
               };
               console.log('newfacet', facet);
               newFacets.push(facet);
