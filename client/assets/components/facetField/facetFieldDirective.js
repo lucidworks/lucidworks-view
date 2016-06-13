@@ -200,7 +200,7 @@
         tag: vm.facetTag
       };
       query.fq.push(keyObj);
-      $log.debug('final query', query)
+      $log.debug('final query', query);
       return query;
     }
 
