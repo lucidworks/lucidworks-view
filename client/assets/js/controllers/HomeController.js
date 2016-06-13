@@ -5,7 +5,7 @@
     .controller('HomeController', HomeController);
 
 
-  function HomeController($filter, $timeout, ConfigService, QueryService, URLService, Orwell, AuthService, _, $log) {
+  function HomeController($filter, $timeout, ConfigService, QueryService, URLService, Orwell, AuthService, _, $log, LocalParamsService) {
 
     'ngInject';
     var hc = this; //eslint-disable-line
@@ -62,6 +62,8 @@
         hc.numFoundFormatted = $filter('humanizeNumberFormat')(hc.numFound, 0);
         hc.lastQuery = data.responseHeader.params.q;
         hc.showFacets = checkForFacets(data);
+        hc.facetLocalParams = LocalParamsService.getLocalParams(data.responseHeader.params);
+        console.log(hc.facetLocalParams);
         // Make sure you check for all the supported facets before for empty-ness
         // before toggling the `showFacets` flag
       }
