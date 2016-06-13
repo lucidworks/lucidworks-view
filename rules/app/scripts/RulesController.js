@@ -137,11 +137,11 @@ function aaa() {
 
   function setActivator(elsSelector) {
     $(elsSelector).each(function (index, el) {
-      if (el && el.dataset["initilized"]) {
+      if (el && el.dataset["initialized"]) {
         return;
       }
 
-      el.dataset["initilized"] = true;
+      el.dataset["initialized"] = true;
       $(el).on("click", activate);
     })
   }
