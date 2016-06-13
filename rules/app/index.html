@@ -210,7 +210,7 @@
               Filter
               <span class="caret"></span>
             </a>
-            <ul class="dropdown-menu dropdown-menu-right with-states">
+            <!--<ul class="dropdown-menu dropdown-menu-right with-states">
               <li>
                 <div class="btn-group btn-group-justified filter-range" role="group">
                   <div class="btn">
@@ -248,7 +248,66 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true" ng-click="search()" ><i class="mi-filter_list"></i> Apply</button>
                 <button type="button" class="btn btn-link text-muted" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i> Cancel</button>
               </li>
-            </ul>
+            </ul>--><ul class="dropdown-menu dropdown-menu-right with-states">
+            <li>
+              <div class="btn-group btn-group-justified filter-range" role="group">
+                <div class="btn">
+                  <label for="filterStart" class="small text-muted text-uppercase">Start</label>
+                  <div class="datepicker-holder">
+                    <input type='text' class="form-control datepicker" id="filterStart" />
+                  </div>
+                </div>
+                <div class="btn text-left">
+                  <label for="filterEnd" class="small text-muted text-uppercase">End</label>
+                  <div class="datepicker-holder">
+                    <input type='text' class="form-control datepicker" id="filterEnd" />
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <label for="filterStatus" class="small text-muted text-uppercase">Staus</label>
+              <!-- <div class="btn-group btn-group-justified" role="group" id="filterStatus">
+                 <a class="btn btn-sm btn-link active" href="#">Active</a>
+                 <a class="btn btn-sm btn-link" href="#">Inactive</a>
+              </div>
+              <div class="mb-20"></div>
+              <div class="btn-group btn-group-justified" role="group" id="filterStatus">
+                 <a class="btn btn-sm btn-link active" href="#">Active</a>
+                 <a class="btn btn-sm btn-link" href="#">N/A</a>
+                 <a class="btn btn-sm btn-link" href="#">Inactive</a>
+              </div> -->
+              <div class="btn-group btn-group-justified" data-toggle="buttons" id="filterStatus">
+                <label class="btn btn-link">
+                  <input type="radio" name="options" id="option1" autocomplete="off">Active
+                </label>
+                <label class="btn btn-link active">
+                  <input type="radio" name="options" id="option2" autocomplete="off" checked>N/A
+                </label>
+                <label class="btn btn-link">
+                  <input type="radio" name="options" id="option3" autocomplete="off">Inactive
+                </label>
+              </div>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <label for="filterStart" class="small text-muted text-uppercase" ng-if="facets.tags.length > 0">Tags</label>
+            </li>
+            <li ng-repeat="f in facets.tags">
+              <a class="text-muted-light active" href="#"><i class="fa fa-tag"></i>{{f[0]}}
+                <input type="checkbox" name="filterTagsCheckbox" ng-model="filter.values.facets.tags[f[0]]" />
+              </a>
+            </li>
+            <!-- </ul> -->
+            <li class="divider"></li>
+            <li class="text-right">
+              <div class="btn-group" role="group" id="applyFilters">
+                <button class="btn btn-sm btn-link" type="button"><i class="fa fa-times"></i>Cancel</button>
+                <a class="btn btn-sm btn-default" href="#" ng-click="search()"><i class="fa fa-check"></i> Apply</a>
+              </div>
+            </li>
+          </ul>
           <form class="form-inline" role="search" ng-submit="search()">
             <div class="form-group">
               <input type="text" class="form-control" placeholder="Search" ng-model="filter.values.query">
@@ -670,8 +729,13 @@
   </div>
 </div>
 
+<script src="/bower_components/jquery/dist/jquery.js"></script>
 <script src="scripts/vendor.js"></script>
 <script src="scripts/plugins.js"></script>
-
+<script>
+  $(document).on('click', '.dropdown-menu', function(e) {
+    e.stopPropagation();
+  });
+</script>
 </body>
 </html>
