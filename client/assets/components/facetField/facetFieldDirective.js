@@ -201,10 +201,21 @@
       };
       if(keyObj.tag){
         keyObj.transformer = ['localParams', 'fq:field'];
+        var existingMultiSelectFQ = checkIfMultiSelectFQExists(query.fq, key);
+        if(existingMultiSelectFQ){
+          existingMultiSelectFQ.values.push(title);
+          return query;
+        }
       }
       query.fq.push(keyObj);
       $log.debug('final query', query);
       return query;
+    }
+
+    function checkIfMultiSelectFQExists(fq, key){
+      return _.find(fq, function(v,k){
+        return v.key === key && v.tag;
+      });
     }
 
   }
