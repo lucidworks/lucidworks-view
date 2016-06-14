@@ -111,7 +111,14 @@
             <li ng-repeat="f in facets.display_type"><a data-quantity="{{f[1]}}" class="text-muted-light active" href="#" ng-click="filterBy('display_type', f[0])">{{f[0]}}</a></li>
           </ul>
         </div>
-        <!--<a class="list-group-item" href="#status">Status</a>-->
+
+        <a class="list-group-item" role="button" data-toggle="collapse" href="#collapseEnabled" aria-expanded="true" href="#status">Status</a>
+        <div id="collapseEnabled" class="collapse in" role="tabpanel">
+          <ul class="list-unstyled data-links">
+            <li ng-repeat="f in facets.enabled"><a data-quantity="{{f[1]}}" class="text-muted-light active" href="#" ng-click="filterBy('enabled', f[0])"><i class="fa fa-tag"></i>{{f[0] == 'false' ? 'Disabled' : 'Enabled'}}</a></li>
+          </ul>
+        </div>
+
         <a class="list-group-item" role="button" data-toggle="collapse" href="#collapseTags" aria-expanded="true">Tags</a>
         <div id="collapseTags" class="collapse in" role="tabpanel">
           <ul class="list-unstyled data-links">

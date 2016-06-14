@@ -6,7 +6,8 @@ var Filter = (function () {
 
   var facets = {
     display_type: {name: "Rules type"},
-    tags: {name: "Tags"}
+    tags: {name: "Tags"},
+    enabled: {name: "Enabled"}
   };
 
   return {
