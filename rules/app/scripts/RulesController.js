@@ -283,11 +283,11 @@ rulesApp.controller('rulesController',
     }
 
     if ($scope.currentRule.ruleCategoryType[0]){
-      rule.field_trigger = "";
+      rule.filters = "";
       for (var i = 0, l = $scope.currentRule.ruleCategoryType.length; i<l; i++) {
-        rule.field_trigger += $scope.currentRule.ruleCategoryType[i] + ':' + $scope.currentRule.ruleCategoryValue[i] +' ';
+        rule.filters += $scope.currentRule.ruleCategoryType[i] + ':' + $scope.currentRule.ruleCategoryValue[i] +' ';
       }
-      rule.field_trigger = rule.field_trigger.trim();
+      rule.filters = rule.filters.trim();
     }
 
 

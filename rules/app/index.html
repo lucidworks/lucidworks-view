@@ -405,13 +405,13 @@
                         <label for="triggerKeywords" class="small text-muted text-uppercase">Keywords</label>
                         <textarea rows="1" class="form-control disabledControl" id="triggerKeywords" ng-model="rule.search_terms">{{rule.search_terms}}</textarea>
                       </div>
-                      <div class="form-group" ng-repeat="caregory in rule.field_trigger.split(' ') track by $index">
+                      <div class="form-group" ng-repeat="caregory in rule.filters.split(' ') track by $index">
                         <label class="small text-muted text-uppercase">Field Value</label>
-                        <select class="form-control addTriggerCategory disabledControl" ng-model="rule.field_trigger.split(' ')[$index].split(':')[0]">
+                        <select class="form-control addTriggerCategory disabledControl" ng-model="rule.filters.split(' ')[$index].split(':')[0]">
                           <option value="CategoryID">CategoryID</option>
                           <option ng-repeat="(value, caption) in productList" value="{{value}}">{{caption}}</option>
                         </select>
-                        <input class="form-control disabledControl triggerCategory" ng-model="rule.field_trigger.split(' ')[$index].split(':')[1]" />
+                        <input class="form-control disabledControl triggerCategory" ng-model="rule.filters.split(' ')[$index].split(':')[1]" />
                       </div>
                       <div class="form-group" ng-if="rule.tags">
                         <label for="triggerTags" class="small text-muted text-uppercase">Tags</label>
