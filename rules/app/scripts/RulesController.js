@@ -5,7 +5,7 @@ var rulesApp = angular.module('rulesApp');
 var Filter = (function () {
 
   var facets = {
-    type: {name: "Rules type"},
+    display_type: {name: "Rules type"},
     tags: {name: "Tags"}
   };
 

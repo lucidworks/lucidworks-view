@@ -105,13 +105,13 @@
         Add rule
       </a>
       <div class="list-group table-of-contents" id="accordion">
-        <a class="list-group-item" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true">Rules type</a>
+        <a class="list-group-item" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true">Rule Types</a>
         <div id="collapseOne" class="collapse in" role="tabpanel">
           <ul class="list-unstyled data-links">
-            <li ng-repeat="f in facets.type"><a data-quantity="{{f[1]}}" class="text-muted-light active" href="#" ng-click="filterBy('type', f[0])">{{f[0]}}</a></li>
+            <li ng-repeat="f in facets.display_type"><a data-quantity="{{f[1]}}" class="text-muted-light active" href="#" ng-click="filterBy('display_type', f[0])">{{f[0]}}</a></li>
           </ul>
         </div>
-        <a class="list-group-item" href="#status">Status</a>
+        <!--<a class="list-group-item" href="#status">Status</a>-->
         <a class="list-group-item" role="button" data-toggle="collapse" href="#collapseTags" aria-expanded="true">Tags</a>
         <div id="collapseTags" class="collapse in" role="tabpanel">
           <ul class="list-unstyled data-links">
