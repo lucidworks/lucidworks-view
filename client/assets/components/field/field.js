@@ -14,6 +14,7 @@
       controller: Controller,
       controllerAs: 'fc',
       bindToController: {
+        formattingHandler: '=',
         value: '=',
         highlight: '=',
         hkey: '@', //The Highlight key, used to look up the proper highlighting snippet by name.
@@ -73,6 +74,9 @@
         fc.limit = true;
       }
       fc.totalLength = result.length;
+      if (fc.formattingHandler){
+        result = fc.formattingHandler(result);
+      }
       return result;
     }
   }
