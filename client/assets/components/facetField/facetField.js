@@ -19,6 +19,10 @@
     QueryBuilderProvider.registerTransformer('wrapper', 'fq:field', fqFieldWrapper);
 
     // TODO properly implement transformer for localParams
+    QueryBuilderProvider.registerTransformer('keyValue', 'localParams', localParamKeyValTransformer);
+    // QueryBuilderProvider.registerTransformer('preEncodeWrapper', 'localParams', fqFieldPreEncodeWrapper);
+    QueryBuilderProvider.registerTransformer('encode', 'localParams', fqFieldEncode);
+    // QueryBuilderProvider.registerTransformer('wrapper', 'localParams', fqFieldWrapper);
     QueryBuilderProvider.registerTransformer('join', 'localParams', localParamJoinTransformer);
     QueryBuilderProvider.registerTransformer('wrapper', 'localParams', localParamWrapperTransformer);
 
@@ -29,7 +33,6 @@
      */
 
     function fqFieldkeyValueTransformer(key, value) {
-
       var escapedKey = QueryBuilderProvider.escapeSpecialChars(key);
       var y = QueryBuilderProvider.keyValueString(escapedKey, value, ':');
       return y;
@@ -40,6 +43,7 @@
     }
 
     function fqFieldEncode(data){
+      console.log('encode', data);
       return QueryBuilderProvider.encodeURIComponentPlus(data);
     }
 
@@ -47,26 +51,27 @@
       return '('+data+')';
     }
 
-    function localParamJoinTransformer(str, values) {
+    function localParamKeyValTransformer(key, value){
       var tag, curFilterKey, curFilterValue;
-      if(str.match(/:/)){
-        tag = str.substring(_.indexOf(str, '{'), _.indexOf(str, '}')+1);
-        curFilterKey = str.substring(_.indexOf(str, '}')+1, _.indexOf(str, ':'));
-        curFilterValue = str.substring(_.indexOf(str, '(')+1, _.indexOf(str, ')'));
-      }
-      else {
-        tag = '{!tag=dc}';
-        curFilterKey = str.split('=')[0];
-        curFilterValue = str.split('=')[1];
-      }
-      var qbFilterVal = '(' + QueryBuilderProvider.arrayJoinString(curFilterValue, values.split('=')[1], ' OR ') + ')';
-      var filter = QueryBuilderProvider.arrayJoinString(tag + curFilterKey, qbFilterVal, ':');
-      console.log('filter', filter) + ')';
+      curFilterKey = key;
+      curFilterValue = value;
+      var qbFilterVal = '(' + QueryBuilderProvider.arrayJoinString(curFilterValue, value.split('=')[1], ' OR ') + ')';
+      var filter = QueryBuilderProvider.arrayJoinString(curFilterKey, qbFilterVal, ':');
+      return filter;
+    }
+
+    function localParamJoinTransformer(str, values) {
+      var curFilterKey = str.substring(0, _.indexOf(str, ':'));
+      var curFilterValue = str.substring(_.indexOf(str, '(')+1, _.indexOf(str, ')'));
+      var newValue = values.substring(_.indexOf(values, '(')+1, _.indexOf(values, ')'));
+      var qbFilterVal = '(' + QueryBuilderProvider.arrayJoinString(curFilterValue, newValue, ' OR ') + ')';
+      var filter = QueryBuilderProvider.arrayJoinString(curFilterKey, qbFilterVal, ':');
+      console.log('filter join', filter);
       return filter;
     }
 
     function localParamWrapperTransformer(data) {
-      return '"' + data + '"';
+      return JSON.stringify(data);
     }
   }
 

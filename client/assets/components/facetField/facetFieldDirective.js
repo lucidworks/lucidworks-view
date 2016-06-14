@@ -200,8 +200,9 @@
         tag: vm.facetTag
       };
       if(keyObj.tag){
-        keyObj.transformer = ['localParams', 'fq:field'];
-        var existingMultiSelectFQ = checkIfMultiSelectFQExists(query.fq, key);
+        keyObj.key = '{!tag=' + keyObj.tag + '}' + key;
+        keyObj.transformer = 'localParams';
+        var existingMultiSelectFQ = checkIfMultiSelectFQExists(query.fq, keyObj.key);
         if(existingMultiSelectFQ){
           existingMultiSelectFQ.values.push(title);
           return query;
