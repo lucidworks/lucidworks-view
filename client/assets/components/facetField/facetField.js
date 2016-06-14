@@ -29,8 +29,10 @@
      */
 
     function fqFieldkeyValueTransformer(key, value) {
+
       var escapedKey = QueryBuilderProvider.escapeSpecialChars(key);
-      return QueryBuilderProvider.keyValueString(escapedKey, value, ':');
+      var y = QueryBuilderProvider.keyValueString(escapedKey, value, ':');
+      return y;
     }
 
     function fqFieldPreEncodeWrapper(data){
@@ -46,7 +48,6 @@
     }
 
     function localParamJoinTransformer(str, values) {
-      // console.log('localParamJoinTransformer');
       var tag, curFilterKey, curFilterValue;
       if(str.match(/:/)){
         tag = str.substring(_.indexOf(str, '{'), _.indexOf(str, '}')+1);
@@ -56,24 +57,16 @@
       else {
         tag = '{!tag=dc}';
         curFilterKey = str.split('=')[0];
-        curFilterValue = '"' + str.split('=')[1] + '"';
+        curFilterValue = str.split('=')[1];
       }
-      // console.log('curFilterKey', curFilterKey);
-      // console.log('curFilterValue', curFilterValue);
-      var filter = tag + curFilterKey + ':(' + QueryBuilderProvider.arrayJoinString(curFilterValue, '"' + values.split('=')[1] + '"', ' OR ') + ')';
+      var qbFilterVal = '(' + QueryBuilderProvider.arrayJoinString(curFilterValue, values.split('=')[1], ' OR ') + ')';
+      var filter = QueryBuilderProvider.arrayJoinString(tag + curFilterKey, qbFilterVal, ':');
       console.log('filter', filter) + ')';
       return filter;
     }
 
     function localParamWrapperTransformer(data) {
-      console.log('data', data);
-      // console.log(data);
-      // var tagName = 'ex=dc';
-      // console.log('localParamWrapperTransformer', data, tagName);
-      // return '{!' + data + '}';
-      // return '("++")'
-      return data;
-      // return '{!tag=dc}';//parsing_time_l:("10" OR "9")';
+      return '"' + data + '"';
     }
   }
 
