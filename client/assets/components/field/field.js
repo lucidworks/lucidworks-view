@@ -31,7 +31,6 @@
     fc.showMore = false;
     fc.totalLength = -1;
     fc.toggleRead = toggleRead;
-    //console.log(fc.value.trim().substring(0, 20) + " Start sm: " + fc.showMore + " lV: " + fc.limitValue + " l: " + fc.limit + " ml: " + fc.maxlength);
     activate();
 
     ///////////
@@ -41,7 +40,7 @@
     }
 
     function toggleRead(){
-      if (fc.limit == true) {//this only applies when we have more than the limitValue chars
+      if (fc.limit) {//this only applies when we have more than the limitValue chars
         if (!fc.showMore) {
           //toggle to true, meaning user wants to see more
           fc.showMore = true;
@@ -51,7 +50,6 @@
           fc.limitValue = fc.maxlength;
         }
       }
-      //console.log("sm: " + fc.showMore + " lV: " + fc.limitValue + " l: " + fc.limit);
     }
 
     function processField(field, highlightKey, highlight, maxlength) {

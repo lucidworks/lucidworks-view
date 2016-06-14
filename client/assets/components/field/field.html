@@ -1,3 +1,7 @@
-<p>
-<span ng-bind-html="fc.value|limitTo:fc.limitValue" class="field"></span><span ng-show="fc.limit"><span ng-show="!fc.showMore">... <a ng-click="fc.toggleRead()">Read More</a></span><span ng-if="fc.showMore"> <a ng-click="fc.toggleRead()">Read Less</a></span></span>
-</p>
+<span>
+  <span ng-bind-html="fc.value|limitTo:fc.limitValue" class="field"></span>
+  <span ng-show="fc.limit">
+    {{!fc.showMore ? "..." : ""}}
+    <a ng-click="fc.toggleRead()">Read {{!fc.showMore ? "More" : "Less"}}</a>
+  </span>
+</span>
