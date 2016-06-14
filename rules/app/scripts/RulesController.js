@@ -166,11 +166,18 @@ rulesApp.controller('rulesController',
     function($scope, $http, $timeout, rulesService) {
 
       $scope.types = {
-        filter_ids: "Filter List",
-        block_ids: "Block List",
-        boost_ids: "Boost List",
-        redirect: "Redirect",
-        banner: "Banner"
+        "Filter List": "set_params",
+        "Block List": "set_params",
+        "Boost List": "set_params",
+        "Redirect": "response_value",
+        "Banner": "response_value"
+      };
+      $scope.keys = {
+        "Filter List": "filter_list",
+        "Block List": "block_list",
+        "Boost List": "boost_list",
+        "Redirect": "redirect",
+        "Banner": "banner"
       };
 
   function findIndexById(id) {
@@ -184,6 +191,7 @@ rulesApp.controller('rulesController',
   }
 
   $scope.triggerDates = [];
+  $scope.categories = [];
 
   $scope.flags = {
     keywordsFlag : false,
@@ -194,15 +202,16 @@ rulesApp.controller('rulesController',
   $scope.currentRule = {
     currentDate: Date.now(),
     ruleType: '',
+    displayRuleType: '',
     ruleName: '',
     ruleDescription: '',
     ruleStart: '',
     ruleEnd: '',
-    ruleKeywords: '',
-    ruleCategoryType: '',
-    ruleCategoryValue: '',
+    ruleKeywords: [],
+    ruleCategoryType: [],
+    ruleCategoryValue: [],
     ruleTags: '',
-    ruleIds: []
+    ruleValues: []
   };
 
   $scope.filter = Filter;
@@ -210,52 +219,73 @@ rulesApp.controller('rulesController',
   $scope.addRule = function () {
 
     var rule = {
-      type: $scope.currentRule.ruleType,
+      display_type: $scope.currentRule.displayRuleType,
       id: $scope.currentRule.ruleName,
-      description: $scope.currentRule.ruleDescription,
-      triggerStart: [],
-      triggerEnd: [],
-      search_terms: $scope.currentRule.ruleKeywords,
-      category_id: [$scope.currentRule.ruleCategoryType, $scope.currentRule.ruleCategoryValue],
-      tags: $scope.currentRule.ruleTags,
-      ids: $scope.currentRule.ruleIds,
+      //description: $scope.currentRule.ruleDescription,
+      //effective_range: [],
+      //search_terms: $scope.currentRule.ruleKeywords,
+      //category_id: [$scope.currentRule.ruleCategoryType, $scope.currentRule.ruleCategoryValue],
+      //tags: $scope.currentRule.ruleTags,
+      values: Array.isArray($scope.currentRule.ruleValues) ? $scope.currentRule.ruleValues : [$scope.currentRule.ruleValues],
       createdAt: Date.now(),
-      updatedAt: Date.now()
+      updatedAt: Date.now(),
+      enabled: false
     };
 
     var ruleName = $('#addRuleName')[0];
     var addRuleButton = $('#addRuleButton');
+
     addRuleButton.removeAttr('data-dismiss');
+
     if (ruleName.value==''){
       ruleName.placeholder = 'Rule name is required';
       return;
     }
-    if ($scope.ruleType == 'Choose rule type'){
-      //$('#chooseRuleType>option')[0].html('Rule type is required');
+
+    if (rule.display_type == ''){
       return;
     }
+
     addRuleButton.attr('data-dismiss', 'modal');
+
+    $scope.currentRule.ruleDescription ? rule.description = $scope.currentRule.ruleDescription : false;
+    $scope.currentRule.ruleKeywords[0] ? rule.search_terms = $scope.currentRule.ruleKeywords : false;
+    $scope.currentRule.ruleCategoryType ? rule.category_id = [$scope.currentRule.ruleCategoryType, $scope.currentRule.ruleCategoryValue] : false;
+    $scope.currentRule.ruleTags ? rule.tags = $scope.currentRule.ruleTags : false;
+
+
+    rule.type = $scope.types[rule.display_type];
+
+    rule.keys = [];
+    rule.keys.push($scope.keys[rule.display_type]);
+
 
     var triggerStartArray = $('.add-trigger-start');
     var triggerEndArray = $('.add-trigger-end');
-    for (var i = 0, l = triggerStartArray.length; i<l; i++){
-      rule.triggerStart.push(triggerStartArray[i].value);
-    }
-    for (var i = 0, l = triggerEndArray.length; i<l; i++){
-      rule.triggerEnd.push(triggerEndArray[i].value);
+
+    if (triggerStartArray[0] && triggerStartArray[0].value) {
+      rule.effective_range = [];
+      for (var i = 0, l = triggerStartArray.length; i < l; i++) {
+        rule.effective_range.push(triggerStartArray[i].value);
+        rule.effective_range.push(triggerEndArray[i].value);
+      }
     }
 
     var triggerTags = $('#addTriggerTags')[0];
     if (triggerTags!= undefined){
       rule.tags = triggerTags.value.split(',');
     }
-    rule.search_terms = rule.search_terms.split(',');
-    if ($scope.currentRule.ruleType=='banner' && $scope.currentRule.ruleBanner){
-      rule.banner = $scope.currentRule.ruleBanner;
-    }
-    if ($scope.currentRule.ruleType=='redirect'&& $scope.currentRule.ruleRedirect){
-      rule.redirect = $scope.currentRule.ruleRedirect;
-    }
+
+    //rule.search_terms = rule.search_terms.split(',');
+    //
+    //if ($scope.currentRule.ruleType=='banner' && $scope.currentRule.ruleBanner){
+    //  rule.banner = $scope.currentRule.ruleBanner;
+    //}
+    //if ($scope.currentRule.ruleType=='redirect'&& $scope.currentRule.ruleRedirect){
+    //  rule.redirect = $scope.currentRule.ruleRedirect;
+    //}
+
+    $scope.currentRule.ruleValues = [];
 
     $scope.rules = [rule].concat($scope.rules);
     $scope.rulesTotal += 1;
@@ -386,7 +416,7 @@ rulesApp.controller('rulesController',
       rule.tags = $('tr.' + rule.id + ' .triggerTags')[0].value.split(',');
     }
     if ($('tr.' + rule.id + ' .actionProductList').length!=0) {
-      rule.ids = $('tr.' + rule.id + ' .actionProductList')[0].value.split(',');
+      rule.values = $('tr.' + rule.id + ' .actionProductList')[0].value.split(',');
     }
 
     delete rule._version_;
