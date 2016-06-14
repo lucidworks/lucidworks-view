@@ -497,10 +497,16 @@ rulesApp.controller('rulesController',
       console.log($scope.rules);
       $timeout(aaa, 1);
     });
-    rulesService.getProductFields( function(responce){
+/*    rulesService.getProductFields( function(responce){
       console.log("Product list loaded!");
       $scope.productList = responce.data;
-    });
+    });*/
+
+    $scope.productList = {
+      //"value": "caption",
+      "name": "Name",
+      "brand": "Brand"
+    };
   };
 
   $scope.next = function () {
