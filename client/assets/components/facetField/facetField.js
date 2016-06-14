@@ -46,14 +46,34 @@
     }
 
     function localParamJoinTransformer(str, values) {
-      console.log('localParamJoinTransformer', str, values);
-      return QueryBuilderProvider.arrayJoinString(str, values, ' ');
+      // console.log('localParamJoinTransformer');
+      var tag, curFilterKey, curFilterValue;
+      if(str.match(/:/)){
+        tag = str.substring(_.indexOf(str, '{'), _.indexOf(str, '}')+1);
+        curFilterKey = str.substring(_.indexOf(str, '}')+1, _.indexOf(str, ':'));
+        curFilterValue = str.substring(_.indexOf(str, '(')+1, _.indexOf(str, ')'));
+      }
+      else {
+        tag = '{!tag=dc}';
+        curFilterKey = str.split('=')[0];
+        curFilterValue = '"' + str.split('=')[1] + '"';
+      }
+      // console.log('curFilterKey', curFilterKey);
+      // console.log('curFilterValue', curFilterValue);
+      var filter = tag + curFilterKey + ':(' + QueryBuilderProvider.arrayJoinString(curFilterValue, '"' + values.split('=')[1] + '"', ' OR ') + ')';
+      console.log('filter', filter) + ')';
+      return filter;
     }
 
     function localParamWrapperTransformer(data) {
+      console.log('data', data);
+      // console.log(data);
       // var tagName = 'ex=dc';
       // console.log('localParamWrapperTransformer', data, tagName);
-      return '{!' + data + '}';
+      // return '{!' + data + '}';
+      // return '("++")'
+      return data;
+      // return '{!tag=dc}';//parsing_time_l:("10" OR "9")';
     }
   }
 
