@@ -114,7 +114,6 @@
       else {
         var rangeFacet = data.facet_counts.facet_ranges[vm.facetName];
         var rangeFacetsObjects = arrayToObjectArray(rangeFacet.counts);
-        //$log.info(rangeFacetsObjects);
         vm.facetCounts = transformObjectArray(rangeFacetsObjects, rangeFacet);
         setActiveState();
       }
