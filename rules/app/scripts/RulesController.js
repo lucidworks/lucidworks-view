@@ -227,7 +227,8 @@ rulesApp.controller('rulesController',
       //tags: $scope.currentRule.ruleTags,
       //values: Array.isArray($scope.currentRule.ruleValues) ? $scope.currentRule.ruleValues : [$scope.currentRule.ruleValues],
       createdAt: Date.now(),
-      updatedAt: Date.now()
+      updatedAt: Date.now(),
+      enabled: true
     };
 
     var ruleName = $('#addRuleName')[0];
