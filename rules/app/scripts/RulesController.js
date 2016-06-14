@@ -166,16 +166,13 @@ rulesApp.controller('rulesController',
     function($scope, $http, $timeout, rulesService) {
 
       $scope.types = {
-        "Filter List": "set_params",
-        "Block List": "set_params",
-        "Boost List": "set_params",
+        "Filter List": "filter_list",
+        "Block List": "block_list",
+        "Boost List": "boost_list",
         "Redirect": "response_value",
         "Banner": "response_value"
       };
       $scope.keys = {
-        "Filter List": "filter_list",
-        "Block List": "block_list",
-        "Boost List": "boost_list",
         "Redirect": "redirect",
         "Banner": "banner"
       };
@@ -202,7 +199,7 @@ rulesApp.controller('rulesController',
   $scope.currentRule = {
     currentDate: Date.now(),
     ruleType: '',
-    displayRuleType: '',
+    displayRuleType: 'Choose rule type',
     ruleName: '',
     ruleDescription: '',
     ruleStart: '',
@@ -211,6 +208,8 @@ rulesApp.controller('rulesController',
     ruleCategoryType: [],
     ruleCategoryValue: [],
     ruleTags: '',
+    ruleFieldName: '',
+    ruleFieldValues: [],
     ruleValues: []
   };
 
@@ -226,10 +225,9 @@ rulesApp.controller('rulesController',
       //search_terms: $scope.currentRule.ruleKeywords,
       //category_id: [$scope.currentRule.ruleCategoryType, $scope.currentRule.ruleCategoryValue],
       //tags: $scope.currentRule.ruleTags,
-      values: Array.isArray($scope.currentRule.ruleValues) ? $scope.currentRule.ruleValues : [$scope.currentRule.ruleValues],
+      //values: Array.isArray($scope.currentRule.ruleValues) ? $scope.currentRule.ruleValues : [$scope.currentRule.ruleValues],
       createdAt: Date.now(),
-      updatedAt: Date.now(),
-      enabled: false
+      updatedAt: Date.now()
     };
 
     var ruleName = $('#addRuleName')[0];
@@ -242,7 +240,7 @@ rulesApp.controller('rulesController',
       return;
     }
 
-    if (rule.display_type == ''){
+    if (rule.display_type == 'Choose rule type'){
       return;
     }
 
@@ -250,14 +248,20 @@ rulesApp.controller('rulesController',
 
     $scope.currentRule.ruleDescription ? rule.description = $scope.currentRule.ruleDescription : false;
     $scope.currentRule.ruleKeywords[0] ? rule.search_terms = $scope.currentRule.ruleKeywords : false;
-    $scope.currentRule.ruleCategoryType ? rule.category_id = [$scope.currentRule.ruleCategoryType, $scope.currentRule.ruleCategoryValue] : false;
+    //$scope.currentRule.ruleCategoryType ? rule.category_id = [$scope.currentRule.ruleCategoryType, $scope.currentRule.ruleCategoryValue] : false;
     $scope.currentRule.ruleTags ? rule.tags = $scope.currentRule.ruleTags : false;
 
 
     rule.type = $scope.types[rule.display_type];
 
-    rule.keys = [];
-    rule.keys.push($scope.keys[rule.display_type]);
+    if ($scope.currentRule.ruleFieldName){
+      rule.field_name = $scope.currentRule.ruleFieldName;
+      rule.field_values = $scope.currentRule.ruleFieldValues;
+    } else {
+      rule.keys = [];
+      rule.keys.push($scope.keys[rule.display_type]);
+      rule.values = [$scope.currentRule.ruleValues];
+    }
 
 
     var triggerStartArray = $('.add-trigger-start');
@@ -276,14 +280,15 @@ rulesApp.controller('rulesController',
       rule.tags = triggerTags.value.split(',');
     }
 
-    //rule.search_terms = rule.search_terms.split(',');
-    //
-    //if ($scope.currentRule.ruleType=='banner' && $scope.currentRule.ruleBanner){
-    //  rule.banner = $scope.currentRule.ruleBanner;
-    //}
-    //if ($scope.currentRule.ruleType=='redirect'&& $scope.currentRule.ruleRedirect){
-    //  rule.redirect = $scope.currentRule.ruleRedirect;
-    //}
+    if ($scope.currentRule.ruleCategoryType[0]){
+      rule.field_trigger = "";
+      for (var i = 0, l = $scope.currentRule.ruleCategoryType.length; i<l; i++) {
+        rule.field_trigger += $scope.currentRule.ruleCategoryType[i] + ':' + $scope.currentRule.ruleCategoryValue[i] +' ';
+      }
+      rule.field_trigger = rule.field_trigger.trim();
+    }
+
+
 
     $scope.currentRule.ruleValues = [];
 
@@ -491,6 +496,10 @@ rulesApp.controller('rulesController',
 
       console.log($scope.rules);
       $timeout(aaa, 1);
+    });
+    rulesService.getProductFields( function(responce){
+      console.log("Product list loaded!");
+      $scope.productList = responce.data;
     });
   };
 
