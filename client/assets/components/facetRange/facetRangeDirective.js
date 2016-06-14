@@ -14,6 +14,7 @@
       controller: Controller,
       controllerAs: 'vm',
       bindToController: {
+        formattingHandler: '=',
         facetName: '@',
         facetLabel: '@',
         facetAutoOpen: '@'
@@ -44,6 +45,7 @@
       // initialize the facets.
       // parseRangeFacets(resultsObservable.getContent());
       parseFacets(resultsObservable.getContent());
+
     }
 
     /**
@@ -60,10 +62,15 @@
     function arrayToObjectArray(arr) {
       return _.transform(arr, function (result, value, index) {
         if (index % 2 === 1) {
+          var titleVal;
+          if (vm.formattingHandler){
+            titleVal = vm.formattingHandler(result[result.length - 1]);
+          } else {
+            titleVal = result[result.length - 1];
+          }
           result[result.length - 1] = {
-            title: result[result.length - 1],
+            title: titleVal,
             amount: value,
-            date: Date.parse(result[result.length - 1]),
             amountFormatted: $filter('humanizeNumberFormat')(value, 0),
             hash: FoundationApi.generateUuid(),
             active: isFacetActive(vm.facetName, result[result.length - 1])
@@ -81,7 +88,12 @@
      * @return {Array}                [array of facet objects]
      */
     function transformObjectArray(arr, rangeFacetData){
-      var end = rangeFacetData.end;
+      var end;
+      if (vm.formattingHandler){
+        end = vm.formattingHandler(rangeFacetData.end);
+      } else {
+        end = rangeFacetData.end
+      }
       return _.map(arr, function(item, index){
         // TODO: Detect more data types and do proper display of the buckets
         var startOfRange = item.title;
@@ -102,6 +114,7 @@
       else {
         var rangeFacet = data.facet_counts.facet_ranges[vm.facetName];
         var rangeFacetsObjects = arrayToObjectArray(rangeFacet.counts);
+        //$log.info(rangeFacetsObjects);
         vm.facetCounts = transformObjectArray(rangeFacetsObjects, rangeFacet);
         setActiveState();
       }
