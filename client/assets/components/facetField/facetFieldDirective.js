@@ -129,7 +129,9 @@
       } else {
         // Remove the key object from the query.
         // We will re-add later if we need to.
-        var keyArr = _.remove(query.fq, {key: key, transformer:'fq:field'});
+        var keyArr = _.remove(query.fq, function(value){
+          return (value.key === key && value.transformer === 'fq:field') || (value.key === ('{!tag='+vm.facetTag+'}' + key) && value.transformer === 'localParams');
+        });
 
         // CASE: facet key exists in query.
         if(keyArr.length > 0) {
@@ -179,7 +181,9 @@
       if(!query.hasOwnProperty('fq')){
         return false;
       }
-      var keyObj = _.find(query.fq, {key: key, transformer: 'fq:field'});
+      var keyObj = _.find(query.fq, function(val){
+        return val.key === key && val.transformer === 'fq:field' || val.transformer === 'localParams';
+      });
       if(_.isEmpty(keyObj)){
         return false;
       }

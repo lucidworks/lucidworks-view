@@ -20,9 +20,6 @@
 
     // TODO properly implement transformer for localParams
     QueryBuilderProvider.registerTransformer('keyValue', 'localParams', localParamKeyValTransformer);
-    // QueryBuilderProvider.registerTransformer('preEncodeWrapper', 'localParams', fqFieldPreEncodeWrapper);
-    QueryBuilderProvider.registerTransformer('encode', 'localParams', fqFieldEncode);
-    // QueryBuilderProvider.registerTransformer('wrapper', 'localParams', fqFieldWrapper);
     QueryBuilderProvider.registerTransformer('join', 'localParams', localParamJoinTransformer);
     QueryBuilderProvider.registerTransformer('wrapper', 'localParams', localParamWrapperTransformer);
 
@@ -43,7 +40,6 @@
     }
 
     function fqFieldEncode(data){
-      console.log('encode', data);
       return QueryBuilderProvider.encodeURIComponentPlus(data);
     }
 
@@ -51,13 +47,12 @@
       return '('+data+')';
     }
 
+    /**
+     * Transformers for Local Params.
+     */
+
     function localParamKeyValTransformer(key, value){
-      var tag, curFilterKey, curFilterValue;
-      curFilterKey = key;
-      curFilterValue = value;
-      var qbFilterVal = '(' + QueryBuilderProvider.arrayJoinString(curFilterValue, value.split('=')[1], ' OR ') + ')';
-      var filter = QueryBuilderProvider.arrayJoinString(curFilterKey, qbFilterVal, ':');
-      return filter;
+      return QueryBuilderProvider.arrayJoinString(key, '(' + value + ')', ':');;
     }
 
     function localParamJoinTransformer(str, values) {
@@ -65,9 +60,7 @@
       var curFilterValue = str.substring(_.indexOf(str, '(')+1, _.indexOf(str, ')'));
       var newValue = values.substring(_.indexOf(values, '(')+1, _.indexOf(values, ')'));
       var qbFilterVal = '(' + QueryBuilderProvider.arrayJoinString(curFilterValue, newValue, ' OR ') + ')';
-      var filter = QueryBuilderProvider.arrayJoinString(curFilterKey, qbFilterVal, ':');
-      console.log('filter join', filter);
-      return filter;
+      return QueryBuilderProvider.arrayJoinString(curFilterKey, qbFilterVal, ':');
     }
 
     function localParamWrapperTransformer(data) {
