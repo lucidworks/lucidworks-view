@@ -292,7 +292,6 @@ rulesApp.controller('rulesController',
     for (var i = 0, l = addRuleForm.length; i<l; i++) {
       addRuleForm[i].reset();
     }
-    $scope.currentRule.displayRuleType = 'Choose rule type';
     $scope.currentRule.currentDate = Date.now();
     $scope.currentRule.ruleType = '';
     $scope.currentRule.displayRuleType = 'Choose rule type';
@@ -320,9 +319,14 @@ rulesApp.controller('rulesController',
     $timeout(aaa, 1);
   };
 
-  $scope.checkUncheckAll = function () {
+  $scope.checkUncheckAll = function (operation) {
     var masterBox = $('#selectAllBoxes');
     var checkboxes = $('.ruleCheckbox');
+    if (operation == 'all'){
+      masterBox[0].checked = true;
+    } else if (operation == 'none') {
+      masterBox[0].checked = false;
+    }
     if (masterBox[0].checked) {
       for (var i = 0; i < checkboxes.length; i++) {
         checkboxes[i].checked = true;
@@ -429,10 +433,10 @@ rulesApp.controller('rulesController',
     var triggerStartArray = $('tr.'+rule.id + ' trigger-start');
     var triggerEndArray = $('tr.'+rule.id + ' trigger-end');
 
-    rule.effective_range = [];
+    //rule.effective_range = [];
     for (var i = 0, l = triggerStartArray; i<l; i++){
-      rule.effective_range.push(triggerStartArray[i]);
-      rule.effective_range.push(triggerEndArray[i]);
+      rule.effective_range[i*2] = triggerStartArray[i];
+      rule.effective_range[i*2+1] = triggerEndArray[i];
     }
     if ($('tr.' + rule.id + ' .triggerTags').length!=0) {
       rule.tags = $('tr.' + rule.id + ' .triggerTags')[0].value.split(',');

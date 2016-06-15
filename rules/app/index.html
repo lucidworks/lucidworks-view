@@ -144,11 +144,11 @@
             </a>
             <ul class="dropdown-menu with-states">
               <li>
-                <a href="#">All</a>
+                <a href="#" ng-click="checkUncheckAll('all')">All</a>
               </li>
               <li class="divider"></li>
               <li>
-                <a href="#">None</a>
+                <a href="#" ng-click="checkUncheckAll('none')">None</a>
               </li>
               <!--
               <li class="divider"></li>
@@ -385,7 +385,7 @@
             <div class="column-holder">
               <div class="row hor-gut-6px">
                 <!-- Trigger Date and Time -->
-                <div class="col-xs-5" ng-repeat="ruledate in rule.effective_range track by $index | limitTo:(rule.effective_range.length/2):0">
+                <div class="col-xs-5" ng-repeat="ruleDate in rule.effective_range track by $index">
                   <form action="">
                     <fieldset>
                       <div class="form-group">
@@ -436,13 +436,13 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li>
-                    <a href="#" ng-click="rule.effective_range.push(' '); rule.effective_range.push(' ')">ADD DATE</a>
+                    <a href="#" ng-click="rule.effective_range.push(' ', ' ')">ADD DATE</a>
                   </li>
                   <li ng-if="!rule.search_terms">
                     <a href="#" ng-click="addTrigger(rule.id, 'search_terms')">KEYWORDS</a>
                   </li>
                   <li>
-                    <a href="#" ng-click="rule.category_id[0].push(' '); rule.category_id[1].push(' ')">FIELD VALUE</a>
+                    <a href="#" ng-click="rule.filters = rule.filters.concat(' :')">FIELD VALUE</a>
                   </li>
                   <li ng-if="!rule.tags">
                     <a href="#" ng-click="addTrigger(rule.id, 'tags')">TAGS</a>
