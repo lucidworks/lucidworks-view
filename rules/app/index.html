@@ -359,7 +359,13 @@
               <form action="">
                 <fieldset>
                   <label for="actionProductList" class="small text-muted text-uppercase">{{rule.display_type.toString()}}</label>
-                  <textarea type='text' class="form-control disabledControl actionProductList" id="actionProductList" value="product list" ng-model="rule.values || rule.field_values"></textarea>
+                  <select class="form-control addTriggerCategory disabledControl" ng-if="rule.field_values" ng-model="rule.field_name">
+                    <option value="CategoryID" selected>CategoryID</option>
+                    <option value="ProductIDSearch">ProductIDSearch</option>
+                    <option ng-repeat="(value, caption) in productList" value="{{value}}">{{caption}}</option>
+                  </select>
+                  <textarea type='text' class="form-control disabledControl actionProductList" id="actionProductList" value="product list" ng-if="rule.values" ng-model="rule.values"></textarea>
+                  <textarea type='text' class="form-control disabledControl actionProductList" id="actionProductList" value="product list" ng-if="rule.field_values" ng-model="rule.field_values" ng-list></textarea>
                 </fieldset>
               </form>
             </div>
