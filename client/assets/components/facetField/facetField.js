@@ -18,10 +18,7 @@
     QueryBuilderProvider.registerTransformer('encode', 'fq:field', fqFieldEncode);
     QueryBuilderProvider.registerTransformer('wrapper', 'fq:field', fqFieldWrapper);
 
-    //Register transformers for localParams
-    QueryBuilderProvider.registerTransformer('keyValue', 'localParams', localParamKeyValTransformer);
-    QueryBuilderProvider.registerTransformer('join', 'localParams', localParamJoinTransformer);
-    QueryBuilderProvider.registerTransformer('wrapper', 'localParams', localParamWrapperTransformer);
+
 
     /**
      * Transformers.
@@ -44,26 +41,6 @@
 
     function fqFieldWrapper(data){
       return '('+data+')';
-    }
-
-    /**
-     * Transformers for Local Params.
-     */
-
-    function localParamKeyValTransformer(key, value){
-      return QueryBuilderProvider.arrayJoinString(key, '(' + value + ')', ':');;
-    }
-
-    function localParamJoinTransformer(str, values) {
-      var curFilterKey = str.substring(0, _.indexOf(str, ':'));
-      var curFilterValue = str.substring(_.indexOf(str, '(')+1, _.indexOf(str, ')'));
-      var newValue = values.substring(_.indexOf(values, '(')+1, _.indexOf(values, ')'));
-      var qbFilterVal = '(' + QueryBuilderProvider.arrayJoinString(curFilterValue, newValue, ' OR ') + ')';
-      return QueryBuilderProvider.arrayJoinString(curFilterKey, qbFilterVal, ':');
-    }
-
-    function localParamWrapperTransformer(data) {
-      return JSON.stringify(data);
     }
   }
 

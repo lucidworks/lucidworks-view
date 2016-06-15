@@ -2,8 +2,35 @@
   'use strict';
 
   angular
-    .module('lucidworksView.services.localParams', [])
+    .module('lucidworksView.services.localParams', ['lucidworksView.services.config', 'lucidworksView.utils.queryBuilder'])
+    .config(Config)
     .factory('LocalParamsService', LocalParamsService);
+
+  function Config(QueryBuilderProvider){
+    //Register transformers for localParams
+    QueryBuilderProvider.registerTransformer('keyValue', 'localParams', localParamKeyValTransformer);
+    QueryBuilderProvider.registerTransformer('join', 'localParams', localParamJoinTransformer);
+    QueryBuilderProvider.registerTransformer('wrapper', 'localParams', localParamWrapperTransformer);
+
+    /**
+     * Transformers for Local Params.
+     */
+    function localParamKeyValTransformer(key, value){
+      return QueryBuilderProvider.arrayJoinString(key, '(' + value + ')', ':');
+    }
+
+    function localParamJoinTransformer(str, values) {
+      var curFilterKey = str.substring(0, _.indexOf(str, ':'));
+      var curFilterValue = str.substring(_.indexOf(str, '(')+1, _.indexOf(str, ')'));
+      var newValue = values.substring(_.indexOf(values, '(')+1, _.indexOf(values, ')'));
+      var qbFilterVal = '(' + QueryBuilderProvider.arrayJoinString(curFilterValue, newValue, ' OR ') + ')';
+      return QueryBuilderProvider.arrayJoinString(curFilterKey, qbFilterVal, ':');
+    }
+
+    function localParamWrapperTransformer(data) {
+      return JSON.stringify(data);
+    }
+  }
 
   function LocalParamsService() {
     'ngInject';
