@@ -323,7 +323,7 @@ rulesApp.controller('rulesController',
   $scope.checkUncheckAll = function () {
     var masterBox = $('#selectAllBoxes');
     var checkboxes = $('.ruleCheckbox');
-    if (masterBox.checked) {
+    if (masterBox[0].checked) {
       for (var i = 0; i < checkboxes.length; i++) {
         checkboxes[i].checked = true;
       }
