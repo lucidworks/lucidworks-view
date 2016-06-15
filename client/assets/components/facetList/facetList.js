@@ -83,7 +83,7 @@
     /**
      * Retrieves the facet type from the facetType variable
      * @param  {string} facetType facet type present in responseHeader.params
-     * @return {string}           facet type split frmo the initial string
+     * @return {string}           facet type split from the initial string
      */
     function retrieveFacetType(facetType){
       //example: @param: facet_fields, @return: field

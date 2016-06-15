@@ -14,8 +14,7 @@
       //TODO: future
       // 'facet.pivot': 'pivot',
       //'facet.interval': 'interval',
-      // 'facet.query': 'query',
-      //'facet.date': 'date'
+      // 'facet.query': 'query'
     };
 
     var facetParamRegexp = /^({!(.*)})?([ -+]?[^:]+(:.+)?)/,
