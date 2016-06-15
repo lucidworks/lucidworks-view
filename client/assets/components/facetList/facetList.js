@@ -20,15 +20,36 @@
 
   }
 
-  function Controller(ConfigService, Orwell, LocalParamsService) {
+  function Controller(ConfigService, Orwell, LocalParamsService, $filter) {
     'ngInject';
     var vm = this;
     var resultsObservable = Orwell.getObservable('queryResults');
     vm.facets = [];
     vm.facetNames = {};
     vm.facetLocalParams = {};
-
+    vm.defaultRangeFacetFormatter = defaultRangeFacetFormatter;
     activate();
+
+    /**
+     * Try to parse the range facets automatically by looking to see if they are dates.  Callers
+     * of the directive may provider their own formatter by specifying the `formatting-handler` attribute
+     *  on the directive.
+     * @param toFormat
+     * @returns The formatted result.  If it is a date, it will apply the 'mediumDate' format, else it will return the value as is
+     */
+    function defaultRangeFacetFormatter(toFormat){
+      //check to see if it looks like a date first, since Solr will likely send back as an ISO date
+      //2016-02-14T00:00:00Z - 2016-03-14T00:00:00Z
+      var result;
+      if (typeof toFormat.indexOf === 'function' && toFormat.indexOf("Z") != -1 && toFormat.indexOf("T") != -1){
+        result = Date.parse(toFormat);
+        //most range facet displays don't need time info, so just do angular filter by default to day/month/year
+        result = $filter('date')(result, 'mediumDate')
+      } else {
+        result = toFormat;
+      }
+      return result;
+    }
 
     function activate() {
       resultsObservable.addObserver(function (data) {
