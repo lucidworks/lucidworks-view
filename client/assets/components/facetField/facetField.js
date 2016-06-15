@@ -18,7 +18,7 @@
     QueryBuilderProvider.registerTransformer('encode', 'fq:field', fqFieldEncode);
     QueryBuilderProvider.registerTransformer('wrapper', 'fq:field', fqFieldWrapper);
 
-    // TODO properly implement transformer for localParams
+    //Register transformers for localParams
     QueryBuilderProvider.registerTransformer('keyValue', 'localParams', localParamKeyValTransformer);
     QueryBuilderProvider.registerTransformer('join', 'localParams', localParamJoinTransformer);
     QueryBuilderProvider.registerTransformer('wrapper', 'localParams', localParamWrapperTransformer);
