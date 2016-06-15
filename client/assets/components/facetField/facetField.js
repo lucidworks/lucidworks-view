@@ -31,8 +31,7 @@
 
     function fqFieldkeyValueTransformer(key, value) {
       var escapedKey = QueryBuilderProvider.escapeSpecialChars(key);
-      var y = QueryBuilderProvider.keyValueString(escapedKey, value, ':');
-      return y;
+      return QueryBuilderProvider.keyValueString(escapedKey, value, ':');
     }
 
     function fqFieldPreEncodeWrapper(data){

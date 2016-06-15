@@ -64,7 +64,7 @@
                 type: facetType,
                 autoOpen: true,
                 label: ConfigService.getFieldLabels()[value]||value,
-                tag: LocalParamsService.getLocalParamTag(vm.facetLocalParams[facetType.split('_')[1].slice(0,-1)], value) || null
+                tag: LocalParamsService.getLocalParamTag(vm.facetLocalParams[retrieveFacetType(facetType)], value) || null
               };
               newFacets.push(facet);
             });
@@ -78,6 +78,16 @@
           }
         }
       });
+    }
+
+    /**
+     * Retrieves the facet type from the facetType variable
+     * @param  {string} facetType facet type present in responseHeader.params
+     * @return {string}           facet type split frmo the initial string
+     */
+    function retrieveFacetType(facetType){
+      //example: @param: facet_fields, @return: field
+      return facetType.split('_')[1].slice(0,-1);
     }
 
   }
