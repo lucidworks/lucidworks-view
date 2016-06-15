@@ -358,7 +358,7 @@
             <div class="column-holder">
               <form action="">
                 <fieldset>
-                  <label for="actionProductList" class="small text-muted text-uppercase">{{rule.display_type}}</label>
+                  <label for="actionProductList" class="small text-muted text-uppercase">{{rule.display_type.toString()}}</label>
                   <textarea type='text' class="form-control disabledControl actionProductList" id="actionProductList" value="product list" ng-model="rule.values || rule.field_values"></textarea>
                 </fieldset>
               </form>
@@ -451,13 +451,13 @@
               <div class="form-group">
                 <label for="rule-1-created-date" class="small text-muted text-uppercase">Date</label>
                 <div class="datepicker-holder">
-                  <input type='text' class="form-control" id="rule-1-created-date" value="{{rule.createdAt[0] | date: 'MM/dd/yyyy'}}" disabled />
+                  <input type='text' class="form-control" id="rule-1-created-date" value="{{rule.createdAt.toString() | date: 'MM/dd/yyyy'}}" disabled />
                 </div>
               </div>
               <div class="form-group">
                 <label for="rule-1-created-Time" class="small text-muted text-uppercase">Time</label>
                 <div class="datepicker-holder">
-                  <input type='text' class="form-control" id="rule-1-created-Time" value="{{rule.createdAt[0] | date: 'hh:mm a'}}" disabled />
+                  <input type='text' class="form-control" id="rule-1-created-Time" value="{{rule.createdAt.toString() | date: 'hh:mm a'}}" disabled />
                 </div>
               </div>
             </div>
@@ -467,13 +467,13 @@
               <div class="form-group">
                 <label for="rule-1-edited-date" class="small text-muted text-uppercase">Date</label>
                 <div class="datepicker-holder">
-                  <input type='text' class="form-control" id="rule-1-edited-date" value="{{rule.updatedAt[0] | date: 'MM/dd/yyyy'}}" disabled />
+                  <input type='text' class="form-control" id="rule-1-edited-date" value="{{rule.updatedAt.toString() | date: 'MM/dd/yyyy'}}" disabled />
                 </div>
               </div>
               <div class="form-group">
                 <label for="rule-1-edited-Time" class="small text-muted text-uppercase">Time</label>
                 <div class="datepicker-holder">
-                  <input type='text' class="form-control" id="rule-1-edited-Time" value="{{rule.updatedAt[0] | date: 'hh:mm a'}}" disabled />
+                  <input type='text' class="form-control" id="rule-1-edited-Time" value="{{rule.updatedAt.toString() | date: 'hh:mm a'}}" disabled />
                 </div>
               </div>
             </div>
