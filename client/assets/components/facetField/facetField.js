@@ -19,7 +19,6 @@
     QueryBuilderProvider.registerTransformer('wrapper', 'fq:field', fqFieldWrapper);
 
 
-
     /**
      * Transformers.
      *

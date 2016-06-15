@@ -130,7 +130,10 @@
         // Remove the key object from the query.
         // We will re-add later if we need to.
         var keyArr = _.remove(query.fq, function(value){
-          return (value.key === key && value.transformer === 'fq:field') || (value.key === ('{!tag='+vm.facetTag+'}' + key) && value.transformer === 'localParams');
+          //CASE 1: query facet is a field facet without local params
+          //CASE 2: query facet is a field facet with local params. The local param is present in the key of the query facet. Eg: {!tag=param}keyName
+          return (value.key === key && value.transformer === 'fq:field') ||
+           (value.key === ('{!tag='+vm.facetTag+'}' + key) && value.transformer === 'localParams');
         });
 
         // CASE: facet key exists in query.
@@ -204,10 +207,13 @@
         tag: vm.facetTag
       };
       if(keyObj.tag){
+        //Set these properties if the facet has localParams
+        //concat the localParams with the key of the facet
         keyObj.key = '{!tag=' + keyObj.tag + '}' + key;
         keyObj.transformer = 'localParams';
         var existingMultiSelectFQ = checkIfMultiSelectFQExists(query.fq, keyObj.key);
         if(existingMultiSelectFQ){
+          //If the facet exists, the new filter values are pushed into the same facet. A new facet object is not added into the query.
           existingMultiSelectFQ.values.push(title);
           return query;
         }
@@ -217,9 +223,15 @@
       return query;
     }
 
+    /**
+     * Return the facet with localParams if it exists in the query object
+     * @param  {object} fq  query object
+     * @param  {string} key the key name of the query facet
+     * @return {object}     the facet with localParams found in the query object
+     */
     function checkIfMultiSelectFQExists(fq, key){
-      return _.find(fq, function(v,k){
-        return v.key === key && v.tag;
+      return _.find(fq, function(value){
+        return value.key === key && value.tag;
       });
     }
 
