@@ -444,11 +444,16 @@ rulesApp.controller('rulesController',
     delete rule._version_;
 
     rulesService.update(id, rule);
+    $scope.updateRulesInfo();
   };
 
   $scope.changeStatus = function (id) {
     var rule = $scope.rules[findIndexById(id)];
-    rule.enabled = rule.enabled !== true;
+    if (rule.enabled == undefined || rule.enabled === true) {
+      rule.enabled = false;
+    } else {
+      rule.enabled = true;
+    }
     $scope.updateRule(id);
   };
 
@@ -500,6 +505,16 @@ rulesApp.controller('rulesController',
     return actionCount;
   };
 
+  $scope.updateRulesInfo = function () {
+    $timeout(function () {
+      rulesService.search($scope.filter, function(response) {
+        console.log("Update rules info...");
+        $scope.rulesTotal = response.data.response.numFound;
+        $scope.facets = response.data.facet_counts.facet_fields;
+      });
+    }, 1000);
+  };
+
   $scope.search = function (pageNum) {
     console.log("searching (" + pageNum + ")...");
     $scope.filter.values.pageNum = (pageNum || 0);
@@ -508,10 +523,8 @@ rulesApp.controller('rulesController',
       console.log("Rules loaded: ");
       $scope.rules = response.data.response.docs;
       $scope.rulesTotal = response.data.response.numFound;
-
       $scope.facets = response.data.facet_counts.facet_fields;
 
-      console.log($scope.rules);
       $timeout(aaa, 1);
     });
 /*    rulesService.getProductFields( function(response){
