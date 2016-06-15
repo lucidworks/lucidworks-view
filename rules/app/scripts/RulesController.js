@@ -380,13 +380,18 @@ rulesApp.controller('rulesController',
       if (ruleArray[i].checked) {
         var rule = $scope.rules[findIndexById(ruleArray[i].value)];
         if (remove) {
-          var index = rule.tags.indexOf(tag);
-          if (index > -1) {
-            rule.tags.splice(index, 1);
-          } else {
-            console.log("error:index for tag '" + tag + "' not found");
+          if (rule.tags) {
+            var index = rule.tags.indexOf(tag);
+            if (index > -1) {
+              rule.tags.splice(index, 1);
+            } else {
+              console.log("error:index for tag '" + tag + "' not found");
+            }
           }
         } else {
+          if (!rule.tags) {
+            rule.tags = [];
+          }
           rule.tags.push(tag);
         }
         var tagsInput = $('tr.' + rule.id + " .triggerTags");
