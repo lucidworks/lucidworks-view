@@ -361,6 +361,7 @@
                   <label for="actionProductList" class="small text-muted text-uppercase">{{rule.display_type.toString()}}</label>
                   <select class="form-control addTriggerCategory disabledControl" ng-if="rule.field_values" ng-model="rule.field_name">
                     <option value="CategoryID" selected>CategoryID</option>
+                    <option value="ProductID">ProductID</option>
                     <option value="ProductIDSearch">ProductIDSearch</option>
                     <option ng-repeat="(value, caption) in productList" value="{{value}}">{{caption}}</option>
                   </select>
@@ -415,6 +416,7 @@
                         <label class="small text-muted text-uppercase">Field Value</label>
                         <select class="form-control addTriggerCategory disabledControl" ng-model="rule.filters.split(' ')[$index].split(':')[0]">
                           <option value="CategoryID">CategoryID</option>
+                          <option value="ProductID">ProductID</option>
                           <option value="ProductIDSearch">ProductIDSearch</option>
                           <option ng-repeat="(value, caption) in productList" value="{{value}}">{{caption}}</option>
                         </select>
@@ -604,6 +606,7 @@
                         <label class="small text-muted text-uppercase">Field Value</label>
                         <select class="form-control addTriggerCategory" ng-model="currentRule.ruleCategoryType[$index]">
                           <option value="CategoryID" ng-selected="categories[0]">CategoryID</option>
+                          <option value="ProductID">ProductID</option>
                           <option value="ProductIDSearch">ProductIDSearch</option>
                           <option ng-repeat="(value, caption) in productList" value="{{value}}">{{caption}}</option>
                         </select>
@@ -645,6 +648,7 @@
                     <fieldset>
                       <select class="form-control addTriggerCategory" ng-model="currentRule.ruleFieldName" ng-if="currentRule.displayRuleType == 'Filter List' || currentRule.displayRuleType == 'Block List' || currentRule.displayRuleType == 'Boost List'">
                         <option value="CategoryID" ng-selected="currentRule.displayRuleType == 'Filter List' || currentRule.displayRuleType == 'Block List' || currentRule.displayRuleType == 'Boost List'">CategoryID</option>
+                        <option value="ProductID">ProductID</option>
                         <option value="ProductIDSearch">ProductIDSearch</option>
                         <option ng-repeat="(value, caption) in productList" value="{{value}}">{{caption}}</option>
                       </select>
