@@ -563,19 +563,28 @@ rulesApp.controller('rulesController',
       $scope.rules = response.data.response.docs;
 
       for (var i = 0, l = $scope.rules.length; i<l; i++) {
-        var filtersArray = $scope.rules[i].filters.split(/[ ,:]+/);
-        var actualFiltersArray = [[],[]];
-        for (var j = 0, k = filtersArray.length; j<k; j++){
-          if (j%2 == 0){
-            actualFiltersArray[0].push(filtersArray[j]);
-          } else {
-            actualFiltersArray[1].push(filtersArray[j]);
+        var rulesSub = {};
+
+        if ($scope.rules[i] && $scope.rules[i].filters) {
+          var filtersArray = $scope.rules[i].filters.split(/[ ,:]+/);
+          var actualFiltersArray = [[],[]];
+          for (var j = 0, k = filtersArray.length; j<k; j++){
+            if (j%2 == 0){
+              actualFiltersArray[0].push(filtersArray[j]);
+            } else {
+              actualFiltersArray[1].push(filtersArray[j]);
+            }
           }
+
+          rulesSub.filters = actualFiltersArray;
         }
-        $scope.ruleArrays[$scope.rules[i].id] = {
-          dates: new Array($scope.rules[i].effective_range.length / 2),
-          filters: actualFiltersArray
-        };
+
+        var range = $scope.rules[i].effective_range;
+        if (range) {
+          rulesSub.dates = new Array(range.length / 2);
+        }
+
+        $scope.ruleArrays[$scope.rules[i].id] = rulesSub;
       }
       $scope.rulesTotal = response.data.response.numFound;
       $scope.facets = response.data.facet_counts.facet_fields;
