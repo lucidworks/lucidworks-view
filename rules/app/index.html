@@ -386,16 +386,16 @@
             <div class="column-holder">
               <div class="row hor-gut-6px">
                 <!-- Trigger Date and Time -->
-                <div class="col-xs-5" ng-repeat="ruleDate in rule.effective_range track by $index">
+                <div class="col-xs-5" ng-repeat="ruleDate in ruleArrays[rule.id].dates track by $index">
                   <form action="">
                     <fieldset>
-                      <div class="form-group">
+                      <div class="form-group datepicker-inline">
                         <label for="triggerStart" class="small text-muted text-uppercase">Start</label>
                         <div class="datepicker-holder">
                           <input type='text' class="form-control  trigger-start disabledControl" id="triggerStart" ng-model="rule.effective_range[$index*2]"/>
                         </div>
                       </div>
-                      <div class="form-group">
+                      <div class="form-group datepicker-inline">
                         <label for="triggerEnd" class="small text-muted text-uppercase">End</label>
                         <div class="datepicker-holder">
                           <input type='text' class="form-control  trigger-end disabledControl" id="triggerEnd" ng-model="rule.effective_range[$index*2+1]"/>
@@ -412,15 +412,15 @@
                         <label for="triggerKeywords" class="small text-muted text-uppercase">Keywords</label>
                         <textarea rows="1" class="form-control disabledControl" id="triggerKeywords" ng-model="rule.search_terms">{{rule.search_terms}}</textarea>
                       </div>
-                      <div class="form-group" ng-repeat="caregory in rule.filters.split(' ') track by $index">
+                      <div class="form-group" ng-repeat="caregory in ruleArrays[rule.id].filters[0] track by $index">
                         <label class="small text-muted text-uppercase">Field Value</label>
-                        <select class="form-control addTriggerCategory disabledControl" ng-model="rule.filters.split(' ')[$index].split(':')[0]">
+                        <select class="form-control addTriggerCategory disabledControl" ng-model="ruleArrays[rule.id].filters[0][$index]">
                           <option value="CategoryID">CategoryID</option>
                           <option value="ProductID">ProductID</option>
                           <option value="ProductIDSearch">ProductIDSearch</option>
                           <option ng-repeat="(value, caption) in productList" value="{{value}}">{{caption}}</option>
                         </select>
-                        <input class="form-control disabledControl triggerCategory" ng-model="rule.filters.split(' ')[$index].split(':')[1]" />
+                        <input class="form-control disabledControl triggerCategory" ng-model="ruleArrays[rule.id].filters[1][$index]" />
                       </div>
                       <div class="form-group" ng-if="rule.tags">
                         <label for="triggerTags" class="small text-muted text-uppercase">Tags</label>
@@ -438,13 +438,13 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li>
-                    <a href="#" ng-click="rule.effective_range.push(' ', ' ')">ADD DATE</a>
+                    <a href="#" ng-click="ruleArrays[rule.id].dates.push(' ')">ADD DATE</a>
                   </li>
                   <li ng-if="!rule.search_terms">
                     <a href="#" ng-click="addTrigger(rule.id, 'search_terms')">KEYWORDS</a>
                   </li>
                   <li>
-                    <a href="#" ng-click="rule.filters = rule.filters.concat(' :')">FIELD VALUE</a>
+                    <a href="#" ng-click="addFilter(rule.id)">FIELD VALUE</a>
                   </li>
                   <li ng-if="!rule.tags">
                     <a href="#" ng-click="addTrigger(rule.id, 'tags')">TAGS</a>
@@ -498,7 +498,7 @@
       </table>
       <div class="row table-footer">
         <div class="col-sm-6">
-          <p class="small text-nowrap"><span>Rules {{filter.rulesFrom()}} - {{filter.rulesTo()}}</span> of <span>{{rulesTotal}}</span> </p>
+          <p class="small text-nowrap"><span>Rules {{filter.rulesFrom()}} - {{rules.length < 10 ? rules.length : filter.rulesTo()}}</span> of <span>{{rules.length}}</span> </p>
         </div>
         <div class="col-sm-6 text-right">
           <a href="javascript:void(0)" class="btn btn-sm btn-link" ng-click="prev()" ng-class="filter.hasPrev() ? '' : 'text-muted'" ><i class="fa fa-angle-left"></i>Previous</a>
@@ -626,7 +626,7 @@
                     </a>
                     <ul class="dropdown-menu">
                       <li>
-                        <a href="#" ng-click="triggerDates.push(' ')">ADD DATES</a>
+                        <a href="#" ng-click="triggerDates.push(' '); ruleArrays[rule.id].dates.push(' ')">ADD DATES</a>
                       </li>
                       <li ng-if="!flags.keywordsFlag">
                         <a href="#" ng-click="flags.keywordsFlag = true">KEYWORDS</a>

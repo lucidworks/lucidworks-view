@@ -114,7 +114,7 @@ var Filter = (function () {
 
 function aaa() {
   moment().calendar();
-  $(".datepicker").datetimepicker({defaultDate: "now"});
+  $(".datepicker").datetimepicker({defaultDate: "now", format: "YYYY-MM-DD"});
   autosize($("textarea"));
   $('.triggerTags').tagsinput({tagClass: "label label-default"});
 
@@ -153,7 +153,7 @@ function aaa() {
 
   function datePickerOnFocus() { // TODO why we need this function
     $(this).addClass('datepicker');
-    $(".datepicker").datetimepicker();
+    $(".datepicker").datetimepicker({format: "YYYY-MM-DD"});
     $(this).blur();
     $(this).focus();
   }
@@ -190,6 +190,7 @@ rulesApp.controller('rulesController',
 
   $scope.triggerDates = [];
   $scope.categories = [];
+  $scope.ruleArrays = [];
 
   $scope.flags = {
     keywordsFlag : false,
@@ -251,7 +252,7 @@ rulesApp.controller('rulesController',
     $scope.currentRule.ruleDescription ? rule.description = $scope.currentRule.ruleDescription : false;
     $scope.currentRule.ruleKeywords[0] ? rule.search_terms = $scope.currentRule.ruleKeywords : false;
     //$scope.currentRule.ruleCategoryType ? rule.category_id = [$scope.currentRule.ruleCategoryType, $scope.currentRule.ruleCategoryValue] : false;
-    $scope.currentRule.ruleTags ? rule.tags = $scope.currentRule.ruleTags : false;
+    $scope.currentRule.ruleTags!='' ? rule.tags = $scope.currentRule.ruleTags : false;
 
     rule.type = $scope.types[rule.display_type];
 
@@ -275,8 +276,19 @@ rulesApp.controller('rulesController',
       }
     }
 
+    if (!$scope.ruleArrays[rule.id]) {
+      $scope.ruleArrays[rule.id] = {dates:[], filters:[]};
+    }
+    //
+    //if (!$scope.ruleArrays[rule.id].dates) {
+    //  $scope.ruleArrays[rule.id].dates = [];
+    //}
+    if (rule.effective_range) {
+      $scope.ruleArrays[rule.id].dates.length = rule.effective_range.length / 2;
+    }
+
     var triggerTags = $('#addTriggerTags')[0];
-    if (triggerTags!= undefined){
+    if (triggerTags && triggerTags.value){
       rule.tags = triggerTags.value.split(',');
     }
 
@@ -419,7 +431,8 @@ rulesApp.controller('rulesController',
       bulkDropdown.css('visibility', 'visible');
     }
     $('.triggerTags').tagsinput({tagClass: "label label-default"});
-    $('.datepicker').datetimepicker();
+    $('.datepicker').datetimepicker({format: "YYYY-MM-DD"});
+
     return checkedCount;
   };
 
@@ -446,10 +459,19 @@ rulesApp.controller('rulesController',
     if ($('tr.' + rule.id + ' .triggerTags').length!=0) {
       rule.tags = $('tr.' + rule.id + ' .triggerTags')[0].value.split(',');
     }
+    if (rule.tags && rule.tags[0] == ""){
+      delete rule.tags;
+    }
     //if ($('tr.' + rule.id + ' .actionProductList').length!=0) {
     //  rule.values = $('tr.' + rule.id + ' .actionProductList')[0].value.split(',');
     //}
-
+    rule.filters = "";
+    if ($scope.ruleArrays[rule.id].filters[0]) {
+      for (var i = 0, l = $scope.ruleArrays[rule.id].filters[0].length; i < l; i++) {
+        rule.filters += $scope.ruleArrays[rule.id].filters[0][i] + ':' + $scope.ruleArrays[rule.id].filters[1][i] + ' ';
+      }
+      rule.filters = rule.filters.trim();
+    }
     delete rule._version_;
 
     rulesService.update(id, rule);
@@ -472,9 +494,9 @@ rulesApp.controller('rulesController',
     if (name == 'search_terms') {
       rule.search_terms = rule.search_terms || ["keyword"];
     } else if (name == 'tags') {
-      rule.tags = rule.tags || ["t1"];
+      rule.tags = rule.tags || [""];
     } else if (name == 'category') {
-      rule.category_id = rule.category_id || ["field","value"];
+      rule.filters = rule.filters || ["field","value"];
     }
   };
 
@@ -495,6 +517,14 @@ rulesApp.controller('rulesController',
       rule.querySet = rule.querySet || "querySet";
     }
   };
+
+   $scope.addFilter = function(id){
+     if (!$scope.ruleArrays[id].filters[0]){
+       $scope.ruleArrays[id].filters = [[],[]];
+     }
+     $scope.ruleArrays[id].filters[0].push(' ');
+     $scope.ruleArrays[id].filters[1].push(' ');
+   };
 
   $scope.checkActionCount = function (id) {
     var actionCount = 0;
@@ -531,6 +561,22 @@ rulesApp.controller('rulesController',
     rulesService.search($scope.filter, function(response) {
       console.log("Rules loaded: ");
       $scope.rules = response.data.response.docs;
+
+      for (var i = 0, l = $scope.rules.length; i<l; i++) {
+        var filtersArray = $scope.rules[i].filters.split(/[ ,:]+/);
+        var actualFiltersArray = [[],[]];
+        for (var j = 0, k = filtersArray.length; j<k; j++){
+          if (j%2 == 0){
+            actualFiltersArray[0].push(filtersArray[j]);
+          } else {
+            actualFiltersArray[1].push(filtersArray[j]);
+          }
+        }
+        $scope.ruleArrays[$scope.rules[i].id] = {
+          dates: new Array($scope.rules[i].effective_range.length / 2),
+          filters: actualFiltersArray
+        };
+      }
       $scope.rulesTotal = response.data.response.numFound;
       $scope.facets = response.data.facet_counts.facet_fields;
 
