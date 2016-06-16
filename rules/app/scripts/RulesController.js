@@ -318,9 +318,10 @@ rulesApp.controller('rulesController',
     $scope.currentRule.ruleFieldName = '';
     $scope.currentRule.ruleFieldValues = [];
     $scope.currentRule.ruleValues = [];
+    $scope.categories = [];
 
     $scope.rules = [rule].concat($scope.rules);
-    $scope.rulesTotal += 1;
+    $scope.rulesTotal++;
 
 
     if ($scope.rules[$scope.rules.length - 1] == undefined) {
