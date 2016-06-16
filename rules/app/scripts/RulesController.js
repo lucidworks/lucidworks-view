@@ -466,9 +466,10 @@ rulesApp.controller('rulesController',
     //  rule.values = $('tr.' + rule.id + ' .actionProductList')[0].value.split(',');
     //}
     rule.filters = "";
-    if ($scope.ruleArrays[rule.id].filters[0]) {
-      for (var i = 0, l = $scope.ruleArrays[rule.id].filters[0].length; i < l; i++) {
-        rule.filters += $scope.ruleArrays[rule.id].filters[0][i] + ':' + $scope.ruleArrays[rule.id].filters[1][i] + ' ';
+    var ruleArray = $scope.ruleArrays[rule.id];
+      if (ruleArray && ruleArray.filters && ruleArray.filters[0]) {
+      for (var i = 0, l = ruleArray.filters[0].length; i < l; i++) {
+        rule.filters += ruleArray.filters[0][i] + ':' + ruleArray.filters[1][i] + ' ';
       }
       rule.filters = rule.filters.trim();
     }
