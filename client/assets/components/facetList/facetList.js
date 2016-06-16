@@ -20,12 +20,13 @@
 
   }
 
-  function Controller(ConfigService, Orwell, $filter, $log) {
+  function Controller(ConfigService, Orwell, LocalParamsService, $filter) {
     'ngInject';
     var vm = this;
     var resultsObservable = Orwell.getObservable('queryResults');
     vm.facets = [];
     vm.facetNames = {};
+    vm.facetLocalParams = {};
     vm.defaultRangeFacetFormatter = defaultRangeFacetFormatter;
     activate();
 
@@ -54,6 +55,7 @@
       resultsObservable.addObserver(function (data) {
         // Exit early if there are no facets in the response.
         if (!data.hasOwnProperty('facet_counts')) return;
+        vm.facetLocalParams = LocalParamsService.getLocalParams(data.responseHeader.params);
 
         // Iterate through each facet type.
         _.forEach(data.facet_counts, resultFacetParse);
@@ -82,7 +84,8 @@
                 name: value,
                 type: facetType,
                 autoOpen: true,
-                label: ConfigService.getFieldLabels()[value]||value
+                label: ConfigService.getFieldLabels()[value]||value,
+                tag: LocalParamsService.getLocalParamTag(vm.facetLocalParams[retrieveFacetType(facetType)], value) || null
               };
               newFacets.push(facet);
             });
@@ -96,6 +99,16 @@
           }
         }
       });
+    }
+
+    /**
+     * Retrieves the facet type from the facetType variable
+     * @param  {string} facetType facet type present in responseHeader.params
+     * @return {string}           facet type split from the initial string
+     */
+    function retrieveFacetType(facetType){
+      //example: @param: facet_fields, @return: field
+      return facetType.split('_')[1].slice(0,-1);
     }
 
   }
