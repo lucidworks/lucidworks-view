@@ -38,15 +38,15 @@
       vm.doc.page = PaginateService.getNormalizedCurrentPage();
     }
 
-    function postSignal(doc, options){
+    function postSignal(options){
       var paramsObj = {
         params: {
-          position: doc.position,
-          page: doc.page
+          position: vm.doc.position,
+          page: vm.doc.page
         }
       };
       _.defaultsDeep(paramsObj, options);
-      SignalsService.postClickSignal(doc.__signals_doc_id__, paramsObj);
+      SignalsService.postClickSignal(vm.doc.__signals_doc_id__, paramsObj);
     }
   }
 })();
