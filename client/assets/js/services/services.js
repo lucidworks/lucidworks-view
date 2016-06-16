@@ -9,5 +9,6 @@ angular.module('lucidworksView.services', [
   'lucidworksView.services.queryData',
   'lucidworksView.services.signals',
   'lucidworksView.services.url',
-  'lucidworksView.services.localParams'
+  'lucidworksView.services.localParams',
+  'lucidworksView.services.clientStats'
 ]);

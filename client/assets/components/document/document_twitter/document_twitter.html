@@ -5,8 +5,8 @@
         <field value="::vm.doc.tweet[0]" highlight="::vm.highlight[doc.id]" hkey="tweet[0]"></field>
       </blockquote>
       <div class="link">
-        <a class="author" ng-href="http://twitter.com/{{::vm.doc.userScreenName}}" ng-click="::vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank">@<field value="vm.doc.userScreenName" highlight="::vm.highlight" maxlength="200" hkey="{{::userScreenName}}"></field></a>
-        <a class="timestamp" ng-href="https://twitter.com/{{::vm.doc.userScreenName}}/status/{{::vm.doc.id}}" ng-click="vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank"><field value="::vm.doc.createdAtFormatted"></field> UTC</a>
+        <a class="author" ng-href="http://twitter.com/{{::vm.doc.userScreenName}}" ng-click="::vm.postSignal({params: {lw_url:'http://twitter.com/' + vm.doc.userScreenName}})" rel="noopener" target="_blank">@<field value="vm.doc.userScreenName" highlight="::vm.highlight" maxlength="200" hkey="{{::userScreenName}}"></field></a>
+        <a class="timestamp" ng-href="https://twitter.com/{{::vm.doc.userScreenName}}/status/{{::vm.doc.id}}" ng-click="vm.postSignal({params: {lw_url:'https://twitter.com/' + vm.doc.userScreenName + '/status/' + vm.doc.id}})" rel="noopener" target="_blank"><field value="::vm.doc.createdAtFormatted"></field> UTC</a>
       </div>
     </div>
   </div>

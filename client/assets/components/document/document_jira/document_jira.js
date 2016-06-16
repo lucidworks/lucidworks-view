@@ -15,6 +15,7 @@
       controllerAs: 'vm',
       bindToController: {
         doc: '=',
+        position: '=',
         highlight: '='
       }
     };
@@ -31,13 +32,25 @@
     activate();
 
     function activate() {
-      vm.postSignal = SignalsService.postClickSignal;
+      vm.postSignal = postSignal;
       vm.doc = processDocument(vm.doc);
     }
 
     function processDocument(doc) {
       doc.lastModified_dtFormatted = $filter('date')(doc.lastModified_dt);
+      doc.position = vm.position;
       return doc;
+    }
+
+    function postSignal(options){
+      var paramsObj = {
+        params: {
+          position: vm.doc.position,
+          page: vm.doc.page
+        }
+      };
+      _.defaultsDeep(paramsObj, options);
+      SignalsService.postClickSignal(vm.doc.__signals_doc_id__, paramsObj);
     }
   }
 })();

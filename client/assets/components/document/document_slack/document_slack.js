@@ -15,6 +15,7 @@
       controllerAs: 'vm',
       bindToController: {
         doc: '=',
+        position: '=',
         highlight: '='
       }
     };
@@ -24,14 +25,14 @@
   }
 
 
-  function Controller(SignalsService, $filter) {
+  function Controller(SignalsService, $filter, PaginateService) {
     'ngInject';
     var vm = this;
 
     activate();
 
     function activate() {
-      vm.postSignal = SignalsService.postClickSignal;
+      vm.postSignal = postSignal;
       vm.doc = processDocument(vm.doc);
     }
 
@@ -39,7 +40,21 @@
       doc.timestamp_tdtFormatted = $filter('date')(vm.doc.timestamp_tdt, 'M/d/yy h:mm:ss a');
       // For multivalued fields
       doc.text = _.isArray(doc.text)?_.join(doc.text,' '):doc.text;
+      doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(doc);
+      doc.position = vm.position;
+      doc.page = PaginateService.getNormalizedCurrentPage();
       return doc;
+    }
+
+    function postSignal(options){
+      var paramsObj = {
+        params: {
+          position: vm.doc.position,
+          page: vm.doc.page
+        }
+      };
+      _.defaultsDeep(paramsObj, options);
+      SignalsService.postClickSignal(vm.doc.__signals_doc_id__, paramsObj);
     }
   }
 })();

@@ -14,16 +14,17 @@
       controllerAs: 'vm',
       bindToController: {
         doc: '=',
+        position: '=',
         highlight: '='
       },
       replace: true
     };
   }
 
-  function Controller($log, $scope, DocsHelper, ConfigService, SignalsService) {
+  function Controller($log, $scope, DocsHelper, ConfigService, SignalsService, PaginateService) {
     'ngInject';
     var vm = this;
-    vm.postSignal = SignalsService.postClickSignal;
+    vm.postSignal = postSignal;
 
     activate();
 
@@ -63,6 +64,10 @@
 
       doc.lw_url = getField('head_url', doc);
 
+      doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(doc);
+      doc.position = vm.position;
+      doc.page = PaginateService.getNormalizedCurrentPage();
+
       return doc;
     }
 
@@ -78,6 +83,17 @@
         return doc[fieldName];
       }
       return null;
+    }
+
+    function postSignal(options){
+      var paramsObj = {
+        params: {
+          position: vm.doc.position,
+          page: vm.doc.page
+        }
+      };
+      _.defaultsDeep(paramsObj, options);
+      SignalsService.postClickSignal(vm.doc.__signals_doc_id__, paramsObj);
     }
 
   }

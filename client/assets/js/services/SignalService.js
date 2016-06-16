@@ -7,7 +7,7 @@
     ])
     .factory('SignalsService', SignalsService);
 
-  function SignalsService(ApiBase, ConfigService, $http, $q, QueryService) {
+  function SignalsService(ApiBase, ConfigService, $http, $q, QueryService, ClientStatsService) {
     'ngInject';
     var service = {
       postClickSignal: postClickSignal,
@@ -30,6 +30,11 @@
         data = {
           params: {
             docId: docId,
+            head_field: ConfigService.config.head_field,
+            language: ClientStatsService.getBrowserLanguage(),
+            platform: ClientStatsService.getBrowserPlatform(),
+            user_agent: ClientStatsService.getBrowserUserAgent(),
+            user_name: ConfigService.getLoginCredentials().username || ConfigService.config.anonymous_access.username,
             query: QueryService.getQueryObject().q
           },
           pipeline: ConfigService.config.signals_pipeline,
@@ -38,7 +43,6 @@
         };
 
       _.defaultsDeep(data, options);
-
 
       return postSignalData([data]);
     }

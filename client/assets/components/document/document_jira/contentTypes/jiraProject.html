@@ -1,7 +1,7 @@
 <div class="detail jira-issue vertical grid-content">
   <h3 class="subheader">
 
-    <a ng-href="{{::vm.doc.id}}" ng-click="vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank">
+    <a ng-href="{{::vm.doc.id}}" ng-click="vm.postSignal({params: {lw_url: vm.doc.id}})" rel="noopener" target="_blank">
       <field value="::vm.doc.name_s" highlight="vm.highlight[doc.id]" maxlength="200" hkey="name_s"></field>
     </a>
   </h3>
@@ -17,7 +17,7 @@
              hkey="jira_content_type_s"></field>
       </div>
       <div class="key" ng-if="::vm.doc.parent_s">
-        <a ng-href="{{::vm.doc.id}}" ng-click="vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank">
+        <a ng-href="{{::vm.doc.id}}" ng-click="vm.postSignal({params: {lw_url: vm.doc.id}})" rel="noopener" target="_blank">
           <field value="::vm.doc.key_s" highlight="::vm.highlight[doc.id]" maxlength="200" hkey="key_s"></field>
         </a>
       </div>

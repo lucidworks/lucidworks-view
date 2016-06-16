@@ -15,6 +15,7 @@
       controllerAs: 'vm',
       bindToController: {
         doc: '=',
+        position: '=',
         highlight: '='
       }
     };
@@ -23,7 +24,7 @@
 
   }
 
-  function Controller(SignalsService, $filter) {
+  function Controller(SignalsService, $filter, PaginateService) {
     'ngInject';
     var vm = this;
 
@@ -37,6 +38,8 @@
     function processDocument(doc) {
       doc.length_lFormatted = $filter('humanizeFilesize')(doc.length_l);
       doc.lastModified_dtFormatted = $filter('date')(doc.lastModified_dt);
+      doc.position = vm.position;
+      doc.page = PaginateService.getNormalizedCurrentPage();
       return doc;
     }
   }
