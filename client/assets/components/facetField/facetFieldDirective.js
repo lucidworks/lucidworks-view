@@ -130,10 +130,7 @@
         // Remove the key object from the query.
         // We will re-add later if we need to.
         var keyArr = _.remove(query.fq, function(value){
-          //CASE 1: query facet is a field facet without local params
-          //CASE 2: query facet is a field facet with local params. The local param is present in the key of the query facet. Eg: {!tag=param}keyName
-          return (value.key === key && value.transformer === 'fq:field') ||
-           (value.key === ('{!tag='+vm.facetTag+'}' + key) && value.transformer === 'localParams');
+          return checkQueryFacetExists(value, key);
         });
 
         // CASE: facet key exists in query.
@@ -185,7 +182,7 @@
         return false;
       }
       var keyObj = _.find(query.fq, function(val){
-        return val.key === key && val.transformer === 'fq:field' || val.transformer === 'localParams';
+        return checkQueryFacetExists(val, key);
       });
       if(_.isEmpty(keyObj)){
         return false;
@@ -235,5 +232,17 @@
       });
     }
 
+    /**
+     * Check if the facet key and transformer match with the passed in key and the appropriate key syntax
+     * @param  {object}  val The facet object
+     * @param  {string}  key The name of the facet
+     * @return {Boolean}
+     */
+    function checkQueryFacetExists(val, key){
+      //CASE 1: query facet is a field facet without local params
+      //CASE 2: query facet is a field facet with local params. The local param is present in the key of the query facet. Eg: {!tag=param}keyName
+      return (val.key === key && val.transformer === 'fq:field') ||
+       (val.key === ('{!tag='+vm.facetTag+'}' + key) && val.transformer === 'localParams');
+    }
   }
 })();
