@@ -30,6 +30,7 @@
     vm.toggleMore = toggleMore;
     vm.getLimitAmount = getLimitAmount;
     vm.more = false;
+    vm.clearAppliedFilters = clearAppliedFilters;
     var resultsObservable = Orwell.getObservable('queryResults');
 
     activate();
@@ -243,6 +244,23 @@
       //CASE 2: query facet is a field facet with local params. The local param is present in the key of the query facet. Eg: {!tag=param}keyName
       return (val.key === key && val.transformer === 'fq:field') ||
        (val.key === ('{!tag='+vm.facetTag+'}' + key) && val.transformer === 'localParams');
+    }
+
+    /**
+     * remove all filters applied on a facet
+     * @param  {object} e event object to stopPropagation of click
+     */
+    function clearAppliedFilters(e){
+      e.stopPropagation();
+      var query = QueryService.getQueryObject();
+      if(query.hasOwnProperty('fq')){
+        var clearedFilter = _.remove(query.fq, function(value){
+          return checkQueryFacetExists(value, vm.facetName);
+        });
+        if(clearedFilter.length){
+          updateFacetQuery(query);
+        }
+      }
     }
   }
 })();
