@@ -144,7 +144,7 @@ function aaa() {
 
       el.dataset["initialized"] = true;
       $(el).on("click", activate);
-    })
+    });
   }
 
   //setActivator(".rules-list h2");
@@ -158,9 +158,11 @@ function aaa() {
     $(this).focus();
   }
 
-  $('.trigger-start').on('focus', datePickerOnFocus);
-  $('.trigger-end').on('focus', datePickerOnFocus);
+
+  $('.trigger-start').on('click', datePickerOnFocus);
+  $('.trigger-end').on('click', datePickerOnFocus);
 }
+
 
 rulesApp.controller('rulesController',
            ['$scope', '$http', '$timeout', 'RulesService',
@@ -218,45 +220,57 @@ rulesApp.controller('rulesController',
   $scope.filter = Filter;
 
   $scope.addRule = function () {
-
     var rule = {
       display_type: $scope.currentRule.displayRuleType,
       id: $scope.currentRule.ruleName,
-      //description: $scope.currentRule.ruleDescription,
-      //effective_range: [],
-      //search_terms: $scope.currentRule.ruleKeywords,
-      //category_id: [$scope.currentRule.ruleCategoryType, $scope.currentRule.ruleCategoryValue],
-      //tags: $scope.currentRule.ruleTags,
-      //values: Array.isArray($scope.currentRule.ruleValues) ? $scope.currentRule.ruleValues : [$scope.currentRule.ruleValues],
       createdAt: Date.now(),
       updatedAt: Date.now(),
       enabled: true
     };
 
-    var ruleName = $('#addRuleName')[0];
+    var ruleName = $('#addRuleName');
     var addRuleButton = $('#addRuleButton');
 
     addRuleButton.removeAttr('data-dismiss');
 
-    if (ruleName.value==''){
-      ruleName.placeholder = 'Rule name is required';
-      return;
-    }
-
+    var validFlag = true;
     if (rule.display_type == 'Choose rule type'){
+      var ruleType = $('.rule-type-select');
+      ruleType.addClass('has-error');
+      ruleType.find('select').css('color', '#e51c23');
+      ruleType.on('click', function(){
+        $(this).removeClass('has-error');
+        $(this).find('select').css('color', '#666');
+      });
+      validFlag = false;
+    }
+
+    if (ruleName[0].value==''){
+      ruleName[0].placeholder = 'Rule name is required';
+      var ruleNameDiv = $('.rule-name-input');
+      ruleNameDiv.addClass('has-error');
+      ruleName.addClass('has-error');
+      ruleNameDiv.on('click', function(){
+        $(this).removeClass('has-error');
+        ruleName.removeClass('has-error');
+      });
+      validFlag = false;
+    }
+
+    if (!validFlag){
       return;
     }
 
+    ruleName[0].placeholder = 'Enter rule name';
     addRuleButton.attr('data-dismiss', 'modal');
 
     $scope.currentRule.ruleDescription ? rule.description = $scope.currentRule.ruleDescription : false;
     $scope.currentRule.ruleKeywords[0] ? rule.search_terms = $scope.currentRule.ruleKeywords : false;
-    //$scope.currentRule.ruleCategoryType ? rule.category_id = [$scope.currentRule.ruleCategoryType, $scope.currentRule.ruleCategoryValue] : false;
     $scope.currentRule.ruleTags!='' ? rule.tags = $scope.currentRule.ruleTags : false;
 
     rule.type = $scope.types[rule.display_type];
 
-    if ($scope.currentRule.ruleFieldName){
+    if (rule.type!='response_value'){
       rule.field_name = $scope.currentRule.ruleFieldName;
       rule.field_values = $scope.currentRule.ruleFieldValues;
     } else {
@@ -268,23 +282,17 @@ rulesApp.controller('rulesController',
     var triggerStartArray = $('.add-trigger-start');
     var triggerEndArray = $('.add-trigger-end');
 
+    if (!$scope.ruleArrays[rule.id]) {
+      $scope.ruleArrays[rule.id] = {dates:[[],[]], filters:[[],[]]};
+    }
+
     if (triggerStartArray[0] && triggerStartArray[0].value) {
       rule.effective_range = [];
       for (var i = 0, l = triggerStartArray.length; i < l; i++) {
-        rule.effective_range.push(triggerStartArray[i].value);
-        rule.effective_range.push(triggerEndArray[i].value);
+        rule.effective_range.push("[" + triggerStartArray[i].value + " TO " + triggerEndArray[i].value + "]");
+        $scope.ruleArrays[rule.id].dates[0].push(triggerStartArray[i].value);
+        $scope.ruleArrays[rule.id].dates[1].push(triggerEndArray[i].value);
       }
-    }
-
-    if (!$scope.ruleArrays[rule.id]) {
-      $scope.ruleArrays[rule.id] = {dates:[], filters:[]};
-    }
-    //
-    //if (!$scope.ruleArrays[rule.id].dates) {
-    //  $scope.ruleArrays[rule.id].dates = [];
-    //}
-    if (rule.effective_range) {
-      $scope.ruleArrays[rule.id].dates.length = rule.effective_range.length / 2;
     }
 
     var triggerTags = $('#addTriggerTags')[0];
@@ -296,6 +304,8 @@ rulesApp.controller('rulesController',
       rule.filters = "";
       for (var i = 0, l = $scope.currentRule.ruleCategoryType.length; i<l; i++) {
         rule.filters += $scope.currentRule.ruleCategoryType[i] + ':' + $scope.currentRule.ruleCategoryValue[i] +' ';
+        $scope.ruleArrays[rule.id].filters[0].push($scope.currentRule.ruleCategoryType[i]);
+        $scope.ruleArrays[rule.id].filters[1].push($scope.currentRule.ruleCategoryValue[i]);
       }
       rule.filters = rule.filters.trim();
     }
@@ -319,6 +329,7 @@ rulesApp.controller('rulesController',
     $scope.currentRule.ruleFieldValues = [];
     $scope.currentRule.ruleValues = [];
     $scope.categories = [];
+    $scope.triggerDates = [];
 
     $scope.rules = [rule].concat($scope.rules);
     $scope.rulesTotal++;
@@ -447,33 +458,41 @@ rulesApp.controller('rulesController',
     console.log("update - " + id);
 
     var rule = $scope.rules[findIndexById(id)];
+    var ruleArray = $scope.ruleArrays[rule.id];
+
     rule.updatedAt = Date.now();
 
-    var triggerStartArray = $('tr.'+rule.id + ' trigger-start');
-    var triggerEndArray = $('tr.'+rule.id + ' trigger-end');
-
-    //rule.effective_range = [];
-    for (var i = 0, l = triggerStartArray; i<l; i++){
-      rule.effective_range[i*2] = triggerStartArray[i];
-      rule.effective_range[i*2+1] = triggerEndArray[i];
+    if (rule.values) {
+      rule.values = [rule.values];
     }
-    if ($('tr.' + rule.id + ' .triggerTags').length!=0) {
-      rule.tags = $('tr.' + rule.id + ' .triggerTags')[0].value.split(',');
+
+    var triggerStartArray = $('tr.'+rule.id + ' .trigger-start');
+    var triggerEndArray = $('tr.'+rule.id + ' .trigger-end');
+
+    for (var i = 0, l = triggerStartArray.length; i<l; i++){
+      rule.effective_range[i] = "[" + triggerStartArray[i].value + " TO " + triggerEndArray[i].value + "]";
+      ruleArray.dates[0][i] = triggerStartArray[i].value;
+      ruleArray.dates[1][i] = triggerEndArray[i].value;
+    }
+    var ruleTriggerTags = $('tr.' + rule.id + ' .triggerTags');
+      if (ruleTriggerTags.length!=0) {
+      rule.tags = ruleTriggerTags[0].value.split(',');
     }
     if (rule.tags && rule.tags[0] == ""){
       delete rule.tags;
     }
-    //if ($('tr.' + rule.id + ' .actionProductList').length!=0) {
-    //  rule.values = $('tr.' + rule.id + ' .actionProductList')[0].value.split(',');
-    //}
     rule.filters = "";
-    var ruleArray = $scope.ruleArrays[rule.id];
-      if (ruleArray && ruleArray.filters && ruleArray.filters[0]) {
+    if (ruleArray && ruleArray.filters && ruleArray.filters[0]) {
       for (var i = 0, l = ruleArray.filters[0].length; i < l; i++) {
         rule.filters += ruleArray.filters[0][i] + ':' + ruleArray.filters[1][i] + ' ';
       }
       rule.filters = rule.filters.trim();
     }
+
+    if (rule.filters == ""){
+      delete rule.filters;
+    }
+
     delete rule._version_;
 
     rulesService.update(id, rule);
@@ -502,7 +521,7 @@ rulesApp.controller('rulesController',
     }
   };
 
-  $scope.addAction = function (id, name) {
+ /* $scope.addAction = function (id, name) {
     var rule = $scope.rules[findIndexById(id)];
 
     if (name == 'product_list') {
@@ -518,7 +537,7 @@ rulesApp.controller('rulesController',
     } else if (name == 'querySet') {
       rule.querySet = rule.querySet || "querySet";
     }
-  };
+  };*/
 
    $scope.addFilter = function(id){
      if (!$scope.ruleArrays[id].filters[0]){
@@ -577,13 +596,18 @@ rulesApp.controller('rulesController',
               actualFiltersArray[1].push(filtersArray[j]);
             }
           }
-
           rulesSub.filters = actualFiltersArray;
         }
-
         var range = $scope.rules[i].effective_range;
         if (range) {
-          rulesSub.dates = new Array(range.length / 2);
+          rulesSub.dates = [[],[]];
+          for (var j = 0, k = range.length; j < k; j++){
+            var split = range[j].split(' TO ');
+            rulesSub.dates[0][j] = split[0];
+            rulesSub.dates[0][j] = rulesSub.dates[0][j].replace("[", "");
+            rulesSub.dates[1][j] = split[1];
+            rulesSub.dates[1][j] = rulesSub.dates[1][j].replace("]", "");
+          }
         }
 
         $scope.ruleArrays[$scope.rules[i].id] = rulesSub;

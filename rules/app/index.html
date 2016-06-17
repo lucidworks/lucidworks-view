@@ -168,7 +168,7 @@
             </ul>
           </div>
           <span class="small text-muted checkbox-inside-hint">{{getCheckedBoxesCount() + (getCheckedBoxesCount()==1 ? ' rule selected':' rules selected')}}</span>
-          <div class="btn-group">
+          <!--<div class="btn-group">
             <a href="#" class="btn btn-link dropdown-toggle" data-toggle="dropdown"  id="bulk-actions">
               <i class="fa fa-clone"></i>
               Bulk actions
@@ -205,6 +205,61 @@
                   <form ng-submit="bulkAddTag(customTag, false, true)">
                     <input type='text' class="form-control " id="addNewTag" placeholder="Add new tag" ng-model="customTag"/>
                   </form>
+                </div>
+              </li>
+            </ul>
+          </div>-->
+          <div class="btn-group btn-group-lg">
+            <a href="#" class="btn btn-link dropdown-toggle" data-toggle="dropdown" id="bulk-actions">
+              <i class="fa fa-clone"></i>
+              Bulk actions
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu with-states min-w-280" id="bulk-dropdown">
+              <li>
+                <a class="text-overflow" href="#" ng-click="bulkRemoveRules()"><i class="fa fa-times"></i>Delete selected rules</a>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <div class="btn-group btn-group-sm pull-right" data-toggle="buttons">
+                  <label class="btn btn-link active" ng-click="bulkStatus(true)">
+                    <input type="radio" name="options" id="option1" autocomplete="off">On
+                  </label>
+                  <label class="btn-uncheckable btn-link disabled">
+                    <input type="radio" name="options" id="option2" autocomplete="off" disabled checked>N/A
+                  </label>
+                  <label class="btn btn-link" ng-click="bulkStatus(false)">
+                    <input type="radio" name="options" id="option3" autocomplete="off">Off
+                  </label>
+                </div>
+                <span class="text-overflow"><i class="status half-circle bg-active"></i><i class="status bg-inactive"></i>Enable / Disable</span>
+              </li>
+
+              <li class="divider"></li>
+
+              <li ng-repeat="f in facets.tags">
+                <div class="btn-group btn-group-sm pull-right" data-toggle="buttons">
+                  <label class="btn btn-link" ng-click="bulkAddTag(f[0], false)">
+                    <input type="radio" name="options" id="option1" autocomplete="off">On
+                  </label>
+                  <label class="btn-uncheckable btn-link disabled active">
+                    <input type="radio" name="options" id="option2" autocomplete="off" disabled checked>N/A
+                  </label>
+                  <label class="btn btn-link" ng-click="bulkAddTag(f[0], true)">
+                    <input type="radio" name="options" id="option3" autocomplete="off">Off
+                  </label>
+                </div>
+                  <span class="text-overflow">
+                     <i class="fa fa-tag text-muted-light"></i>{{f[0]}}
+                  </span>
+              </li>
+
+              <li>
+                <div class="complex-input mb-20">
+                  <span class="input-addon"><i class="fa fa-tag text-muted"></i></span>
+                   <form ng-submit="bulkAddTag(customTag, false, true)">
+                     <input type='text' class="form-control " id="addNewTag" placeholder="Add new tag" ng-model="customTag"/>
+                   </form>
                 </div>
               </li>
             </ul>
@@ -261,20 +316,20 @@
                 <div class="btn">
                   <label for="filterStart" class="small text-muted text-uppercase">Start</label>
                   <div class="datepicker-holder">
-                    <input type='text' class="form-control datepicker" id="filterStart" />
+                    <input type='text' class="form-control datepicker" id="filterStart" placeholder="Enter start date"/>
                   </div>
                 </div>
                 <div class="btn text-left">
-                  <label for="filterEnd" class="small text-muted text-uppercase">End</label>
+                  <label for="filterEnd" class="small text-muted text-uppercase" >End</label>
                   <div class="datepicker-holder">
-                    <input type='text' class="form-control datepicker" id="filterEnd" />
+                    <input type='text' class="form-control datepicker" id="filterEnd" placeholder="Enter end date"/>
                   </div>
                 </div>
               </div>
             </li>
             <li class="divider"></li>
             <li>
-              <label for="filterStatus" class="small text-muted text-uppercase">Staus</label>
+              <label for="filterStatus" class="small text-muted text-uppercase">Status</label>
               <!-- <div class="btn-group btn-group-justified" role="group" id="filterStatus">
                  <a class="btn btn-sm btn-link active" href="#">Active</a>
                  <a class="btn btn-sm btn-link" href="#">Inactive</a>
@@ -286,13 +341,13 @@
                  <a class="btn btn-sm btn-link" href="#">Inactive</a>
               </div> -->
               <div class="btn-group btn-group-justified" data-toggle="buttons" id="filterStatus">
-                <label class="btn btn-link">
+                <label class="btn btn-link" onclick="Filter.values.status = 'Active'">
                   <input type="radio" name="options" id="option1" autocomplete="off">Active
                 </label>
-                <label class="btn btn-link active">
+                <label class="btn btn-link active" onclick="Filter.values.status = null">
                   <input type="radio" name="options" id="option2" autocomplete="off" checked>N/A
                 </label>
-                <label class="btn btn-link">
+                <label class="btn btn-link" onclick="Filter.values.status = 'Inactive'">
                   <input type="radio" name="options" id="option3" autocomplete="off">Inactive
                 </label>
               </div>
@@ -303,7 +358,7 @@
             </li>
             <li ng-repeat="f in facets.tags">
               <a class="text-muted-light active" href="#"><i class="fa fa-tag"></i>{{f[0]}}
-                <input type="checkbox" name="filterTagsCheckbox" ng-model="filter.values.facets.tags[f[0]]" />
+                <input type="checkbox" name="filterTagsCheckbox" ng-model="filter.values.facets.tags[f[0]]" ng-click="resetFocus()" value="{{f[0]}}" />
               </a>
             </li>
             <!-- </ul> -->
@@ -311,7 +366,7 @@
             <li class="text-right">
               <div class="btn-group" role="group" id="applyFilters">
                 <button class="btn btn-sm btn-link" type="button"><i class="fa fa-times"></i>Cancel</button>
-                <a class="btn btn-sm btn-default" href="#" ng-click="search()"><i class="fa fa-check"></i> Apply</a>
+                <a class="btn btn-sm btn-default" href="#" onclick="Filter.values.startDate = $('#filterStart')[0].value; Filter.values.endDate = $('#filterEnd')[0].value;" ng-click="search()"><i class="fa fa-check"></i> Apply</a>
               </div>
             </li>
           </ul>
@@ -386,19 +441,19 @@
             <div class="column-holder">
               <div class="row hor-gut-6px">
                 <!-- Trigger Date and Time -->
-                <div class="col-xs-5" ng-repeat="ruleDate in ruleArrays[rule.id].dates track by $index">
+                <div class="col-xs-5" ng-repeat="ruleDate in ruleArrays[rule.id].dates[0] track by $index">
                   <form action="">
                     <fieldset>
                       <div class="form-group datepicker-inline">
                         <label for="triggerStart" class="small text-muted text-uppercase">Start</label>
                         <div class="datepicker-holder">
-                          <input type='text' class="form-control  trigger-start disabledControl" id="triggerStart" ng-model="rule.effective_range[$index*2]"/>
+                          <input type='text' class="form-control  trigger-start disabledControl" id="triggerStart" ng-model="ruleArrays[rule.id].dates[0][$index]"/>
                         </div>
                       </div>
                       <div class="form-group datepicker-inline">
                         <label for="triggerEnd" class="small text-muted text-uppercase">End</label>
                         <div class="datepicker-holder">
-                          <input type='text' class="form-control  trigger-end disabledControl" id="triggerEnd" ng-model="rule.effective_range[$index*2+1]"/>
+                          <input type='text' class="form-control  trigger-end disabledControl" id="triggerEnd" ng-model="ruleArrays[rule.id].dates[1][$index]"/>
                         </div>
                       </div>
                     </fieldset>
@@ -414,7 +469,7 @@
                       </div>
                       <div class="form-group" ng-repeat="caregory in ruleArrays[rule.id].filters[0] track by $index">
                         <label class="small text-muted text-uppercase">Field Value</label>
-                        <select class="form-control addTriggerCategory disabledControl" ng-model="ruleArrays[rule.id].filters[0][$index]">
+                        <select class="form-control addTriggerCategory disabledControl"  ng-model="ruleArrays[rule.id].filters[0][$index]">
                           <option value="CategoryID" ng-selected="true" selected>CategoryID</option>
                           <option value="ProductID">ProductID</option>
                           <option value="ProductIDSearch">ProductIDSearch</option>
@@ -438,7 +493,7 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li>
-                    <a href="#" ng-click="ruleArrays[rule.id].dates.push(' ')">ADD DATE</a>
+                    <a href="#" ng-click="ruleArrays[rule.id].dates[0].push(' '); ruleArrays[rule.id].dates[1].push(' '); ">ADD DATE</a>
                   </li>
                   <li ng-if="!rule.search_terms">
                     <a href="#" ng-click="addTrigger(rule.id, 'search_terms')">KEYWORDS</a>
@@ -546,7 +601,7 @@
                           </li>
                         </ul>
                       </div>-->
-                      <div class="form-group">
+                      <div class="form-group rule-type-select">
                         <label for="chooseRuleType" class="small text-muted text-uppercase">Rule type</label>
                         <select class="form-control" id="chooseRuleType" ng-model="currentRule.displayRuleType">
                           <option value="Choose rule type" selected style="display:none;">Choose rule type</option>
@@ -559,7 +614,7 @@
                         </select>
                       </div>
 
-                      <div class="form-group">
+                      <div class="form-group rule-name-input">
                         <label for="addRuleName" class="small text-muted text-uppercase">Rule name</label>
                         <input type='text' class="form-control" id="addRuleName" placeholder="Enter rule name" ng-model="currentRule.ruleName"/>
                       </div>
@@ -632,7 +687,7 @@
                         <a href="#" ng-click="flags.keywordsFlag = true">KEYWORDS</a>
                       </li>
                       <li ng-if="!flags.categoryFlag">
-                        <a href="#" ng-click="categories.push(' ')">FIELD VALUE</a>
+                        <a href="#" ng-click="categories.push('')">FIELD VALUE</a>
                       </li>
                       <li ng-if="!flags.tagsFlag">
                         <a href="#" ng-click="flags.tagsFlag = true">TAGS</a>
@@ -648,7 +703,6 @@
                     <fieldset>
                       <select class="form-control addTriggerCategory" ng-model="currentRule.ruleFieldName" ng-if="currentRule.displayRuleType == 'Filter List' || currentRule.displayRuleType == 'Block List' || currentRule.displayRuleType == 'Boost List'">
                         <option value="CategoryID" ng-selected="true" selected>CategoryID</option>
-                        <option value="ProductID">ProductID</option>
                         <option value="ProductIDSearch">ProductIDSearch</option>
                         <option ng-repeat="(value, caption) in productList" value="{{value}}">{{caption}}</option>
                       </select>
@@ -680,7 +734,7 @@
         </div>
         <div class="modal-footer">
           <hr />
-          <button type="button" class="btn btn-link text-muted" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i> Cancel</button>
+          <button type="button" class="btn btn-link text-muted" data-dismiss="modal" aria-hidden="true" onclick="ruleFormReset()"><i class="fa fa-times"></i> Cancel</button>
           <button type="button" class="btn btn-default" data-dismiss="modal" id="addRuleButton" aria-hidden="true" ng-click="addRule()"><i class="fa fa-plus"></i> Add rule</button>
         </div>
       </div>
@@ -710,6 +764,15 @@
   $(document).on('click', '.dropdown-menu', function(e) {
     e.stopPropagation();
   });
+  function ruleFormReset(){
+    var ruleName = $('#addRuleName');
+    ruleName.removeClass('has-error');
+    ruleName[0].placeholder = 'Enter rule name';
+    var ruleType = $('.rule-type-select');
+    ruleType.removeClass('has-error');
+    ruleType.find('select').css('color', '#666');
+    $('.rule-name-input').removeClass('has-error');
+  }
 </script>
 </body>
 </html>
