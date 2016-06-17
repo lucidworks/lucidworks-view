@@ -30,6 +30,7 @@
     vm.toggleMore = toggleMore;
     vm.getLimitAmount = getLimitAmount;
     vm.more = false;
+    vm.clearAppliedFilters = clearAppliedFilters;
     var resultsObservable = Orwell.getObservable('queryResults');
     vm.facetCounts = [];
 
@@ -266,6 +267,21 @@
           transformer: 'TO'
         }
       ];
+    }
+
+    /**
+     * remove all filters applied on a facet
+     * @param  {object} e event object to stopPropagation of click
+     */
+    function clearAppliedFilters(e){
+      e.stopPropagation();
+      var query = QueryService.getQueryObject();
+      if(query.hasOwnProperty('fq')){
+        var clearedFilter = _.remove(query.fq, {key: vm.facetName, transformer: 'fq:range'});
+        if(clearedFilter.length){
+          updateFacetQuery(query);
+        }
+      }
     }
   }
 })();

@@ -30,6 +30,7 @@
     vm.toggleMore = toggleMore;
     vm.getLimitAmount = getLimitAmount;
     vm.more = false;
+    vm.clearAppliedFilters = clearAppliedFilters;
     var resultsObservable = Orwell.getObservable('queryResults');
 
     activate();
@@ -130,7 +131,7 @@
         // Remove the key object from the query.
         // We will re-add later if we need to.
         var keyArr = _.remove(query.fq, function(value){
-          return checkQueryFacetExists(value, key);
+          return checkFacetExists(value, key);
         });
 
         // CASE: facet key exists in query.
@@ -182,7 +183,7 @@
         return false;
       }
       var keyObj = _.find(query.fq, function(val){
-        return checkQueryFacetExists(val, key);
+        return checkFacetExists(val, key);
       });
       if(_.isEmpty(keyObj)){
         return false;
@@ -238,11 +239,28 @@
      * @param  {string}  key The name of the facet
      * @return {Boolean}
      */
-    function checkQueryFacetExists(val, key){
-      //CASE 1: query facet is a field facet without local params
-      //CASE 2: query facet is a field facet with local params. The local param is present in the key of the query facet. Eg: {!tag=param}keyName
+    function checkFacetExists(val, key){
+      //CASE 1: facet is a field facet without local params
+      //CASE 2: facet is a field facet with local params. The local param is present in the key of the facet. Eg: {!tag=param}keyName
       return (val.key === key && val.transformer === 'fq:field') ||
        (val.key === ('{!tag='+vm.facetTag+'}' + key) && val.transformer === 'localParams');
+    }
+
+    /**
+     * remove all filters applied on a facet
+     * @param  {object} e event object to stopPropagation of click
+     */
+    function clearAppliedFilters(e){
+      e.stopPropagation();
+      var query = QueryService.getQueryObject();
+      if(query.hasOwnProperty('fq')){
+        var clearedFilter = _.remove(query.fq, function(value){
+          return checkFacetExists(value, vm.facetName);
+        });
+        if(clearedFilter.length){
+          updateFacetQuery(query);
+        }
+      }
     }
   }
 })();
