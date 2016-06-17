@@ -467,9 +467,10 @@ rulesApp.controller('rulesController',
     //  rule.values = $('tr.' + rule.id + ' .actionProductList')[0].value.split(',');
     //}
     rule.filters = "";
-    if ($scope.ruleArrays[rule.id].filters[0]) {
-      for (var i = 0, l = $scope.ruleArrays[rule.id].filters[0].length; i < l; i++) {
-        rule.filters += $scope.ruleArrays[rule.id].filters[0][i] + ':' + $scope.ruleArrays[rule.id].filters[1][i] + ' ';
+    var ruleArray = $scope.ruleArrays[rule.id];
+      if (ruleArray && ruleArray.filters && ruleArray.filters[0]) {
+      for (var i = 0, l = ruleArray.filters[0].length; i < l; i++) {
+        rule.filters += ruleArray.filters[0][i] + ':' + ruleArray.filters[1][i] + ' ';
       }
       rule.filters = rule.filters.trim();
     }
@@ -564,19 +565,28 @@ rulesApp.controller('rulesController',
       $scope.rules = response.data.response.docs;
 
       for (var i = 0, l = $scope.rules.length; i<l; i++) {
-        var filtersArray = $scope.rules[i].filters.split(/[ ,:]+/);
-        var actualFiltersArray = [[],[]];
-        for (var j = 0, k = filtersArray.length; j<k; j++){
-          if (j%2 == 0){
-            actualFiltersArray[0].push(filtersArray[j]);
-          } else {
-            actualFiltersArray[1].push(filtersArray[j]);
+        var rulesSub = {};
+
+        if ($scope.rules[i] && $scope.rules[i].filters) {
+          var filtersArray = $scope.rules[i].filters.split(/[ ,:]+/);
+          var actualFiltersArray = [[],[]];
+          for (var j = 0, k = filtersArray.length; j<k; j++){
+            if (j%2 == 0){
+              actualFiltersArray[0].push(filtersArray[j]);
+            } else {
+              actualFiltersArray[1].push(filtersArray[j]);
+            }
           }
+
+          rulesSub.filters = actualFiltersArray;
         }
-        $scope.ruleArrays[$scope.rules[i].id] = {
-          dates: new Array($scope.rules[i].effective_range.length / 2),
-          filters: actualFiltersArray
-        };
+
+        var range = $scope.rules[i].effective_range;
+        if (range) {
+          rulesSub.dates = new Array(range.length / 2);
+        }
+
+        $scope.ruleArrays[$scope.rules[i].id] = rulesSub;
       }
       $scope.rulesTotal = response.data.response.numFound;
       $scope.facets = response.data.facet_counts.facet_fields;
