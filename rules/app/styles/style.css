@@ -1,7 +1,7 @@
 ul.dropdown-menu>li input{
   float: right;
 }
-ul.dropdown-menu>li input#addNewTag{
+ul.dropdown-menu>li input.addNewTag{
   float:none;
 }
 .rule-name{
@@ -20,6 +20,10 @@ table .col-xs-5, table .col-xs-6{
 }
 .datepicker-inline{
   width: 49%;
+  display: inline-block;
+}
+.set-params{
+  width: 32%;
   display: inline-block;
 }
 .has-error::-webkit-input-placeholder {color:#e51c23!important;}

@@ -112,9 +112,9 @@ var Filter = (function () {
   }
 })();
 
-function aaa() {
+function pageInit() {
   moment().calendar();
-  $(".datepicker").datetimepicker({defaultDate: "now", format: "YYYY-MM-DD"});
+  $(".datepicker").datetimepicker({defaultDate: "now", format: "YYYY-MM-DDTHH:mm"});
   autosize($("textarea"));
   $('.triggerTags').tagsinput({tagClass: "label label-default"});
 
@@ -153,14 +153,14 @@ function aaa() {
 
   function datePickerOnFocus() { // TODO why we need this function
     $(this).addClass('datepicker');
-    $(".datepicker").datetimepicker({format: "YYYY-MM-DD"});
+    $(".datepicker").datetimepicker({format: "YYYY-MM-DDTHH:mm"});
     $(this).blur();
     $(this).focus();
   }
 
 
-  $('.trigger-start').on('click', datePickerOnFocus);
-  $('.trigger-end').on('click', datePickerOnFocus);
+  $('.trigger-start').one('click', datePickerOnFocus);
+  $('.trigger-end').one('click', datePickerOnFocus);
 }
 
 
@@ -168,17 +168,24 @@ rulesApp.controller('rulesController',
            ['$scope', '$http', '$timeout', 'RulesService',
     function($scope, $http, $timeout, rulesService) {
 
-      $scope.types = {
-        "Filter List": "filter_list",
-        "Block List": "block_list",
-        "Boost List": "boost_list",
-        "Redirect": "response_value",
-        "Banner": "response_value"
-      };
-      $scope.keys = {
-        "Redirect": "redirect",
-        "Banner": "banner"
-      };
+  $scope.types = {
+    "Filter List": "filter_list",
+    "Block List": "block_list",
+    "Boost List": "boost_list",
+    "Redirect": "response_value",
+    "Banner": "response_value",
+    "Set Params": "set_params"
+  };
+
+  $scope.policyList = {
+    "append": "Append",
+    "replace": "Replace"
+  };
+
+  var keys = {
+    "Redirect": "redirect",
+    "Banner": "banner"
+  };
 
   function findIndexById(id) {
     for (var i = 0; i < $scope.rules.length; i++) {
@@ -193,6 +200,7 @@ rulesApp.controller('rulesController',
   $scope.triggerDates = [];
   $scope.categories = [];
   $scope.ruleArrays = [];
+  $scope.setParams = [' '];
 
   $scope.flags = {
     keywordsFlag : false,
@@ -214,7 +222,12 @@ rulesApp.controller('rulesController',
     ruleTags: '',
     ruleFieldName: '',
     ruleFieldValues: [],
-    ruleValues: []
+    ruleValues: [],
+    ruleSetParams: {
+      param_names: [],
+      param_values: [],
+      param_policies: []
+    }
   };
 
   $scope.filter = Filter;
@@ -223,9 +236,9 @@ rulesApp.controller('rulesController',
     var rule = {
       display_type: $scope.currentRule.displayRuleType,
       id: $scope.currentRule.ruleName,
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
-      enabled: true
+      createdAt: [Date.now()],
+      updatedAt: [Date.now()],
+      enabled: [true]
     };
 
     var ruleName = $('#addRuleName');
@@ -270,12 +283,16 @@ rulesApp.controller('rulesController',
 
     rule.type = $scope.types[rule.display_type];
 
-    if (rule.type!='response_value'){
+    if (rule.type == 'set_params'){
+      rule.param_names = $scope.currentRule.ruleSetParams.param_names;
+      rule.param_values = $scope.currentRule.ruleSetParams.param_values;
+      rule.param_policies = $scope.currentRule.ruleSetParams.param_policies;
+    } else if (rule.type!='response_value'){
       rule.field_name = $scope.currentRule.ruleFieldName;
       rule.field_values = $scope.currentRule.ruleFieldValues;
     } else {
       rule.keys = [];
-      rule.keys.push($scope.keys[rule.display_type]);
+      rule.keys.push(keys[rule.display_type]);
       rule.values = [$scope.currentRule.ruleValues];
     }
 
@@ -302,11 +319,12 @@ rulesApp.controller('rulesController',
 
     if ($scope.currentRule.ruleCategoryType[0]){
       rule.filters = "";
-      for (var i = 0, l = $scope.currentRule.ruleCategoryType.length; i<l; i++) {
-        rule.filters += $scope.currentRule.ruleCategoryType[i] + ':' + $scope.currentRule.ruleCategoryValue[i] +' ';
-        $scope.ruleArrays[rule.id].filters[0].push($scope.currentRule.ruleCategoryType[i]);
+      //for (var i = 0, l = $scope.currentRule.ruleCategoryType.length; i<l; i++) {
+      $scope.currentRule.ruleCategoryType.forEach(function(item, i){
+        rule.filters += item + ':' + $scope.currentRule.ruleCategoryValue[i] +' ';
+        $scope.ruleArrays[rule.id].filters[0].push(item);
         $scope.ruleArrays[rule.id].filters[1].push($scope.currentRule.ruleCategoryValue[i]);
-      }
+      });
       rule.filters = rule.filters.trim();
     }
 
@@ -328,19 +346,23 @@ rulesApp.controller('rulesController',
     $scope.currentRule.ruleFieldName = '';
     $scope.currentRule.ruleFieldValues = [];
     $scope.currentRule.ruleValues = [];
+    $scope.currentRule.ruleSetParams = {
+      param_names: [],
+      param_values: [],
+      param_policies: []
+    };
     $scope.categories = [];
     $scope.triggerDates = [];
 
     $scope.rules = [rule].concat($scope.rules);
     $scope.rulesTotal++;
 
-
     if ($scope.rules[$scope.rules.length - 1] == undefined) {
       $scope.rules.pop();
     }
 
     rulesService.add(rule);
-    $timeout(aaa, 1);
+    $timeout(pageInit, 1);
   };
 
   $scope.checkUncheckAll = function (operation) {
@@ -355,12 +377,10 @@ rulesApp.controller('rulesController',
       for (var i = 0; i < checkboxes.length; i++) {
         checkboxes[i].checked = true;
       }
-      $scope.checkedBoxesCount = checkboxes.length;
     } else {
       for (var i = 0; i < checkboxes.length; i++) {
         checkboxes[i].checked = false;
       }
-      $scope.checkedBoxesCount = 0;
     }
   };
 
@@ -387,7 +407,7 @@ rulesApp.controller('rulesController',
     for (var i = 0, l = ruleArray.length; i < l; i++) {
       if (ruleArray[i].checked) {
         var rule = $scope.rules[findIndexById(ruleArray[i].value)];
-        rule.enabled = enabled;
+        rule.enabled[0] = enabled;
         $scope.updateRule(ruleArray[i].value);
       }
     }
@@ -419,9 +439,10 @@ rulesApp.controller('rulesController',
           rule.tags.push(tag);
         }
         var tagsInput = $('tr.' + rule.id + " .triggerTags");
+        var tempTags = rule.tags;
         tagsInput.tagsinput('removeAll');
-        if (rule.tags && rule.tags.length > 0) {
-          tagsInput.tagsinput('add', rule.tags.join(","));
+        if (tempTags && tempTags.length > 0) {
+          tagsInput.tagsinput('add', tempTags.join(","));
         }
         if (isNewTag) {
           $scope.facets.tags.push([tag, 1]);
@@ -443,7 +464,7 @@ rulesApp.controller('rulesController',
       bulkDropdown.css('visibility', 'visible');
     }
     $('.triggerTags').tagsinput({tagClass: "label label-default"});
-    $('.datepicker').datetimepicker({format: "YYYY-MM-DD"});
+    $('.datepicker').datetimepicker({format: "YYYY-MM-DDTHH:mm"});
 
     return checkedCount;
   };
@@ -469,42 +490,54 @@ rulesApp.controller('rulesController',
     var triggerStartArray = $('tr.'+rule.id + ' .trigger-start');
     var triggerEndArray = $('tr.'+rule.id + ' .trigger-end');
 
+    if (!rule.effective_range){
+      rule.effective_range = [];
+    }
+
     for (var i = 0, l = triggerStartArray.length; i<l; i++){
       rule.effective_range[i] = "[" + triggerStartArray[i].value + " TO " + triggerEndArray[i].value + "]";
       ruleArray.dates[0][i] = triggerStartArray[i].value;
       ruleArray.dates[1][i] = triggerEndArray[i].value;
     }
+
+    if (rule.search_terms) {
+      if (rule.search_terms[0] == '' || rule.search_terms == "") {
+        delete rule.search_terms;
+      }
+    }
+
     var ruleTriggerTags = $('tr.' + rule.id + ' .triggerTags');
       if (ruleTriggerTags.length!=0) {
       rule.tags = ruleTriggerTags[0].value.split(',');
     }
-    if (rule.tags && rule.tags[0] == ""){
+    if (rule.tags && rule.tags[0] == "" || rule.tags == ""){
       delete rule.tags;
     }
     rule.filters = "";
     if (ruleArray && ruleArray.filters && ruleArray.filters[0]) {
       for (var i = 0, l = ruleArray.filters[0].length; i < l; i++) {
+      //ruleArray.filters.forEach(function(item, i){
         rule.filters += ruleArray.filters[0][i] + ':' + ruleArray.filters[1][i] + ' ';
       }
       rule.filters = rule.filters.trim();
     }
 
-    if (rule.filters == ""){
+    if (rule.filters == ":"){
       delete rule.filters;
     }
 
     delete rule._version_;
 
     rulesService.update(id, rule);
-    $scope.updateRulesInfo();
+    updateRulesInfo();
   };
 
   $scope.changeStatus = function (id) {
     var rule = $scope.rules[findIndexById(id)];
-    if (rule.enabled == undefined || rule.enabled === true) {
-      rule.enabled = false;
+    if (rule.enabled[0] == undefined || rule.enabled[0] === true) {
+      rule.enabled[0] = false;
     } else {
-      rule.enabled = true;
+      rule.enabled[0] = true;
     }
     $scope.updateRule(id);
   };
@@ -517,7 +550,7 @@ rulesApp.controller('rulesController',
     } else if (name == 'tags') {
       rule.tags = rule.tags || [""];
     } else if (name == 'category') {
-      rule.filters = rule.filters || ["field","value"];
+      rule.filters = rule.filters || [["field"],["value"]];
     }
   };
 
@@ -550,22 +583,22 @@ rulesApp.controller('rulesController',
   $scope.checkActionCount = function (id) {
     var actionCount = 0;
     var rule = $scope.rules[findIndexById(id)];
-    if (rule.productList)
-      actionCount++;
-    if (rule.redirect)
-      actionCount++;
-    if (rule.banner)
-      actionCount++;
-    if (rule.facetList)
-      actionCount++;
-    if (rule.rankList)
-      actionCount++;
-    if (rule.querySet)
-      actionCount++;
+    //if (rule.productList)
+    //  actionCount++;
+    //if (rule.redirect)
+    //  actionCount++;
+    //if (rule.banner)
+    //  actionCount++;
+    //if (rule.facetList)
+    //  actionCount++;
+    //if (rule.rankList)
+    //  actionCount++;
+    //if (rule.querySet)
+    //  actionCount++;
     return actionCount;
   };
 
-  $scope.updateRulesInfo = function () {
+  var updateRulesInfo = function () {
     $timeout(function () {
       rulesService.search($scope.filter, function(response) {
         console.log("Update rules info...");
@@ -580,14 +613,16 @@ rulesApp.controller('rulesController',
     $scope.filter.values.pageNum = (pageNum || 0);
 
     rulesService.search($scope.filter, function(response) {
-      console.log("Rules loaded: ");
       $scope.rules = response.data.response.docs;
+      console.log("Rules loaded: ");
+      console.log($scope.rules);
 
-      for (var i = 0, l = $scope.rules.length; i<l; i++) {
+      //for (var i = 0, l = $scope.rules.length; i<l; i++) {
+      $scope.rules.forEach(function(item, i){
         var rulesSub = {};
 
-        if ($scope.rules[i] && $scope.rules[i].filters) {
-          var filtersArray = $scope.rules[i].filters.split(/[ ,:]+/);
+        if (item && item.filters) {
+          var filtersArray = item.filters.split(/[ ,:]+/);
           var actualFiltersArray = [[],[]];
           for (var j = 0, k = filtersArray.length; j<k; j++){
             if (j%2 == 0){
@@ -610,12 +645,12 @@ rulesApp.controller('rulesController',
           }
         }
 
-        $scope.ruleArrays[$scope.rules[i].id] = rulesSub;
-      }
+        $scope.ruleArrays[item.id] = rulesSub;
+      });
       $scope.rulesTotal = response.data.response.numFound;
       $scope.facets = response.data.facet_counts.facet_fields;
 
-      $timeout(aaa, 1);
+      $timeout(pageInit, 1);
     });
 /*    rulesService.getProductFields( function(response){
       console.log("Product list loaded!");
@@ -624,6 +659,9 @@ rulesApp.controller('rulesController',
 
     $scope.productList = {
       //"value": "caption",
+      "CategoryID": "CategoryID",
+      "ProductID": "ProductID",
+      "ProductIDSearch": "ProductIDSearch",
       "name": "Name",
       "brand": "Brand"
     };
