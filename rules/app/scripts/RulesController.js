@@ -270,6 +270,19 @@ rulesApp.controller('rulesController',
       validFlag = false;
     }
 
+    if (rule.display_type == 'Set Params'){
+      var paramKey = $('.param-key.ng-empty');
+      paramKey.addClass('has-error');
+      paramKey.parent().addClass('has-error');
+      paramKey.on('click', function(){
+        $(this).removeClass('has-error');
+        $(this).parent().removeClass('has-error');
+      });
+      if (paramKey.length!=0) {
+        validFlag = false;
+      }
+    }
+
     if (!validFlag){
       return;
     }
@@ -353,6 +366,7 @@ rulesApp.controller('rulesController',
     };
     $scope.categories = [];
     $scope.triggerDates = [];
+    $scope.setParams = [' '];
 
     $scope.rules = [rule].concat($scope.rules);
     $scope.rulesTotal++;

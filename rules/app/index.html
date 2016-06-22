@@ -211,7 +211,7 @@
               <i class="mi-filter_list"></i>
               Filter
               <span class="caret"></span>
-            </a><ul class="dropdown-menu dropdown-menu-right with-states">
+            </a><ul class="dropdown-menu dropdown-menu-right with-states" id="filterMenu">
             <li>
               <div class="btn-group btn-group-justified filter-range" role="group">
                 <div class="btn">
@@ -235,7 +235,7 @@
                 <label class="btn btn-link" onclick="Filter.values.status = 'Active'">
                   <input type="radio" name="options" id="option1" autocomplete="off">Active
                 </label>
-                <label class="btn btn-link active" onclick="Filter.values.status = null">
+                <label class="btn btn-link active n/a" onclick="Filter.values.status = null">
                   <input type="radio" name="options" id="option2" autocomplete="off" checked>N/A
                 </label>
                 <label class="btn btn-link" onclick="Filter.values.status = 'Inactive'">
@@ -256,6 +256,7 @@
             <li class="divider"></li>
             <li class="text-right">
               <div class="btn-group" role="group" id="applyFilters">
+                <button class="btn btn-sm btn-link" type="button" onclick="$('#filterMenu #option2')[0].click(); $('#filterStart')[0].value = ''; $('#filterEnd')[0].value = ''" ng-click=" Filter.values = { query: '', pageSize: 10, pageNum: 0, startDate: null, endDate: null, status: null, facets: {}}; filter.values = Filter.values; search()"><i class="fa fa-refresh"></i>Reset</button>
                 <button class="btn btn-sm btn-link" type="button"><i class="fa fa-times"></i>Cancel</button>
                 <a class="btn btn-sm btn-default" href="#" onclick="Filter.values.startDate = $('#filterStart')[0].value; Filter.values.endDate = $('#filterEnd')[0].value;" ng-click="search()"><i class="fa fa-check"></i> Apply</a>
               </div>
@@ -340,18 +341,19 @@
                 <div class="col-xs-5" ng-repeat="ruleDate in ruleArrays[rule.id].dates[0] track by $index">
                   <form action="">
                     <fieldset>
-                      <div class="form-group datepicker-inline">
+                      <div class="form-group datepicker-inline trigger-date">
                         <label for="triggerStart" class="small text-muted text-uppercase">Start</label>
                         <div class="datepicker-holder">
                           <input type='text' class="form-control  trigger-start disabledControl" id="triggerStart" ng-model="ruleArrays[rule.id].dates[0][$index]"/>
                         </div>
                       </div>
-                      <div class="form-group datepicker-inline">
+                      <div class="form-group datepicker-inline trigger-date">
                         <label for="triggerEnd" class="small text-muted text-uppercase">End</label>
                         <div class="datepicker-holder">
                           <input type='text' class="form-control  trigger-end disabledControl" id="triggerEnd" ng-model="ruleArrays[rule.id].dates[1][$index]"/>
                         </div>
                       </div>
+                      <a class="text-muted" href="#"><i class="fa fa-times" ng-click="ruleArrays[rule.id].dates[0].splice($index, 1); ruleArrays[rule.id].dates[1].splice($index, 1)"></i></a>
                     </fieldset>
                   </form>
                 </div>
@@ -360,8 +362,9 @@
                   <form action="">
                     <fieldset>
                       <div class="form-group" ng-if="rule.search_terms[0]">
-                        <label for="triggerKeywords" class="small text-muted text-uppercase">Keywords</label>
-                        <textarea rows="1" class="form-control disabledControl" id="triggerKeywords" ng-model="rule.search_terms[0]"></textarea>
+                        <label class="small text-muted text-uppercase">Keywords</label>
+                        <textarea rows="1" class="form-control disabledControl triggerKeywords" ng-model="rule.search_terms[0]"></textarea>
+                        <a class="text-muted" href="#"><i class="fa fa-times" ng-click="rule.search_terms[0] = ''"></i></a>
                       </div>
                       <div class="form-group" ng-repeat="caregory in ruleArrays[rule.id].filters[0] track by $index">
                         <label class="small text-muted text-uppercase">Field Value</label>
@@ -369,10 +372,12 @@
                           <option ng-repeat="(value, caption) in productList" value="{{value}}">{{caption}}</option>
                         </select>
                         <input class="form-control disabledControl triggerCategory" ng-model="ruleArrays[rule.id].filters[1][$index]" />
+                        <a class="text-muted" href="#"><i class="fa fa-times" ng-click="ruleArrays[rule.id].filters[0].splice($index, 1); ruleArrays[rule.id].filters[1].splice($index, 1)"></i></a>
                       </div>
                       <div class="form-group" ng-if="rule.tags">
-                        <label for="triggerTags" class="small text-muted text-uppercase">Tags</label>
-                        <input type="text" class="form-control disabledControl triggerTags" id="triggerTags" aria-describedby="triggerTags"  placeholder='Enter tags' ng-model="rule.tags"/>
+                        <label class="small text-muted text-uppercase">Tags</label>
+                        <input type="text" class="form-control disabledControl triggerTags" aria-describedby="triggerTags"  placeholder='Enter tags' ng-model="rule.tags"/>
+                        <a class="text-muted" href="#"><i class="fa fa-times" ng-click="rule.tags = ''"></i></a>
                       </div>
                     </fieldset>
                   </form>
@@ -504,23 +509,25 @@
                     <fieldset>
                       <div class="form-group">
                         <div class="row hor-gut-10px" ng-repeat="triggerDate in triggerDates track by $index">
-                          <div class="col-sm-6">
+                          <div class="col-sm-6 datepicker-inline">
                             <label for="addTriggerStart" class="small text-muted text-uppercase">Start</label>
                             <div class="datepicker-holder">
                               <input type='text' class="form-control datepicker add-trigger-start" id="addTriggerStart"/>
                             </div>
                           </div>
-                          <div class="col-sm-6">
+                          <div class="col-sm-6 datepicker-inline">
                             <label for="addTriggerEnd" class="small text-muted text-uppercase">End</label>
                             <div class="datepicker-holder">
                               <input type='text' class="form-control datepicker add-trigger-end" id="addTriggerEnd"/>
                             </div>
                           </div>
+                          <a class="text-muted" href="#"><i class="fa fa-times" ng-click="triggerDates.pop();"></i></a>
                         </div>
                       </div>
                       <div class="form-group" ng-if="flags.keywordsFlag">
-                        <label for="addTriggerKeywords" class="small text-muted text-uppercase">Keywords</label>
-                        <textarea rows="1" class="form-control" id="addTriggerKeywords" ng-model="currentRule.ruleKeywords[0]"></textarea>
+                        <label class="small text-muted text-uppercase">Keywords</label>
+                        <textarea rows="1" class="form-control addTriggerKeywords" ng-model="currentRule.ruleKeywords[0]"></textarea>
+                        <a class="text-muted" href="#"><i class="fa fa-times" ng-click="flags.keywordsFlag = false; currentRule.ruleKeywords[0] = '';"></i></a>
                       </div>
                       <div class="form-group" ng-repeat="x in categories track by $index">
                         <label class="small text-muted text-uppercase">Field Value</label>
@@ -528,10 +535,12 @@
                           <option ng-repeat="(value, caption) in productList" value="{{value}}">{{caption}}</option>
                         </select>
                         <input class="form-control addTriggerCategory" ng-model="currentRule.ruleCategoryValue[$index]"/>
+                        <a class="text-muted" href="#"><i class="fa fa-times" ng-click="categories.pop(); currentRule.ruleCategoryType.splice($index, 1); currentRule.ruleCategoryValue.splice($index, 1)"></i></a>
                       </div>
                       <div class="form-group" ng-if="flags.tagsFlag">
-                        <label for="addTriggerTags" class="small text-muted text-uppercase">Tags</label>
-                        <input type="text" class="form-control triggerTags" id="addTriggerTags" aria-describedby="triggerTags"  placeholder='Enter tags' ng-model="currentRule.ruleTags"/>
+                        <label class="small text-muted text-uppercase">Tags</label>
+                        <input type="text" class="form-control triggerTags addTriggerTags" aria-describedby="triggerTags"  placeholder='Enter tags' ng-model="currentRule.ruleTags"/>
+                        <a class="text-muted" href="#"><i class="fa fa-times" ng-click="flags.tagsFlag = false; currentRule.ruleTags = '';"></i></a>
                       </div>
                     </fieldset>
                   </form>
@@ -583,12 +592,14 @@
                         <input type='text' placeholder="Please write redirect value here" class="form-control" id="redirect" value="redirect" ng-model="currentRule.ruleValues"/>
                       </div>
                       <div class="form-group" ng-if="currentRule.displayRuleType == 'Set Params'" ng-repeat="param in setParams track by $index">
-                        <input type='text' placeholder="Key" class="form-control set-params" ng-model="currentRule.ruleSetParams.param_names[$index]"/>
+                        <span>
+                        <input type='text' placeholder="Key" class="form-control set-params param-key" ng-model="currentRule.ruleSetParams.param_names[$index]"/></span>
                         <input type='text' placeholder="Value" class="form-control set-params" ng-model="currentRule.ruleSetParams.param_values[$index]"/>
                         <select class="form-control addTriggerCategory set-params" ng-model="currentRule.ruleSetParams.param_policies[$index]">
                           <!--<option value="Param policy" selected style="display:none;">Choose rule type</option>-->
                           <option ng-repeat="(value, caption) in policyList" value="{{value}}">{{caption}}</option>
                         </select>
+                        <a class="text-muted" href="#"><i class="fa fa-times" ng-click="setParams.pop();  currentRule.ruleSetParams.param_names.splice([$index],1); currentRule.ruleSetParams.param_values.splice([$index],1); currentRule.ruleSetParams.param_policies.splice([$index],1);"></i></a>
                       </div>
                       <button type="button" class="btn btn-sm btn-default" ng-click="setParams.push(' ');" ng-if="currentRule.displayRuleType == 'Set Params'">Add param</button>
                     </fieldset>
