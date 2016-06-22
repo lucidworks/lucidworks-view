@@ -41,6 +41,22 @@ input.addTriggerCategory{
   width: 30%;
   display: inline-block;
 }
+.table>tbody>tr.inactive>td.inline-icons .btn-cancel{
+  display: none;
+}
+.edit-buttons{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.edit-buttons > a{
+  margin-bottom: 5px;
+}
+#applyFilters{
+  display: flex;
+  justify-content: space-between;
+}
+
 .has-error::-webkit-input-placeholder {color:#e51c23!important;}
 .has-error::-moz-placeholder          {color:#e51c23!important;}
 .has-error:-moz-placeholder           {color:#e51c23!important;}

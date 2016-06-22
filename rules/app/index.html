@@ -256,9 +256,13 @@
             <li class="divider"></li>
             <li class="text-right">
               <div class="btn-group" role="group" id="applyFilters">
-                <button class="btn btn-sm btn-link" type="button" onclick="$('#filterMenu #option2')[0].click(); $('#filterStart')[0].value = ''; $('#filterEnd')[0].value = ''" ng-click=" Filter.values = { query: '', pageSize: 10, pageNum: 0, startDate: null, endDate: null, status: null, facets: {}}; filter.values = Filter.values; search()"><i class="fa fa-refresh"></i>Reset</button>
+                <div>
+                  <button class="btn btn-sm btn-link" type="button" onclick="$('#filterMenu #option2')[0].click(); $('#filterStart')[0].value = ''; $('#filterEnd')[0].value = ''" ng-click=" Filter.values = { query: '', pageSize: 10, pageNum: 0, startDate: null, endDate: null, status: null, facets: {}}; filter.values = Filter.values; search()"><i class="fa fa-undo"></i>Reset</button>
+                </div>
+                <div>
                 <button class="btn btn-sm btn-link" type="button"><i class="fa fa-times"></i>Cancel</button>
                 <a class="btn btn-sm btn-default" href="#" onclick="Filter.values.startDate = $('#filterStart')[0].value; Filter.values.endDate = $('#filterEnd')[0].value;" ng-click="search()"><i class="fa fa-check"></i> Apply</a>
+                </div>
               </div>
             </li>
           </ul>
@@ -443,7 +447,10 @@
             <div class="column-holder">
               <a class="text-muted" href="#"><i class="fa fa-pencil"></i></a>
               <a class="text-muted" href="#"><i class="fa fa-times" ng-click="removeRule(rule.id)"></i></a>
-              <a href="#" class="btn btn-sm btn-default btn-save" ng-click="updateRule(rule.id)"><i class="fa fa-check-circle"></i>Save</a>
+              <div class="edit-buttons">
+                <a href="#" class="btn btn-sm btn-default btn-save" ng-click="updateRule(rule.id)"><i class="fa fa-check-circle"></i>Save</a>
+                <a href="#" class="btn btn-sm btn-default btn-cancel" ng-click=""><i class="fa fa-trash"></i>Cancel</a>
+              </div>
             </div>
           </td>
         </tr>
@@ -476,11 +483,6 @@
                         <select class="form-control" id="chooseRuleType" ng-model="currentRule.displayRuleType">
                           <option value="Choose rule type" selected style="display:none;">Choose rule type</option>
                           <option ng-repeat="(key, value) in types" value="{{key}}">{{key}}</option>
-                          <!--<option value="Filter List">Filter List</option>
-                          <option value="Block List">Block List</option>
-                          <option value="Boost List">Boost List</option>
-                          <option value="Redirect">Redirect</option>
-                          <option value="Banner">Banner</option>-->
                         </select>
                       </div>
 
@@ -648,6 +650,9 @@
     var ruleType = $('.rule-type-select');
     ruleType.removeClass('has-error');
     ruleType.find('select').css('color', '#666');
+    var paramKey = $('.param-key.ng-empty');
+    paramKey.removeClass('has-error');
+    paramKey.parent().removeClass('has-error');
     $('.rule-name-input').removeClass('has-error');
   }
 </script>

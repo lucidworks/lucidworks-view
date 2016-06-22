@@ -150,6 +150,7 @@ function pageInit() {
   //setActivator(".rules-list h2");
   setActivator(".fa-pencil");
   setActivator(".rules-list .btn-save");
+  setActivator(".rules-list .btn-cancel");
 
   function datePickerOnFocus() { // TODO why we need this function
     $(this).addClass('datepicker');
