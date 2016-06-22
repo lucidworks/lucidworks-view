@@ -57,6 +57,21 @@ input.addTriggerCategory{
   justify-content: space-between;
 }
 
+.fa-close:before, .fa-remove:before, .fa-times:before {
+  content: "";
+  color: #bbb;
+}
+.table>tbody>tr.inactive>td.btn-bottom-holder .fa-times  {
+   display: none;
+}
+.table>tbody>tr.inactive>td.btn-bottom-holder .tag span  {
+  display: none;
+}
+div.table-footer .btn.btn-sm.btn-link.text-muted{
+  background: none;
+  color:#bbb;
+}
+
 .has-error::-webkit-input-placeholder {color:#e51c23!important;}
 .has-error::-moz-placeholder          {color:#e51c23!important;}
 .has-error:-moz-placeholder           {color:#e51c23!important;}
