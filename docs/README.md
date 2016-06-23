@@ -11,3 +11,5 @@ Also see [README.md](../README.md) for instructions on installing and running Lu
   How to customize the templates that control how View displays different document types in search results.
 
 * [How to Use QueryBuilder](HowToUseQueryBuilder.md)
+
+* [How to deploy View as a webapp in Jetty](ViewAsJettyWebapp.md)
