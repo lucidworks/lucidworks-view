@@ -302,7 +302,7 @@
           </td>
           <td class="text-center">
             <div class="column-holder">
-              <a href="javascript:void(0)" class="status" ng-class="{'bg-inactive':!rule.enabled[0] , 'bg-active': rule.enabled[0]}" ng-click="changeStatus(rule.id)"></a>
+              <a href="javascript:void(0)" class="status" ng-class="{'bg-inactive':!rule.enabled , 'bg-active': rule.enabled}" ng-click="changeStatus(rule.id)"></a>
             </div>
           </td>
           <td class="btn-bottom-holder">
@@ -315,14 +315,14 @@
                   </select>
                   <textarea type='text' class="form-control disabledControl actionProductList" id="actionProductList" value="product list" ng-if="rule.values" ng-model="rule.values"></textarea>
                   <textarea type='text' class="form-control disabledControl actionProductList" id="actionProductList" value="product list" ng-if="rule.field_values" ng-model="rule.field_values" ng-list></textarea>
-                  <div class="form-group" ng-if="rule.param_names" ng-repeat="param in rule.param_names track by $index">
-                    <input type='text' class="form-control set-params disabledControl" ng-model="rule.param_names[$index]"/>
+                  <div class="form-group" ng-if="rule.param_keys" ng-repeat="param in rule.param_keys track by $index">
+                    <input type='text' class="form-control set-params disabledControl" ng-model="rule.param_keys[$index]"/>
                     <input type='text' class="form-control set-params disabledControl" ng-model="rule.param_values[$index]"/>
                     <select class="form-control addTriggerCategory set-params disabledControl" ng-model="rule.param_policies[$index]">
                       <option ng-repeat="(value, caption) in policyList" value="{{value}}">{{caption}}</option>
                     </select>
                   </div>
-                  <button type="button" class="btn btn-sm btn-default disabledControl" ng-click="rule.param_names.push(' '); rule.param_values.push(' '); rule.param_policies.push(' ');" ng-if="rule.param_names">Add param</button>
+                  <button type="button" class="btn btn-sm btn-default disabledControl" ng-click="rule.param_keys.push(' '); rule.param_values.push(' '); rule.param_policies.push(' ');" ng-if="rule.param_keys">Add param</button>
                 </fieldset>
               </form>
             </div>
@@ -595,13 +595,13 @@
                       </div>
                       <div class="form-group" ng-if="currentRule.displayRuleType == 'Set Params'" ng-repeat="param in setParams track by $index">
                         <span>
-                        <input type='text' placeholder="Key" class="form-control set-params param-key" ng-model="currentRule.ruleSetParams.param_names[$index]"/></span>
+                        <input type='text' placeholder="Key" class="form-control set-params param-key" ng-model="currentRule.ruleSetParams.param_keys[$index]"/></span>
                         <input type='text' placeholder="Value" class="form-control set-params" ng-model="currentRule.ruleSetParams.param_values[$index]"/>
                         <select class="form-control addTriggerCategory set-params" ng-model="currentRule.ruleSetParams.param_policies[$index]">
                           <!--<option value="Param policy" selected style="display:none;">Choose rule type</option>-->
                           <option ng-repeat="(value, caption) in policyList" value="{{value}}">{{caption}}</option>
                         </select>
-                        <a class="text-muted" href="#"><i class="fa fa-times" ng-click="setParams.pop();  currentRule.ruleSetParams.param_names.splice([$index],1); currentRule.ruleSetParams.param_values.splice([$index],1); currentRule.ruleSetParams.param_policies.splice([$index],1);"></i></a>
+                        <a class="text-muted" href="#"><i class="fa fa-times" ng-click="setParams.pop();  currentRule.ruleSetParams.param_keys.splice([$index],1); currentRule.ruleSetParams.param_values.splice([$index],1); currentRule.ruleSetParams.param_policies.splice([$index],1);"></i></a>
                       </div>
                       <button type="button" class="btn btn-sm btn-default" ng-click="setParams.push(' ');" ng-if="currentRule.displayRuleType == 'Set Params'">Add param</button>
                     </fieldset>

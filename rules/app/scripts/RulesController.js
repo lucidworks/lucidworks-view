@@ -225,7 +225,7 @@ rulesApp.controller('rulesController',
     ruleFieldValues: [],
     ruleValues: [],
     ruleSetParams: {
-      param_names: [],
+      param_keys: [],
       param_values: [],
       param_policies: []
     }
@@ -298,7 +298,7 @@ rulesApp.controller('rulesController',
     rule.type = $scope.types[rule.display_type];
 
     if (rule.type == 'set_params'){
-      rule.param_names = $scope.currentRule.ruleSetParams.param_names;
+      rule.param_keys = $scope.currentRule.ruleSetParams.param_keys;
       rule.param_values = $scope.currentRule.ruleSetParams.param_values;
       rule.param_policies = $scope.currentRule.ruleSetParams.param_policies;
     } else if (rule.type!='response_value'){
@@ -361,7 +361,7 @@ rulesApp.controller('rulesController',
     $scope.currentRule.ruleFieldValues = [];
     $scope.currentRule.ruleValues = [];
     $scope.currentRule.ruleSetParams = {
-      param_names: [],
+      param_keys: [],
       param_values: [],
       param_policies: []
     };
@@ -422,7 +422,7 @@ rulesApp.controller('rulesController',
     for (var i = 0, l = ruleArray.length; i < l; i++) {
       if (ruleArray[i].checked) {
         var rule = $scope.rules[findIndexById(ruleArray[i].value)];
-        rule.enabled[0] = enabled;
+        rule.enabled = enabled;
         $scope.updateRule(ruleArray[i].value);
       }
     }
@@ -549,10 +549,10 @@ rulesApp.controller('rulesController',
 
   $scope.changeStatus = function (id) {
     var rule = $scope.rules[findIndexById(id)];
-    if (rule.enabled[0] == undefined || rule.enabled[0] === true) {
-      rule.enabled[0] = false;
+    if (rule.enabled == undefined || rule.enabled === true) {
+      rule.enabled = false;
     } else {
-      rule.enabled[0] = true;
+      rule.enabled = true;
     }
     $scope.updateRule(id);
   };
@@ -588,11 +588,12 @@ rulesApp.controller('rulesController',
   };*/
 
    $scope.addFilter = function(id){
-     if (!$scope.ruleArrays[id].filters[0]){
-       $scope.ruleArrays[id].filters = [[],[]];
+     var rule = $scope.ruleArrays[id];
+       if (!rule.filters){
+       rule.filters = [[],[]];
      }
-     $scope.ruleArrays[id].filters[0].push(' ');
-     $scope.ruleArrays[id].filters[1].push(' ');
+     rule.filters[0].push(' ');
+     rule.filters[1].push(' ');
    };
 
   $scope.checkActionCount = function (id) {
