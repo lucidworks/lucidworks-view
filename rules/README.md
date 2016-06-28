@@ -68,6 +68,7 @@
   
 1. Change credentials and the fusion access info in 'RulesService.js' 
 
+1. In order to change list of available fields you can modify productList variable in RulesController.js (currently line 676)
 
 1. Run application:
 
