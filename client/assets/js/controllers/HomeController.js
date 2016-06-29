@@ -31,8 +31,10 @@
       hc.lastQuery = '';
       hc.sorting = {};
       hc.grouped = false;
+      hc.defaultFilters = ConfigService.getDefaultFacetFilters();
 
       query = URLService.getQueryFromUrl();
+      _.defaultsDeep(query, ConfigService.getDefaultFacetFilters());
       //Setting the query object... also populating the the view model
       hc.searchQuery = _.get(query,'q','*');
       // Use an observable to get the contents of a queryResults after it is updated.

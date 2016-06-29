@@ -39,7 +39,8 @@
       typeahead_query_profile_id: 'default',
       typeahead_fields: ['id'],
       typeahead_requesthandler: 'select',
-      landing_page_redirect: true
+      landing_page_redirect: true,
+      defaultFilter: []
     })
     /** Config overrides from FUSION_CONFIG.js **/
     .constant('CONFIG_OVERRIDE', window.appConfig) //eslint-disable-line
@@ -93,7 +94,8 @@
         getFields: {
           all: getAllFields,
           get: getSpecificField
-        }
+        },
+        getDefaultFacetFilters: getDefaultFacetFilters
       };
     }
 
@@ -201,7 +203,8 @@
     }
 
     function getTypeaheadField(){
-      return appConfig.typeahead_fields[0];
+      var allFields = getAllFields();
+      return appConfig.typeahead_fields[0] || allFields.head_field;
     }
 
     function getFieldsToDisplay() {
@@ -210,6 +213,10 @@
 
     function getFieldLabels() {
       return appConfig.field_display_labels;
+    }
+
+    function getDefaultFacetFilters(){
+      return appConfig.defaultFilter;
     }
   }
 })();
