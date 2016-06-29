@@ -203,8 +203,7 @@
     }
 
     function getTypeaheadField(){
-      var allFields = getAllFields();
-      return appConfig.typeahead_fields[0] || allFields.head_field;
+      return appConfig.typeahead_fields[0];
     }
 
     function getFieldsToDisplay() {
