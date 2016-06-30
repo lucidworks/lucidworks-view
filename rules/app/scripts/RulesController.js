@@ -168,7 +168,74 @@ function pageInit() {
   initInRowDateTriggers();
 }
 
+function emptyRule() {
+  return {
+    currentDate: Date.now(),
+    ruleType: '',
+    displayRuleType: 'Choose rule type',
+    ruleName: '',
+    ruleDescription: '',
+    ruleStart: '',
+    ruleEnd: '',
+    ruleKeywords: [],
+    ruleCategoryType: [],
+    ruleCategoryValue: [],
+    ruleTags: '',
+    ruleFieldName: '',
+    ruleFieldValues: [],
+    ruleValues: [],
+    ruleSetParams: {
+      param_keys: [],
+      param_values: [],
+      param_policies: []
+    },
 
+    keywordsFlag : false,
+    categoryFlag : false,
+    tagsFlag : false
+  };
+}
+
+
+function validateRuleCreation(rule, ruleName) {
+  var validFlag = true;
+  if (rule.display_type == 'Choose rule type'){
+      var ruleType = $('.rule-type-select');
+      ruleType.addClass('has-error');
+      ruleType.find('select').css('color', '#e51c23');
+      ruleType.on('click', function(){
+        $(this).removeClass('has-error');
+        $(this).find('select').css('color', '#666');
+      });
+      validFlag = false;
+    }
+
+  if (ruleName[0].value == ''){
+      ruleName[0].placeholder = 'Rule name is required';
+      var ruleNameDiv = $('.rule-name-input');
+      ruleNameDiv.addClass('has-error');
+      ruleName.addClass('has-error');
+      ruleNameDiv.on('click', function(){
+        $(this).removeClass('has-error');
+        ruleName.removeClass('has-error');
+      });
+      validFlag = false;
+    }
+
+  if (rule.display_type == 'Set Params'){
+      var paramKey = $('.param-key.ng-empty');
+      paramKey.addClass('has-error');
+      paramKey.parent().addClass('has-error');
+      paramKey.on('click', function(){
+        $(this).removeClass('has-error');
+        $(this).parent().removeClass('has-error');
+      });
+      if (paramKey.length!=0) {
+              validFlag = false;
+          }
+      }
+  return validFlag;
+}
 rulesApp.controller('rulesController',
            ['$scope', '$http', '$timeout', 'RulesService',
     function($scope, $http, $timeout, rulesService) {
@@ -207,33 +274,7 @@ rulesApp.controller('rulesController',
   $scope.ruleArrays = [];
   $scope.setParams = [' '];
 
-  $scope.flags = {
-    keywordsFlag : false,
-    categoryFlag : false,
-    tagsFlag : false
-  };
-
-  $scope.currentRule = {
-    currentDate: Date.now(),
-    ruleType: '',
-    displayRuleType: 'Choose rule type',
-    ruleName: '',
-    ruleDescription: '',
-    ruleStart: '',
-    ruleEnd: '',
-    ruleKeywords: [],
-    ruleCategoryType: [],
-    ruleCategoryValue: [],
-    ruleTags: '',
-    ruleFieldName: '',
-    ruleFieldValues: [],
-    ruleValues: [],
-    ruleSetParams: {
-      param_keys: [],
-      param_values: [],
-      param_policies: []
-    }
-  };
+  $scope.currentRule = emptyRule();
 
   $scope.filter = Filter;
 
@@ -250,55 +291,16 @@ rulesApp.controller('rulesController',
     var addRuleButton = $('#addRuleButton');
 
     addRuleButton.removeAttr('data-dismiss');
-
-    var validFlag = true;
-    if (rule.display_type == 'Choose rule type'){
-      var ruleType = $('.rule-type-select');
-      ruleType.addClass('has-error');
-      ruleType.find('select').css('color', '#e51c23');
-      ruleType.on('click', function(){
-        $(this).removeClass('has-error');
-        $(this).find('select').css('color', '#666');
-      });
-      validFlag = false;
-    }
-
-    if (ruleName[0].value==''){
-      ruleName[0].placeholder = 'Rule name is required';
-      var ruleNameDiv = $('.rule-name-input');
-      ruleNameDiv.addClass('has-error');
-      ruleName.addClass('has-error');
-      ruleNameDiv.on('click', function(){
-        $(this).removeClass('has-error');
-        ruleName.removeClass('has-error');
-      });
-      validFlag = false;
-    }
-
-    if (rule.display_type == 'Set Params'){
-      var paramKey = $('.param-key.ng-empty');
-      paramKey.addClass('has-error');
-      paramKey.parent().addClass('has-error');
-      paramKey.on('click', function(){
-        $(this).removeClass('has-error');
-        $(this).parent().removeClass('has-error');
-      });
-      if (paramKey.length!=0) {
-        validFlag = false;
-      }
-    }
-
-    if (!validFlag){
+    if (!validateRuleCreation(rule, ruleName)){
       return;
     }
 
-    ruleName[0].placeholder = 'Enter rule name';
-    addRuleButton.attr('data-dismiss', 'modal');
+    //ruleName[0].placeholder = 'Enter rule name';
+    //addRuleButton.attr('data-dismiss', 'modal');
 
-    $scope.currentRule.ruleDescription ? rule.description = $scope.currentRule.ruleDescription : false;
-    $scope.currentRule.ruleKeywords[0] ? rule.search_terms = $scope.currentRule.ruleKeywords : false;
-    $scope.currentRule.ruleTags!='' ? rule.tags = $scope.currentRule.ruleTags : false;
-
+    rule.description = $scope.currentRule.ruleDescription || false;
+    rule.search_terms = $scope.currentRule.ruleKeywords || false;
+    rule.tags = $scope.currentRule.ruleTags || false;
     rule.type = $scope.types[rule.display_type];
 
     if (rule.type == 'set_params'){
@@ -346,42 +348,27 @@ rulesApp.controller('rulesController',
       rule.filters = rule.filters.trim();
     }
 
-    var addRuleForm = $('.addRuleForm');
-    for (var i = 0, l = addRuleForm.length; i<l; i++) {
-      addRuleForm[i].reset();
-    }
-    $scope.currentRule.currentDate = Date.now();
-    $scope.currentRule.ruleType = '';
-    $scope.currentRule.displayRuleType = 'Choose rule type';
-    $scope.currentRule.ruleName = '';
-    $scope.currentRule.ruleDescription = '';
-    $scope.currentRule.ruleStart = '';
-    $scope.currentRule.ruleEnd = '';
-    $scope.currentRule.ruleKeywords = [];
-    $scope.currentRule.ruleCategoryType = [];
-    $scope.currentRule.ruleCategoryValue = [];
-    $scope.currentRule.ruleTags = '';
-    $scope.currentRule.ruleFieldName = '';
-    $scope.currentRule.ruleFieldValues = [];
-    $scope.currentRule.ruleValues = [];
-    $scope.currentRule.ruleSetParams = {
-      param_keys: [],
-      param_values: [],
-      param_policies: []
-    };
-    $scope.categories = [];
-    $scope.triggerDates = [];
-    $scope.setParams = [' '];
+    rulesService.add(rule, function () {
+      addRuleButton.attr('data-dismiss', 'modal');
 
-    $scope.rules = [rule].concat($scope.rules);
-    $scope.rulesTotal++;
+      $('.addRuleForm').each(function (index, form) { form.reset() });
 
-    if ($scope.rules[$scope.rules.length - 1] == undefined) {
-      $scope.rules.pop();
-    }
+      $scope.currentRule = emptyRule();
+      $scope.categories = [];
+      $scope.triggerDates = [];
+      $scope.setParams = [' '];
 
-    rulesService.add(rule);
-    $timeout(pageInit, 1);
+      $scope.rules = [rule].concat($scope.rules);
+      $scope.rulesTotal++;
+
+      if ($scope.rules[$scope.rules.length - 1] == undefined) {
+        $scope.rules.pop();
+      }
+
+      $timeout(pageInit, 1);
+    }, function (resp) {
+      console.log(resp);
+    });
   };
 
   $scope.checkUncheckAll = function (operation) {

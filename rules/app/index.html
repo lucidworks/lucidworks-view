@@ -526,10 +526,10 @@
                           <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="triggerDates.pop();"></i></a>
                         </div>
                       </div>
-                      <div class="form-group" ng-if="flags.keywordsFlag">
+                      <div class="form-group" ng-if="currentRule.keywordsFlag">
                         <label class="small text-muted text-uppercase">Keywords</label>
                         <textarea rows="1" class="form-control addTriggerKeywords" ng-model="currentRule.ruleKeywords[0]"></textarea>
-                        <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="flags.keywordsFlag = false; currentRule.ruleKeywords[0] = '';"></i></a>
+                        <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="currentRule.keywordsFlag = false; currentRule.ruleKeywords[0] = '';"></i></a>
                       </div>
                       <div class="form-group" ng-repeat="x in categories track by $index">
                         <label class="small text-muted text-uppercase">Field Value</label>
@@ -539,10 +539,10 @@
                         <input class="form-control addTriggerCategory" ng-model="currentRule.ruleCategoryValue[$index]"/>
                         <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="categories.pop(); currentRule.ruleCategoryType.splice($index, 1); currentRule.ruleCategoryValue.splice($index, 1)"></i></a>
                       </div>
-                      <div class="form-group" ng-if="flags.tagsFlag">
+                      <div class="form-group" ng-if="currentRule.tagsFlag">
                         <label class="small text-muted text-uppercase">Tags</label>
                         <input type="text" class="form-control triggerTags addTriggerTags" aria-describedby="triggerTags"  placeholder='Enter tags' ng-model="currentRule.ruleTags"/>
-                        <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="flags.tagsFlag = false; currentRule.ruleTags = '';"></i></a>
+                        <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="currentRule.tagsFlag = false; currentRule.ruleTags = '';"></i></a>
                       </div>
                     </fieldset>
                   </form>
@@ -556,14 +556,14 @@
                       <li>
                         <a href="javascript:void(0);" ng-click="triggerDates.push(' '); ruleArrays[rule.id].dates.push(' ')">ADD DATES</a>
                       </li>
-                      <li ng-if="!flags.keywordsFlag">
-                        <a href="javascript:void(0);" ng-click="flags.keywordsFlag = true">KEYWORDS</a>
+                      <li ng-if="!currentRule.keywordsFlag">
+                        <a href="javascript:void(0);" ng-click="currentRule.keywordsFlag = true">KEYWORDS</a>
                       </li>
-                      <li ng-if="!flags.categoryFlag">
+                      <li ng-if="!currentRule.categoryFlag">
                         <a href="javascript:void(0);" ng-click="categories.push('')">FIELD VALUE</a>
                       </li>
-                      <li ng-if="!flags.tagsFlag">
-                        <a href="javascript:void(0);" ng-click="flags.tagsFlag = true">TAGS</a>
+                      <li ng-if="!currentRule.tagsFlag">
+                        <a href="javascript:void(0);" ng-click="currentRule.tagsFlag = true">TAGS</a>
                       </li>
                     </ul>
                   </div>

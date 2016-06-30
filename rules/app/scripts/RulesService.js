@@ -9,10 +9,8 @@ rulesApp.factory('RulesService', ['$http',
 
     return {
 
-      add: function (rule) {
-        $http.post(solrUrl + '/' + rulesCollection + '/update/json/docs?commit=true', rule, auth).then(function(response) {
-          console.log("Rule '" + rule.id + "' created!");
-        });
+      add: function (rule, success, error) {
+        $http.post(solrUrl + '/' + rulesCollection + '/update/json/docs?commit=true', rule, auth).then(success, error);
       },
 
       delete: function (id) {
