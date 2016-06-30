@@ -112,12 +112,25 @@ var Filter = (function () {
   }
 })();
 
+
+function initInRowDateTriggers () {
+  function datePickerOnFocus() { // TODO why we need this function
+    $(this).addClass('datepicker');
+    $(".datepicker").datetimepicker({format: "YYYY-MM-DDTHH:mm"});
+    $(this).blur();
+    $(this).focus();
+  }
+
+  $('.trigger-start').one('click', datePickerOnFocus);
+  $('.trigger-end').one('click', datePickerOnFocus);
+}
+
 function pageInit() {
   moment().calendar();
   $(".datepicker").datetimepicker({defaultDate: "now", format: "YYYY-MM-DDTHH:mm"});
   autosize($("textarea"));
-  $('.triggerTags').tagsinput({tagClass: "label label-default"});
 
+  $('.triggerTags').tagsinput({tagClass: "label label-default"});
   $('.disabledControl').prop('disabled', true);
 
   function activate() {
@@ -152,16 +165,7 @@ function pageInit() {
   setActivator(".rules-list .btn-save");
   setActivator(".rules-list .btn-cancel");
 
-  function datePickerOnFocus() { // TODO why we need this function
-    $(this).addClass('datepicker');
-    $(".datepicker").datetimepicker({format: "YYYY-MM-DDTHH:mm"});
-    $(this).blur();
-    $(this).focus();
-  }
-
-
-  $('.trigger-start').one('click', datePickerOnFocus);
-  $('.trigger-end').one('click', datePickerOnFocus);
+  initInRowDateTriggers();
 }
 
 
@@ -400,6 +404,10 @@ rulesApp.controller('rulesController',
   };
 
   $scope.removeRule = function (id) {
+    if (!confirm('Are you sure want to delete rule "' + id + '"')) {
+      return;
+    }
+
     console.log("delete - " + id);
     $scope.rules.splice(findIndexById(id), 1);
     $scope.rulesTotal -= 1;
@@ -453,7 +461,8 @@ rulesApp.controller('rulesController',
           }
           rule.tags.push(tag);
         }
-        var tagsInput = $('tr.' + rule.id + " .triggerTags");
+
+        var tagsInput = $('tr[data-ruleId="' + rule.id + '"] .triggerTags');
         var tempTags = rule.tags;
         tagsInput.tagsinput('removeAll');
         if (tempTags && tempTags.length > 0) {
@@ -502,10 +511,10 @@ rulesApp.controller('rulesController',
       rule.values = [rule.values];
     }
 
-    var triggerStartArray = $('tr.'+rule.id + ' .trigger-start');
-    var triggerEndArray = $('tr.'+rule.id + ' .trigger-end');
+    var triggerStartArray = $('tr[data-ruleId="' + rule.id + '"] .trigger-start');
+    var triggerEndArray = $('tr[data-ruleId="' + rule.id + '"] .trigger-end');
 
-    if (!rule.effective_range){
+    if (!rule.effective_range) {
       rule.effective_range = [];
     }
 
@@ -513,6 +522,8 @@ rulesApp.controller('rulesController',
       rule.effective_range[i] = "[" + triggerStartArray[i].value + " TO " + triggerEndArray[i].value + "]";
       ruleArray.dates[0][i] = triggerStartArray[i].value;
       ruleArray.dates[1][i] = triggerEndArray[i].value;
+
+      console.log(ruleArray.dates[0][i], " - ", ruleArray.dates[1][i]);
     }
 
     if (rule.search_terms) {
@@ -521,8 +532,8 @@ rulesApp.controller('rulesController',
       }
     }
 
-    var ruleTriggerTags = $('tr.' + rule.id + ' .triggerTags');
-      if (ruleTriggerTags.length!=0) {
+    var ruleTriggerTags = $('tr[data-ruleId="' + rule.id + '"] .triggerTags');
+    if (ruleTriggerTags.length!=0) {
       rule.tags = ruleTriggerTags[0].value.split(',');
     }
     if (rule.tags && rule.tags[0] == "" || rule.tags == ""){
@@ -638,6 +649,9 @@ rulesApp.controller('rulesController',
         var rulesSub = {};
 
         if (item && item.filters) {
+          if (item.filters.length) {
+            item.filters = item.filters[0];
+          }
           var filtersArray = item.filters.split(/[ ,:]+/);
           var actualFiltersArray = [[],[]];
           for (var j = 0, k = filtersArray.length; j<k; j++){
@@ -702,5 +716,17 @@ rulesApp.controller('rulesController',
   };
 
   $scope.search();
+
+  $scope.addDates = function (ruleId) {
+    var rule = $scope.ruleArrays[ruleId];
+
+    if (!rule.dates) {
+      rule.dates = [[], []];
+    }
+    rule.dates[0].push(' ');
+    rule.dates[1].push(' ');
+
+    $timeout(initInRowDateTriggers, 100);
+  }
 }]);
 

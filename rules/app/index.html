@@ -37,36 +37,36 @@
     <div class="navbar-collapse collapse" id="navbar-main">
       <ul class="nav navbar-nav">
         <li>
-          <a href="#">Link #1</a>
+          <a href="javascript:void(0);">Link #1</a>
         </li>
         <li>
-          <a href="#">Link #2</a>
+          <a href="javascript:void(0);">Link #2</a>
         </li>
         <li>
-          <a href="#">Link #3</a>
+          <a href="javascript:void(0);">Link #3</a>
         </li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             Dropdown
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
             <li>
-              <a href="#">Action</a>
+              <a href="javascript:void(0);">Action</a>
             </li>
             <li>
-              <a href="#">Another action</a>
+              <a href="javascript:void(0);">Another action</a>
             </li>
             <li>
-              <a href="#">Something else here</a>
-            </li>
-            <li role="separator" class="divider"></li>
-            <li>
-              <a href="#">Separated link</a>
+              <a href="javascript:void(0);">Something else here</a>
             </li>
             <li role="separator" class="divider"></li>
             <li>
-              <a href="#">One more separated link</a>
+              <a href="javascript:void(0);">Separated link</a>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li>
+              <a href="javascript:void(0);">One more separated link</a>
             </li>
           </ul>
         </li>
@@ -74,10 +74,10 @@
 
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <a href="#" target="_blank">Right item #1</a>
+          <a href="javascript:void(0);" target="_blank">Right item #1</a>
         </li>
         <li>
-          <a href="#" target="_blank">Right item #2</a>
+          <a href="javascript:void(0);" target="_blank">Right item #2</a>
         </li>
       </ul>
 
@@ -104,21 +104,21 @@
         <a class="list-group-item" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true">Rule Types</a>
         <div id="collapseOne" class="collapse in" role="tabpanel">
           <ul class="list-unstyled data-links">
-            <li ng-repeat="f in facets.display_type"><a data-quantity="{{f[1]}}" class="text-muted-light active" href="#" ng-click="filterBy('display_type', f[0])">{{f[0]}}</a></li>
+            <li ng-repeat="f in facets.display_type"><a data-quantity="{{f[1]}}" class="text-muted-light active" href="javascript:void(0);" ng-click="filterBy('display_type', f[0])">{{f[0]}}</a></li>
           </ul>
         </div>
 
         <a class="list-group-item" role="button" data-toggle="collapse" href="#collapseEnabled" aria-expanded="true" href="#status">Status</a>
         <div id="collapseEnabled" class="collapse in" role="tabpanel">
           <ul class="list-unstyled data-links">
-            <li ng-repeat="f in facets.enabled"><a data-quantity="{{f[1]}}" class="text-muted-light active" href="#" ng-click="filterBy('enabled', f[0])"><i class="fa fa-tag"></i>{{f[0] == 'false' ? 'Disabled' : 'Enabled'}}</a></li>
+            <li ng-repeat="f in facets.enabled"><a data-quantity="{{f[1]}}" class="text-muted-light active" href="javascript:void(0);" ng-click="filterBy('enabled', f[0])"><i class="fa fa-tag"></i>{{f[0] == 'false' ? 'Disabled' : 'Enabled'}}</a></li>
           </ul>
         </div>
 
         <a class="list-group-item" role="button" data-toggle="collapse" href="#collapseTags" aria-expanded="true">Tags</a>
         <div id="collapseTags" class="collapse in" role="tabpanel">
           <ul class="list-unstyled data-links">
-            <li ng-repeat="f in facets.tags"><a data-quantity="{{f[1]}}" class="text-muted-light active" href="#" ng-click="filterBy('tags', f[0])"><i class="fa fa-tag"></i>{{f[0]}}</a></li>
+            <li ng-repeat="f in facets.tags"><a data-quantity="{{f[1]}}" class="text-muted-light active" href="javascript:void(0);" ng-click="filterBy('tags', f[0])"><i class="fa fa-tag"></i>{{f[0]}}</a></li>
           </ul>
         </div>
       </div>
@@ -135,29 +135,29 @@
                 <label><input type="checkbox" id="selectAllBoxes" ng-click="checkUncheckAll(); resetFocus();"></label>
               </div>
             </div>
-            <a href="#" class="btn dropdown-toggle" data-toggle="dropdown">
+            <a href="javascript:void(0);" class="btn dropdown-toggle" data-toggle="dropdown">
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu with-states">
               <li>
-                <a href="#" ng-click="checkUncheckAll('all')">All</a>
+                <a href="javascript:void(0);" ng-click="checkUncheckAll('all')">All</a>
               </li>
               <li class="divider"></li>
               <li>
-                <a href="#" ng-click="checkUncheckAll('none')">None</a>
+                <a href="javascript:void(0);" ng-click="checkUncheckAll('none')">None</a>
               </li>
             </ul>
           </div>
           <span class="small text-muted checkbox-inside-hint">{{getCheckedBoxesCount() + (getCheckedBoxesCount()==1 ? ' rule selected':' rules selected')}}</span>
           <div class="btn-group btn-group-lg">
-            <a href="#" class="btn btn-link dropdown-toggle" data-toggle="dropdown" id="bulk-actions">
+            <a href="javascript:void(0);" class="btn btn-link dropdown-toggle" data-toggle="dropdown" id="bulk-actions">
               <i class="fa fa-clone"></i>
               Bulk actions
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu with-states min-w-280" id="bulk-dropdown">
               <li>
-                <a class="text-overflow" href="#" ng-click="bulkRemoveRules()"><i class="fa fa-times"></i>Delete selected rules</a>
+                <a class="text-overflow" href="javascript:void(0);" ng-click="bulkRemoveRules()"><i class="fa fa-times"></i>Delete selected rules</a>
               </li>
               <li class="divider"></li>
               <li>
@@ -207,7 +207,7 @@
         </div>
         <div class="col-sm-6 text-right">
           <div class="btn-group btn-group-lg">
-            <a href="#" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+            <a href="javascript:void(0);" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
               <i class="mi-filter_list"></i>
               Filter
               <span class="caret"></span>
@@ -248,7 +248,7 @@
               <label for="filterStart" class="small text-muted text-uppercase" ng-if="facets.tags.length > 0">Tags</label>
             </li>
             <li ng-repeat="f in facets.tags">
-              <a class="text-muted-light active" href="#"><i class="fa fa-tag"></i>{{f[0]}}
+              <a class="text-muted-light active" href="javascript:void(0);"><i class="fa fa-tag"></i>{{f[0]}}
                 <input type="checkbox" name="filterTagsCheckbox" ng-model="filter.values.facets.tags[f[0]]" ng-click="resetFocus()" ng-model="f[0]" />
               </a>
             </li>
@@ -261,7 +261,7 @@
                 </div>
                 <div>
                 <button class="btn btn-sm btn-link" type="button"><i class="fa fa-times"></i>Cancel</button>
-                <a class="btn btn-sm btn-default" href="#" onclick="Filter.values.startDate = $('#filterStart')[0].value; Filter.values.endDate = $('#filterEnd')[0].value;" ng-click="search()"><i class="fa fa-check"></i> Apply</a>
+                <a class="btn btn-sm btn-default" href="javascript:void(0);" onclick="Filter.values.startDate = $('#filterStart')[0].value; Filter.values.endDate = $('#filterEnd')[0].value;" ng-click="search()"><i class="fa fa-check"></i> Apply</a>
                 </div>
               </div>
             </li>
@@ -285,14 +285,14 @@
           <th style="width:28%">Type</th>
           <th style="width:20%"><div class="column-header-holder"><span>General </span></div></th>
           <th style="width:30%">Trigger</th>
-          <th><div class="column-header-holder">Created on<a href="#" class="text-muted"></a></div></th>
-          <th><div class="column-header-holder">Edited on<a href="#" class="text-muted"></a></div></th>
+          <th><div class="column-header-holder">Created on<a href="javascript:void(0);" class="text-muted"></a></div></th>
+          <th><div class="column-header-holder">Edited on<a href="javascript:void(0);" class="text-muted"></a></div></th>
           <th></th>
         </tr>
         </thead>
         <!-- TBODY -->
         <tbody>
-        <tr class="inactive  {{rule.id}}" ng-repeat="rule in rules">
+        <tr class="inactive {{rule.id}}" data-ruleId="{{rule.id}}" ng-repeat="rule in rules">
           <td>
             <div class="column-holder">
               <div class="checkbox">
@@ -326,7 +326,7 @@
                 </fieldset>
               </form>
             </div>
-            <a href="#" class="column-more" ng-if="checkActionCount(rule.id)>2">&#x85;</a>
+            <a href="javascript:void(0);" class="column-more" ng-if="checkActionCount(rule.id)>2">&#x85;</a>
           </td>
           <td>
             <div class="column-holder">
@@ -334,7 +334,7 @@
               <p class="lead">
                 <textarea rows="3" class="form-control disabledControl"
                           ng-model="rule.description" disabled>{{rule.description}}</textarea>
-                <a href="#" class="column-more" ng-if="rule.description.length>38">&#x85;</a>
+                <a href="javascript:void(0);" class="column-more" ng-if="rule.description.length>38">&#x85;</a>
               </p>
             </div>
           </td>
@@ -357,7 +357,7 @@
                           <input type='text' class="form-control  trigger-end disabledControl" id="triggerEnd" ng-model="ruleArrays[rule.id].dates[1][$index]"/>
                         </div>
                       </div>
-                      <a class="text-muted" href="#"><i class="fa fa-times" ng-click="ruleArrays[rule.id].dates[0].splice($index, 1); ruleArrays[rule.id].dates[1].splice($index, 1)"></i></a>
+                      <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="ruleArrays[rule.id].dates[0].splice($index, 1); ruleArrays[rule.id].dates[1].splice($index, 1)"></i></a>
                     </fieldset>
                   </form>
                 </div>
@@ -368,7 +368,7 @@
                       <div class="form-group" ng-if="rule.search_terms[0]">
                         <label class="small text-muted text-uppercase">Keywords</label>
                         <textarea rows="1" class="form-control disabledControl triggerKeywords" ng-model="rule.search_terms[0]"></textarea>
-                        <a class="text-muted" href="#"><i class="fa fa-times" ng-click="rule.search_terms[0] = ''"></i></a>
+                        <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="rule.search_terms[0] = ''"></i></a>
                       </div>
                       <div class="form-group" ng-repeat="caregory in ruleArrays[rule.id].filters[0] track by $index">
                         <label class="small text-muted text-uppercase">Field Value</label>
@@ -376,40 +376,40 @@
                           <option ng-repeat="(value, caption) in productList" value="{{value}}">{{caption}}</option>
                         </select>
                         <input class="form-control disabledControl triggerCategory" ng-model="ruleArrays[rule.id].filters[1][$index]" />
-                        <a class="text-muted" href="#"><i class="fa fa-times" ng-click="ruleArrays[rule.id].filters[0].splice($index, 1); ruleArrays[rule.id].filters[1].splice($index, 1)"></i></a>
+                        <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="ruleArrays[rule.id].filters[0].splice($index, 1); ruleArrays[rule.id].filters[1].splice($index, 1)"></i></a>
                       </div>
                       <div class="form-group" ng-if="rule.tags">
                         <label class="small text-muted text-uppercase">Tags</label>
                         <input type="text" class="form-control disabledControl triggerTags" aria-describedby="triggerTags"  placeholder='Enter tags' ng-model="rule.tags"/>
-                        <a class="text-muted" href="#"><i class="fa fa-times" ng-click="rule.tags = ''"></i></a>
+                        <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="rule.tags = ''"></i></a>
                       </div>
                     </fieldset>
                   </form>
                 </div>
               </div>
               <div class="btn-group btn-group-sm">
-                <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <a href="javascript:void(0);" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                   <i class="fa fa-plus"></i>
                   Add trigger
                   <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
                   <li>
-                    <a href="#" ng-click="ruleArrays[rule.id].dates[0].push(' '); ruleArrays[rule.id].dates[1].push(' '); ">ADD DATE</a>
+                    <a href="javascript:void(0);" ng-click="addDates(rule.id)">ADD DATE</a>
                   </li>
                   <li ng-if="!rule.search_terms">
-                    <a href="#" ng-click="addTrigger(rule.id, 'search_terms')">KEYWORDS</a>
+                    <a href="javascript:void(0);" ng-click="addTrigger(rule.id, 'search_terms')">KEYWORDS</a>
                   </li>
                   <li>
-                    <a href="#" ng-click="addFilter(rule.id)">FIELD VALUE</a>
+                    <a href="javascript:void(0);" ng-click="addFilter(rule.id)">FIELD VALUE</a>
                   </li>
                   <li ng-if="!rule.tags">
-                    <a href="#" ng-click="addTrigger(rule.id, 'tags')">TAGS</a>
+                    <a href="javascript:void(0);" ng-click="addTrigger(rule.id, 'tags')">TAGS</a>
                   </li>
                 </ul>
               </div>
             </div>
-            <a href="#" class="column-more" ng-if="rule.search_terms && rule.category_id && rule.tags">&#x85;</a>
+            <a href="javascript:void(0);" class="column-more" ng-if="rule.search_terms && rule.category_id && rule.tags">&#x85;</a>
           </td>
           <td>
             <div class="column-holder">
@@ -445,11 +445,11 @@
           </td>
           <td class="text-nowrap inline-icons">
             <div class="column-holder">
-              <a class="text-muted" href="#"><i class="fa fa-pencil"></i></a>
-              <a class="text-muted" href="#"><i class="fa fa-times" ng-click="removeRule(rule.id)"></i></a>
+              <a class="text-muted" href="javascript:void(0);"><i class="fa fa-pencil"></i></a>
+              <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="removeRule(rule.id)"></i></a>
               <div class="edit-buttons">
-                <a href="#" class="btn btn-sm btn-default btn-save" ng-click="updateRule(rule.id)"><i class="fa fa-check-circle"></i>Save</a>
-                <a href="#" class="btn btn-sm btn-default btn-cancel" ng-click=""><i class="fa fa-trash"></i>Cancel</a>
+                <a href="javascript:void(0);" class="btn btn-sm btn-default btn-save" ng-click="updateRule(rule.id)"><i class="fa fa-check-circle"></i>Save</a>
+                <a href="javascript:void(0);" class="btn btn-sm btn-default btn-cancel" ng-click=""><i class="fa fa-trash"></i>Cancel</a>
               </div>
             </div>
           </td>
@@ -523,13 +523,13 @@
                               <input type='text' class="form-control datepicker add-trigger-end" id="addTriggerEnd"/>
                             </div>
                           </div>
-                          <a class="text-muted" href="#"><i class="fa fa-times" ng-click="triggerDates.pop();"></i></a>
+                          <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="triggerDates.pop();"></i></a>
                         </div>
                       </div>
                       <div class="form-group" ng-if="flags.keywordsFlag">
                         <label class="small text-muted text-uppercase">Keywords</label>
                         <textarea rows="1" class="form-control addTriggerKeywords" ng-model="currentRule.ruleKeywords[0]"></textarea>
-                        <a class="text-muted" href="#"><i class="fa fa-times" ng-click="flags.keywordsFlag = false; currentRule.ruleKeywords[0] = '';"></i></a>
+                        <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="flags.keywordsFlag = false; currentRule.ruleKeywords[0] = '';"></i></a>
                       </div>
                       <div class="form-group" ng-repeat="x in categories track by $index">
                         <label class="small text-muted text-uppercase">Field Value</label>
@@ -537,33 +537,33 @@
                           <option ng-repeat="(value, caption) in productList" value="{{value}}">{{caption}}</option>
                         </select>
                         <input class="form-control addTriggerCategory" ng-model="currentRule.ruleCategoryValue[$index]"/>
-                        <a class="text-muted" href="#"><i class="fa fa-times" ng-click="categories.pop(); currentRule.ruleCategoryType.splice($index, 1); currentRule.ruleCategoryValue.splice($index, 1)"></i></a>
+                        <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="categories.pop(); currentRule.ruleCategoryType.splice($index, 1); currentRule.ruleCategoryValue.splice($index, 1)"></i></a>
                       </div>
                       <div class="form-group" ng-if="flags.tagsFlag">
                         <label class="small text-muted text-uppercase">Tags</label>
                         <input type="text" class="form-control triggerTags addTriggerTags" aria-describedby="triggerTags"  placeholder='Enter tags' ng-model="currentRule.ruleTags"/>
-                        <a class="text-muted" href="#"><i class="fa fa-times" ng-click="flags.tagsFlag = false; currentRule.ruleTags = '';"></i></a>
+                        <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="flags.tagsFlag = false; currentRule.ruleTags = '';"></i></a>
                       </div>
                     </fieldset>
                   </form>
                   <div class="btn-group btn-group-sm">
-                    <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <a href="javascript:void(0);" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                       <i class="fa fa-plus"></i>
                       Add trigger
                       <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                       <li>
-                        <a href="#" ng-click="triggerDates.push(' '); ruleArrays[rule.id].dates.push(' ')">ADD DATES</a>
+                        <a href="javascript:void(0);" ng-click="triggerDates.push(' '); ruleArrays[rule.id].dates.push(' ')">ADD DATES</a>
                       </li>
                       <li ng-if="!flags.keywordsFlag">
-                        <a href="#" ng-click="flags.keywordsFlag = true">KEYWORDS</a>
+                        <a href="javascript:void(0);" ng-click="flags.keywordsFlag = true">KEYWORDS</a>
                       </li>
                       <li ng-if="!flags.categoryFlag">
-                        <a href="#" ng-click="categories.push('')">FIELD VALUE</a>
+                        <a href="javascript:void(0);" ng-click="categories.push('')">FIELD VALUE</a>
                       </li>
                       <li ng-if="!flags.tagsFlag">
-                        <a href="#" ng-click="flags.tagsFlag = true">TAGS</a>
+                        <a href="javascript:void(0);" ng-click="flags.tagsFlag = true">TAGS</a>
                       </li>
                     </ul>
                   </div>
@@ -601,7 +601,7 @@
                           <!--<option value="Param policy" selected style="display:none;">Choose rule type</option>-->
                           <option ng-repeat="(value, caption) in policyList" value="{{value}}">{{caption}}</option>
                         </select>
-                        <a class="text-muted" href="#"><i class="fa fa-times" ng-click="setParams.pop();  currentRule.ruleSetParams.param_keys.splice([$index],1); currentRule.ruleSetParams.param_values.splice([$index],1); currentRule.ruleSetParams.param_policies.splice([$index],1);"></i></a>
+                        <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="setParams.pop();  currentRule.ruleSetParams.param_keys.splice([$index],1); currentRule.ruleSetParams.param_values.splice([$index],1); currentRule.ruleSetParams.param_policies.splice([$index],1);"></i></a>
                       </div>
                       <button type="button" class="btn btn-sm btn-default" ng-click="setParams.push(' ');" ng-if="currentRule.displayRuleType == 'Set Params'">Add param</button>
                     </fieldset>
