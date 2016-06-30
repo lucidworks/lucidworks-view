@@ -14,6 +14,7 @@
       controller: Controller,
       controllerAs: 'fc',
       bindToController: {
+        formattingHandler: '=',
         value: '=',
         highlight: '=',
         hkey: '@', //The Highlight key, used to look up the proper highlighting snippet by name.
@@ -23,10 +24,14 @@
     };
   }
 
-  function Controller() {
+  function Controller($sanitize) {
     'ngInject';
     var fc = this;
-
+    fc.limit = false;
+    fc.limitValue = fc.maxlength;//keep track of the limitValue, as the user can toggle this w/ the Read More/Less toggle, but not the max length value
+    fc.showMore = false;
+    fc.totalLength = -1;
+    fc.toggleRead = toggleRead;
     activate();
 
     ///////////
@@ -35,8 +40,21 @@
       fc.value = processField(fc.value, fc.hkey, fc.highlight, fc.maxlength);
     }
 
+    function toggleRead(){
+      if (fc.limit) {//this only applies when we have more than the limitValue chars
+        if (!fc.showMore) {
+          //toggle to true, meaning user wants to see more
+          fc.showMore = true;
+          fc.limitValue = fc.totalLength;
+        } else {
+          fc.showMore = false;
+          fc.limitValue = fc.maxlength;
+        }
+      }
+    }
+
     function processField(field, highlightKey, highlight, maxlength) {
-      var result = field;
+      var result = $sanitize(_.escape(field));
       var hasHighlight = false;
 
       if (highlight && Object.keys(highlight).length > 0) {
@@ -52,15 +70,12 @@
       result = _.isArray(result)?_.join(result, ' '):result;
 
       if (hasHighlight === false && result && result.length > maxlength) {
-        // Trim it, ideally on whitespace
-        var idx = result.lastIndexOf(' ', maxlength);
-        if (idx !== -1) {
-          result = result.substring(0, idx);
-        } else {
-          // We can't find simple whitespace, so just trim arbitrarily
-          result = result.substring(0, maxlength);
-        }
-        result += '...';
+        // Mark this as being trimmed, but don't actually physically trim it
+        fc.limit = true;
+      }
+      fc.totalLength = result.length;
+      if (fc.formattingHandler){
+        result = fc.formattingHandler(result);
       }
       return result;
     }

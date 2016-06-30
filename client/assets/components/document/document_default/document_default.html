@@ -36,7 +36,7 @@
     <!-- {{vm.doc}} -->
       <!-- show head field linked with a url. -->
       <h3 class="head-field" ng-if="::vm.doc.lw_url">
-        <a ng-href="{{::vm.doc.lw_url}}" ng-click="vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank">{{::vm.doc.lw_head}}</a>
+        <a ng-href="{{::vm.doc.lw_url}}" ng-click="vm.postSignal({params: {lw_url: vm.doc.lw_url}})" rel="noopener" target="_blank">{{::vm.doc.lw_head}}</a>
 
       </h3>
       <!-- show head field without a url. -->
@@ -48,7 +48,7 @@
       </p>
       <!-- Output of CONFIG BASED FIELD DISPLAY -->
       <p ng-repeat="(field, value) in vm.doc.fieldsToDisplay">
-        
+
         <span><strong>{{::field}}:	&nbsp;  </strong></span>
 
         <field value="::value" highlight="::vm.highlight[doc.id]" maxlength="200" hkey="{{field}}"></field>

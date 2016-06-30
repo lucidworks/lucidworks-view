@@ -16,12 +16,13 @@
       bindToController: {
         facetName: '@facetName',
         facetLabel: '@facetLabel',
-        facetAutoOpen: '@facetAutoOpen'
+        facetAutoOpen: '@facetAutoOpen',
+        facetTag: '@facetTag'
       }
     };
   }
 
-  function Controller(ConfigService, QueryService, URLService, QueryDataService, Orwell, FoundationApi, $filter) {
+  function Controller(ConfigService, QueryService, URLService, QueryDataService, Orwell, FoundationApi, $filter, $log) {
     'ngInject';
     var vm = this;
     vm.facetCounts = [];
@@ -29,6 +30,7 @@
     vm.toggleMore = toggleMore;
     vm.getLimitAmount = getLimitAmount;
     vm.more = false;
+    vm.clearAppliedFilters = clearAppliedFilters;
     var resultsObservable = Orwell.getObservable('queryResults');
 
     activate();
@@ -39,7 +41,6 @@
      * Activate the controller.
      */
     function activate() {
-
       // Add observer to update data when we get results back.
       resultsObservable.addObserver(parseFacets);
       // initialize the facets.
@@ -129,7 +130,9 @@
       } else {
         // Remove the key object from the query.
         // We will re-add later if we need to.
-        var keyArr = _.remove(query.fq, {key: key, transformer:'fq:field'});
+        var keyArr = _.remove(query.fq, function(value){
+          return checkFacetExists(value, key);
+        });
 
         // CASE: facet key exists in query.
         if(keyArr.length > 0) {
@@ -179,7 +182,9 @@
       if(!query.hasOwnProperty('fq')){
         return false;
       }
-      var keyObj = _.find(query.fq, {key: key, transformer: 'fq:field'});
+      var keyObj = _.find(query.fq, function(val){
+        return checkFacetExists(val, key);
+      });
       if(_.isEmpty(keyObj)){
         return false;
       }
@@ -196,11 +201,66 @@
       var keyObj = {
         key: key,
         values: [title],
-        transformer: 'fq:field'
+        transformer: 'fq:field',
+        tag: vm.facetTag
       };
+      if(keyObj.tag){
+        //Set these properties if the facet has localParams
+        //concat the localParams with the key of the facet
+        keyObj.key = '{!tag=' + keyObj.tag + '}' + key;
+        keyObj.transformer = 'localParams';
+        var existingMultiSelectFQ = checkIfMultiSelectFQExists(query.fq, keyObj.key);
+        if(existingMultiSelectFQ){
+          //If the facet exists, the new filter values are pushed into the same facet. A new facet object is not added into the query.
+          existingMultiSelectFQ.values.push(title);
+          return query;
+        }
+      }
       query.fq.push(keyObj);
+      $log.debug('final query', query);
       return query;
     }
 
+    /**
+     * Return the facet with localParams if it exists in the query object
+     * @param  {object} fq  query object
+     * @param  {string} key the key name of the query facet
+     * @return {object}     the facet with localParams found in the query object
+     */
+    function checkIfMultiSelectFQExists(fq, key){
+      return _.find(fq, function(value){
+        return value.key === key && value.tag;
+      });
+    }
+
+    /**
+     * Check if the facet key and transformer match with the passed in key and the appropriate key syntax
+     * @param  {object}  val The facet object
+     * @param  {string}  key The name of the facet
+     * @return {Boolean}
+     */
+    function checkFacetExists(val, key){
+      //CASE 1: facet is a field facet without local params
+      //CASE 2: facet is a field facet with local params. The local param is present in the key of the facet. Eg: {!tag=param}keyName
+      return (val.key === key && val.transformer === 'fq:field') ||
+       (val.key === ('{!tag='+vm.facetTag+'}' + key) && val.transformer === 'localParams');
+    }
+
+    /**
+     * remove all filters applied on a facet
+     * @param  {object} e event object to stopPropagation of click
+     */
+    function clearAppliedFilters(e){
+      e.stopPropagation();
+      var query = QueryService.getQueryObject();
+      if(query.hasOwnProperty('fq')){
+        var clearedFilter = _.remove(query.fq, function(value){
+          return checkFacetExists(value, vm.facetName);
+        });
+        if(clearedFilter.length){
+          updateFacetQuery(query);
+        }
+      }
+    }
   }
 })();

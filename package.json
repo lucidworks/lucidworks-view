@@ -1,6 +1,6 @@
 {
   "name": "lucidworks-view",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Lucidworks View: Create custom user experiences for your Fusion-powered apps.",
   "repository": {
     "type": "git",
@@ -31,7 +31,7 @@
     "test": "./node_modules/karma/bin/karma start karma.conf.js"
   },
   "devDependencies": {
-    "bower": "1.7.7",
+    "bower": "1.7.9",
     "browser-sync": "^2.11.0",
     "connect-history-api-fallback": "^1.1.0",
     "connect-logger": "0.0.1",

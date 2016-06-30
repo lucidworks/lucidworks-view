@@ -1,5 +1,6 @@
 <div class="facet-list accordion">
     <div ng-repeat="facet in vm.facets" ng-switch="::facet.type">
-      <facet-field ng-switch-when="facet_fields" facet-name="{{::facet.name}}" facet-label="{{::facet.label}}" facet-auto-open="{{::facet.autoOpen}}"></facet-field>
+      <facet-field ng-switch-when="facet_fields" facet-name="{{::facet.name}}" facet-label="{{::facet.label}}" facet-auto-open="{{::facet.autoOpen}}" facet-tag="{{::facet.tag}}"></facet-field>
+      <facet-range ng-switch-when="facet_ranges" facet-name="{{::facet.name}}" facet-label="{{::facet.label}}" facet-auto-open="{{::facet.autoOpen}}" formatting-handler="vm.defaultRangeFacetFormatter"></facet-range>
     </div>
 </div>

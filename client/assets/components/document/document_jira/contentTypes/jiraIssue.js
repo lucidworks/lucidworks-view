@@ -24,14 +24,27 @@
   }
 
 
-  function Controller(SignalsService) {
+  function Controller(SignalsService, PaginateService) {
     'ngInject';
     var vm = this;
 
     activate();
 
     function activate() {
-      vm.postSignal = SignalsService.postClickSignal;
+      vm.postSignal = postSignal;
+      vm.doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(vm.doc);
+      vm.doc.page = PaginateService.getNormalizedCurrentPage();
+    }
+
+    function postSignal(options){
+      var paramsObj = {
+        params: {
+          position: vm.doc.position,
+          page: vm.doc.page
+        }
+      };
+      _.defaultsDeep(paramsObj, options);
+      SignalsService.postClickSignal(vm.doc.__signals_doc_id__, paramsObj);
     }
 
   }

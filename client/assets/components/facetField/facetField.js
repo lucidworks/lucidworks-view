@@ -18,9 +18,6 @@
     QueryBuilderProvider.registerTransformer('encode', 'fq:field', fqFieldEncode);
     QueryBuilderProvider.registerTransformer('wrapper', 'fq:field', fqFieldWrapper);
 
-    // TODO properly implement transformer for localParens
-    QueryBuilderProvider.registerTransformer('join', 'localParens', localParenJoinTransformer);
-    QueryBuilderProvider.registerTransformer('wrapper', 'localParens', localParenWrapperTransformer);
 
     /**
      * Transformers.
@@ -43,14 +40,6 @@
 
     function fqFieldWrapper(data){
       return '('+data+')';
-    }
-
-    function localParenJoinTransformer(str, values) {
-      return QueryBuilderProvider.arrayJoinString(str, values, ' ');
-    }
-
-    function localParenWrapperTransformer(data) {
-      return '{!' + data + '}';
     }
   }
 

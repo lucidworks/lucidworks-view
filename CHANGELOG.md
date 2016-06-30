@@ -1,6 +1,19 @@
 # CHANGELOG
 
-## 1.1.0 - Tsarina Alexandra Tiara
+## 1.2.0 - Cersei's Iron Tiara
+**New Features**
+* Now support range facet type
+* Add multi select faceting, meaning you can facet on multiple items within a single query
+* Add 'clear all' button to facet lists, clearing all selected facets
+* Improved signals now pass in more information including position, language, and platform
+* Enhanced signals service, adding additional functionality
+* Improved field display in templates by setting set max-length
+
+**Bug fixes**
+* Fix typeahead of a query profile or pipeline
+* Fixed field values: HTML entities are now properly truncated
+
+## 1.1.0 - Tsarina Alexandra Tiara - May 4, 2016
 **New Features**
 * Highlighting support for fields when configured in Fusion
 * Grouped results are now displayed when configured in the Fusion pipeline
