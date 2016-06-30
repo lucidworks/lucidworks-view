@@ -1,6 +1,17 @@
 # CHANGELOG
 
-## 1.1.0 - Tsarina Alexandra Tiara
+## 1.2.0 - Iron Tiara
+**New Features**
+* Click Signals now pass in more information including listing position.
+* Multi Select Faceting
+* Fields in tempaltes now can have a max-length set
+* Adds a clear all button for selected facets
+* Added display of range facets
+
+**Bug Fixes**
+* Many minor improvements
+
+## 1.1.0 - Tsarina Alexandra Tiara - May 4, 2016
 **New Features**
 * Highlighting support for fields when configured in Fusion
 * Grouped results are now displayed when configured in the Fusion pipeline
