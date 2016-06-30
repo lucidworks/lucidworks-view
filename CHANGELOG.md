@@ -9,7 +9,7 @@
 * Enhanced signals service, adding additional functionality
 * Improved field display in templates by setting set max-length
 
-**Bug Fixes**
+**Bug fixes**
 * Fix typeahead of a query profile or pipeline
 * Fixed field values: HTML entities are now properly truncated
 
