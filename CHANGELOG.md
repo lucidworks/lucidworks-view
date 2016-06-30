@@ -5,7 +5,7 @@
  * Click Signals now pass in position information
  * Multi Select Faceting
  * Fields now can have a max-length set
- *
+ * Clear all button for selected facets
 
 **Bug fixes**
 * Fixed display of range facets
