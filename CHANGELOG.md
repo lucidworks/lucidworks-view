@@ -4,7 +4,7 @@
 **New Features**
 * Click Signals now pass in more information including listing position.
 * Multi Select Faceting
-* Fields in tempaltes now can have a max-length set
+* Fields in templates now can have a max-length set
 * Adds a clear all button for selected facets
 * Added display of range facets
 
