@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 1.2.0 - Iron Tiara
+## 1.2.0 - Cersei's Iron Tiara
 **New Features**
 * Now support range facet type
 * Add multi select faceting, meaning you can facet on multiple items within a single query
