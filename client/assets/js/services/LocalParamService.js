@@ -39,7 +39,7 @@
       //extract the current fq values applied
       var curFilterValue = str.substring(_.indexOf(str, '(')+1, _.lastIndexOf(str, ')'));
       //extract the values of the new filter value which will be joined to the existing filter value with an OR
-      var newValue = values.substring(_.indexOf(values, '(')+1, _.lastndexOf(values, ')'));
+      var newValue = values.substring(_.indexOf(values, '(')+1, _.lastIndexOf(values, ')'));
       var qbFilterVal = '(' + QueryBuilderProvider.arrayJoinString(curFilterValue, newValue, ' OR ') + ')';
       return QueryBuilderProvider.arrayJoinString(curFilterKey, qbFilterVal, ':');
     }
