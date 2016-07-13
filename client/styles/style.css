@@ -1,0 +1,82 @@
+ul.dropdown-menu>li input{
+  float: right;
+}
+ul.dropdown-menu>li input.addNewTag{
+  float:none;
+}
+.rule-name{
+  font-size: 18px!important;
+}
+table .col-xs-5, table .col-xs-6{
+  float: none;
+  width: 100%;
+}
+.actionTextArea{
+  resize: vertical!important;
+}
+.addTriggerCategory, .triggerCategory{
+  display: inline-block;
+  width: 45%;
+}
+.addTriggerKeywords, .addTriggerTags{
+  display: inline-block;
+  width: 92%;
+}
+input.addTriggerCategory{
+  margin-left: 2px;
+}
+.triggerKeywords{
+  display: inline-block;
+  width: 91%;
+}
+.addRuleForm .bootstrap-tagsinput, table .bootstrap-tagsinput{
+  display: inline-block;
+  width: 92%;
+}
+.datepicker-inline{
+  width: 45%;
+  display: inline-block;
+}
+.set-params{
+  width: 30%;
+  display: inline-block;
+}
+.table>tbody>tr.inactive>td.inline-icons .btn-cancel{
+  display: none;
+}
+.edit-buttons{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.edit-buttons > a{
+  margin-bottom: 5px;
+}
+#applyFilters{
+  display: flex;
+  justify-content: space-between;
+}
+
+.fa-close:before, .fa-remove:before, .fa-times:before {
+  content: "";
+  color: #bbb;
+}
+.table>tbody>tr.inactive>td.btn-bottom-holder .fa-times  {
+   display: none;
+}
+.table>tbody>tr.inactive>td.btn-bottom-holder .tag span  {
+  display: none;
+}
+div.table-footer .btn.btn-sm.btn-link.text-muted{
+  background: none;
+  color:#bbb;
+}
+
+.has-error::-webkit-input-placeholder {color:#e51c23!important;}
+.has-error::-moz-placeholder          {color:#e51c23!important;}
+.has-error:-moz-placeholder           {color:#e51c23!important;}
+.has-error:-ms-input-placeholder      {color:#e51c23!important;}
+
+#addRule .alert-warning {
+  margin: 10px 50px 0 50px;
+}

@@ -567,24 +567,6 @@ rulesApp.controller('rulesController',
     }
   };
 
- /* $scope.addAction = function (id, name) {
-    var rule = $scope.rules[findIndexById(id)];
-
-    if (name == 'product_list') {
-      rule.productList = rule.productList || ["product"];
-    } else if (name == 'redirect') {
-      rule.redirect = rule.redirect || "/screens/touch-technology";
-    } else if (name == 'banner') {
-      rule.banner = rule.banner || "banner";
-    } else if (name == 'facetList') {
-      rule.facetList = rule.facetList || ["facetList"];
-    } else if (name == 'rankList') {
-      rule.rankList = rule.rankList || ["rankList"];
-    } else if (name == 'querySet') {
-      rule.querySet = rule.querySet || "querySet";
-    }
-  };*/
-
    $scope.addFilter = function(id){
      var rule = $scope.ruleArrays[id];
        if (!rule.filters){
@@ -597,18 +579,6 @@ rulesApp.controller('rulesController',
   $scope.checkActionCount = function (id) {
     var actionCount = 0;
     var rule = $scope.rules[findIndexById(id)];
-    //if (rule.productList)
-    //  actionCount++;
-    //if (rule.redirect)
-    //  actionCount++;
-    //if (rule.banner)
-    //  actionCount++;
-    //if (rule.facetList)
-    //  actionCount++;
-    //if (rule.rankList)
-    //  actionCount++;
-    //if (rule.querySet)
-    //  actionCount++;
     return actionCount;
   };
 
@@ -631,7 +601,6 @@ rulesApp.controller('rulesController',
       console.log("Rules loaded: ");
       console.log($scope.rules);
 
-      //for (var i = 0, l = $scope.rules.length; i<l; i++) {
       $scope.rules.forEach(function(item, i){
         var rulesSub = {};
 
@@ -642,11 +611,7 @@ rulesApp.controller('rulesController',
           var filtersArray = item.filters.split(/[ ,:]+/);
           var actualFiltersArray = [[],[]];
           for (var j = 0, k = filtersArray.length; j<k; j++){
-            if (j%2 == 0){
-              actualFiltersArray[0].push(filtersArray[j]);
-            } else {
-              actualFiltersArray[1].push(filtersArray[j]);
-            }
+            actualFiltersArray[j%2].push(filtersArray[j]);
           }
           rulesSub.filters = actualFiltersArray;
         }

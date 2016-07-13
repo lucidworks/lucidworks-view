@@ -28,7 +28,19 @@
     "angucomplete-alt": "~2.2.0",
     "angular-sanitize": "~1.4.10",
     "angular-rison": "~0.0.13",
-    "angularjs-humanize": "master"
+    "angularjs-humanize": "master",
+    "bootstrap-sass": "~3.3.5",
+    "modernizr": "~2.8.3",
+    "font-awesome": "^4.6.3",
+    "eonasdan-bootstrap-datetimepicker": "^4.17.37",
+    "autosize": "^3.0.15",
+    "bootstrap-tagsinput": "^0.8.0",
+    "angular": "~1.5.0",
+    "angular-route": "~1.5.0",
+    "angular-loader": "~1.5.0",
+    "angular-mocks": "~1.5.0",
+    "html5-boilerplate": "^5.3.0"
+
   },
   "devDependencies": {
     "angular-mocks": "~1.4.10"
