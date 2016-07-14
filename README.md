@@ -1,34 +1,26 @@
-# Lucidworks View
-  [Lucidworks View](https://lucidworks.com/products/view/) is a consumer-facing front end for Lucidworks Fusion.  It provides a basic search interface with simple configuration, so you can quickly deliver a Fusion-based search solution with minimal development.  View is powered by Fusion, Gulp, Angular, and libSaSS.
-
-  You can also use View as the basis for developing a more sophisticated Web interface, using Foundation for Apps: http://foundation.zurb.com/apps/docs/
-
-  If you need help setting up Fusion, see https://doc.lucidworks.com/.
+# Lucidworks Rules
+  
 
 ## Requirements
 
-If you downloaded a [platform-specific package](https://github.com/lucidworks/lucidworks-view/releases), all dependencies are included. Skip to Get Started step 4.
-
-If you start by cloning the repository, you'll need the following software:
-
+- [Fusion](https://doc.lucidworks.com/): If you need help setting up Fusion, see https://doc.lucidworks.com/.
 - [Node.js](http://nodejs.org): Use the installer for your OS. Use version 5.xxx.
 - [Git](http://git-scm.com/downloads) (if you're cloning the repo): Use the installer for your OS.
 - Windows users can also try [Git for Windows](http://git-for-windows.github.io/).
-- [Gulp](http://gulpjs.com/) and [Bower](http://bower.io): Run `npm install -g gulp bower`
-- Depending on how Node is configured on your machine, you may need to run `sudo npm install -g gulp bower` instead, if you get an error with the first command.
+- [Bower](http://bower.io): Run `npm install -g bower`
 
 ## Get Started
 
 1. Clone the repository, where `app` is the name of your app:
 
   ```bash
-  git clone https://github.com/lucidworks/lucidworks-view app
+  git clone https://github.com/AlexKolonitsky/lucidworks-view app
   ```
 
 1. Change into the directory:
 
   ```bash
-  cd app
+  cd app/rules
   ```
 
 1. Install the dependencies:
@@ -38,74 +30,47 @@ If you start by cloning the repository, you'll need the following software:
   bower install
   ```
 
-1. While you're working on your project, run:
+1. Set up fusion collections:
 
-  * If you downloaded a tar package:
+  ```bash
+  #!/usr/bin/env bash
+  export FUSION_HOME=$HOME/fusion-2.1.3
+  export FUSION_API_BASE=http://localhost:8764/api/apollo
+  export SOLR_API_BASE=http://localhost:8983/solr
+  export FUSION_API_CREDENTIALS=admin:123qweasdzxc
+  
+  # create products collection
+  curl -u $FUSION_API_CREDENTIALS -X PUT -H 'Content-type: application/json' \
+       -d '{"solrParams":{"replicationFactor":1,"numShards":1}}' \
+       ${FUSION_API_BASE}/collections/bsb_products
+  
+  # Adjust schema to allow attr-* fields to be strings rather than autodetected
+  curl -X POST -H 'Content-type:application/json' --data-binary '{
+    "add-dynamic-field":{
+       "name":"attr-*",
+       "type":"string",
+       "multiValued":true,
+       "stored":false }
+  }' $SOLR_API_BASE/bsb_products/schema
+  
+  # upload products data 
+  $FUSION_HOME/apps/solr-dist/bin/post -c bsb_products -params "rowid=id&csv.mv.separator=~&csv.mv.encapsulator=%60&f.PhraseText.split=true&f.Category-search.split=true&f.CategoryID.split=true&f.CategoryID.separator=~&f.Color-search.split=true&f.attr-__General__LNav_Colors.split=true&f.ImageData.split=true&f.attr-__General__LNavColorCategory.split=true&skip=_version_,Brand-search,Color-search,Category-no_stem,Name-search,Name-no_stem,Name-sort,Price-search,PricePerMonth-search,ProductID-search,autoPhrase_text,LastIndexed,_text_" products.csv
 
-    ```bash
-    ./view.sh start
-    ```
-
-  * If you cloned the repository:
-
-    ```bash
-    npm start
-    ```
-
-  This will compile the SaSS, assemble your Angular app, and create `FUSION_CONFIG.js` (if you haven't created it already).  You'll see output that tells you which port was selected:
-
+  
+  # create rules collection (specific to the example products)
+  curl -u $FUSION_API_CREDENTIALS -X PUT -H 'Content-type: application/json' \
+       -d '{"solrParams":{"replicationFactor":1,"numShards":1}}' \
+       ${FUSION_API_BASE}/collections/bsb_products_rules
+  
+  # upload rules data
+  curl '$SOLR_API_BASE/bsb_products_rules/update?commit=true' --data-binary @rules.json -H 'Content-type:application/js'  
   ```
-  [BS] Access URLs:
-   ------------------------------------
-         Local: http://localhost:3000
-      External: http://<external IP>:3000
-   ------------------------------------
-   ```
+  
+1. All configuration such as fusion url, available rule types or documents fields should be made in FUSION_CONFIG.js 
 
-   The default is port 3000, but if that port is already in use then the app selects the next highest available port.
+1. Run application:
 
-1. **Now go to `http://localhost:<port>` in your browser to see it in action.**
+  ```bash
+  npm start
+  ```
 
-  The first time you browse to the app, you'll see a login page.  Use your Fusion username and password.  To enable anonymous access, edit the `anonymous_access` keys in FUSION_CONFIG.js.
-
-  When you change FUSION_CONFIG.js or any file in the `client` folder, the appropriate Gulp task will run to build new files. This uses [`browser-sync`](https://www.browsersync.io/) for instant reload upon change of source files. Visit `http://localhost:3001` (or whatever your terminal shows as the browser-sync UI) for the `browser-sync` dashboard.
-
-To run the compiling process once, without watching any files, use the `build` command:
-```bash
-npm run build
-```
-
-## Unit testing
-
-```
-npm run build
-npm test
-```
-
-## Basic Configuration
-
-The first time you run `npm start`, FUSION_CONFIG.sample.js is copied to FUSION_CONFIG.js.  Modify this file to configure View's basic options.  Documentation about the configuration keys is included in the file.
-
-At a minimum, you _must_ configure the `collection` key to match the name of your Fusion collection.
-
-In a production environment, you must also configure `host` and `port` to point to the UI service of your Fusion deployment.  The default is `localhost:8764` for development purposes.
-
-When the app is running with BrowserSync, it reloads the configuration every time you save FUSION_CONFIG.js.  You can modify the configuration and watch the app change in real time in your browser.
-
-## Basic Customization
-
-The title and logo for your interface are configured in FUSION_CONFIG.js as `search_app_title` and `logo_location`.
-
-CSS options are configured in the files in client/assets/scss.
-
-Templates for various UI components are located in client/assets/components.
-
-Search results from different document types can use different templates.  The `client/assets/components/document` directory contains templates for some common document types, plus default templates for all others.  Data types correspond to Connectors in Fusion.  See [Customizing Documents](docs/Customizing_Documents.md) for details about working with these.
-
-## What's Next
-
-For more details about configuring and customizing View, see the [docs](docs/) directory.
-
-## Contributions
-
-View is open source! Pull requests welcome. This is a great way to give back to the community and help others build a better search app.

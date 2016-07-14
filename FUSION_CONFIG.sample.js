@@ -198,6 +198,31 @@ appConfig = { //eslint-disable-line
   // @see https://lucidworks.com/blog/2016/02/04/fusion-plus-solr-suggesters-search-less-typing/
 
   //typeahead_requesthandler: 'suggest', // recommended (requires configuration)
-  typeahead_requesthandler: 'select'
+  typeahead_requesthandler: 'select',
 
+  rules: {
+    types: {
+      "Filter List": "filter_list",
+      "Block List": "block_list",
+      "Boost List": "boost_list",
+      "Redirect": "response_value",
+      "Banner": "response_value",
+      "Set Params": "set_params"
+    },
+
+    set_params: {
+      policies : {
+        "append": "Append",
+        "replace": "Replace"
+      }
+    },
+
+    documentFields: {
+      "CategoryID": "CategoryID",
+      "ProductID": "ProductID",
+      "ProductIDSearch": "ProductIDSearch",
+      "name": "Name",
+      "brand": "Brand"
+    }
+  }
 };
