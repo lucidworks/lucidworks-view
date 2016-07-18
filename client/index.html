@@ -5,16 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title ng-bind="title"></title>
     <link rel="icon" type="image/x-icon" href="./assets/img/favicon.ico">
-    <link href="./assets/css/app.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="./assets/css/app.css" type="text/css">
+    <link rel="stylesheet" href="./styles/bootstrap-datetimepicker.min.css" />
+    <link rel="stylesheet" href="./styles/bootstrap-tagsinput.css" />
+
+    <link rel="stylesheet" href="./styles/vendor.css">
+    <link rel="stylesheet" href="./styles/main.css">
+    <link rel="stylesheet" href="./styles/style.css">
+
+
     <script src="./assets/js/foundation.js"></script>
     <script src="./assets/js/templates.js"></script>
     <script src="./assets/js/routes.js"></script>
     <script src="./assets/js/FUSION_CONFIG.js"></script>
     <script src="./assets/js/app.js"></script>
+
+
+    <script src="./scripts/jquery.js"></script>
+    <script src="./scripts/vendor.js"></script>
+    <script src="./scripts/plugins.js"></script>
+    <script>
+      $(document).on('click', '.dropdown-menu', function(e) {
+        e.stopPropagation();
+      });
+      function ruleFormReset(){
+        var ruleName = $('#addRuleName');
+        ruleName.removeClass('has-error');
+        ruleName[0].placeholder = 'Enter rule name';
+        var ruleType = $('.rule-type-select');
+        ruleType.removeClass('has-error');
+        ruleType.find('select').css('color', '#666');
+        var paramKey = $('.param-key.ng-empty');
+        paramKey.removeClass('has-error');
+        paramKey.parent().removeClass('has-error');
+        $('.rule-name-input').removeClass('has-error');
+      }
+      $(document).ready(function () {
+        $('.text-muted').attr('tabindex', '-1');
+
+      });
+    </script>
+    <script src="./scripts/vendor/modernizr.js"></script>
   </head>
   <body>
       <div ui-view>
       </div>
-    </div>
   </body>
 </html>

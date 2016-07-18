@@ -11,7 +11,7 @@
 
       var appHost = ApiBase.getEndpoint();
       var solrUrl = appHost + "api/apollo/solr";
-      var rulesCollection = ConfigService.getCollectionName();
+      var rulesCollection = ConfigService.getCollectionName().trim();
 
       return {
 

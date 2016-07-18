@@ -37,16 +37,19 @@
   function config($urlRouterProvider, $httpProvider, $locationProvider, ApiBaseProvider,
     ConfigServiceProvider, $windowProvider) {
     'ngInject';
-    $urlRouterProvider.otherwise('/search');
+
+    $urlRouterProvider.otherwise('search');
     $httpProvider.interceptors.push('AuthInterceptor');
     $httpProvider.defaults['withCredentials'] = true; //eslint-disable-line
 
+/*
     $locationProvider.html5Mode({
       enabled: true,
       requireBase: false
     });
-
     $locationProvider.hashPrefix('!');
+*/
+
     // If using a proxy use the same url.
     if (ConfigServiceProvider.config.use_proxy) {
       var $window = $windowProvider.$get();

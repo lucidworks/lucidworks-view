@@ -1,29 +1,10 @@
-<!doctype html>
-<html class="no-js" lang="" ng-app="rulesApp" ng-controller="rulesController">
-<head>
-  <meta charset="utf-8">
-  <title>Lucidworks Rules</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link rel="stylesheet" href="./styles/bootstrap-datetimepicker.min.css" />
-  <link rel="stylesheet" href="./styles/bootstrap-tagsinput.css" />
-
-  <link rel="stylesheet" href="./styles/vendor.css">
-  <link rel="stylesheet" href="./styles/main.css">
-  <link rel="stylesheet" href="./styles/style.css">
-
-</head>
-<body>
-<!--[if lt IE 10]>
-<p class="browsehappy">
-  You are using an <strong>outdated</strong>
-  browser. Please
-  <a href="http://browsehappy.com/">upgrade your browser</a>
-  to improve your experience.
-</p>
-<![endif]-->
-
+---
+name: rules
+url: /rules
+animationIn: slideInRight
+animationOut: slideOutLeft
+controller: rulesController as rc
+---
 <div class="container">
 
   <div class="row">
@@ -35,7 +16,7 @@
   <div class="row">
     <!-- SIDEBAR -->
     <div class="col-sm-2">
-      <a href="#addRule" data-toggle="modal" class="btn btn-lg btn-block btn-default lead-btn">
+      <a data-toggle="modal" data-target="#addRule" class="btn btn-lg btn-block btn-default lead-btn">
         <i class="fa fa-plus"></i>
         Add rule
       </a>
@@ -406,224 +387,172 @@
       </div>
     </div>
 
-    <div id="addRule" data-show="true" class="modal fade add-rule">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-body">
-            <div class="add-rule-wiz">
-              <ol class="list-inline">
-                <li>
-                  <h4>General</h4>
-                  <div class="wiz-step">
-                    <form action="" class="addRuleForm">
-                      <fieldset>
-                        <div class="form-group rule-type-select">
-                          <label for="chooseRuleType" class="small text-muted text-uppercase">Rule type</label>
-                          <select class="form-control" id="chooseRuleType" ng-model="currentRule.displayRuleType">
-                            <option value="Choose rule type" selected style="display:none;">Choose rule type</option>
-                            <option ng-repeat="(key, value) in types" value="{{key}}">{{key}}</option>
-                          </select>
-                        </div>
+  </div>
 
-                        <div class="form-group rule-name-input">
-                          <label for="addRuleName" class="small text-muted text-uppercase">Rule name</label>
-                          <input type='text' class="form-control" id="addRuleName" placeholder="Enter rule name" ng-model="currentRule.ruleName"/>
+  <div id="addRule" data-show="true" class="modal fade add-rule">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="add-rule-wiz">
+            <ol class="list-inline">
+              <li>
+                <h4>General</h4>
+                <div class="wiz-step">
+                  <form action="" class="addRuleForm">
+                    <fieldset>
+                      <div class="form-group rule-type-select">
+                        <label for="chooseRuleType" class="small text-muted text-uppercase">Rule type</label>
+                        <select class="form-control" id="chooseRuleType" ng-model="currentRule.displayRuleType">
+                          <option value="Choose rule type" selected style="display:none;">Choose rule type</option>
+                          <option ng-repeat="(key, value) in types" value="{{key}}">{{key}}</option>
+                        </select>
+                      </div>
+
+                      <div class="form-group rule-name-input">
+                        <label for="addRuleName" class="small text-muted text-uppercase">Rule name</label>
+                        <input type='text' class="form-control" id="addRuleName" placeholder="Enter rule name" ng-model="currentRule.ruleName"/>
+                      </div>
+                      <div class="form-group">
+                        <label for="addRuleDescription" class="small text-muted text-uppercase">Description</label>
+                        <textarea rows="1" class="form-control" id="addRuleDescription" placeholder="Enter rule description" ng-model="currentRule.ruleDescription"></textarea>
+                      </div>
+                      <div class="form-group">
+                        <label for="rule-1-created-date" class="small text-muted text-uppercase">Date</label>
+                        <div class="datepicker-holder">
+                          <input type='text' class="form-control" id="rule-1-created-date" value="{{currentRule.currentDate | date: 'MM/dd/yyyy , hh:mm a'}}" disabled/>
                         </div>
-                        <div class="form-group">
-                          <label for="addRuleDescription" class="small text-muted text-uppercase">Description</label>
-                          <textarea rows="1" class="form-control" id="addRuleDescription" placeholder="Enter rule description" ng-model="currentRule.ruleDescription"></textarea>
-                        </div>
-                        <div class="form-group">
-                          <label for="rule-1-created-date" class="small text-muted text-uppercase">Date</label>
-                          <div class="datepicker-holder">
-                            <input type='text' class="form-control" id="rule-1-created-date" value="{{currentRule.currentDate | date: 'MM/dd/yyyy , hh:mm a'}}" disabled/>
-                          </div>
-                        </div>
-                      </fieldset>
-                    </form>
-                  </div>
-                </li>
-                <li>
-                  <h4>Trigger</h4>
-                  <div class="wiz-step">
-                    <form action="" class="addRuleForm">
-                      <fieldset>
-                        <div class="form-group">
-                          <div class="row hor-gut-10px" ng-repeat="triggerDate in triggerDates track by $index">
-                            <div class="col-sm-6 datepicker-inline">
-                              <label for="addTriggerStart" class="small text-muted text-uppercase">Start</label>
-                              <div class="datepicker-holder">
-                                <input type='text' class="form-control datepicker add-trigger-start" id="addTriggerStart"/>
-                              </div>
+                      </div>
+                    </fieldset>
+                  </form>
+                </div>
+              </li>
+              <li>
+                <h4>Trigger</h4>
+                <div class="wiz-step">
+                  <form action="" class="addRuleForm">
+                    <fieldset>
+                      <div class="form-group">
+                        <div class="row hor-gut-10px" ng-repeat="triggerDate in triggerDates track by $index">
+                          <div class="col-sm-6 datepicker-inline">
+                            <label for="addTriggerStart" class="small text-muted text-uppercase">Start</label>
+                            <div class="datepicker-holder">
+                              <input type='text' class="form-control datepicker add-trigger-start" id="addTriggerStart"/>
                             </div>
-                            <div class="col-sm-6 datepicker-inline">
-                              <label for="addTriggerEnd" class="small text-muted text-uppercase">End</label>
-                              <div class="datepicker-holder">
-                                <input type='text' class="form-control datepicker add-trigger-end" id="addTriggerEnd"/>
-                              </div>
-                            </div>
-                            <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="triggerDates.pop();"></i></a>
                           </div>
+                          <div class="col-sm-6 datepicker-inline">
+                            <label for="addTriggerEnd" class="small text-muted text-uppercase">End</label>
+                            <div class="datepicker-holder">
+                              <input type='text' class="form-control datepicker add-trigger-end" id="addTriggerEnd"/>
+                            </div>
+                          </div>
+                          <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="triggerDates.pop();"></i></a>
                         </div>
-                        <div class="form-group" ng-if="currentRule.keywordsFlag">
-                          <label class="small text-muted text-uppercase">Keywords</label>
-                          <textarea rows="1" class="form-control addTriggerKeywords" ng-model="currentRule.ruleKeywords[0]"></textarea>
-                          <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="currentRule.keywordsFlag = false; currentRule.ruleKeywords[0] = '';"></i></a>
-                        </div>
-                        <div class="form-group" ng-repeat="x in categories track by $index">
-                          <label class="small text-muted text-uppercase">Field Value</label>
-                          <select class="form-control addTriggerCategory" ng-model="currentRule.ruleCategoryType[$index]">
-                            <option ng-repeat="(value, caption) in productList" value="{{value}}">{{caption}}</option>
-                          </select>
-                          <input class="form-control addTriggerCategory" ng-model="currentRule.ruleCategoryValue[$index]"/>
-                          <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="categories.pop(); currentRule.ruleCategoryType.splice($index, 1); currentRule.ruleCategoryValue.splice($index, 1)"></i></a>
-                        </div>
-                        <div class="form-group" ng-if="currentRule.tagsFlag">
-                          <label class="small text-muted text-uppercase">Tags</label>
-                          <input type="text" class="form-control triggerTags addTriggerTags" aria-describedby="triggerTags"  placeholder='Enter tags' ng-model="currentRule.ruleTags"/>
-                          <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="currentRule.tagsFlag = false; currentRule.ruleTags = '';"></i></a>
-                        </div>
-                      </fieldset>
-                    </form>
-                    <div class="btn-group btn-group-sm">
-                      <a href="javascript:void(0);" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-plus"></i>
-                        Add trigger
-                        <span class="caret"></span>
-                      </a>
-                      <ul class="dropdown-menu">
-                        <li>
-                          <a href="javascript:void(0);" ng-click="triggerDates.push(' '); ruleArrays[rule.id].dates.push(' ')">ADD DATES</a>
-                        </li>
-                        <li ng-if="!currentRule.keywordsFlag">
-                          <a href="javascript:void(0);" ng-click="currentRule.keywordsFlag = true">KEYWORDS</a>
-                        </li>
-                        <li ng-if="!currentRule.categoryFlag">
-                          <a href="javascript:void(0);" ng-click="categories.push('')">FIELD VALUE</a>
-                        </li>
-                        <li ng-if="!currentRule.tagsFlag">
-                          <a href="javascript:void(0);" ng-click="currentRule.tagsFlag = true">TAGS</a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <h4>{{currentRule.displayRuleType}}</h4>
-                  <div class="wiz-step">
-                    <form action="" class="addRuleForm">
-                      <fieldset>
-                        <select class="form-control addTriggerCategory" ng-model="currentRule.ruleFieldName" ng-if="currentRule.displayRuleType == 'Filter List' || currentRule.displayRuleType == 'Block List' || currentRule.displayRuleType == 'Boost List'">
+                      </div>
+                      <div class="form-group" ng-if="currentRule.keywordsFlag">
+                        <label class="small text-muted text-uppercase">Keywords</label>
+                        <textarea rows="1" class="form-control addTriggerKeywords" ng-model="currentRule.ruleKeywords[0]"></textarea>
+                        <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="currentRule.keywordsFlag = false; currentRule.ruleKeywords[0] = '';"></i></a>
+                      </div>
+                      <div class="form-group" ng-repeat="x in categories track by $index">
+                        <label class="small text-muted text-uppercase">Field Value</label>
+                        <select class="form-control addTriggerCategory" ng-model="currentRule.ruleCategoryType[$index]">
                           <option ng-repeat="(value, caption) in productList" value="{{value}}">{{caption}}</option>
                         </select>
-                        <label class="small text-muted text-uppercase" ng-if="currentRule.displayRuleType == 'Filter List' || currentRule.displayRuleType == 'Block List' || currentRule.displayRuleType == 'Boost List'">Document ID List</label>
-                        <div class="form-group" ng-if="currentRule.displayRuleType == 'Filter List'">
-                          <textarea rows="5" placeholder="Please write a comma separated list of product ids" class="form-control actionTextArea" id="filter-list" value="filter list" ng-model="currentRule.ruleFieldValues" ng-list=","></textarea>
-                        </div>
-                        <div class="form-group" ng-if="currentRule.displayRuleType == 'Block List'">
-                          <textarea rows="5" placeholder="Please write a comma separated list of product ids" class="form-control actionTextArea" id="block-list" value="/screens/touch-technology" ng-model="currentRule.ruleFieldValues" ng-list=","></textarea>
-                        </div>
-                        <div class="form-group" ng-if="currentRule.displayRuleType == 'Banner'">
-                          <input type='text' placeholder="Please write banner value here" class="form-control" id="banner" value="banner"  ng-model="currentRule.ruleValues"/>
-                        </div>
-                        <div class="form-group" ng-if="currentRule.displayRuleType == 'Boost List'">
-                          <textarea rows="5" placeholder="Please write a comma separated list of product ids" class="form-control actionTextArea" id="boost-list" value="boost list" ng-model="currentRule.ruleFieldValues" ng-list=","></textarea>
-                        </div>
-                        <div class="form-group" ng-if="currentRule.displayRuleType == 'Redirect'">
-                          <input type='text' placeholder="Please write redirect value here" class="form-control" id="redirect" value="redirect" ng-model="currentRule.ruleValues"/>
-                        </div>
-                        <div class="form-group" ng-if="currentRule.displayRuleType == 'Set Params'" ng-repeat="param in setParams track by $index">
+                        <input class="form-control addTriggerCategory" ng-model="currentRule.ruleCategoryValue[$index]"/>
+                        <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="categories.pop(); currentRule.ruleCategoryType.splice($index, 1); currentRule.ruleCategoryValue.splice($index, 1)"></i></a>
+                      </div>
+                      <div class="form-group" ng-if="currentRule.tagsFlag">
+                        <label class="small text-muted text-uppercase">Tags</label>
+                        <input type="text" class="form-control triggerTags addTriggerTags" aria-describedby="triggerTags"  placeholder='Enter tags' ng-model="currentRule.ruleTags"/>
+                        <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="currentRule.tagsFlag = false; currentRule.ruleTags = '';"></i></a>
+                      </div>
+                    </fieldset>
+                  </form>
+                  <div class="btn-group btn-group-sm">
+                    <a href="javascript:void(0);" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                      <i class="fa fa-plus"></i>
+                      Add trigger
+                      <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a href="javascript:void(0);" ng-click="triggerDates.push(' '); ruleArrays[rule.id].dates.push(' ')">ADD DATES</a>
+                      </li>
+                      <li ng-if="!currentRule.keywordsFlag">
+                        <a href="javascript:void(0);" ng-click="currentRule.keywordsFlag = true">KEYWORDS</a>
+                      </li>
+                      <li ng-if="!currentRule.categoryFlag">
+                        <a href="javascript:void(0);" ng-click="categories.push('')">FIELD VALUE</a>
+                      </li>
+                      <li ng-if="!currentRule.tagsFlag">
+                        <a href="javascript:void(0);" ng-click="currentRule.tagsFlag = true">TAGS</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <h4>{{currentRule.displayRuleType}}</h4>
+                <div class="wiz-step">
+                  <form action="" class="addRuleForm">
+                    <fieldset>
+                      <select class="form-control addTriggerCategory" ng-model="currentRule.ruleFieldName" ng-if="currentRule.displayRuleType == 'Filter List' || currentRule.displayRuleType == 'Block List' || currentRule.displayRuleType == 'Boost List'">
+                        <option ng-repeat="(value, caption) in productList" value="{{value}}">{{caption}}</option>
+                      </select>
+                      <label class="small text-muted text-uppercase" ng-if="currentRule.displayRuleType == 'Filter List' || currentRule.displayRuleType == 'Block List' || currentRule.displayRuleType == 'Boost List'">Document ID List</label>
+                      <div class="form-group" ng-if="currentRule.displayRuleType == 'Filter List'">
+                        <textarea rows="5" placeholder="Please write a comma separated list of product ids" class="form-control actionTextArea" id="filter-list" value="filter list" ng-model="currentRule.ruleFieldValues" ng-list=","></textarea>
+                      </div>
+                      <div class="form-group" ng-if="currentRule.displayRuleType == 'Block List'">
+                        <textarea rows="5" placeholder="Please write a comma separated list of product ids" class="form-control actionTextArea" id="block-list" value="/screens/touch-technology" ng-model="currentRule.ruleFieldValues" ng-list=","></textarea>
+                      </div>
+                      <div class="form-group" ng-if="currentRule.displayRuleType == 'Banner'">
+                        <input type='text' placeholder="Please write banner value here" class="form-control" id="banner" value="banner"  ng-model="currentRule.ruleValues"/>
+                      </div>
+                      <div class="form-group" ng-if="currentRule.displayRuleType == 'Boost List'">
+                        <textarea rows="5" placeholder="Please write a comma separated list of product ids" class="form-control actionTextArea" id="boost-list" value="boost list" ng-model="currentRule.ruleFieldValues" ng-list=","></textarea>
+                      </div>
+                      <div class="form-group" ng-if="currentRule.displayRuleType == 'Redirect'">
+                        <input type='text' placeholder="Please write redirect value here" class="form-control" id="redirect" value="redirect" ng-model="currentRule.ruleValues"/>
+                      </div>
+                      <div class="form-group" ng-if="currentRule.displayRuleType == 'Set Params'" ng-repeat="param in setParams track by $index">
                         <span>
                         <input type='text' placeholder="Key" class="form-control set-params param-key" ng-model="currentRule.ruleSetParams.param_keys[$index]"/></span>
-                          <input type='text' placeholder="Value" class="form-control set-params" ng-model="currentRule.ruleSetParams.param_values[$index]"/>
-                          <select class="form-control addTriggerCategory set-params" ng-model="currentRule.ruleSetParams.param_policies[$index]">
-                            <!--<option value="Param policy" selected style="display:none;">Choose rule type</option>-->
-                            <option ng-repeat="(value, caption) in policyList" value="{{value}}">{{caption}}</option>
-                          </select>
-                          <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="setParams.pop();  currentRule.ruleSetParams.param_keys.splice([$index],1); currentRule.ruleSetParams.param_values.splice([$index],1); currentRule.ruleSetParams.param_policies.splice([$index],1);"></i></a>
-                        </div>
-                        <button type="button" class="btn btn-sm btn-default" ng-click="setParams.push(' ');" ng-if="currentRule.displayRuleType == 'Set Params'">Add param</button>
-                      </fieldset>
-                    </form>
-                  </div>
-                </li>
-              </ol>
-            </div>
-          </div>
-          <div class="alert add-rule-error" >
-            <div class="err">
-              <span class="err-code"></span>
-              <span class="err-message"></span>
-              <a class="" data-toggle="collapse" href="#addRuleErrorDetails"
-                 aria-expanded="false" aria-controls="addRuleErrorDetails">
-                more
-              </a>
-            </div>
-            <div id="addRuleErrorDetails" class="collapse" >
-
-            </div>
-          </div>
-          <div class="modal-footer">
-            <hr />
-            <button type="button" class="btn btn-link text-muted" data-dismiss="modal" aria-hidden="true" onclick="ruleFormReset()"><i class="fa fa-times"></i> Cancel</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal" id="addRuleButton" aria-hidden="true" ng-click="addRule()"><i class="fa fa-plus"></i> Add rule</button>
+                        <input type='text' placeholder="Value" class="form-control set-params" ng-model="currentRule.ruleSetParams.param_values[$index]"/>
+                        <select class="form-control addTriggerCategory set-params" ng-model="currentRule.ruleSetParams.param_policies[$index]">
+                          <!--<option value="Param policy" selected style="display:none;">Choose rule type</option>-->
+                          <option ng-repeat="(value, caption) in policyList" value="{{value}}">{{caption}}</option>
+                        </select>
+                        <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="setParams.pop();  currentRule.ruleSetParams.param_keys.splice([$index],1); currentRule.ruleSetParams.param_values.splice([$index],1); currentRule.ruleSetParams.param_policies.splice([$index],1);"></i></a>
+                      </div>
+                      <button type="button" class="btn btn-sm btn-default" ng-click="setParams.push(' ');" ng-if="currentRule.displayRuleType == 'Set Params'">Add param</button>
+                    </fieldset>
+                  </form>
+                </div>
+              </li>
+            </ol>
           </div>
         </div>
-      </div>
-    </div>
+        <div class="alert add-rule-error" >
+          <div class="err">
+            <span class="err-code"></span>
+            <span class="err-message"></span>
+            <a class="" data-toggle="collapse" href="#addRuleErrorDetails"
+               aria-expanded="false" aria-controls="addRuleErrorDetails">
+              more
+            </a>
+          </div>
+          <div id="addRuleErrorDetails" class="collapse" >
 
-    <div id="source-modal" class="modal fade">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h4 class="modal-title">Source Code</h4>
           </div>
-          <div class="modal-body">
-            <pre></pre>
-          </div>
+        </div>
+        <div class="modal-footer">
+          <hr />
+          <button type="button" class="btn btn-link text-muted" data-dismiss="modal" aria-hidden="true" onclick="ruleFormReset()"><i class="fa fa-times"></i> Cancel</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="addRuleButton" aria-hidden="true" ng-click="addRule()"><i class="fa fa-plus"></i> Add rule</button>
         </div>
       </div>
     </div>
   </div>
+
 </div>
-
-<script src="./scripts/jquery.js"></script>
-<script src="./scripts/vendor.js"></script>
-<script src="./scripts/plugins.js"></script>
-<script>
-  $(document).on('click', '.dropdown-menu', function(e) {
-    e.stopPropagation();
-  });
-  function ruleFormReset(){
-    var ruleName = $('#addRuleName');
-    ruleName.removeClass('has-error');
-    ruleName[0].placeholder = 'Enter rule name';
-    var ruleType = $('.rule-type-select');
-    ruleType.removeClass('has-error');
-    ruleType.find('select').css('color', '#666');
-    var paramKey = $('.param-key.ng-empty');
-    paramKey.removeClass('has-error');
-    paramKey.parent().removeClass('has-error');
-    $('.rule-name-input').removeClass('has-error');
-  }
-</script>
-<script>
-  $(document).ready(function () {
-    $('.text-muted').attr('tabindex', '-1');
-
-  });
-</script>
-<script src="./scripts/vendor/modernizr.js"></script>
-
-<script src="./assets/js/foundation.js"></script>
-<script src="./assets/js/templates.js"></script>
-<script src="./assets/js/routes.js"></script>
-<script src="./assets/js/FUSION_CONFIG.js"></script>
-<script src="./assets/js/app.js"></script>
-
-<script src="./scripts/RulesApp.js"></script>
-<script src="./scripts/RulesService.js"></script>
-<script src="./scripts/RulesController.js"></script>
-</body>
-</html>

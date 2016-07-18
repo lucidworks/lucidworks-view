@@ -98,7 +98,7 @@
         }
 
         if (filterQuery.length > 0) {
-          res += "&fq=" + filterQuery.join(" ");
+          res += "&fq=" + filterQuery.join("&fq=");
         }
 
         /*      if (this.values.facets.length > 0) {
@@ -235,7 +235,7 @@
   }
 
   angular
-    .module('lucidworksView.services.controller', ["lucidworksView.services.rules", 'lucidworksView.services.config'])
+    .module('lucidworksView.controllers.rules', ["lucidworksView.services.rules", 'lucidworksView.services.config'])
     .controller('rulesController', ['$scope', '$http', '$timeout', 'RulesService', 'ConfigService',
       function ($scope, $http, $timeout, rulesService, ConfigService) {
 
@@ -322,7 +322,7 @@
             }
           }
 
-          var triggerTags = $('#addTriggerTags')[0];
+          var triggerTags = $('.addTriggerTags')[0];
           if (triggerTags && triggerTags.value) {
             rule.tags = triggerTags.value.split(',');
           }

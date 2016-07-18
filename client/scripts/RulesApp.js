@@ -8,6 +8,8 @@
 
       // Foundation
       'foundation',
+      'foundation.dynamicRouting',
+      'foundation.dynamicRouting.animations',
 
       // Libraries
       'ngOrwell',
@@ -16,9 +18,11 @@
       // Fusion Seed App
       'lucidworksView.services',
       'lucidworksView.controllers',
+      'lucidworksView.controllers.login',
 
       'lucidworksView.services.rules',
-      'lucidworksView.services.controller'
+      'lucidworksView.services.controller',
+      'lucidworksView.services.config.controller'
     ])
     .constant('_', window._) //eslint-disable-line
     .config(config)

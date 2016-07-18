@@ -80,3 +80,7 @@ div.table-footer .btn.btn-sm.btn-link.text-muted{
 #addRule .alert-warning {
   margin: 10px 50px 0 50px;
 }
+
+.modal.add-rule {
+  max-width: 100%;
+}
