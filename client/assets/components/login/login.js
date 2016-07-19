@@ -38,7 +38,7 @@
 
       function success() {
         vm.submitting = false;
-        $state.go('home');
+        $state.go('rules');
       }
 
       function failure(err) {

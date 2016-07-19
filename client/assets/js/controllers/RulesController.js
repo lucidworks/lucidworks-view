@@ -107,6 +107,10 @@
          }*/
 
         return res;
+      },
+
+      logout: function (){
+        AuthService.destroySession();
       }
     }
   })();
@@ -235,9 +239,13 @@
   }
 
   angular
-    .module('lucidworksView.controllers.rules', ["lucidworksView.services.rules", 'lucidworksView.services.config'])
-    .controller('rulesController', ['$scope', '$http', '$timeout', 'RulesService', 'ConfigService',
-      function ($scope, $http, $timeout, rulesService, ConfigService) {
+    .module('lucidworksView.controllers.rules', [
+        'lucidworksView.services.rules',
+        'lucidworksView.services.config',
+        'lucidworksView.services.auth'
+    ])
+    .controller('rulesController', ['$scope', '$http', '$timeout', 'RulesService', 'ConfigService', 'AuthService',
+      function ($scope, $http, $timeout, rulesService, ConfigService, AuthService) {
 
         var rulesConfig = ConfigService.config.rules;
         $scope.types = rulesConfig.types;
