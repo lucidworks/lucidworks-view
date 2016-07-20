@@ -1,0 +1,33 @@
+<div class="detail jira-issue vertical grid-content">
+  <h3 class="subheader">
+
+    <a ng-href="{{::vm.doc.id}}" ng-click="vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank">
+      <field value="::vm.doc.name_s" highlight="vm.highlight[doc.id]" maxlength="200" hkey="name_s"></field>
+    </a>
+  </h3>
+
+  <div class="large-8 xlarge-7 xx-large-6">
+    <p ng-if="::vm.doc.content_txt">
+      <field value="::vm.doc.content_txt" highlight="::vm.highlight[doc.id]" maxlength="200"
+             hkey="content_txt"></field>
+    </p>
+    <div class="detail-row">
+      <div class="type" ng-if="::vm.doc.jira_content_type_s">
+        <field value="::vm.doc.jira_content_type_s" highlight="::vm.highlight[doc.id]" maxlength="200"
+             hkey="jira_content_type_s"></field>
+      </div>
+      <div class="key" ng-if="::vm.doc.parent_s">
+        <a ng-href="{{::vm.doc.id}}" ng-click="vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank">
+          <field value="::vm.doc.key_s" highlight="::vm.highlight[doc.id]" maxlength="200" hkey="key_s"></field>
+        </a>
+      </div>
+      <div class="last-modified" ng-if="::vm.doc.lastModified_dt">
+        <span class="doc-label">Last Modified:</span> <field value="::vm.doc.lastModified_dtFormatted"></field>
+      </div>
+      <div class="lead" ng-if="::vm.doc.lead_s">
+        <span class="doc-label">Lead:</span> <field value="::vm.doc.lead_s" maxlength="200"></field>
+      </div>
+    </div>
+  </div>
+</div>
+

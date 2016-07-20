@@ -62,8 +62,10 @@
    *
    * @param  {Service} $document     Document service
    */
-  function run($document, $rootScope, ConfigService) {
+  function run($document, $rootScope, ConfigService){
     'ngInject';
     $rootScope.title = ConfigService.config.search_app_title;
+
   }
+
 })();

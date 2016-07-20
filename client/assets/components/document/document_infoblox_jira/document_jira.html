@@ -1,0 +1,5 @@
+<article class="grid-block document document-jira row" ng-switch="vm.doc.jira_content_type_s">
+  <infoblox-jira-project ng-switch-when="PROJECT" doc="vm.doc" highlight="vm.highlight"></infoblox-jira-project>
+  <infoblox-jira-issue ng-switch-when="COMMENT" doc="vm.doc" highlight="vm.highlight"></infoblox-jira-issue>
+  <infoblox-jira-issue ng-switch-default doc="vm.doc" highlight="vm.highlight"></infoblox-jira-issue>
+</article>

@@ -1,15 +1,28 @@
 (function() {
   'use strict';
+  var observerHandle = null;
   angular
     .module('lucidworksView.controllers.home', ['lucidworksView.services', 'angucomplete-alt', 'angular-humanize'])
+    .config(Config)
     .controller('HomeController', HomeController);
 
+    
+   /**
+   * register an observable used for triggering the perDocument details pages
+   * as per https://github.com/lucidworks/searchhub/tree/GH-28-doc-view
+   */
+  function Config(OrwellProvider) {
+    'ngInject';
+    OrwellProvider.createObservable('perDocument', {});
+  }
+   
 
-  function HomeController($filter, $timeout, ConfigService, QueryService, URLService, Orwell, AuthService, _, $log) {
+  function HomeController($filter, $timeout, ConfigService, QueryService, URLService, Orwell, AuthService, _, $log,$rootScope,$location) {
 
     'ngInject';
     var hc = this; //eslint-disable-line
     var resultsObservable;
+    var perDocumentObservable;
     var query;
     var sorting;
 
@@ -25,12 +38,17 @@
     function activate() {
       hc.search = doSearch;
       hc.logout = logout;
+      hc.clear = clearSearch;
       hc.appName = ConfigService.config.search_app_title;
       hc.logoLocation = ConfigService.config.logo_location;
       hc.status = 'loading';
       hc.lastQuery = '';
       hc.sorting = {};
       hc.grouped = false;
+      // defaults used by perDocument events
+      hc.perDocument = false;
+      hc.showRecommendations = false;
+      hc.showFacets = true;
 
       query = URLService.getQueryFromUrl();
       //Setting the query object... also populating the the view model
@@ -47,6 +65,71 @@
         createSortList();
 
       });
+
+      /*
+      * When a the observable has a docId put into it, 
+      *  -turn off facets and turn on perDocument 
+      *  The perDocument flag will signal the templates/home_main-content-frame.html
+      *  to switch to the <perdocument> directive in the main view
+      */
+      perDocumentObservable = Orwell.getObservable('perDocument');
+      if(observerHandle === null) {
+        $log.info("HC perD addObserver");
+        observerHandle = perDocumentObservable.addObserver(function (data){
+          $log.info("HC perD observer triggered: ", data);
+          if (data.docId) {
+            hc.perDocument = true;
+            hc.showFacets = false;
+            hc.showRecommendations = true;
+          } else {
+            hc.perDocument = false;
+            hc.showFacets = true;
+            hc.showRecommendations = false;
+            //detail results will have replaced the results documents from solr
+            //with the single detail document.  Rerun query to set it back
+            $timeout(function(){
+              URLService.setQuery(URLService.getQueryFromUrl());
+            });
+          }
+        });
+
+        $rootScope.$on('$routeChangeStart', function(event, next, current) {
+          var x = hc;
+          $log.info('routeChangeStart next:' + next + ' current:' + current);
+        });
+
+        $rootScope.$on('$locationChangeSuccess', function() {
+          var x = hc;
+          $log.info('locationchageSuccess');
+        });
+        $rootScope.$on('$locationChangeStart', function(event, newUrl,oldUrl,newState,oldState) {
+          var x = hc;
+          var y = URLService.getQueryFromUrl();
+          if(hc.perDocument){
+            event.preventDefault();
+            hc.perDocument = false;
+            hc.showFacets = true;
+            hc.showRecommendations = false;
+            $log.info('setting query to oldUrl:' + oldUrl);
+
+            //detail results will have replaced the results documents from solr
+            //with the single detail document.  Rerun query to set it back
+
+            // ALERT: this syntax requires a modification to URLService.getQUeryFromURL
+            URLService.setQuery(URLService.getQueryFromUrl(oldUrl));
+          }
+
+          $log.info('locationChangeStart');
+        });
+
+        $rootScope.$watch(function() { return $location.path() },
+          function(newLocation, oldLocation) {
+            var x = hc;
+            $log.info('location watch newLocation:' + newLocation + ' oldLocation:' + oldLocation);
+          }
+        );
+
+      }
 
       // Force set the query object to change one digest cycle later
       // than the digest cycle of the initial load-rendering
@@ -86,7 +169,7 @@
     // TODO: Refactor this to make sure it detects facet types from available modules.
     function checkForFacets(data){
       if(_.has(data, 'facet_counts')){
-        return (!_.isEmpty(data.facet_counts.facet_fields)) || (!_.isEmpty(data.facet_counts.facet_ranges));
+        return ((!_.isEmpty(data.facet_counts.facet_fields)) || (!_.isEmpty(data.facet_counts.facet_ranges))) && !hc.perDocument;
       }
       else{
         return false;
@@ -106,7 +189,9 @@
       hc.status = status;
     }
 
-
+    function clearSearch(){
+      hc.searchQuery = '*';
+    }
 
     /**
      * Initializes a new search.

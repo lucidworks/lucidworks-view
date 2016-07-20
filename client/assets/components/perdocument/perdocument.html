@@ -1,0 +1,9 @@
+<div class="perDocument" ng-switch="dc.docType">
+  <div ng-if="true" class="returnToSearch"><a ng-click="dc.backToSearchResults()">Return to Search Results</a></div>
+
+   <div ng-repeat="doc in dc.docs" ng-switch="dc.getDocType(doc)" class="doc-results">
+    <details-installbase ng-switch-when="Install Base" doc="doc" expanded="true"></details-installbase>
+    <details-r-n-incident ng-switch-when="RightNow Incidents" doc="doc" expanded="true"></details-r-n-incident>
+    <details-r-n-knowledge ng-switch-when="RightNow Knowledge" doc="doc" expanded="true"></details-r-n-knowledge>
+  </div>
+</div>
