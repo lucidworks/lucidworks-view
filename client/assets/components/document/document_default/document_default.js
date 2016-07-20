@@ -17,7 +17,7 @@
         position: '=',
         highlight: '='
       },
-      replace: true
+      // replace: true
     };
   }
 
@@ -31,7 +31,7 @@
     ///////////
 
     function activate() {
-      vm.doc = processDocument(DocsHelper.concatMultivaluedFields(vm.doc));
+      vm.doc = processDocument(DocsHelper.concatMultivaluedFields(vm.doc),vm.highlight[vm.doc.id]);
     }
 
     /**
@@ -39,7 +39,15 @@
      * @param  {object} doc A single document record
      * @return {object}     The document record with processed properties.
      */
-    function processDocument(doc) {
+    function processDocument(doc, highlight) {
+      // console.log('Document Highlight: ',highlight);
+
+      if (highlight && Object.keys(highlight).length > 0) {
+        if (highlight[highlightKey]) {
+          // the result needs to change here
+          result = highlight[highlightKey];
+        }
+      }
 
       // Populate the additional fields to display
 
@@ -58,6 +66,7 @@
 
       doc.lw_subhead = getField('subhead', doc);
 
+      // this needs to be highlighted
       doc.lw_description = getField('description', doc);
 
       doc.lw_image = getField('image', doc);

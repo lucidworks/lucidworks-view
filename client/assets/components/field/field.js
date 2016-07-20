@@ -54,6 +54,7 @@
     }
 
     function processField(field, highlightKey, highlight, maxlength) {
+    // console.log("Field Highlight:   ",highlight);
       var result = $sanitize(_.escape(field));
       var hasHighlight = false;
 
