@@ -120,7 +120,7 @@ View is open source! Pull requests welcome. This is a great way to give back to 
   gulp package
 ```
 
-Or if you don't have node on your path, you can do:
+Or if you don't have node on your path, you can do something like:
 
 ~/Downloads/node-v5.2.0-linux-x64/bin/npm install
 ~/Downloads/node-v5.2.0-linux-x64/bin/node bower install
