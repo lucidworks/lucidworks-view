@@ -14,3 +14,4 @@ FUSION_CONFIG.*.js
 !FUSION_CONFIG.sample.js
 .jira-prefix
 .project
+installer/Output
