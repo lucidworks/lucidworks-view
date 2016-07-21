@@ -52,3 +52,4 @@ end;
 
 [Run]
 Filename: "{app}\getting-started-on-windows.md"; Description: "View the README file"; Flags: postinstall shellexec skipifsilent
+
