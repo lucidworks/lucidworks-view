@@ -124,7 +124,7 @@ Or if you don't have node on your path, you can do something like:
 
 ~/Downloads/node-v5.2.0-linux-x64/bin/npm install
 ~/Downloads/node-v5.2.0-linux-x64/bin/node bower install
-~/Downloads/node-v5.2.0-linux-x64/bin/node node_modules/gulp/bin/gulp.js build
-~/Downloads/node-v5.2.0-linux-x64/bin/node node_modules/gulp/bin/gulp.js cook
-~/Downloads/node-v5.2.0-linux-x64/bin/node node_modules/gulp/bin/gulp.js package
+~/Downloads/node-v5.2.0-linux-x64/bin/node node_modules/gulp/bin/gulp.js build --buildTarget=linux
+~/Downloads/node-v5.2.0-linux-x64/bin/node node_modules/gulp/bin/gulp.js cook --buildTarget=linux
+~/Downloads/node-v5.2.0-linux-x64/bin/node node_modules/gulp/bin/gulp.js package --buildTarget=linux
 
