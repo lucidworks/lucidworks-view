@@ -23,7 +23,7 @@ DefaultDirName=\lucidworks-view
 DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
 OutputBaseFilename=Lucidworks-View
-SetupIconFile=C:\Users\Administrator\Downloads\Lucidworks-Glyph.ico
+SetupIconFile={#SourcePath}\Lucidworks-Glyph.ico
 Compression=lzma
 SolidCompression=yes
 
@@ -35,7 +35,7 @@ Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environmen
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
-Source: "C:\lucidworks-view\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#SourcePath}\..\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
