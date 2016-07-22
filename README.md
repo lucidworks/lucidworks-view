@@ -104,7 +104,7 @@ Search results from different document types can use different templates.  The `
 
 ## View on Windows
 
-  Follow the directions in `installer/Lucidworks View Windows Installer.md` to get View running on windows.
+  Download the latest view installer from <https://lucidworks.com/products/view> and run it **as an administrator**.
 
 ## What's Next
 

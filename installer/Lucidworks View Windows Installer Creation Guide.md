@@ -4,7 +4,7 @@
 
 Do the following steps from a windows box
 
-1. Pull the latest changes from lucidworks-view repository and build the tar.gz file from Linux. (See the README.md for build instructions on how to build lucidworks-view tar ball)
+1. Pull the latest changes from lucidworks-view repository and build the tar.gz file from Linux. (See the README.md for build instructions on how to build lucidworks-view tar ball or download the latest tar at <https://lucidworks.com/products/view>)
 
 2. Download nodejs x64 MSI installer version <https://nodejs.org/en/download/> for windows same version you are using and install to some directory. We will call this **WINDOW_NODEJS_INSTALL_HOME**.
 
@@ -14,7 +14,7 @@ Do the following steps from a windows box
 	- Copy all the files from **WINDOW_NODEJS_INSTALL_HOME** into **VIEW_HOME**\lib\nodejs
 	- From the lucidworks-view git directory, copy the **installer** directory to **VIEW_HOME**
 	- From the lucidworks-view git directory, copy `*.exe`, `*.cmd` and `*.md `to **VIEW_HOME**
-	
+
 
 4. Get latest version of **inno setup** installed <http://www.jrsoftware.org/isdl.php#stable>
 
