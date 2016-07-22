@@ -12,15 +12,15 @@ Do the following steps from a windows box
 
 	- Delete everything in **VIEW_HOME**\lib\nodejs\\*
 	- Copy all the files from **WINDOW_NODEJS_INSTALL_HOME** into **VIEW_HOME**\lib\nodejs
-	- From the lucidworks-view git directory, copy the **installer** directory to **VIEW_HOME**
-	- From the lucidworks-view git directory, copy `*.exe`, `*.cmd` and `*.md `to **VIEW_HOME**
+	- From the lucidworks-view git directory, copy the **win64** directory to **VIEW_HOME**
+	- From the lucidworks-view\win64 git directory, copy `*.exe`, `*.cmd` and `*.md `to **VIEW_HOME**
 
 
 4. Get latest version of **inno setup** installed <http://www.jrsoftware.org/isdl.php#stable>
 
-5. Delete **VIEW_HOME**\installer\Output\\*
+5. Delete **VIEW_HOME**\win64\Output\\*
 
-6. Launch **VIEW_HOME**\installer\create-installer.cmd
+6. Launch **VIEW_HOME**\win64\create-installer.cmd
 	- This will create the Installer in **VIEW_HOME**\installer\Output directory.
 
 ## How to use the Windows Installer:
