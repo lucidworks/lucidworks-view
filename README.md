@@ -102,6 +102,10 @@ Templates for various UI components are located in client/assets/components.
 
 Search results from different document types can use different templates.  The `client/assets/components/document` directory contains templates for some common document types, plus default templates for all others.  Data types correspond to Connectors in Fusion.  See [Customizing Documents](docs/Customizing_Documents.md) for details about working with these.
 
+## View on Windows
+
+  Follow the directions in `installer/Lucidworks View Windows Installer.md` to get View running on windows.
+
 ## What's Next
 
 For more details about configuring and customizing View, see the [docs](docs/) directory.
