@@ -30,7 +30,7 @@ SolidCompression=yes
 [Registry]
 Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType:expandsz; ValueName:"PATH"; ValueData:"{olddata};{app}\lib\nodejs"; Flags: preservestringtype
 Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType:expandsz; ValueName:"PATH"; ValueData:"{olddata};{app}\node_modules\.bin"; Flags: preservestringtype
-          
+
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
@@ -47,9 +47,8 @@ var
   ErrorCode : Integer ;
 begin
   if CurPageID = wpFinished then
-    ShellExecAsOriginalUser('', ExpandConstant('{app}\install.cmd'), '', '',SW_SHOWNORMAL, ewNoWait, ErrorCode);
+    ShellExecAsOriginalUser('', ExpandConstant('{app}\installer\install.cmd'), '', '',SW_SHOWNORMAL, ewNoWait, ErrorCode);
 end;
 
 [Run]
 Filename: "{app}\getting-started-on-windows.md"; Description: "View the README file"; Flags: postinstall shellexec skipifsilent
-
