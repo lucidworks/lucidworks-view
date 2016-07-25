@@ -7,7 +7,9 @@ var browserSync     = require('browser-sync').create();
 gulp.task('sass', function () {
   var cssnano = $.if(global.isProduction, $.cssnano());
 
-  return gulp.src('client/assets/scss/app.scss')
+  return gulp.src(
+      ['client/assets/scss/app.scss',
+       'client/assets/scss/main.scss'])
     .pipe($.sass({
       includePaths: global.paths.sass,
       outputStyle: (global.isProduction ? 'compressed' : 'nested'),

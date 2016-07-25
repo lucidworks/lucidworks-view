@@ -1,0 +1,4255 @@
+@import "mi-vars";
+
+@font-face {
+    font-family: 'material-icons';
+    src:
+        url('#{$icomoon-font-path}/material-icons.ttf?x3icnq') format('truetype'),
+        url('#{$icomoon-font-path}/material-icons.woff?x3icnq') format('woff'),
+        url('#{$icomoon-font-path}/material-icons.svg?x3icnq#material-icons') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="mi-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'material-icons' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    top: 1px;
+    position: relative;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.mi-3d_rotation {
+    &:before {
+        content: $mi-3d_rotation;
+    }
+}
+.mi-ac_unit {
+    &:before {
+        content: $mi-ac_unit;
+    }
+}
+.mi-alarm {
+    &:before {
+        content: $mi-alarm;
+    }
+}
+.mi-access_alarms {
+    &:before {
+        content: $mi-access_alarms;
+    }
+}
+.mi-schedule {
+    &:before {
+        content: $mi-schedule;
+    }
+}
+.mi-accessibility {
+    &:before {
+        content: $mi-accessibility;
+    }
+}
+.mi-accessible {
+    &:before {
+        content: $mi-accessible;
+    }
+}
+.mi-account_balance {
+    &:before {
+        content: $mi-account_balance;
+    }
+}
+.mi-account_balance_wallet {
+    &:before {
+        content: $mi-account_balance_wallet;
+    }
+}
+.mi-account_box {
+    &:before {
+        content: $mi-account_box;
+    }
+}
+.mi-account_circle {
+    &:before {
+        content: $mi-account_circle;
+    }
+}
+.mi-adb {
+    &:before {
+        content: $mi-adb;
+    }
+}
+.mi-add {
+    &:before {
+        content: $mi-add;
+    }
+}
+.mi-add_a_photo {
+    &:before {
+        content: $mi-add_a_photo;
+    }
+}
+.mi-alarm_add {
+    &:before {
+        content: $mi-alarm_add;
+    }
+}
+.mi-add_alert {
+    &:before {
+        content: $mi-add_alert;
+    }
+}
+.mi-add_box {
+    &:before {
+        content: $mi-add_box;
+    }
+}
+.mi-add_circle {
+    &:before {
+        content: $mi-add_circle;
+    }
+}
+.mi-control_point {
+    &:before {
+        content: $mi-control_point;
+    }
+}
+.mi-add_location {
+    &:before {
+        content: $mi-add_location;
+    }
+}
+.mi-add_shopping_cart {
+    &:before {
+        content: $mi-add_shopping_cart;
+    }
+}
+.mi-queue {
+    &:before {
+        content: $mi-queue;
+    }
+}
+.mi-add_to_queue {
+    &:before {
+        content: $mi-add_to_queue;
+    }
+}
+.mi-adjust {
+    &:before {
+        content: $mi-adjust;
+    }
+}
+.mi-airline_seat_flat {
+    &:before {
+        content: $mi-airline_seat_flat;
+    }
+}
+.mi-airline_seat_flat_angled {
+    &:before {
+        content: $mi-airline_seat_flat_angled;
+    }
+}
+.mi-airline_seat_individual_suite {
+    &:before {
+        content: $mi-airline_seat_individual_suite;
+    }
+}
+.mi-airline_seat_legroom_extra {
+    &:before {
+        content: $mi-airline_seat_legroom_extra;
+    }
+}
+.mi-airline_seat_legroom_normal {
+    &:before {
+        content: $mi-airline_seat_legroom_normal;
+    }
+}
+.mi-airline_seat_legroom_reduced {
+    &:before {
+        content: $mi-airline_seat_legroom_reduced;
+    }
+}
+.mi-airline_seat_recline_extra {
+    &:before {
+        content: $mi-airline_seat_recline_extra;
+    }
+}
+.mi-airline_seat_recline_normal {
+    &:before {
+        content: $mi-airline_seat_recline_normal;
+    }
+}
+.mi-flight {
+    &:before {
+        content: $mi-flight;
+    }
+}
+.mi-airplanemode_inactive {
+    &:before {
+        content: $mi-airplanemode_inactive;
+    }
+}
+.mi-airplay {
+    &:before {
+        content: $mi-airplay;
+    }
+}
+.mi-airport_shuttle {
+    &:before {
+        content: $mi-airport_shuttle;
+    }
+}
+.mi-alarm_off {
+    &:before {
+        content: $mi-alarm_off;
+    }
+}
+.mi-alarm_on {
+    &:before {
+        content: $mi-alarm_on;
+    }
+}
+.mi-album {
+    &:before {
+        content: $mi-album;
+    }
+}
+.mi-all_inclusive {
+    &:before {
+        content: $mi-all_inclusive;
+    }
+}
+.mi-all_out {
+    &:before {
+        content: $mi-all_out;
+    }
+}
+.mi-android {
+    &:before {
+        content: $mi-android;
+    }
+}
+.mi-announcement {
+    &:before {
+        content: $mi-announcement;
+    }
+}
+.mi-apps {
+    &:before {
+        content: $mi-apps;
+    }
+}
+.mi-archive {
+    &:before {
+        content: $mi-archive;
+    }
+}
+.mi-arrow_back {
+    &:before {
+        content: $mi-arrow_back;
+    }
+}
+.mi-arrow_downward {
+    &:before {
+        content: $mi-arrow_downward;
+    }
+}
+.mi-arrow_drop_down {
+    &:before {
+        content: $mi-arrow_drop_down;
+    }
+}
+.mi-arrow_drop_down_circle {
+    &:before {
+        content: $mi-arrow_drop_down_circle;
+    }
+}
+.mi-arrow_drop_up {
+    &:before {
+        content: $mi-arrow_drop_up;
+    }
+}
+.mi-arrow_forward {
+    &:before {
+        content: $mi-arrow_forward;
+    }
+}
+.mi-arrow_upward {
+    &:before {
+        content: $mi-arrow_upward;
+    }
+}
+.mi-art_track {
+    &:before {
+        content: $mi-art_track;
+    }
+}
+.mi-aspect_ratio {
+    &:before {
+        content: $mi-aspect_ratio;
+    }
+}
+.mi-poll {
+    &:before {
+        content: $mi-poll;
+    }
+}
+.mi-assignment {
+    &:before {
+        content: $mi-assignment;
+    }
+}
+.mi-assignment_ind {
+    &:before {
+        content: $mi-assignment_ind;
+    }
+}
+.mi-assignment_late {
+    &:before {
+        content: $mi-assignment_late;
+    }
+}
+.mi-assignment_return {
+    &:before {
+        content: $mi-assignment_return;
+    }
+}
+.mi-assignment_returned {
+    &:before {
+        content: $mi-assignment_returned;
+    }
+}
+.mi-assignment_turned_in {
+    &:before {
+        content: $mi-assignment_turned_in;
+    }
+}
+.mi-assistant {
+    &:before {
+        content: $mi-assistant;
+    }
+}
+.mi-flag {
+    &:before {
+        content: $mi-flag;
+    }
+}
+.mi-attach_file {
+    &:before {
+        content: $mi-attach_file;
+    }
+}
+.mi-attach_money {
+    &:before {
+        content: $mi-attach_money;
+    }
+}
+.mi-attachment {
+    &:before {
+        content: $mi-attachment;
+    }
+}
+.mi-audiotrack {
+    &:before {
+        content: $mi-audiotrack;
+    }
+}
+.mi-autorenew {
+    &:before {
+        content: $mi-autorenew;
+    }
+}
+.mi-av_timer {
+    &:before {
+        content: $mi-av_timer;
+    }
+}
+.mi-backspace {
+    &:before {
+        content: $mi-backspace;
+    }
+}
+.mi-cloud_upload {
+    &:before {
+        content: $mi-cloud_upload;
+    }
+}
+.mi-battery_alert {
+    &:before {
+        content: $mi-battery_alert;
+    }
+}
+.mi-battery_charging_full {
+    &:before {
+        content: $mi-battery_charging_full;
+    }
+}
+.mi-battery_std {
+    &:before {
+        content: $mi-battery_std;
+    }
+}
+.mi-battery_unknown {
+    &:before {
+        content: $mi-battery_unknown;
+    }
+}
+.mi-beach_access {
+    &:before {
+        content: $mi-beach_access;
+    }
+}
+.mi-beenhere {
+    &:before {
+        content: $mi-beenhere;
+    }
+}
+.mi-block {
+    &:before {
+        content: $mi-block;
+    }
+}
+.mi-bluetooth {
+    &:before {
+        content: $mi-bluetooth;
+    }
+}
+.mi-bluetooth_searching {
+    &:before {
+        content: $mi-bluetooth_searching;
+    }
+}
+.mi-bluetooth_connected {
+    &:before {
+        content: $mi-bluetooth_connected;
+    }
+}
+.mi-bluetooth_disabled {
+    &:before {
+        content: $mi-bluetooth_disabled;
+    }
+}
+.mi-blur_circular {
+    &:before {
+        content: $mi-blur_circular;
+    }
+}
+.mi-blur_linear {
+    &:before {
+        content: $mi-blur_linear;
+    }
+}
+.mi-blur_off {
+    &:before {
+        content: $mi-blur_off;
+    }
+}
+.mi-blur_on {
+    &:before {
+        content: $mi-blur_on;
+    }
+}
+.mi-class {
+    &:before {
+        content: $mi-class;
+    }
+}
+.mi-turned_in {
+    &:before {
+        content: $mi-turned_in;
+    }
+}
+.mi-turned_in_not {
+    &:before {
+        content: $mi-turned_in_not;
+    }
+}
+.mi-border_all {
+    &:before {
+        content: $mi-border_all;
+    }
+}
+.mi-border_bottom {
+    &:before {
+        content: $mi-border_bottom;
+    }
+}
+.mi-border_clear {
+    &:before {
+        content: $mi-border_clear;
+    }
+}
+.mi-border_color {
+    &:before {
+        content: $mi-border_color;
+    }
+}
+.mi-border_horizontal {
+    &:before {
+        content: $mi-border_horizontal;
+    }
+}
+.mi-border_inner {
+    &:before {
+        content: $mi-border_inner;
+    }
+}
+.mi-border_left {
+    &:before {
+        content: $mi-border_left;
+    }
+}
+.mi-border_outer {
+    &:before {
+        content: $mi-border_outer;
+    }
+}
+.mi-border_right {
+    &:before {
+        content: $mi-border_right;
+    }
+}
+.mi-border_style {
+    &:before {
+        content: $mi-border_style;
+    }
+}
+.mi-border_top {
+    &:before {
+        content: $mi-border_top;
+    }
+}
+.mi-border_vertical {
+    &:before {
+        content: $mi-border_vertical;
+    }
+}
+.mi-branding_watermark {
+    &:before {
+        content: $mi-branding_watermark;
+    }
+}
+.mi-brightness_1 {
+    &:before {
+        content: $mi-brightness_1;
+    }
+}
+.mi-brightness_2 {
+    &:before {
+        content: $mi-brightness_2;
+    }
+}
+.mi-brightness_3 {
+    &:before {
+        content: $mi-brightness_3;
+    }
+}
+.mi-brightness_4 {
+    &:before {
+        content: $mi-brightness_4;
+    }
+}
+.mi-brightness_low {
+    &:before {
+        content: $mi-brightness_low;
+    }
+}
+.mi-brightness_medium {
+    &:before {
+        content: $mi-brightness_medium;
+    }
+}
+.mi-brightness_high {
+    &:before {
+        content: $mi-brightness_high;
+    }
+}
+.mi-brightness_auto {
+    &:before {
+        content: $mi-brightness_auto;
+    }
+}
+.mi-broken_image {
+    &:before {
+        content: $mi-broken_image;
+    }
+}
+.mi-brush {
+    &:before {
+        content: $mi-brush;
+    }
+}
+.mi-bubble_chart {
+    &:before {
+        content: $mi-bubble_chart;
+    }
+}
+.mi-bug_report {
+    &:before {
+        content: $mi-bug_report;
+    }
+}
+.mi-build {
+    &:before {
+        content: $mi-build;
+    }
+}
+.mi-burst_mode {
+    &:before {
+        content: $mi-burst_mode;
+    }
+}
+.mi-domain {
+    &:before {
+        content: $mi-domain;
+    }
+}
+.mi-business_center {
+    &:before {
+        content: $mi-business_center;
+    }
+}
+.mi-cached {
+    &:before {
+        content: $mi-cached;
+    }
+}
+.mi-cake {
+    &:before {
+        content: $mi-cake;
+    }
+}
+.mi-phone {
+    &:before {
+        content: $mi-phone;
+    }
+}
+.mi-call_end {
+    &:before {
+        content: $mi-call_end;
+    }
+}
+.mi-call_made {
+    &:before {
+        content: $mi-call_made;
+    }
+}
+.mi-merge_type {
+    &:before {
+        content: $mi-merge_type;
+    }
+}
+.mi-call_missed {
+    &:before {
+        content: $mi-call_missed;
+    }
+}
+.mi-call_missed_outgoing {
+    &:before {
+        content: $mi-call_missed_outgoing;
+    }
+}
+.mi-call_received {
+    &:before {
+        content: $mi-call_received;
+    }
+}
+.mi-call_split {
+    &:before {
+        content: $mi-call_split;
+    }
+}
+.mi-call_to_action {
+    &:before {
+        content: $mi-call_to_action;
+    }
+}
+.mi-camera {
+    &:before {
+        content: $mi-camera;
+    }
+}
+.mi-photo_camera {
+    &:before {
+        content: $mi-photo_camera;
+    }
+}
+.mi-camera_enhance {
+    &:before {
+        content: $mi-camera_enhance;
+    }
+}
+.mi-camera_front {
+    &:before {
+        content: $mi-camera_front;
+    }
+}
+.mi-camera_rear {
+    &:before {
+        content: $mi-camera_rear;
+    }
+}
+.mi-camera_roll {
+    &:before {
+        content: $mi-camera_roll;
+    }
+}
+.mi-cancel {
+    &:before {
+        content: $mi-cancel;
+    }
+}
+.mi-redeem {
+    &:before {
+        content: $mi-redeem;
+    }
+}
+.mi-card_membership {
+    &:before {
+        content: $mi-card_membership;
+    }
+}
+.mi-card_travel {
+    &:before {
+        content: $mi-card_travel;
+    }
+}
+.mi-casino {
+    &:before {
+        content: $mi-casino;
+    }
+}
+.mi-cast {
+    &:before {
+        content: $mi-cast;
+    }
+}
+.mi-cast_connected {
+    &:before {
+        content: $mi-cast_connected;
+    }
+}
+.mi-center_focus_strong {
+    &:before {
+        content: $mi-center_focus_strong;
+    }
+}
+.mi-center_focus_weak {
+    &:before {
+        content: $mi-center_focus_weak;
+    }
+}
+.mi-change_history {
+    &:before {
+        content: $mi-change_history;
+    }
+}
+.mi-chat {
+    &:before {
+        content: $mi-chat;
+    }
+}
+.mi-chat_bubble {
+    &:before {
+        content: $mi-chat_bubble;
+    }
+}
+.mi-chat_bubble_outline {
+    &:before {
+        content: $mi-chat_bubble_outline;
+    }
+}
+.mi-check {
+    &:before {
+        content: $mi-check;
+    }
+}
+.mi-check_box {
+    &:before {
+        content: $mi-check_box;
+    }
+}
+.mi-check_box_outline_blank {
+    &:before {
+        content: $mi-check_box_outline_blank;
+    }
+}
+.mi-check_circle {
+    &:before {
+        content: $mi-check_circle;
+    }
+}
+.mi-navigate_before {
+    &:before {
+        content: $mi-navigate_before;
+    }
+}
+.mi-navigate_next {
+    &:before {
+        content: $mi-navigate_next;
+    }
+}
+.mi-child_care {
+    &:before {
+        content: $mi-child_care;
+    }
+}
+.mi-child_friendly {
+    &:before {
+        content: $mi-child_friendly;
+    }
+}
+.mi-chrome_reader_mode {
+    &:before {
+        content: $mi-chrome_reader_mode;
+    }
+}
+.mi-close {
+    &:before {
+        content: $mi-close;
+    }
+}
+.mi-clear_all {
+    &:before {
+        content: $mi-clear_all;
+    }
+}
+.mi-closed_caption {
+    &:before {
+        content: $mi-closed_caption;
+    }
+}
+.mi-wb_cloudy {
+    &:before {
+        content: $mi-wb_cloudy;
+    }
+}
+.mi-cloud_circle {
+    &:before {
+        content: $mi-cloud_circle;
+    }
+}
+.mi-cloud_done {
+    &:before {
+        content: $mi-cloud_done;
+    }
+}
+.mi-cloud_download {
+    &:before {
+        content: $mi-cloud_download;
+    }
+}
+.mi-cloud_off {
+    &:before {
+        content: $mi-cloud_off;
+    }
+}
+.mi-cloud_queue {
+    &:before {
+        content: $mi-cloud_queue;
+    }
+}
+.mi-code {
+    &:before {
+        content: $mi-code;
+    }
+}
+.mi-photo_library {
+    &:before {
+        content: $mi-photo_library;
+    }
+}
+.mi-collections_bookmark {
+    &:before {
+        content: $mi-collections_bookmark;
+    }
+}
+.mi-palette {
+    &:before {
+        content: $mi-palette;
+    }
+}
+.mi-colorize {
+    &:before {
+        content: $mi-colorize;
+    }
+}
+.mi-comment {
+    &:before {
+        content: $mi-comment;
+    }
+}
+.mi-compare {
+    &:before {
+        content: $mi-compare;
+    }
+}
+.mi-compare_arrows {
+    &:before {
+        content: $mi-compare_arrows;
+    }
+}
+.mi-laptop {
+    &:before {
+        content: $mi-laptop;
+    }
+}
+.mi-confirmation_number {
+    &:before {
+        content: $mi-confirmation_number;
+    }
+}
+.mi-contact_mail {
+    &:before {
+        content: $mi-contact_mail;
+    }
+}
+.mi-contact_phone {
+    &:before {
+        content: $mi-contact_phone;
+    }
+}
+.mi-contacts {
+    &:before {
+        content: $mi-contacts;
+    }
+}
+.mi-content_copy {
+    &:before {
+        content: $mi-content_copy;
+    }
+}
+.mi-content_cut {
+    &:before {
+        content: $mi-content_cut;
+    }
+}
+.mi-content_paste {
+    &:before {
+        content: $mi-content_paste;
+    }
+}
+.mi-control_point_duplicate {
+    &:before {
+        content: $mi-control_point_duplicate;
+    }
+}
+.mi-copyright {
+    &:before {
+        content: $mi-copyright;
+    }
+}
+.mi-mode_edit {
+    &:before {
+        content: $mi-mode_edit;
+    }
+}
+.mi-create_new_folder {
+    &:before {
+        content: $mi-create_new_folder;
+    }
+}
+.mi-payment {
+    &:before {
+        content: $mi-payment;
+    }
+}
+.mi-crop {
+    &:before {
+        content: $mi-crop;
+    }
+}
+.mi-crop_16_9 {
+    &:before {
+        content: $mi-crop_16_9;
+    }
+}
+.mi-crop_3_2 {
+    &:before {
+        content: $mi-crop_3_2;
+    }
+}
+.mi-crop_landscape {
+    &:before {
+        content: $mi-crop_landscape;
+    }
+}
+.mi-crop_7_5 {
+    &:before {
+        content: $mi-crop_7_5;
+    }
+}
+.mi-crop_din {
+    &:before {
+        content: $mi-crop_din;
+    }
+}
+.mi-crop_free {
+    &:before {
+        content: $mi-crop_free;
+    }
+}
+.mi-crop_original {
+    &:before {
+        content: $mi-crop_original;
+    }
+}
+.mi-crop_portrait {
+    &:before {
+        content: $mi-crop_portrait;
+    }
+}
+.mi-crop_rotate {
+    &:before {
+        content: $mi-crop_rotate;
+    }
+}
+.mi-crop_square {
+    &:before {
+        content: $mi-crop_square;
+    }
+}
+.mi-dashboard {
+    &:before {
+        content: $mi-dashboard;
+    }
+}
+.mi-data_usage {
+    &:before {
+        content: $mi-data_usage;
+    }
+}
+.mi-date_range {
+    &:before {
+        content: $mi-date_range;
+    }
+}
+.mi-dehaze {
+    &:before {
+        content: $mi-dehaze;
+    }
+}
+.mi-delete {
+    &:before {
+        content: $mi-delete;
+    }
+}
+.mi-delete_forever {
+    &:before {
+        content: $mi-delete_forever;
+    }
+}
+.mi-delete_sweep {
+    &:before {
+        content: $mi-delete_sweep;
+    }
+}
+.mi-description {
+    &:before {
+        content: $mi-description;
+    }
+}
+.mi-desktop_mac {
+    &:before {
+        content: $mi-desktop_mac;
+    }
+}
+.mi-desktop_windows {
+    &:before {
+        content: $mi-desktop_windows;
+    }
+}
+.mi-details {
+    &:before {
+        content: $mi-details;
+    }
+}
+.mi-developer_board {
+    &:before {
+        content: $mi-developer_board;
+    }
+}
+.mi-developer_mode {
+    &:before {
+        content: $mi-developer_mode;
+    }
+}
+.mi-device_hub {
+    &:before {
+        content: $mi-device_hub;
+    }
+}
+.mi-phonelink {
+    &:before {
+        content: $mi-phonelink;
+    }
+}
+.mi-devices_other {
+    &:before {
+        content: $mi-devices_other;
+    }
+}
+.mi-dialer_sip {
+    &:before {
+        content: $mi-dialer_sip;
+    }
+}
+.mi-dialpad {
+    &:before {
+        content: $mi-dialpad;
+    }
+}
+.mi-directions {
+    &:before {
+        content: $mi-directions;
+    }
+}
+.mi-directions_bike {
+    &:before {
+        content: $mi-directions_bike;
+    }
+}
+.mi-directions_boat {
+    &:before {
+        content: $mi-directions_boat;
+    }
+}
+.mi-directions_bus {
+    &:before {
+        content: $mi-directions_bus;
+    }
+}
+.mi-directions_car {
+    &:before {
+        content: $mi-directions_car;
+    }
+}
+.mi-directions_railway {
+    &:before {
+        content: $mi-directions_railway;
+    }
+}
+.mi-directions_run {
+    &:before {
+        content: $mi-directions_run;
+    }
+}
+.mi-directions_transit {
+    &:before {
+        content: $mi-directions_transit;
+    }
+}
+.mi-directions_walk {
+    &:before {
+        content: $mi-directions_walk;
+    }
+}
+.mi-disc_full {
+    &:before {
+        content: $mi-disc_full;
+    }
+}
+.mi-dns {
+    &:before {
+        content: $mi-dns;
+    }
+}
+.mi-not_interested {
+    &:before {
+        content: $mi-not_interested;
+    }
+}
+.mi-do_not_disturb_alt {
+    &:before {
+        content: $mi-do_not_disturb_alt;
+    }
+}
+.mi-do_not_disturb_off {
+    &:before {
+        content: $mi-do_not_disturb_off;
+    }
+}
+.mi-remove_circle {
+    &:before {
+        content: $mi-remove_circle;
+    }
+}
+.mi-dock {
+    &:before {
+        content: $mi-dock;
+    }
+}
+.mi-done {
+    &:before {
+        content: $mi-done;
+    }
+}
+.mi-done_all {
+    &:before {
+        content: $mi-done_all;
+    }
+}
+.mi-donut_large {
+    &:before {
+        content: $mi-donut_large;
+    }
+}
+.mi-donut_small {
+    &:before {
+        content: $mi-donut_small;
+    }
+}
+.mi-drafts {
+    &:before {
+        content: $mi-drafts;
+    }
+}
+.mi-drag_handle {
+    &:before {
+        content: $mi-drag_handle;
+    }
+}
+.mi-time_to_leave {
+    &:before {
+        content: $mi-time_to_leave;
+    }
+}
+.mi-dvr {
+    &:before {
+        content: $mi-dvr;
+    }
+}
+.mi-edit_location {
+    &:before {
+        content: $mi-edit_location;
+    }
+}
+.mi-eject {
+    &:before {
+        content: $mi-eject;
+    }
+}
+.mi-markunread {
+    &:before {
+        content: $mi-markunread;
+    }
+}
+.mi-enhanced_encryption {
+    &:before {
+        content: $mi-enhanced_encryption;
+    }
+}
+.mi-equalizer {
+    &:before {
+        content: $mi-equalizer;
+    }
+}
+.mi-error {
+    &:before {
+        content: $mi-error;
+    }
+}
+.mi-error_outline {
+    &:before {
+        content: $mi-error_outline;
+    }
+}
+.mi-euro_symbol {
+    &:before {
+        content: $mi-euro_symbol;
+    }
+}
+.mi-ev_station {
+    &:before {
+        content: $mi-ev_station;
+    }
+}
+.mi-insert_invitation {
+    &:before {
+        content: $mi-insert_invitation;
+    }
+}
+.mi-event_available {
+    &:before {
+        content: $mi-event_available;
+    }
+}
+.mi-event_busy {
+    &:before {
+        content: $mi-event_busy;
+    }
+}
+.mi-event_note {
+    &:before {
+        content: $mi-event_note;
+    }
+}
+.mi-event_seat {
+    &:before {
+        content: $mi-event_seat;
+    }
+}
+.mi-exit_to_app {
+    &:before {
+        content: $mi-exit_to_app;
+    }
+}
+.mi-expand_less {
+    &:before {
+        content: $mi-expand_less;
+    }
+}
+.mi-expand_more {
+    &:before {
+        content: $mi-expand_more;
+    }
+}
+.mi-explicit {
+    &:before {
+        content: $mi-explicit;
+    }
+}
+.mi-explore {
+    &:before {
+        content: $mi-explore;
+    }
+}
+.mi-exposure {
+    &:before {
+        content: $mi-exposure;
+    }
+}
+.mi-exposure_neg_1 {
+    &:before {
+        content: $mi-exposure_neg_1;
+    }
+}
+.mi-exposure_neg_2 {
+    &:before {
+        content: $mi-exposure_neg_2;
+    }
+}
+.mi-exposure_plus_1 {
+    &:before {
+        content: $mi-exposure_plus_1;
+    }
+}
+.mi-exposure_plus_2 {
+    &:before {
+        content: $mi-exposure_plus_2;
+    }
+}
+.mi-exposure_zero {
+    &:before {
+        content: $mi-exposure_zero;
+    }
+}
+.mi-extension {
+    &:before {
+        content: $mi-extension;
+    }
+}
+.mi-face {
+    &:before {
+        content: $mi-face;
+    }
+}
+.mi-fast_forward {
+    &:before {
+        content: $mi-fast_forward;
+    }
+}
+.mi-fast_rewind {
+    &:before {
+        content: $mi-fast_rewind;
+    }
+}
+.mi-favorite {
+    &:before {
+        content: $mi-favorite;
+    }
+}
+.mi-favorite_border {
+    &:before {
+        content: $mi-favorite_border;
+    }
+}
+.mi-featured_play_list {
+    &:before {
+        content: $mi-featured_play_list;
+    }
+}
+.mi-featured_video {
+    &:before {
+        content: $mi-featured_video;
+    }
+}
+.mi-sms_failed {
+    &:before {
+        content: $mi-sms_failed;
+    }
+}
+.mi-fiber_dvr {
+    &:before {
+        content: $mi-fiber_dvr;
+    }
+}
+.mi-fiber_manual_record {
+    &:before {
+        content: $mi-fiber_manual_record;
+    }
+}
+.mi-fiber_new {
+    &:before {
+        content: $mi-fiber_new;
+    }
+}
+.mi-fiber_pin {
+    &:before {
+        content: $mi-fiber_pin;
+    }
+}
+.mi-fiber_smart_record {
+    &:before {
+        content: $mi-fiber_smart_record;
+    }
+}
+.mi-get_app {
+    &:before {
+        content: $mi-get_app;
+    }
+}
+.mi-file_upload {
+    &:before {
+        content: $mi-file_upload;
+    }
+}
+.mi-filter {
+    &:before {
+        content: $mi-filter;
+    }
+}
+.mi-filter_1 {
+    &:before {
+        content: $mi-filter_1;
+    }
+}
+.mi-filter_2 {
+    &:before {
+        content: $mi-filter_2;
+    }
+}
+.mi-filter_3 {
+    &:before {
+        content: $mi-filter_3;
+    }
+}
+.mi-filter_4 {
+    &:before {
+        content: $mi-filter_4;
+    }
+}
+.mi-filter_5 {
+    &:before {
+        content: $mi-filter_5;
+    }
+}
+.mi-filter_6 {
+    &:before {
+        content: $mi-filter_6;
+    }
+}
+.mi-filter_7 {
+    &:before {
+        content: $mi-filter_7;
+    }
+}
+.mi-filter_8 {
+    &:before {
+        content: $mi-filter_8;
+    }
+}
+.mi-filter_9 {
+    &:before {
+        content: $mi-filter_9;
+    }
+}
+.mi-filter_9_plus {
+    &:before {
+        content: $mi-filter_9_plus;
+    }
+}
+.mi-filter_b_and_w {
+    &:before {
+        content: $mi-filter_b_and_w;
+    }
+}
+.mi-filter_center_focus {
+    &:before {
+        content: $mi-filter_center_focus;
+    }
+}
+.mi-filter_drama {
+    &:before {
+        content: $mi-filter_drama;
+    }
+}
+.mi-filter_frames {
+    &:before {
+        content: $mi-filter_frames;
+    }
+}
+.mi-terrain {
+    &:before {
+        content: $mi-terrain;
+    }
+}
+.mi-filter_list {
+    &:before {
+        content: $mi-filter_list;
+    }
+}
+.mi-filter_none {
+    &:before {
+        content: $mi-filter_none;
+    }
+}
+.mi-filter_tilt_shift {
+    &:before {
+        content: $mi-filter_tilt_shift;
+    }
+}
+.mi-filter_vintage {
+    &:before {
+        content: $mi-filter_vintage;
+    }
+}
+.mi-find_in_page {
+    &:before {
+        content: $mi-find_in_page;
+    }
+}
+.mi-find_replace {
+    &:before {
+        content: $mi-find_replace;
+    }
+}
+.mi-fingerprint {
+    &:before {
+        content: $mi-fingerprint;
+    }
+}
+.mi-first_page {
+    &:before {
+        content: $mi-first_page;
+    }
+}
+.mi-fitness_center {
+    &:before {
+        content: $mi-fitness_center;
+    }
+}
+.mi-flare {
+    &:before {
+        content: $mi-flare;
+    }
+}
+.mi-flash_auto {
+    &:before {
+        content: $mi-flash_auto;
+    }
+}
+.mi-flash_off {
+    &:before {
+        content: $mi-flash_off;
+    }
+}
+.mi-flash_on {
+    &:before {
+        content: $mi-flash_on;
+    }
+}
+.mi-flight_land {
+    &:before {
+        content: $mi-flight_land;
+    }
+}
+.mi-flight_takeoff {
+    &:before {
+        content: $mi-flight_takeoff;
+    }
+}
+.mi-flip {
+    &:before {
+        content: $mi-flip;
+    }
+}
+.mi-flip_to_back {
+    &:before {
+        content: $mi-flip_to_back;
+    }
+}
+.mi-flip_to_front {
+    &:before {
+        content: $mi-flip_to_front;
+    }
+}
+.mi-folder {
+    &:before {
+        content: $mi-folder;
+    }
+}
+.mi-folder_open {
+    &:before {
+        content: $mi-folder_open;
+    }
+}
+.mi-folder_shared {
+    &:before {
+        content: $mi-folder_shared;
+    }
+}
+.mi-folder_special {
+    &:before {
+        content: $mi-folder_special;
+    }
+}
+.mi-font_download {
+    &:before {
+        content: $mi-font_download;
+    }
+}
+.mi-format_align_center {
+    &:before {
+        content: $mi-format_align_center;
+    }
+}
+.mi-format_align_justify {
+    &:before {
+        content: $mi-format_align_justify;
+    }
+}
+.mi-format_align_left {
+    &:before {
+        content: $mi-format_align_left;
+    }
+}
+.mi-format_align_right {
+    &:before {
+        content: $mi-format_align_right;
+    }
+}
+.mi-format_bold {
+    &:before {
+        content: $mi-format_bold;
+    }
+}
+.mi-format_clear {
+    &:before {
+        content: $mi-format_clear;
+    }
+}
+.mi-format_color_fill {
+    &:before {
+        content: $mi-format_color_fill;
+    }
+}
+.mi-format_color_reset {
+    &:before {
+        content: $mi-format_color_reset;
+    }
+}
+.mi-format_color_text {
+    &:before {
+        content: $mi-format_color_text;
+    }
+}
+.mi-format_indent_decrease {
+    &:before {
+        content: $mi-format_indent_decrease;
+    }
+}
+.mi-format_indent_increase {
+    &:before {
+        content: $mi-format_indent_increase;
+    }
+}
+.mi-format_italic {
+    &:before {
+        content: $mi-format_italic;
+    }
+}
+.mi-format_line_spacing {
+    &:before {
+        content: $mi-format_line_spacing;
+    }
+}
+.mi-format_list_bulleted {
+    &:before {
+        content: $mi-format_list_bulleted;
+    }
+}
+.mi-format_list_numbered {
+    &:before {
+        content: $mi-format_list_numbered;
+    }
+}
+.mi-format_paint {
+    &:before {
+        content: $mi-format_paint;
+    }
+}
+.mi-format_quote {
+    &:before {
+        content: $mi-format_quote;
+    }
+}
+.mi-format_shapes {
+    &:before {
+        content: $mi-format_shapes;
+    }
+}
+.mi-format_size {
+    &:before {
+        content: $mi-format_size;
+    }
+}
+.mi-format_strikethrough {
+    &:before {
+        content: $mi-format_strikethrough;
+    }
+}
+.mi-format_textdirection_l_to_r {
+    &:before {
+        content: $mi-format_textdirection_l_to_r;
+    }
+}
+.mi-format_textdirection_r_to_l {
+    &:before {
+        content: $mi-format_textdirection_r_to_l;
+    }
+}
+.mi-format_underlined {
+    &:before {
+        content: $mi-format_underlined;
+    }
+}
+.mi-question_answer {
+    &:before {
+        content: $mi-question_answer;
+    }
+}
+.mi-forward {
+    &:before {
+        content: $mi-forward;
+    }
+}
+.mi-forward_10 {
+    &:before {
+        content: $mi-forward_10;
+    }
+}
+.mi-forward_30 {
+    &:before {
+        content: $mi-forward_30;
+    }
+}
+.mi-forward_5 {
+    &:before {
+        content: $mi-forward_5;
+    }
+}
+.mi-free_breakfast {
+    &:before {
+        content: $mi-free_breakfast;
+    }
+}
+.mi-fullscreen {
+    &:before {
+        content: $mi-fullscreen;
+    }
+}
+.mi-fullscreen_exit {
+    &:before {
+        content: $mi-fullscreen_exit;
+    }
+}
+.mi-functions {
+    &:before {
+        content: $mi-functions;
+    }
+}
+.mi-g_translate {
+    &:before {
+        content: $mi-g_translate;
+    }
+}
+.mi-games {
+    &:before {
+        content: $mi-games;
+    }
+}
+.mi-gavel {
+    &:before {
+        content: $mi-gavel;
+    }
+}
+.mi-gesture {
+    &:before {
+        content: $mi-gesture;
+    }
+}
+.mi-gif {
+    &:before {
+        content: $mi-gif;
+    }
+}
+.mi-goat {
+    &:before {
+        content: $mi-goat;
+    }
+}
+.mi-golf_course {
+    &:before {
+        content: $mi-golf_course;
+    }
+}
+.mi-my_location {
+    &:before {
+        content: $mi-my_location;
+    }
+}
+.mi-location_searching {
+    &:before {
+        content: $mi-location_searching;
+    }
+}
+.mi-location_disabled {
+    &:before {
+        content: $mi-location_disabled;
+    }
+}
+.mi-star {
+    &:before {
+        content: $mi-star;
+    }
+}
+.mi-gradient {
+    &:before {
+        content: $mi-gradient;
+    }
+}
+.mi-grain {
+    &:before {
+        content: $mi-grain;
+    }
+}
+.mi-graphic_eq {
+    &:before {
+        content: $mi-graphic_eq;
+    }
+}
+.mi-grid_off {
+    &:before {
+        content: $mi-grid_off;
+    }
+}
+.mi-grid_on {
+    &:before {
+        content: $mi-grid_on;
+    }
+}
+.mi-people {
+    &:before {
+        content: $mi-people;
+    }
+}
+.mi-group_add {
+    &:before {
+        content: $mi-group_add;
+    }
+}
+.mi-group_work {
+    &:before {
+        content: $mi-group_work;
+    }
+}
+.mi-hd {
+    &:before {
+        content: $mi-hd;
+    }
+}
+.mi-hdr_off {
+    &:before {
+        content: $mi-hdr_off;
+    }
+}
+.mi-hdr_on {
+    &:before {
+        content: $mi-hdr_on;
+    }
+}
+.mi-hdr_strong {
+    &:before {
+        content: $mi-hdr_strong;
+    }
+}
+.mi-hdr_weak {
+    &:before {
+        content: $mi-hdr_weak;
+    }
+}
+.mi-headset {
+    &:before {
+        content: $mi-headset;
+    }
+}
+.mi-headset_mic {
+    &:before {
+        content: $mi-headset_mic;
+    }
+}
+.mi-healing {
+    &:before {
+        content: $mi-healing;
+    }
+}
+.mi-hearing {
+    &:before {
+        content: $mi-hearing;
+    }
+}
+.mi-help {
+    &:before {
+        content: $mi-help;
+    }
+}
+.mi-help_outline {
+    &:before {
+        content: $mi-help_outline;
+    }
+}
+.mi-high_quality {
+    &:before {
+        content: $mi-high_quality;
+    }
+}
+.mi-highlight {
+    &:before {
+        content: $mi-highlight;
+    }
+}
+.mi-highlight_off {
+    &:before {
+        content: $mi-highlight_off;
+    }
+}
+.mi-restore {
+    &:before {
+        content: $mi-restore;
+    }
+}
+.mi-home {
+    &:before {
+        content: $mi-home;
+    }
+}
+.mi-hot_tub {
+    &:before {
+        content: $mi-hot_tub;
+    }
+}
+.mi-local_hotel {
+    &:before {
+        content: $mi-local_hotel;
+    }
+}
+.mi-hourglass_empty {
+    &:before {
+        content: $mi-hourglass_empty;
+    }
+}
+.mi-hourglass_full {
+    &:before {
+        content: $mi-hourglass_full;
+    }
+}
+.mi-http {
+    &:before {
+        content: $mi-http;
+    }
+}
+.mi-lock {
+    &:before {
+        content: $mi-lock;
+    }
+}
+.mi-photo {
+    &:before {
+        content: $mi-photo;
+    }
+}
+.mi-image_aspect_ratio {
+    &:before {
+        content: $mi-image_aspect_ratio;
+    }
+}
+.mi-import_contacts {
+    &:before {
+        content: $mi-import_contacts;
+    }
+}
+.mi-import_export {
+    &:before {
+        content: $mi-import_export;
+    }
+}
+.mi-important_devices {
+    &:before {
+        content: $mi-important_devices;
+    }
+}
+.mi-inbox {
+    &:before {
+        content: $mi-inbox;
+    }
+}
+.mi-indeterminate_check_box {
+    &:before {
+        content: $mi-indeterminate_check_box;
+    }
+}
+.mi-info {
+    &:before {
+        content: $mi-info;
+    }
+}
+.mi-info_outline {
+    &:before {
+        content: $mi-info_outline;
+    }
+}
+.mi-input {
+    &:before {
+        content: $mi-input;
+    }
+}
+.mi-insert_comment {
+    &:before {
+        content: $mi-insert_comment;
+    }
+}
+.mi-insert_drive_file {
+    &:before {
+        content: $mi-insert_drive_file;
+    }
+}
+.mi-tag_faces {
+    &:before {
+        content: $mi-tag_faces;
+    }
+}
+.mi-link {
+    &:before {
+        content: $mi-link;
+    }
+}
+.mi-invert_colors {
+    &:before {
+        content: $mi-invert_colors;
+    }
+}
+.mi-invert_colors_off {
+    &:before {
+        content: $mi-invert_colors_off;
+    }
+}
+.mi-iso {
+    &:before {
+        content: $mi-iso;
+    }
+}
+.mi-keyboard {
+    &:before {
+        content: $mi-keyboard;
+    }
+}
+.mi-keyboard_arrow_down {
+    &:before {
+        content: $mi-keyboard_arrow_down;
+    }
+}
+.mi-keyboard_arrow_left {
+    &:before {
+        content: $mi-keyboard_arrow_left;
+    }
+}
+.mi-keyboard_arrow_right {
+    &:before {
+        content: $mi-keyboard_arrow_right;
+    }
+}
+.mi-keyboard_arrow_up {
+    &:before {
+        content: $mi-keyboard_arrow_up;
+    }
+}
+.mi-keyboard_backspace {
+    &:before {
+        content: $mi-keyboard_backspace;
+    }
+}
+.mi-keyboard_capslock {
+    &:before {
+        content: $mi-keyboard_capslock;
+    }
+}
+.mi-keyboard_hide {
+    &:before {
+        content: $mi-keyboard_hide;
+    }
+}
+.mi-keyboard_return {
+    &:before {
+        content: $mi-keyboard_return;
+    }
+}
+.mi-keyboard_tab {
+    &:before {
+        content: $mi-keyboard_tab;
+    }
+}
+.mi-keyboard_voice {
+    &:before {
+        content: $mi-keyboard_voice;
+    }
+}
+.mi-kitchen {
+    &:before {
+        content: $mi-kitchen;
+    }
+}
+.mi-label {
+    &:before {
+        content: $mi-label;
+    }
+}
+.mi-label_outline {
+    &:before {
+        content: $mi-label_outline;
+    }
+}
+.mi-language {
+    &:before {
+        content: $mi-language;
+    }
+}
+.mi-laptop_chromebook {
+    &:before {
+        content: $mi-laptop_chromebook;
+    }
+}
+.mi-laptop_mac {
+    &:before {
+        content: $mi-laptop_mac;
+    }
+}
+.mi-laptop_windows {
+    &:before {
+        content: $mi-laptop_windows;
+    }
+}
+.mi-last_page {
+    &:before {
+        content: $mi-last_page;
+    }
+}
+.mi-open_in_new {
+    &:before {
+        content: $mi-open_in_new;
+    }
+}
+.mi-layers {
+    &:before {
+        content: $mi-layers;
+    }
+}
+.mi-layers_clear {
+    &:before {
+        content: $mi-layers_clear;
+    }
+}
+.mi-leak_add {
+    &:before {
+        content: $mi-leak_add;
+    }
+}
+.mi-leak_remove {
+    &:before {
+        content: $mi-leak_remove;
+    }
+}
+.mi-lens {
+    &:before {
+        content: $mi-lens;
+    }
+}
+.mi-library_books {
+    &:before {
+        content: $mi-library_books;
+    }
+}
+.mi-library_music {
+    &:before {
+        content: $mi-library_music;
+    }
+}
+.mi-lightbulb_outline {
+    &:before {
+        content: $mi-lightbulb_outline;
+    }
+}
+.mi-line_style {
+    &:before {
+        content: $mi-line_style;
+    }
+}
+.mi-line_weight {
+    &:before {
+        content: $mi-line_weight;
+    }
+}
+.mi-linear_scale {
+    &:before {
+        content: $mi-linear_scale;
+    }
+}
+.mi-linked_camera {
+    &:before {
+        content: $mi-linked_camera;
+    }
+}
+.mi-list {
+    &:before {
+        content: $mi-list;
+    }
+}
+.mi-live_help {
+    &:before {
+        content: $mi-live_help;
+    }
+}
+.mi-live_tv {
+    &:before {
+        content: $mi-live_tv;
+    }
+}
+.mi-local_play {
+    &:before {
+        content: $mi-local_play;
+    }
+}
+.mi-local_airport {
+    &:before {
+        content: $mi-local_airport;
+    }
+}
+.mi-local_atm {
+    &:before {
+        content: $mi-local_atm;
+    }
+}
+.mi-local_bar {
+    &:before {
+        content: $mi-local_bar;
+    }
+}
+.mi-local_cafe {
+    &:before {
+        content: $mi-local_cafe;
+    }
+}
+.mi-local_car_wash {
+    &:before {
+        content: $mi-local_car_wash;
+    }
+}
+.mi-local_convenience_store {
+    &:before {
+        content: $mi-local_convenience_store;
+    }
+}
+.mi-restaurant_menu {
+    &:before {
+        content: $mi-restaurant_menu;
+    }
+}
+.mi-local_drink {
+    &:before {
+        content: $mi-local_drink;
+    }
+}
+.mi-local_florist {
+    &:before {
+        content: $mi-local_florist;
+    }
+}
+.mi-local_gas_station {
+    &:before {
+        content: $mi-local_gas_station;
+    }
+}
+.mi-shopping_cart {
+    &:before {
+        content: $mi-shopping_cart;
+    }
+}
+.mi-local_hospital {
+    &:before {
+        content: $mi-local_hospital;
+    }
+}
+.mi-local_laundry_service {
+    &:before {
+        content: $mi-local_laundry_service;
+    }
+}
+.mi-local_library {
+    &:before {
+        content: $mi-local_library;
+    }
+}
+.mi-local_mall {
+    &:before {
+        content: $mi-local_mall;
+    }
+}
+.mi-theaters {
+    &:before {
+        content: $mi-theaters;
+    }
+}
+.mi-local_offer {
+    &:before {
+        content: $mi-local_offer;
+    }
+}
+.mi-local_parking {
+    &:before {
+        content: $mi-local_parking;
+    }
+}
+.mi-local_pharmacy {
+    &:before {
+        content: $mi-local_pharmacy;
+    }
+}
+.mi-local_pizza {
+    &:before {
+        content: $mi-local_pizza;
+    }
+}
+.mi-print {
+    &:before {
+        content: $mi-print;
+    }
+}
+.mi-local_shipping {
+    &:before {
+        content: $mi-local_shipping;
+    }
+}
+.mi-local_taxi {
+    &:before {
+        content: $mi-local_taxi;
+    }
+}
+.mi-location_city {
+    &:before {
+        content: $mi-location_city;
+    }
+}
+.mi-location_off {
+    &:before {
+        content: $mi-location_off;
+    }
+}
+.mi-room {
+    &:before {
+        content: $mi-room;
+    }
+}
+.mi-lock_open {
+    &:before {
+        content: $mi-lock_open;
+    }
+}
+.mi-lock_outline {
+    &:before {
+        content: $mi-lock_outline;
+    }
+}
+.mi-looks {
+    &:before {
+        content: $mi-looks;
+    }
+}
+.mi-looks_3 {
+    &:before {
+        content: $mi-looks_3;
+    }
+}
+.mi-looks_4 {
+    &:before {
+        content: $mi-looks_4;
+    }
+}
+.mi-looks_5 {
+    &:before {
+        content: $mi-looks_5;
+    }
+}
+.mi-looks_6 {
+    &:before {
+        content: $mi-looks_6;
+    }
+}
+.mi-looks_one {
+    &:before {
+        content: $mi-looks_one;
+    }
+}
+.mi-looks_two {
+    &:before {
+        content: $mi-looks_two;
+    }
+}
+.mi-sync {
+    &:before {
+        content: $mi-sync;
+    }
+}
+.mi-loupe {
+    &:before {
+        content: $mi-loupe;
+    }
+}
+.mi-low_priority {
+    &:before {
+        content: $mi-low_priority;
+    }
+}
+.mi-loyalty {
+    &:before {
+        content: $mi-loyalty;
+    }
+}
+.mi-mail_outline {
+    &:before {
+        content: $mi-mail_outline;
+    }
+}
+.mi-map {
+    &:before {
+        content: $mi-map;
+    }
+}
+.mi-markunread_mailbox {
+    &:before {
+        content: $mi-markunread_mailbox;
+    }
+}
+.mi-memory {
+    &:before {
+        content: $mi-memory;
+    }
+}
+.mi-menu {
+    &:before {
+        content: $mi-menu;
+    }
+}
+.mi-message {
+    &:before {
+        content: $mi-message;
+    }
+}
+.mi-mic {
+    &:before {
+        content: $mi-mic;
+    }
+}
+.mi-mic_none {
+    &:before {
+        content: $mi-mic_none;
+    }
+}
+.mi-mic_off {
+    &:before {
+        content: $mi-mic_off;
+    }
+}
+.mi-mms {
+    &:before {
+        content: $mi-mms;
+    }
+}
+.mi-mode_comment {
+    &:before {
+        content: $mi-mode_comment;
+    }
+}
+.mi-monetization_on {
+    &:before {
+        content: $mi-monetization_on;
+    }
+}
+.mi-money_off {
+    &:before {
+        content: $mi-money_off;
+    }
+}
+.mi-monochrome_photos {
+    &:before {
+        content: $mi-monochrome_photos;
+    }
+}
+.mi-mood_bad {
+    &:before {
+        content: $mi-mood_bad;
+    }
+}
+.mi-more {
+    &:before {
+        content: $mi-more;
+    }
+}
+.mi-more_horiz {
+    &:before {
+        content: $mi-more_horiz;
+    }
+}
+.mi-more_vert {
+    &:before {
+        content: $mi-more_vert;
+    }
+}
+.mi-motorcycle {
+    &:before {
+        content: $mi-motorcycle;
+    }
+}
+.mi-mouse {
+    &:before {
+        content: $mi-mouse;
+    }
+}
+.mi-move_to_inbox {
+    &:before {
+        content: $mi-move_to_inbox;
+    }
+}
+.mi-movie_creation {
+    &:before {
+        content: $mi-movie_creation;
+    }
+}
+.mi-movie_filter {
+    &:before {
+        content: $mi-movie_filter;
+    }
+}
+.mi-multiline_chart {
+    &:before {
+        content: $mi-multiline_chart;
+    }
+}
+.mi-music_note {
+    &:before {
+        content: $mi-music_note;
+    }
+}
+.mi-music_video {
+    &:before {
+        content: $mi-music_video;
+    }
+}
+.mi-nature {
+    &:before {
+        content: $mi-nature;
+    }
+}
+.mi-nature_people {
+    &:before {
+        content: $mi-nature_people;
+    }
+}
+.mi-navigation {
+    &:before {
+        content: $mi-navigation;
+    }
+}
+.mi-near_me {
+    &:before {
+        content: $mi-near_me;
+    }
+}
+.mi-network_cell {
+    &:before {
+        content: $mi-network_cell;
+    }
+}
+.mi-network_check {
+    &:before {
+        content: $mi-network_check;
+    }
+}
+.mi-network_locked {
+    &:before {
+        content: $mi-network_locked;
+    }
+}
+.mi-network_wifi {
+    &:before {
+        content: $mi-network_wifi;
+    }
+}
+.mi-new_releases {
+    &:before {
+        content: $mi-new_releases;
+    }
+}
+.mi-next_week {
+    &:before {
+        content: $mi-next_week;
+    }
+}
+.mi-nfc {
+    &:before {
+        content: $mi-nfc;
+    }
+}
+.mi-no_encryption {
+    &:before {
+        content: $mi-no_encryption;
+    }
+}
+.mi-signal_cellular_no_sim {
+    &:before {
+        content: $mi-signal_cellular_no_sim;
+    }
+}
+.mi-note {
+    &:before {
+        content: $mi-note;
+    }
+}
+.mi-note_add {
+    &:before {
+        content: $mi-note_add;
+    }
+}
+.mi-notifications {
+    &:before {
+        content: $mi-notifications;
+    }
+}
+.mi-notifications_active {
+    &:before {
+        content: $mi-notifications_active;
+    }
+}
+.mi-notifications_none {
+    &:before {
+        content: $mi-notifications_none;
+    }
+}
+.mi-notifications_off {
+    &:before {
+        content: $mi-notifications_off;
+    }
+}
+.mi-notifications_paused {
+    &:before {
+        content: $mi-notifications_paused;
+    }
+}
+.mi-offline_pin {
+    &:before {
+        content: $mi-offline_pin;
+    }
+}
+.mi-ondemand_video {
+    &:before {
+        content: $mi-ondemand_video;
+    }
+}
+.mi-opacity {
+    &:before {
+        content: $mi-opacity;
+    }
+}
+.mi-open_in_browser {
+    &:before {
+        content: $mi-open_in_browser;
+    }
+}
+.mi-open_with {
+    &:before {
+        content: $mi-open_with;
+    }
+}
+.mi-pages {
+    &:before {
+        content: $mi-pages;
+    }
+}
+.mi-pageview {
+    &:before {
+        content: $mi-pageview;
+    }
+}
+.mi-pan_tool {
+    &:before {
+        content: $mi-pan_tool;
+    }
+}
+.mi-panorama {
+    &:before {
+        content: $mi-panorama;
+    }
+}
+.mi-radio_button_unchecked {
+    &:before {
+        content: $mi-radio_button_unchecked;
+    }
+}
+.mi-panorama_horizontal {
+    &:before {
+        content: $mi-panorama_horizontal;
+    }
+}
+.mi-panorama_vertical {
+    &:before {
+        content: $mi-panorama_vertical;
+    }
+}
+.mi-panorama_wide_angle {
+    &:before {
+        content: $mi-panorama_wide_angle;
+    }
+}
+.mi-party_mode {
+    &:before {
+        content: $mi-party_mode;
+    }
+}
+.mi-pause {
+    &:before {
+        content: $mi-pause;
+    }
+}
+.mi-pause_circle_filled {
+    &:before {
+        content: $mi-pause_circle_filled;
+    }
+}
+.mi-pause_circle_outline {
+    &:before {
+        content: $mi-pause_circle_outline;
+    }
+}
+.mi-people_outline {
+    &:before {
+        content: $mi-people_outline;
+    }
+}
+.mi-perm_camera_mic {
+    &:before {
+        content: $mi-perm_camera_mic;
+    }
+}
+.mi-perm_contact_calendar {
+    &:before {
+        content: $mi-perm_contact_calendar;
+    }
+}
+.mi-perm_data_setting {
+    &:before {
+        content: $mi-perm_data_setting;
+    }
+}
+.mi-perm_device_information {
+    &:before {
+        content: $mi-perm_device_information;
+    }
+}
+.mi-person_outline {
+    &:before {
+        content: $mi-person_outline;
+    }
+}
+.mi-perm_media {
+    &:before {
+        content: $mi-perm_media;
+    }
+}
+.mi-perm_phone_msg {
+    &:before {
+        content: $mi-perm_phone_msg;
+    }
+}
+.mi-perm_scan_wifi {
+    &:before {
+        content: $mi-perm_scan_wifi;
+    }
+}
+.mi-person {
+    &:before {
+        content: $mi-person;
+    }
+}
+.mi-person_add {
+    &:before {
+        content: $mi-person_add;
+    }
+}
+.mi-person_pin {
+    &:before {
+        content: $mi-person_pin;
+    }
+}
+.mi-person_pin_circle {
+    &:before {
+        content: $mi-person_pin_circle;
+    }
+}
+.mi-personal_video {
+    &:before {
+        content: $mi-personal_video;
+    }
+}
+.mi-pets {
+    &:before {
+        content: $mi-pets;
+    }
+}
+.mi-phone_android {
+    &:before {
+        content: $mi-phone_android;
+    }
+}
+.mi-phone_bluetooth_speaker {
+    &:before {
+        content: $mi-phone_bluetooth_speaker;
+    }
+}
+.mi-phone_forwarded {
+    &:before {
+        content: $mi-phone_forwarded;
+    }
+}
+.mi-phone_in_talk {
+    &:before {
+        content: $mi-phone_in_talk;
+    }
+}
+.mi-phone_iphone {
+    &:before {
+        content: $mi-phone_iphone;
+    }
+}
+.mi-phone_locked {
+    &:before {
+        content: $mi-phone_locked;
+    }
+}
+.mi-phone_missed {
+    &:before {
+        content: $mi-phone_missed;
+    }
+}
+.mi-phone_paused {
+    &:before {
+        content: $mi-phone_paused;
+    }
+}
+.mi-phonelink_erase {
+    &:before {
+        content: $mi-phonelink_erase;
+    }
+}
+.mi-phonelink_lock {
+    &:before {
+        content: $mi-phonelink_lock;
+    }
+}
+.mi-phonelink_off {
+    &:before {
+        content: $mi-phonelink_off;
+    }
+}
+.mi-phonelink_ring {
+    &:before {
+        content: $mi-phonelink_ring;
+    }
+}
+.mi-phonelink_setup {
+    &:before {
+        content: $mi-phonelink_setup;
+    }
+}
+.mi-photo_album {
+    &:before {
+        content: $mi-photo_album;
+    }
+}
+.mi-photo_filter {
+    &:before {
+        content: $mi-photo_filter;
+    }
+}
+.mi-photo_size_select_actual {
+    &:before {
+        content: $mi-photo_size_select_actual;
+    }
+}
+.mi-photo_size_select_large {
+    &:before {
+        content: $mi-photo_size_select_large;
+    }
+}
+.mi-photo_size_select_small {
+    &:before {
+        content: $mi-photo_size_select_small;
+    }
+}
+.mi-picture_as_pdf {
+    &:before {
+        content: $mi-picture_as_pdf;
+    }
+}
+.mi-picture_in_picture {
+    &:before {
+        content: $mi-picture_in_picture;
+    }
+}
+.mi-picture_in_picture_alt {
+    &:before {
+        content: $mi-picture_in_picture_alt;
+    }
+}
+.mi-pie_chart {
+    &:before {
+        content: $mi-pie_chart;
+    }
+}
+.mi-pie_chart_outlined {
+    &:before {
+        content: $mi-pie_chart_outlined;
+    }
+}
+.mi-pin_drop {
+    &:before {
+        content: $mi-pin_drop;
+    }
+}
+.mi-play_arrow {
+    &:before {
+        content: $mi-play_arrow;
+    }
+}
+.mi-play_circle_filled {
+    &:before {
+        content: $mi-play_circle_filled;
+    }
+}
+.mi-play_circle_outline {
+    &:before {
+        content: $mi-play_circle_outline;
+    }
+}
+.mi-play_for_work {
+    &:before {
+        content: $mi-play_for_work;
+    }
+}
+.mi-playlist_add {
+    &:before {
+        content: $mi-playlist_add;
+    }
+}
+.mi-playlist_add_check {
+    &:before {
+        content: $mi-playlist_add_check;
+    }
+}
+.mi-playlist_play {
+    &:before {
+        content: $mi-playlist_play;
+    }
+}
+.mi-plus_one {
+    &:before {
+        content: $mi-plus_one;
+    }
+}
+.mi-polymer {
+    &:before {
+        content: $mi-polymer;
+    }
+}
+.mi-pool {
+    &:before {
+        content: $mi-pool;
+    }
+}
+.mi-portable_wifi_off {
+    &:before {
+        content: $mi-portable_wifi_off;
+    }
+}
+.mi-portrait {
+    &:before {
+        content: $mi-portrait;
+    }
+}
+.mi-power {
+    &:before {
+        content: $mi-power;
+    }
+}
+.mi-power_input {
+    &:before {
+        content: $mi-power_input;
+    }
+}
+.mi-power_settings_new {
+    &:before {
+        content: $mi-power_settings_new;
+    }
+}
+.mi-pregnant_woman {
+    &:before {
+        content: $mi-pregnant_woman;
+    }
+}
+.mi-present_to_all {
+    &:before {
+        content: $mi-present_to_all;
+    }
+}
+.mi-priority_high {
+    &:before {
+        content: $mi-priority_high;
+    }
+}
+.mi-public {
+    &:before {
+        content: $mi-public;
+    }
+}
+.mi-publish {
+    &:before {
+        content: $mi-publish;
+    }
+}
+.mi-queue_music {
+    &:before {
+        content: $mi-queue_music;
+    }
+}
+.mi-queue_play_next {
+    &:before {
+        content: $mi-queue_play_next;
+    }
+}
+.mi-radio {
+    &:before {
+        content: $mi-radio;
+    }
+}
+.mi-radio_button_checked {
+    &:before {
+        content: $mi-radio_button_checked;
+    }
+}
+.mi-rate_review {
+    &:before {
+        content: $mi-rate_review;
+    }
+}
+.mi-receipt {
+    &:before {
+        content: $mi-receipt;
+    }
+}
+.mi-recent_actors {
+    &:before {
+        content: $mi-recent_actors;
+    }
+}
+.mi-record_voice_over {
+    &:before {
+        content: $mi-record_voice_over;
+    }
+}
+.mi-redo {
+    &:before {
+        content: $mi-redo;
+    }
+}
+.mi-refresh {
+    &:before {
+        content: $mi-refresh;
+    }
+}
+.mi-remove {
+    &:before {
+        content: $mi-remove;
+    }
+}
+.mi-remove_circle_outline {
+    &:before {
+        content: $mi-remove_circle_outline;
+    }
+}
+.mi-remove_from_queue {
+    &:before {
+        content: $mi-remove_from_queue;
+    }
+}
+.mi-visibility {
+    &:before {
+        content: $mi-visibility;
+    }
+}
+.mi-remove_shopping_cart {
+    &:before {
+        content: $mi-remove_shopping_cart;
+    }
+}
+.mi-reorder {
+    &:before {
+        content: $mi-reorder;
+    }
+}
+.mi-repeat {
+    &:before {
+        content: $mi-repeat;
+    }
+}
+.mi-repeat_one {
+    &:before {
+        content: $mi-repeat_one;
+    }
+}
+.mi-replay {
+    &:before {
+        content: $mi-replay;
+    }
+}
+.mi-replay_10 {
+    &:before {
+        content: $mi-replay_10;
+    }
+}
+.mi-replay_30 {
+    &:before {
+        content: $mi-replay_30;
+    }
+}
+.mi-replay_5 {
+    &:before {
+        content: $mi-replay_5;
+    }
+}
+.mi-reply {
+    &:before {
+        content: $mi-reply;
+    }
+}
+.mi-reply_all {
+    &:before {
+        content: $mi-reply_all;
+    }
+}
+.mi-report {
+    &:before {
+        content: $mi-report;
+    }
+}
+.mi-warning {
+    &:before {
+        content: $mi-warning;
+    }
+}
+.mi-restaurant {
+    &:before {
+        content: $mi-restaurant;
+    }
+}
+.mi-restore_page {
+    &:before {
+        content: $mi-restore_page;
+    }
+}
+.mi-ring_volume {
+    &:before {
+        content: $mi-ring_volume;
+    }
+}
+.mi-room_service {
+    &:before {
+        content: $mi-room_service;
+    }
+}
+.mi-rotate_90_degrees_ccw {
+    &:before {
+        content: $mi-rotate_90_degrees_ccw;
+    }
+}
+.mi-rotate_left {
+    &:before {
+        content: $mi-rotate_left;
+    }
+}
+.mi-rotate_right {
+    &:before {
+        content: $mi-rotate_right;
+    }
+}
+.mi-rounded_corner {
+    &:before {
+        content: $mi-rounded_corner;
+    }
+}
+.mi-router {
+    &:before {
+        content: $mi-router;
+    }
+}
+.mi-rowing {
+    &:before {
+        content: $mi-rowing;
+    }
+}
+.mi-rss_feed {
+    &:before {
+        content: $mi-rss_feed;
+    }
+}
+.mi-rv_hookup {
+    &:before {
+        content: $mi-rv_hookup;
+    }
+}
+.mi-satellite {
+    &:before {
+        content: $mi-satellite;
+    }
+}
+.mi-save {
+    &:before {
+        content: $mi-save;
+    }
+}
+.mi-scanner {
+    &:before {
+        content: $mi-scanner;
+    }
+}
+.mi-school {
+    &:before {
+        content: $mi-school;
+    }
+}
+.mi-screen_lock_landscape {
+    &:before {
+        content: $mi-screen_lock_landscape;
+    }
+}
+.mi-screen_lock_portrait {
+    &:before {
+        content: $mi-screen_lock_portrait;
+    }
+}
+.mi-screen_lock_rotation {
+    &:before {
+        content: $mi-screen_lock_rotation;
+    }
+}
+.mi-screen_rotation {
+    &:before {
+        content: $mi-screen_rotation;
+    }
+}
+.mi-screen_share {
+    &:before {
+        content: $mi-screen_share;
+    }
+}
+.mi-sd_storage {
+    &:before {
+        content: $mi-sd_storage;
+    }
+}
+.mi-search {
+    &:before {
+        content: $mi-search;
+    }
+}
+.mi-security {
+    &:before {
+        content: $mi-security;
+    }
+}
+.mi-select_all {
+    &:before {
+        content: $mi-select_all;
+    }
+}
+.mi-send {
+    &:before {
+        content: $mi-send;
+    }
+}
+.mi-sentiment_dissatisfied {
+    &:before {
+        content: $mi-sentiment_dissatisfied;
+    }
+}
+.mi-sentiment_neutral {
+    &:before {
+        content: $mi-sentiment_neutral;
+    }
+}
+.mi-sentiment_satisfied {
+    &:before {
+        content: $mi-sentiment_satisfied;
+    }
+}
+.mi-sentiment_very_dissatisfied {
+    &:before {
+        content: $mi-sentiment_very_dissatisfied;
+    }
+}
+.mi-sentiment_very_satisfied {
+    &:before {
+        content: $mi-sentiment_very_satisfied;
+    }
+}
+.mi-settings {
+    &:before {
+        content: $mi-settings;
+    }
+}
+.mi-settings_applications {
+    &:before {
+        content: $mi-settings_applications;
+    }
+}
+.mi-settings_backup_restore {
+    &:before {
+        content: $mi-settings_backup_restore;
+    }
+}
+.mi-settings_bluetooth {
+    &:before {
+        content: $mi-settings_bluetooth;
+    }
+}
+.mi-settings_brightness {
+    &:before {
+        content: $mi-settings_brightness;
+    }
+}
+.mi-settings_cell {
+    &:before {
+        content: $mi-settings_cell;
+    }
+}
+.mi-settings_ethernet {
+    &:before {
+        content: $mi-settings_ethernet;
+    }
+}
+.mi-settings_input_antenna {
+    &:before {
+        content: $mi-settings_input_antenna;
+    }
+}
+.mi-settings_input_composite {
+    &:before {
+        content: $mi-settings_input_composite;
+    }
+}
+.mi-settings_input_hdmi {
+    &:before {
+        content: $mi-settings_input_hdmi;
+    }
+}
+.mi-settings_input_svideo {
+    &:before {
+        content: $mi-settings_input_svideo;
+    }
+}
+.mi-settings_overscan {
+    &:before {
+        content: $mi-settings_overscan;
+    }
+}
+.mi-settings_phone {
+    &:before {
+        content: $mi-settings_phone;
+    }
+}
+.mi-settings_power {
+    &:before {
+        content: $mi-settings_power;
+    }
+}
+.mi-settings_remote {
+    &:before {
+        content: $mi-settings_remote;
+    }
+}
+.mi-settings_system_daydream {
+    &:before {
+        content: $mi-settings_system_daydream;
+    }
+}
+.mi-settings_voice {
+    &:before {
+        content: $mi-settings_voice;
+    }
+}
+.mi-share {
+    &:before {
+        content: $mi-share;
+    }
+}
+.mi-shop {
+    &:before {
+        content: $mi-shop;
+    }
+}
+.mi-shop_two {
+    &:before {
+        content: $mi-shop_two;
+    }
+}
+.mi-shopping_basket {
+    &:before {
+        content: $mi-shopping_basket;
+    }
+}
+.mi-short_text {
+    &:before {
+        content: $mi-short_text;
+    }
+}
+.mi-show_chart {
+    &:before {
+        content: $mi-show_chart;
+    }
+}
+.mi-shuffle {
+    &:before {
+        content: $mi-shuffle;
+    }
+}
+.mi-signal_cellular_4_bar {
+    &:before {
+        content: $mi-signal_cellular_4_bar;
+    }
+}
+.mi-signal_cellular_connected_no_internet_4_bar {
+    &:before {
+        content: $mi-signal_cellular_connected_no_internet_4_bar;
+    }
+}
+.mi-signal_cellular_null {
+    &:before {
+        content: $mi-signal_cellular_null;
+    }
+}
+.mi-signal_cellular_off {
+    &:before {
+        content: $mi-signal_cellular_off;
+    }
+}
+.mi-signal_wifi_4_bar {
+    &:before {
+        content: $mi-signal_wifi_4_bar;
+    }
+}
+.mi-signal_wifi_4_bar_lock {
+    &:before {
+        content: $mi-signal_wifi_4_bar_lock;
+    }
+}
+.mi-signal_wifi_off {
+    &:before {
+        content: $mi-signal_wifi_off;
+    }
+}
+.mi-sim_card {
+    &:before {
+        content: $mi-sim_card;
+    }
+}
+.mi-sim_card_alert {
+    &:before {
+        content: $mi-sim_card_alert;
+    }
+}
+.mi-skip_next {
+    &:before {
+        content: $mi-skip_next;
+    }
+}
+.mi-skip_previous {
+    &:before {
+        content: $mi-skip_previous;
+    }
+}
+.mi-slideshow {
+    &:before {
+        content: $mi-slideshow;
+    }
+}
+.mi-slow_motion_video {
+    &:before {
+        content: $mi-slow_motion_video;
+    }
+}
+.mi-stay_primary_portrait {
+    &:before {
+        content: $mi-stay_primary_portrait;
+    }
+}
+.mi-smoke_free {
+    &:before {
+        content: $mi-smoke_free;
+    }
+}
+.mi-smoking_rooms {
+    &:before {
+        content: $mi-smoking_rooms;
+    }
+}
+.mi-textsms {
+    &:before {
+        content: $mi-textsms;
+    }
+}
+.mi-snooze {
+    &:before {
+        content: $mi-snooze;
+    }
+}
+.mi-sort {
+    &:before {
+        content: $mi-sort;
+    }
+}
+.mi-sort_by_alpha {
+    &:before {
+        content: $mi-sort_by_alpha;
+    }
+}
+.mi-spa {
+    &:before {
+        content: $mi-spa;
+    }
+}
+.mi-space_bar {
+    &:before {
+        content: $mi-space_bar;
+    }
+}
+.mi-speaker {
+    &:before {
+        content: $mi-speaker;
+    }
+}
+.mi-speaker_group {
+    &:before {
+        content: $mi-speaker_group;
+    }
+}
+.mi-speaker_notes {
+    &:before {
+        content: $mi-speaker_notes;
+    }
+}
+.mi-speaker_notes_off {
+    &:before {
+        content: $mi-speaker_notes_off;
+    }
+}
+.mi-speaker_phone {
+    &:before {
+        content: $mi-speaker_phone;
+    }
+}
+.mi-spellcheck {
+    &:before {
+        content: $mi-spellcheck;
+    }
+}
+.mi-star_border {
+    &:before {
+        content: $mi-star_border;
+    }
+}
+.mi-star_half {
+    &:before {
+        content: $mi-star_half;
+    }
+}
+.mi-stars {
+    &:before {
+        content: $mi-stars;
+    }
+}
+.mi-stay_primary_landscape {
+    &:before {
+        content: $mi-stay_primary_landscape;
+    }
+}
+.mi-stop {
+    &:before {
+        content: $mi-stop;
+    }
+}
+.mi-stop_screen_share {
+    &:before {
+        content: $mi-stop_screen_share;
+    }
+}
+.mi-storage {
+    &:before {
+        content: $mi-storage;
+    }
+}
+.mi-store_mall_directory {
+    &:before {
+        content: $mi-store_mall_directory;
+    }
+}
+.mi-straighten {
+    &:before {
+        content: $mi-straighten;
+    }
+}
+.mi-streetview {
+    &:before {
+        content: $mi-streetview;
+    }
+}
+.mi-strikethrough_s {
+    &:before {
+        content: $mi-strikethrough_s;
+    }
+}
+.mi-style {
+    &:before {
+        content: $mi-style;
+    }
+}
+.mi-subdirectory_arrow_left {
+    &:before {
+        content: $mi-subdirectory_arrow_left;
+    }
+}
+.mi-subdirectory_arrow_right {
+    &:before {
+        content: $mi-subdirectory_arrow_right;
+    }
+}
+.mi-subject {
+    &:before {
+        content: $mi-subject;
+    }
+}
+.mi-subscriptions {
+    &:before {
+        content: $mi-subscriptions;
+    }
+}
+.mi-subtitles {
+    &:before {
+        content: $mi-subtitles;
+    }
+}
+.mi-subway {
+    &:before {
+        content: $mi-subway;
+    }
+}
+.mi-supervisor_account {
+    &:before {
+        content: $mi-supervisor_account;
+    }
+}
+.mi-surround_sound {
+    &:before {
+        content: $mi-surround_sound;
+    }
+}
+.mi-swap_calls {
+    &:before {
+        content: $mi-swap_calls;
+    }
+}
+.mi-swap_horiz {
+    &:before {
+        content: $mi-swap_horiz;
+    }
+}
+.mi-swap_vert {
+    &:before {
+        content: $mi-swap_vert;
+    }
+}
+.mi-swap_vertical_circle {
+    &:before {
+        content: $mi-swap_vertical_circle;
+    }
+}
+.mi-switch_camera {
+    &:before {
+        content: $mi-switch_camera;
+    }
+}
+.mi-switch_video {
+    &:before {
+        content: $mi-switch_video;
+    }
+}
+.mi-sync_disabled {
+    &:before {
+        content: $mi-sync_disabled;
+    }
+}
+.mi-sync_problem {
+    &:before {
+        content: $mi-sync_problem;
+    }
+}
+.mi-system_update {
+    &:before {
+        content: $mi-system_update;
+    }
+}
+.mi-system_update_alt {
+    &:before {
+        content: $mi-system_update_alt;
+    }
+}
+.mi-tab {
+    &:before {
+        content: $mi-tab;
+    }
+}
+.mi-tab_unselected {
+    &:before {
+        content: $mi-tab_unselected;
+    }
+}
+.mi-tablet {
+    &:before {
+        content: $mi-tablet;
+    }
+}
+.mi-tablet_android {
+    &:before {
+        content: $mi-tablet_android;
+    }
+}
+.mi-tablet_mac {
+    &:before {
+        content: $mi-tablet_mac;
+    }
+}
+.mi-tap_and_play {
+    &:before {
+        content: $mi-tap_and_play;
+    }
+}
+.mi-text_fields {
+    &:before {
+        content: $mi-text_fields;
+    }
+}
+.mi-text_format {
+    &:before {
+        content: $mi-text_format;
+    }
+}
+.mi-texture {
+    &:before {
+        content: $mi-texture;
+    }
+}
+.mi-thumb_down {
+    &:before {
+        content: $mi-thumb_down;
+    }
+}
+.mi-thumb_up {
+    &:before {
+        content: $mi-thumb_up;
+    }
+}
+.mi-thumbs_up_down {
+    &:before {
+        content: $mi-thumbs_up_down;
+    }
+}
+.mi-timelapse {
+    &:before {
+        content: $mi-timelapse;
+    }
+}
+.mi-timeline {
+    &:before {
+        content: $mi-timeline;
+    }
+}
+.mi-timer {
+    &:before {
+        content: $mi-timer;
+    }
+}
+.mi-timer_10 {
+    &:before {
+        content: $mi-timer_10;
+    }
+}
+.mi-timer_3 {
+    &:before {
+        content: $mi-timer_3;
+    }
+}
+.mi-timer_off {
+    &:before {
+        content: $mi-timer_off;
+    }
+}
+.mi-title {
+    &:before {
+        content: $mi-title;
+    }
+}
+.mi-toc {
+    &:before {
+        content: $mi-toc;
+    }
+}
+.mi-today {
+    &:before {
+        content: $mi-today;
+    }
+}
+.mi-toll {
+    &:before {
+        content: $mi-toll;
+    }
+}
+.mi-tonality {
+    &:before {
+        content: $mi-tonality;
+    }
+}
+.mi-touch_app {
+    &:before {
+        content: $mi-touch_app;
+    }
+}
+.mi-toys {
+    &:before {
+        content: $mi-toys;
+    }
+}
+.mi-track_changes {
+    &:before {
+        content: $mi-track_changes;
+    }
+}
+.mi-traffic {
+    &:before {
+        content: $mi-traffic;
+    }
+}
+.mi-train {
+    &:before {
+        content: $mi-train;
+    }
+}
+.mi-tram {
+    &:before {
+        content: $mi-tram;
+    }
+}
+.mi-transfer_within_a_station {
+    &:before {
+        content: $mi-transfer_within_a_station;
+    }
+}
+.mi-transform {
+    &:before {
+        content: $mi-transform;
+    }
+}
+.mi-translate {
+    &:before {
+        content: $mi-translate;
+    }
+}
+.mi-trending_down {
+    &:before {
+        content: $mi-trending_down;
+    }
+}
+.mi-trending_flat {
+    &:before {
+        content: $mi-trending_flat;
+    }
+}
+.mi-trending_up {
+    &:before {
+        content: $mi-trending_up;
+    }
+}
+.mi-tune {
+    &:before {
+        content: $mi-tune;
+    }
+}
+.mi-tv {
+    &:before {
+        content: $mi-tv;
+    }
+}
+.mi-unarchive {
+    &:before {
+        content: $mi-unarchive;
+    }
+}
+.mi-undo {
+    &:before {
+        content: $mi-undo;
+    }
+}
+.mi-unfold_less {
+    &:before {
+        content: $mi-unfold_less;
+    }
+}
+.mi-unfold_more {
+    &:before {
+        content: $mi-unfold_more;
+    }
+}
+.mi-update {
+    &:before {
+        content: $mi-update;
+    }
+}
+.mi-usb {
+    &:before {
+        content: $mi-usb;
+    }
+}
+.mi-verified_user {
+    &:before {
+        content: $mi-verified_user;
+    }
+}
+.mi-vertical_align_bottom {
+    &:before {
+        content: $mi-vertical_align_bottom;
+    }
+}
+.mi-vertical_align_center {
+    &:before {
+        content: $mi-vertical_align_center;
+    }
+}
+.mi-vertical_align_top {
+    &:before {
+        content: $mi-vertical_align_top;
+    }
+}
+.mi-vibration {
+    &:before {
+        content: $mi-vibration;
+    }
+}
+.mi-video_call {
+    &:before {
+        content: $mi-video_call;
+    }
+}
+.mi-video_label {
+    &:before {
+        content: $mi-video_label;
+    }
+}
+.mi-video_library {
+    &:before {
+        content: $mi-video_library;
+    }
+}
+.mi-videocam {
+    &:before {
+        content: $mi-videocam;
+    }
+}
+.mi-videocam_off {
+    &:before {
+        content: $mi-videocam_off;
+    }
+}
+.mi-videogame_asset {
+    &:before {
+        content: $mi-videogame_asset;
+    }
+}
+.mi-view_agenda {
+    &:before {
+        content: $mi-view_agenda;
+    }
+}
+.mi-view_array {
+    &:before {
+        content: $mi-view_array;
+    }
+}
+.mi-view_carousel {
+    &:before {
+        content: $mi-view_carousel;
+    }
+}
+.mi-view_column {
+    &:before {
+        content: $mi-view_column;
+    }
+}
+.mi-view_comfy {
+    &:before {
+        content: $mi-view_comfy;
+    }
+}
+.mi-view_compact {
+    &:before {
+        content: $mi-view_compact;
+    }
+}
+.mi-view_day {
+    &:before {
+        content: $mi-view_day;
+    }
+}
+.mi-view_headline {
+    &:before {
+        content: $mi-view_headline;
+    }
+}
+.mi-view_list {
+    &:before {
+        content: $mi-view_list;
+    }
+}
+.mi-view_module {
+    &:before {
+        content: $mi-view_module;
+    }
+}
+.mi-view_quilt {
+    &:before {
+        content: $mi-view_quilt;
+    }
+}
+.mi-view_stream {
+    &:before {
+        content: $mi-view_stream;
+    }
+}
+.mi-view_week {
+    &:before {
+        content: $mi-view_week;
+    }
+}
+.mi-vignette {
+    &:before {
+        content: $mi-vignette;
+    }
+}
+.mi-visibility_off {
+    &:before {
+        content: $mi-visibility_off;
+    }
+}
+.mi-voice_chat {
+    &:before {
+        content: $mi-voice_chat;
+    }
+}
+.mi-voicemail {
+    &:before {
+        content: $mi-voicemail;
+    }
+}
+.mi-volume_down {
+    &:before {
+        content: $mi-volume_down;
+    }
+}
+.mi-volume_mute {
+    &:before {
+        content: $mi-volume_mute;
+    }
+}
+.mi-volume_off {
+    &:before {
+        content: $mi-volume_off;
+    }
+}
+.mi-volume_up {
+    &:before {
+        content: $mi-volume_up;
+    }
+}
+.mi-vpn_key {
+    &:before {
+        content: $mi-vpn_key;
+    }
+}
+.mi-vpn_lock {
+    &:before {
+        content: $mi-vpn_lock;
+    }
+}
+.mi-wallpaper {
+    &:before {
+        content: $mi-wallpaper;
+    }
+}
+.mi-watch {
+    &:before {
+        content: $mi-watch;
+    }
+}
+.mi-watch_later {
+    &:before {
+        content: $mi-watch_later;
+    }
+}
+.mi-wb_auto {
+    &:before {
+        content: $mi-wb_auto;
+    }
+}
+.mi-wb_incandescent {
+    &:before {
+        content: $mi-wb_incandescent;
+    }
+}
+.mi-wb_iridescent {
+    &:before {
+        content: $mi-wb_iridescent;
+    }
+}
+.mi-wb_sunny {
+    &:before {
+        content: $mi-wb_sunny;
+    }
+}
+.mi-wc {
+    &:before {
+        content: $mi-wc;
+    }
+}
+.mi-web {
+    &:before {
+        content: $mi-web;
+    }
+}
+.mi-web_asset {
+    &:before {
+        content: $mi-web_asset;
+    }
+}
+.mi-weekend {
+    &:before {
+        content: $mi-weekend;
+    }
+}
+.mi-whatshot {
+    &:before {
+        content: $mi-whatshot;
+    }
+}
+.mi-widgets {
+    &:before {
+        content: $mi-widgets;
+    }
+}
+.mi-wifi {
+    &:before {
+        content: $mi-wifi;
+    }
+}
+.mi-wifi_lock {
+    &:before {
+        content: $mi-wifi_lock;
+    }
+}
+.mi-wifi_tethering {
+    &:before {
+        content: $mi-wifi_tethering;
+    }
+}
+.mi-work {
+    &:before {
+        content: $mi-work;
+    }
+}
+.mi-wrap_text {
+    &:before {
+        content: $mi-wrap_text;
+    }
+}
+.mi-youtube_searched_for {
+    &:before {
+        content: $mi-youtube_searched_for;
+    }
+}
+.mi-zoom_in {
+    &:before {
+        content: $mi-zoom_in;
+    }
+}
+.mi-zoom_out {
+    &:before {
+        content: $mi-zoom_out;
+    }
+}
+.mi-zoom_out_map {
+    &:before {
+        content: $mi-zoom_out_map;
+    }
+}
+

@@ -57,7 +57,7 @@ controller: rulesController as rc
 
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <a ui-sref="home">Search</a>
+          <a ui-sref="simulation">Simulation</a>
         </li>
         <li>
           <a ui-sref="login" ng-click="rc.logout()">Logout</a>
@@ -83,21 +83,21 @@ controller: rulesController as rc
         Add rule
       </a>
       <div class="list-group table-of-contents" id="accordion">
-        <a class="list-group-item" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true">Rule Types</a>
+        <a class="list-group-item" role="button" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne" aria-expanded="true">Rule Types</a>
         <div id="collapseOne" class="collapse in" role="tabpanel">
           <ul class="list-unstyled data-links">
             <li ng-repeat="f in facets.display_type"><a data-quantity="{{f[1]}}" class="text-muted-light active" href="javascript:void(0);" ng-click="filterBy('display_type', f[0])">{{f[0]}}</a></li>
           </ul>
         </div>
 
-        <a class="list-group-item" role="button" data-toggle="collapse" href="#collapseEnabled" aria-expanded="true" href="#status">Status</a>
+        <a class="list-group-item" role="button" data-toggle="collapse" data-parent="#accordion" data-target="#collapseEnabled" aria-expanded="true">Status</a>
         <div id="collapseEnabled" class="collapse in" role="tabpanel">
           <ul class="list-unstyled data-links">
             <li ng-repeat="f in facets.enabled"><a data-quantity="{{f[1]}}" class="text-muted-light active" href="javascript:void(0);" ng-click="filterBy('enabled', f[0])"><i class="fa fa-tag"></i>{{f[0] == 'false' ? 'Disabled' : 'Enabled'}}</a></li>
           </ul>
         </div>
 
-        <a class="list-group-item" role="button" data-toggle="collapse" href="#collapseTags" aria-expanded="true">Tags</a>
+        <a class="list-group-item" role="button" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTags" aria-expanded="true">Tags</a>
         <div id="collapseTags" class="collapse in" role="tabpanel">
           <ul class="list-unstyled data-links">
             <li ng-repeat="f in facets.tags"><a data-quantity="{{f[1]}}" class="text-muted-light active" href="javascript:void(0);" ng-click="filterBy('tags', f[0])"><i class="fa fa-tag"></i>{{f[0]}}</a></li>

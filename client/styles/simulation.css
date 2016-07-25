@@ -1,0 +1,215 @@
+.searchUI_color {
+  color: #003b64;
+}
+
+.fusion-header {
+  background-color: #003b64;
+  height: 55px;
+  font-family: ProximaNova-Regular,Helvetica;
+  color: white;
+  font-size: x-large;
+  padding: 10px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.fusion-footer {
+  background-color: #003b64;
+  height: 55px;
+  font-family: ProximaNova-Regular,Helvetica;
+  color: white;
+  padding: 20px;
+  margin-bottom: 0px;
+  text-align: center;
+  width:100%;
+  position:absolute;
+  bottom:0;
+  left:0;
+}
+
+.panel-heading {
+  color: white !important;
+  background: linear-gradient(120deg,#003b64,#003b64) #003b64 !important;
+  font-family:ProximaNova-Regular,Helvetica;
+}
+
+.scroll-div {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 250px;
+}
+
+/*odd and even controlls the look of results list rows background color*/
+.odd {
+  background-color: #f5f5f5;
+  padding: 10px;
+}
+
+.even {
+  padding: 10px;
+}
+
+.label_lw {
+  font-weight: normal !important;
+  background-color: #f0ad4e;
+  font-size: 100%;
+}
+
+.showResponse {
+  padding: 10px;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  word-break: break-all;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.explain {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  word-break: break-all;
+  xword-wrap: break-word;
+  xwhite-space: pre-wrap;
+  xfont-family: monospace;
+}
+
+/*Used for the info notification box*/
+.notification {
+  padding: 10px;
+  background-color: lightyellow;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: red;
+}
+
+.doc-details-scroll-div {
+  overflow-y: auto;
+  xoverflow-x: hidden;
+  max-height: 500px;
+}
+
+.doc-details-scroll-value {
+  overflow-y: auto;
+  overflow-x: auto;
+  xword-break: break-all;
+  word-wrap: break-word;
+  max-height: 200px;
+}
+
+html,body {
+  margin:0;
+  padding:0;
+  height:100%;
+}
+
+#wrapper {
+  min-height:100%;
+  position:relative;
+}
+
+
+/*SoC Customizations*/
+#searchResultsWrapper{
+  /*style="width:1000px !important; padding-bottom: 70px;*/
+  padding-bottom: 70px;
+  min-width: 1000px;
+}
+
+div.fusion-header div.logo {
+  /*class="container" style="width:1000px !important; */
+  padding-left: 15px;
+  display: inline-block;
+  width: 70px;
+}
+
+div.fusion-header div.title {
+  font-weight: bold;
+  display: inline-block;
+}
+
+div.fusion-header div.subtitle {
+  font-size: 0.6em;
+  /*display: inline-block;*/
+  float: right;
+  text-align: right;
+}
+
+div#applicableRulesEl button {
+  margin-bottom: 5px;
+  display: inline-block;
+  width: 100%;
+}
+
+button.tagsButton {
+  margin-bottom: 5px;
+  display: inline-block;
+  width: 100%;
+  background-color: lightblue;
+}
+
+div.solrDocFieldKeyVal {
+  font-size: 0.8em;
+  float: left;
+  clear: left;
+  /*color: darkgray;*/
+}
+
+/*div#applicableRulesEl button div.*/
+div.solrDocFieldKeyVal.id,
+  /*div.solrDocFieldKeyVal.type,*/
+div.solrDocFieldKeyVal._version_ {
+  display: none;
+}
+
+div.solrDocFieldKeyVal.tags div.key {
+  color: blue;
+}
+
+div.solrDocFieldKeyVal div.key {
+  display: inline-block;
+  min-width: 40px;
+  horiz-align: left;
+}
+div.solrDocFieldKeyVal div.val {
+  display: inline-block;
+}
+
+div.solrDocFieldKeyVal div.key:after {
+  content: ': ';
+}
+
+
+div.mainContent {
+  /*style="width:1000px !important; padding-bottom: 70px;" */
+}
+
+button.excluded {
+  background-color: #fcc;
+  opacity: 0.3;
+}
+
+button.depressed{
+  background-color: #ccf;
+  opacity: 0.3;
+}
+
+/*moving from inline style to css def SoC*/
+.col {
+  padding-top:10px;
+  padding-left:10px;
+}
+
+span.count {
+  font-size: 0.8em;
+  color:#ddd;
+}
+
+.floatLeft {
+  float:left;
+}
+
+.floatRight {
+  float:right;
+}

@@ -23,7 +23,7 @@
   margin-top: .75rem;
   .card-get-started,
   .card-no-results {
-    text-align: center;   
+    text-align: center;
   }
 }
 
@@ -36,3 +36,46 @@
   height: 16px;
   width: 16px;
 }
+
+.simulation {
+  .panel {
+    position: static;
+    display: block;
+  }
+
+  input[type="checkbox"],
+  input[type="radio"] {
+    width: inherit;
+    height: inherit;
+  }
+
+  .form-control-feedback {
+    right: 6px;
+    top: -5px;
+  }
+
+  ul, ol, dl {
+   font-size: inherit;
+  },
+
+  input:focus,
+  input:hover {
+    border: 0 none;
+  }
+}
+
+#searchBoxEl {
+  font-size: 3rem;
+  height: 4rem;
+  padding-left: 15px;
+}
+
+#searchBoxEl:focus,
+#searchBoxEl:hover {
+  border: 0 none;
+}
+
+div.searchUI_color {
+  padding-left: 30px;
+}
+

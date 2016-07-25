@@ -211,7 +211,7 @@ appConfig = { //eslint-disable-line
     },
 
     set_params: {
-      policies : {
+      policies: {
         "append": "Append",
         "replace": "Replace"
       }
@@ -224,5 +224,91 @@ appConfig = { //eslint-disable-line
       "name": "Name",
       "brand": "Brand"
     }
+  },
+
+  simulation: {
+//***If you don't know what you want for some configuration items, leave them as-is and see what happens in UI.
+//***You will need to clear browser history/cache before your changes take affect.
+    host: 'http://' + window.location.hostname, //window.location.hostname is used here if UI on same Jetty as Fusion.  If not, please specify Fusion hostname here.
+    port: '8764', //Fusion port
+    authorizationHeader: {headers: {'Authorization': 'Basic ' + btoa('admin:123qweasdzxc')}}, //Please specify Fusion user:password
+
+    collection: 'os_prod', //Please specify your collection name
+    pipelineIdList: 'os_prod-with-rules,os_prod-default', //Please specify comma-separated list of the pipeline(s) that you want to leverage with this UI. NO SPACES.
+//1st pipeline will be default,2nd pipeline could be signal-enabled.  Add other pipelines if desired.
+//If you only have 1 query pipeline, that is ok too.
+    requestHandlerList: 'select,autofilter', //This specifies the list of requestHandlers that the main doSearch() will use.
+    addl_params: '', //Specify any additional query params you want to include as part of doSearch(),
+
+    searchAppTitle: "bluestem search", //Search UI Title
+    searchAppSubtitle: "rules demonstration", //Search UI Title
+    head_field: 'Name', //In search results, for each doc, display this field as the head field
+    head_url_field: '', //In search results, for each doc, use this field to generate link value when a user clicks on head field
+    thumbnail_enabled: false, //In search results, display a thumbnail with each doc
+    thumbnail_field: 'image', //In search results, for each doc, use this field to get thumbnail URL.
+
+    facet_panel_image: "extras/cart.png", //Image that appears on the left when you initially load searchUI.
+//Put image file in extras subfolder.  Suggest image 300px wide or greater.
+//IMPORTANT: Make sure this fl list contains id and any fields you set for     head_field/head_url_field/thumb_field
+    fl: 'Name,PhraseText,ProductID,Price-sort',
+
+    fl2display: 'Name,PhraseText,ProductID,Price-sort',
+//This needs to be a subset of     fl.  No spaces please.
+    always_display_field: true, //Set this to true if you want to always display field in the results list even when it has empty value
+
+    signalNum: 100, //# of signals for demo signal submit
+    signalType: 'click', //Default signal type
+    signals_pipeline: '_signals_ingest', //This specifies the index pipeline that submitSignals() uses to submit signals (simulated clicks)
+
+    UIOptions_enabled: true, //Set to true to make UIOptions button visible
+    geofield: '', //Specify a location field here if you want to enable geospatial search.  Specify EMPTY value if your collection DOES NOT have geospatial data
+    distance: '10', //Default distance value in km for geospatial search
+
+//***Each '_enabled' value below can be changed on the UI***
+    query_info_enabled: false, //Set to true if you want to display query info
+    search_within_results_enabled: false, //Set to true if you want search with results enabled by default
+    stats_enabled: false, //Set to true if you want stats enabled by default
+
+    spellcheck_enabled: false, //Set to true if you want spellcheck enabled by default
+    spellcheck_requesthandler: 'spell', //Please make sure this requestHandler is configured in solrconfig.xml if you plan to use spellcheck
+    spellcheck_dictionary: 'default_text', //Please make sure this dictionary is configured in solrconfig.xml if you plan to use spellcheck
+
+//***typeahead is auto complete feature in UI
+    typeahead_retrieve_num: 5, //Number of suggestions to retrieve from any typeahead mechanisms below
+
+    typeahead_terms_enabled: true, //Enable terms mechanism to do typeahead
+    field_fq_enabled: false, //When using terms mechanism, set this to true if you want to include field name when doing auto complete
+    typeahead_terms_requesthandler: 'terms',
+    typeahead_terms_fl: 'suggestions',
+    typeahead_suggester1_enabled: false, //Set to true if you want to enable this by default.  You can always change it in the UI.
+    typeahead_suggester1_dictionary: 'InfixSuggester_name', //Please make sure this dictionary is configured in solrconfig.xml if you plan to use this suggester
+    typeahead_suggester_requesthandler: 'suggest', //Please make sure this requestHandler is configured in solrconfig.xml if you plan to use suggester
+
+    typeahead_suggester2_enabled: false, //Set to true if you want to enable this by default.  You can always change it in the UI.
+    typeahead_suggester2_dictionary: 'InfixSuggester_artistName', //Please make sure this dictionary is configured in solrconfig.xml if you plan to use this suggester
+
+    typeahead_logs_collection_enabled: false, //Set to true if you want to enable this by default.  You can always change it in the UI.
+
+    typeahead_signals_collection_enabled: false, //Set to true if you want to enable this by default.  You can always change it in the UI.
+//***END OF typeahead mechanisms
+
+//***BEGINNING OF $rootScope.lwlabels
+//If you want to display friendly labels for any field name, then add a line for each field name below.
+//For example, for 'cuisine' field name, replace it with 'Cuisine' in the UI
+    labels: {
+      'artistName_s': 'Artist Name',
+      'genre_s': 'Genre',
+      'format_s': 'Format',
+      'class_s': 'Class',
+      'subclass_s': 'Sub Class',
+      'department_s': 'Department',
+      'manufacturer_s': 'Manufacturer',
+      'salePrice': 'Sale Price',
+      'shortDescription': 'Description',
+      'coupon': 'Coupon',
+      'likes': 'Likes',
+      'last_modified_date': 'Last Modified'
+    }
+
   }
 };

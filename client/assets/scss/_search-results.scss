@@ -1,0 +1,59 @@
+// SEARCH RESULTS
+
+.search-results {
+    background-color: #FFFFFF;
+    color: inherit;
+    padding: 15px 20px 20px 20px;
+    border-color: #E7EAEC;
+    border-image: none;
+    border-style: solid none solid;
+    border-width: 1px 0px;
+
+    small {
+    	display: inline-block;
+    }
+	
+	.search-form {
+	    margin-top: 10px;
+
+	    .btn-default {
+	    	border-color: $table-border-color;
+ 
+			&:hover {
+				border-color: darken($table-border-color, 10%);
+			}
+	    }
+	}
+
+	.search-result {
+
+		h4 {
+		    margin-bottom: 0;
+		}
+		
+		.search-link {
+		    color: #006621;
+		}
+		
+		p {
+		    font-size: 12px;
+		    margin-top: 5px;
+		}
+		
+		& + .hr-line-dashed {
+		    border-top: 1px dashed #E7EAEC;
+		    color: #ffffff;
+		    background-color: #ffffff;
+		    height: 1px;
+		    margin: 20px 0;
+		}
+	}
+
+
+
+
+	h2 {
+	    font-size: 24px;
+	    font-weight: 100;
+	}
+}

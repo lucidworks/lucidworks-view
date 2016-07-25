@@ -1,0 +1,167 @@
+/* MODAL ENHANCE */    
+    
+    // MODAL
+        .modal {
+            text-align: center;
+            padding: 0 !important;
+            overflow: hidden !important;
+        }
+
+        .modal:before {
+            content: '';
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+            margin-right: -9px;
+        }
+
+
+
+        .modal-dialog {
+            display: inline-block;
+            text-align: left;
+            vertical-align: middle;
+            
+            left: auto !important;
+            right: auto !important;
+            top: auto !important;
+            bottom: auto !important;
+            padding: 0 !important;
+
+            @media screen and (max-width: $screen-sm) {
+                margin-right: 5px !important;
+            }
+        }
+
+    // MODAL RWD
+    @media screen and (min-width: 992px) {
+        .modal-lg {
+            width: 90%;
+            max-width: 1200px;
+        }
+    }
+        
+
+    .add-rule {
+        .modal-header {
+            > hr {
+                margin-top: 10px;
+                margin-bottom: 0;
+                // border-top-style: dashed;
+                border-top-color: #f3f3f3; //#ddd;
+            }
+        }
+
+        .modal-content {
+            box-shadow: 0 8px 22px 0 rgba(0,0,0,0.05),0 10px 60px 0 rgba(0,0,0,0.15);
+        }
+
+        .modal-body {
+            // min-height: 455px;
+        }
+
+        .modal-footer {
+            padding-top: 0;
+
+            > hr {
+                margin-bottom: 30px;
+                // border-top-style: dashed;
+                border-top-color: #f3f3f3; //#ddd;
+            }
+        }
+
+        label {
+            display: block;
+            margin-bottom: -6px;
+        }
+
+        ol {
+            margin: 0;
+            counter-reset: term;
+            
+            display: table;
+            position: relative;
+            width: 100%;
+                
+            // hor. VISUAL centering
+            left: 15px;
+
+            &:before,
+            &:after {
+                content: '';
+                position: absolute;
+                display: block;
+                top: 0;
+                bottom: -30px;
+
+                border-width: 0 0 0 1px;
+                border-style: dashed;
+                border-color: #ddd; //$gray-lighter;    
+            }
+
+            &:before {
+                left: 33.3333%;
+            }
+
+            &:after {
+                right: 33.3333%;
+            }
+
+            > li {
+                
+                // STEP COUNTERS
+                &:before {
+                    counter-increment: term;
+                    content: counter(term);
+                    position: absolute;
+                    left: 13px;
+                    top: 4px;
+                    border: 1px solid #7d7d7d; //#BBBBBB;
+                    color: #6b6b6b; //#bbb;
+                    width: 30px;
+                    height: 30px;
+                    line-height: 28px;
+                    font-size: 16px;
+                    text-align: center;
+                    border-radius: 50%;
+                }
+
+                display: table-cell;
+                position: relative;
+                width: 33.3333%;
+                margin: 0;
+                // margin-left: -4px;
+                // margin-right: 2%;
+                vertical-align: top;
+                padding-left: 52px;
+                padding-right: 52px;
+
+                // &:first-child {
+                //     margin-left: 3%;
+                // }
+
+                // &:last-child {
+                //     margin-right: 0;
+                // }
+
+                .form-group + .btn-group {
+                    margin-top: 10px;
+                }
+
+
+                h4 {
+                    color: #565656;
+                    margin-top: 9px;
+                    margin-bottom: 25px;
+                    font-size: 20px;
+                    font-weight: 300;
+                    // text-transform: uppercase;
+                }
+
+                .wiz-step > .btn-group {
+                    margin-top: 10px;
+                }
+            }
+        }
+    }
+

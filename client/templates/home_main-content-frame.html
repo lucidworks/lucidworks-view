@@ -15,7 +15,7 @@
   </div>
 
   <!-- Main Content Area -->
-  <div class="grid-block small-12" ng-class="{'large-9 medium-8':hc.showFacets,'large-12 medium-12':!hc.showFacets}">
+  <div class="grid-block small-12" ng-class="{'large-9 medium-8':hc.showFacets,'large-9 medium-8':!hc.showFacets}">
     <div class="grid-content">
       <a name="topOfMainContent"></a>
       <div class="card card-result-comment" ng-switch="hc.status">
@@ -27,7 +27,7 @@
           <h2>Your results will live here</h2>
           <p class="subheader">Try searching any query above in the search box</p>
         </div>
-        
+
         <div class="card-section center card-no-results" ng-switch-when="no-results">
           <img zf-iconic="" icon="no_results" data-direction="top" size="medium" />
           <h2>There are no results for &ldquo;<span class="highlight">{{hc.lastQuery}}</span>&rdquo;</h2>
@@ -37,6 +37,363 @@
       <landing-page></landing-page>
       <document-list></document-list>
       <paginate></paginate>
+    </div>
+  </div>
+
+  <div class="medium-4 large-3 medium-grid-block">
+
+    <div class="well well-sm well-transp well-outline" id="rules-sidebar">
+      <p class="small text-nowrap text-muted mt-5 well-title">
+        <span>10</span> of <span>22</span> rules
+        <a data-toggle="collapse" data-target="#rules-filters-side-panel"  class="btn btn-lg btn-link pull-right"><i class="mi-filter_list"></i></a>
+        <a data-toggle="collapse" data-target="#rules-quick-search-side-panel" class="btn btn-lg btn-link pull-right"><i class="fa fa-search"></i></a>
+      </p>
+
+      <!-- rules quick search -->
+      <div class="well-holder collapse" id="rules-quick-search-side-panel">
+        <div class="well">
+          <div class="form-group mb-0">
+            <input type="text" class="form-control input" data-input="quick-search" data-search-target="#rules-list-sidebar > a" name="quick-search" placeholder="Enter name of search rule" />
+            <span class="glyphicon glyphicon-remove-circle form-control-feedback form-action-clear" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+      <!-- /.rules quick search -->
+
+      <!-- side-filters-panel -->
+      <div class="well-holder collapse" id="rules-filters-side-panel">
+        <div class="well">
+          <ul class="list-unstyled with-states">
+            <li>
+              <div class="row hor-gut-10">
+                <div class="col-xs-6">
+                  <label for="sideFilterStart" class="small text-muted text-uppercase">Start</label>
+                  <div class="datepicker-holder">
+                    <input type="text" class="form-control" id="rulesSideFilterStartDateVal" value="06/20/2016" />
+                    <input type="text" class="form-control small" id="rulesSideFilterStartTimeVal" value="10:00 AM" />
+                    <input type='text' class="form-control datepicker" id="rulesSideFilterStart" placeholder="Select start date" />
+                  </div>
+                </div>
+                <div class="col-xs-6">
+                  <label for="sideFilterEnd" class="small text-muted text-uppercase">End</label>
+                  <div class="datepicker-holder">
+                    <input type="text" class="form-control" id="rulesSideFilterEndDateVal" value="06/23/2016" />
+                    <input type="text" class="form-control small" id="rulesSideFilterEndTimeVal" value="12:00 AM" />
+                    <input type='text' class="form-control datepicker" id="rulesSideFilterEnd" placeholder="Select end date" />
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <label for="filterStatus" class="small text-muted text-uppercase">Staus</label>
+
+
+              <div class="btn-group btn-group-justified" data-toggle="buttons" id="filterStatus">
+                <label class="btn btn-link">
+                  <input type="radio" name="options" id="option1" autocomplete="off">Active
+                </label>
+                <label class="btn btn-link active">
+                  <input type="radio" name="options" id="option2" autocomplete="off" checked>N/A
+                </label>
+                <label class="btn btn-link">
+                  <input type="radio" name="options" id="option3" autocomplete="off">Inactive
+                </label>
+              </div>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <label for="filterTags" class="small text-muted text-uppercase">Tags</label>
+              <!-- <div class="btn-group btn-group-justified" role="group" id="filterActuality">
+                 <a class="btn btn-sm btn-link" href="#">Enabled</a>
+                 <a class="btn btn-sm btn-link" href="#">Disabled</a>
+              </div> -->
+            </li>
+            <!-- <ul class="with-states list-unstyled tags" id="filterTags"> -->
+            <li>
+              <div class="checkbox checkbox-right">
+                <label>
+                  <input type="checkbox">
+                           <span class="text-overflow">
+                              <i class="fa fa-tag text-muted-light"></i>
+                              Simulation Simulation Simulation Simulation Simulation
+                           </span>
+                </label>
+              </div>
+            </li>
+            <li>
+              <div class="checkbox checkbox-right">
+                <label>
+                  <input type="checkbox">
+                           <span class="text-overflow">
+                              <i class="fa fa-tag text-muted-light"></i>
+                              Tag #2
+                           </span>
+                </label>
+              </div>
+            </li>
+            <li>
+              <div class="checkbox checkbox-right">
+                <label>
+                  <input type="checkbox">
+                           <span class="text-overflow">
+                              <i class="fa fa-tag text-muted-light"></i>
+                              Other tag
+                           </span>
+                </label>
+              </div>
+            </li>
+            <!-- </ul> -->
+            <li class="divider"></li>
+            <li>
+              <div class="btn-group btn-group-justified" id="apply-rules-filters-side-panel">
+                <a data-toggle="collapse" data-target="#rules-filters-side-panel" class="btn btn-sm btn-link"><i class="fa fa-times"></i>Cancel</a>
+                <a data-toggle="collapse" data-target="#rules-filters-side-panel" class="btn btn-sm btn-default"><i class="fa fa-check"></i> Apply</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.side-filters-panel -->
+
+      <div class="list-group list-group-no-outline mb-0" id="rules-list-sidebar">
+        <!-- SEARCH RULE -->
+        <a data-toggle="collapse" data-target="#rule-1-row" class="list-group-item collapse-by-icon" aria-expanded="true" data-parent="#rules-sidebar" >
+           <span class="pull-right">
+              <i class="fa fa-angle-down"></i>
+              <i class="fa fa-angle-up"></i>
+           </span>
+           <span class="text-overflow">
+              <i class="status bg-active mr-5"></i>
+              Rule #1 name long, very-very long name
+           </span>
+        </a>
+        <div id="rule-1-row" aria-expanded="true" class="collapse in list-group-item-content">
+          <ul class="list-unstyled">
+            <!-- RULE TRIGGER -->
+            <li>
+              <div class="form-group">
+                <label for="triggerCategory" class="small text-muted text-uppercase">Category</label>
+                <!-- <select class="form-control" id="triggerCategory" disabled>
+                      <option value="1">Category #1</option>
+                      <option value="2">Category #2</option>
+                      <option value="3">Category #3</option>
+                      <option value="4">Category #4</option>
+                </select> -->
+                <span class="readonly">Category #1, Category #2</span>
+              </div>
+            </li>
+            <!-- /. RULE TRIGGER -->
+
+            <!-- RULE PERIOD -->
+            <li>
+              <div class="row hor-gut-10">
+                <div class="col-sm-6 form-group">
+                  <label for="triggerStart" class="small text-muted text-uppercase">Start</label>
+                  <div class="datepicker-holder">
+                    <input type="text" class="form-control" id="triggerStartDate" value="06/20/2016" disabled />
+                    <input type="text" class="form-control small" id="triggerStartTime" value="10:00 AM" disabled />
+                  </div>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label for="triggerEnd" class="small text-muted text-uppercase">End</label>
+                  <input type="text" class="form-control" id="triggerEndDate" value="06/23/2016" disabled />
+                  <input type="text" class="form-control small" id="triggerEndTime" value="12:00 AM" disabled />
+                </div>
+              </div>
+            </li>
+            <!-- /.RULE PERIOD -->
+
+            <!-- RULE ACTION -->
+            <li>
+              <div class="form-group">
+                <label for="actionRedirect" class="small text-muted text-uppercase">Redirect</label>
+                <input type="text" class="form-control" id="actionRedirect" value="/screens/touch-technology"  disabled>
+              </div>
+            </li>
+            <!-- /.RULE ACTION -->
+          </ul>
+        </div>
+        <!-- /.SEARCH RULE -->
+
+        <!-- SEARCH RULE -->
+        <a class="list-group-item collapse-by-icon" data-toggle="collapse" aria-expanded="false" data-parent="#rules-sidebar" data-target="#rule-2-row">
+                     <span class="pull-right">
+                        <i class="fa fa-angle-down"></i>
+                        <i class="fa fa-angle-up"></i>
+                     </span>
+                     <span class="text-overflow">
+                        <i class="status bg-inactive mr-5"></i>
+                        Rule #2
+                     </span>
+        </a>
+        <div id="rule-2-row" aria-expanded="false" class="collapse list-group-item-content">
+          <ul class="list-unstyled">
+            <!-- RULE TRIGGER -->
+            <li>
+              <div class="form-group">
+                <label for="triggerCategory" class="small text-muted text-uppercase">Category</label>
+                <!-- <select class="form-control" id="triggerCategory" disabled>
+                      <option value="1">Category #1</option>
+                      <option value="2">Category #2</option>
+                      <option value="3">Category #3</option>
+                      <option value="4">Category #4</option>
+                </select> -->
+                <span class="readonly">Category #1, Category #2</span>
+              </div>
+            </li>
+            <!-- /. RULE TRIGGER -->
+
+            <!-- RULE PERIOD -->
+            <li>
+              <div class="row hor-gut-10">
+                <div class="col-sm-6 form-group">
+                  <label for="triggerStart" class="small text-muted text-uppercase">Start</label>
+                  <div class="datepicker-holder">
+                    <input type="text" class="form-control" id="triggerStartDate" value="06/20/2016" disabled />
+                    <input type="text" class="form-control small" id="triggerStartTime" value="10:00 AM" disabled />
+                  </div>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label for="triggerEnd" class="small text-muted text-uppercase">End</label>
+                  <input type="text" class="form-control" id="triggerEndDate" value="06/23/2016" disabled />
+                  <input type="text" class="form-control small" id="triggerEndTime" value="12:00 AM" disabled />
+                </div>
+              </div>
+            </li>
+            <!-- /.RULE PERIOD -->
+
+            <!-- RULE ACTION -->
+            <li>
+              <div class="form-group">
+                <label for="actionRedirect" class="small text-muted text-uppercase">Redirect</label>
+                <input type="text" class="form-control" id="actionRedirect" value="/screens/touch-technology"  disabled>
+              </div>
+            </li>
+            <!-- /.RULE ACTION -->
+          </ul>
+        </div>
+        <!-- /.SEARCH RULE -->
+
+        <!-- SEARCH RULE -->
+        <a class="list-group-item collapse-by-icon" data-toggle="collapse" aria-expanded="false" data-parent="#rules-sidebar" data-target="#rule-3-row">
+                     <span class="pull-right">
+                        <i class="fa fa-angle-down"></i>
+                        <i class="fa fa-angle-up"></i>
+                     </span>
+                     <span class="text-overflow">
+                        <i class="status bg-inactive mr-5"></i>
+                        Rule #3 name
+                     </span>
+        </a>
+        <div id="rule-3-row" aria-expanded="false" class="collapse list-group-item-content">
+          <ul class="list-unstyled">
+            <!-- RULE TRIGGER -->
+            <li>
+              <div class="form-group">
+                <label for="triggerCategory" class="small text-muted text-uppercase">Category</label>
+                <!-- <select class="form-control" id="triggerCategory" disabled>
+                      <option value="1">Category #1</option>
+                      <option value="2">Category #2</option>
+                      <option value="3">Category #3</option>
+                      <option value="4">Category #4</option>
+                </select> -->
+                <span class="readonly">Category #1, Category #2</span>
+              </div>
+            </li>
+            <!-- /. RULE TRIGGER -->
+
+            <!-- RULE PERIOD -->
+            <li>
+              <div class="row hor-gut-10">
+                <div class="col-sm-6 form-group">
+                  <label for="triggerStart" class="small text-muted text-uppercase">Start</label>
+                  <div class="datepicker-holder">
+                    <input type="text" class="form-control" id="triggerStartDate" value="06/20/2016" disabled />
+                    <input type="text" class="form-control small" id="triggerStartTime" value="10:00 AM" disabled />
+                  </div>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label for="triggerEnd" class="small text-muted text-uppercase">End</label>
+                  <input type="text" class="form-control" id="triggerEndDate" value="06/23/2016" disabled />
+                  <input type="text" class="form-control small" id="triggerEndTime" value="12:00 AM" disabled />
+                </div>
+              </div>
+            </li>
+            <!-- /.RULE PERIOD -->
+
+            <!-- RULE ACTION -->
+            <li>
+              <div class="form-group">
+                <label for="actionRedirect" class="small text-muted text-uppercase">Redirect</label>
+                <input type="text" class="form-control" id="actionRedirect" value="/screens/touch-technology"  disabled>
+              </div>
+            </li>
+            <!-- /.RULE ACTION -->
+          </ul>
+        </div>
+        <!-- /.SEARCH RULE -->
+
+        <!-- SEARCH RULE -->
+        <a class="list-group-item collapse-by-icon" data-toggle="collapse" aria-expanded="false" data-parent="#rules-sidebar" data-target="#rule-4-row">
+                     <span class="pull-right">
+                        <i class="fa fa-angle-down"></i>
+                        <i class="fa fa-angle-up"></i>
+                     </span>
+                     <span class="text-overflow">
+                        <i class="status bg-inactive mr-5"></i>
+                        Rule #4
+                     </span>
+        </a>
+        <div id="rule-4-row" aria-expanded="false" class="collapse list-group-item-content">
+          <ul class="list-unstyled">
+            <!-- RULE TRIGGER -->
+            <li>
+              <div class="form-group">
+                <label for="triggerCategory" class="small text-muted text-uppercase">Category</label>
+                <!-- <select class="form-control" id="triggerCategory" disabled>
+                      <option value="1">Category #1</option>
+                      <option value="2">Category #2</option>
+                      <option value="3">Category #3</option>
+                      <option value="4">Category #4</option>
+                </select> -->
+                <span class="readonly">Category #1, Category #2</span>
+              </div>
+            </li>
+            <!-- /. RULE TRIGGER -->
+
+            <!-- RULE PERIOD -->
+            <li>
+              <div class="row hor-gut-10">
+                <div class="col-sm-6 form-group">
+                  <label for="triggerStart" class="small text-muted text-uppercase">Start</label>
+                  <div class="datepicker-holder">
+                    <input type="text" class="form-control" id="triggerStartDate" value="06/20/2016" disabled />
+                    <input type="text" class="form-control small" id="triggerStartTime" value="10:00 AM" disabled />
+                  </div>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label for="triggerEnd" class="small text-muted text-uppercase">End</label>
+                  <input type="text" class="form-control" id="triggerEndDate" value="06/23/2016" disabled />
+                  <input type="text" class="form-control small" id="triggerEndTime" value="12:00 AM" disabled />
+                </div>
+              </div>
+            </li>
+            <!-- /.RULE PERIOD -->
+
+            <!-- RULE ACTION -->
+            <li>
+              <div class="form-group">
+                <label for="actionRedirect" class="small text-muted text-uppercase">Redirect</label>
+                <input type="text" class="form-control" id="actionRedirect" value="/screens/touch-technology"  disabled>
+              </div>
+            </li>
+            <!-- /.RULE ACTION -->
+          </ul>
+        </div>
+        <!-- /.SEARCH RULE -->
+
+      </div>
     </div>
   </div>
 

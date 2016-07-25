@@ -42,7 +42,7 @@
   # create products collection
   curl -u $FUSION_API_CREDENTIALS -X PUT -H 'Content-type: application/json' \
        -d '{"solrParams":{"replicationFactor":1,"numShards":1}}' \
-       ${FUSION_API_BASE}/collections/bsb_products
+       ${FUSION_API_BASE}/collections/os_prod
   
   # Adjust schema to allow attr-* fields to be strings rather than autodetected
   curl -X POST -H 'Content-type:application/json' --data-binary '{
@@ -51,19 +51,19 @@
        "type":"string",
        "multiValued":true,
        "stored":false }
-  }' $SOLR_API_BASE/bsb_products/schema
+  }' $SOLR_API_BASE/os_prod/schema
   
   # upload products data 
-  $FUSION_HOME/apps/solr-dist/bin/post -c bsb_products -params "rowid=id&csv.mv.separator=~&csv.mv.encapsulator=%60&f.PhraseText.split=true&f.Category-search.split=true&f.CategoryID.split=true&f.CategoryID.separator=~&f.Color-search.split=true&f.attr-__General__LNav_Colors.split=true&f.ImageData.split=true&f.attr-__General__LNavColorCategory.split=true&skip=_version_,Brand-search,Color-search,Category-no_stem,Name-search,Name-no_stem,Name-sort,Price-search,PricePerMonth-search,ProductID-search,autoPhrase_text,LastIndexed,_text_" products.csv
+  $FUSION_HOME/apps/solr-dist/bin/post -c os_prod -params "rowid=id&csv.mv.separator=~&csv.mv.encapsulator=%60&f.PhraseText.split=true&f.Category-search.split=true&f.CategoryID.split=true&f.CategoryID.separator=~&f.Color-search.split=true&f.attr-__General__LNav_Colors.split=true&f.ImageData.split=true&f.attr-__General__LNavColorCategory.split=true&skip=_version_,Brand-search,Color-search,Category-no_stem,Name-search,Name-no_stem,Name-sort,Price-search,PricePerMonth-search,ProductID-search,autoPhrase_text,LastIndexed,_text_" products.csv
 
   
   # create rules collection (specific to the example products)
   curl -u $FUSION_API_CREDENTIALS -X PUT -H 'Content-type: application/json' \
        -d '{"solrParams":{"replicationFactor":1,"numShards":1}}' \
-       ${FUSION_API_BASE}/collections/bsb_products_rules
+       ${FUSION_API_BASE}/collections/os_prod_rules
   
   # upload rules data
-  curl '$SOLR_API_BASE/bsb_products_rules/update?commit=true' --data-binary @rules.json -H 'Content-type:application/js'  
+  curl '$SOLR_API_BASE/os_prod_rules/update?commit=true' --data-binary @rules.json -H 'Content-type:application/js'  
   ```
   
 1. All configuration such as fusion url, available rule types or documents fields should be made in FUSION_CONFIG.js 
