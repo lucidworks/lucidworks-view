@@ -11,11 +11,13 @@
     'ngInject';
     var config = ConfigService.config;
     var realmName = config.connection_realm;
+    var loginUserName;
 
     return {
       createSession: createSession,
       getSession: getSession,
-      destroySession: destroySession
+      destroySession: destroySession,
+      getUserName: getUserName
     };
 
     //////////////
@@ -30,6 +32,7 @@
         })
         .then(function (resp) {
           deferred.resolve(resp);
+          loginUserName = username;
         }, function (err) {
           deferred.reject(err);
         });
@@ -43,6 +46,7 @@
         .get(ApiBase.getEndpoint() + 'api/session?realmName=' + realmName)
         .then(function (resp) {
           deferred.resolve(resp);
+          loginUserName = _.get(resp, 'data.user.username');
         }, function (err) {
           deferred.reject(err);
         });
@@ -58,6 +62,10 @@
         });
 
       return deferred.promise;
+    }
+
+    function getUserName() {
+      return loginUserName ? $q.when(loginUserName) : getSession().then(function() { return loginUserName; });
     }
   }
 })();

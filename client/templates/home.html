@@ -41,6 +41,7 @@ controller: HomeController as hc
       </li>
     </ul>
     <ul class="right menu-bar primary condense">
+      <li class="user-name">{{hc.userName}}</li>
       <li class="show-for-medium">
         <a ui-sref="login" ng-click="hc.logout()">Logout</a>
       </li>

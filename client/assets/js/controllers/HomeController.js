@@ -54,6 +54,10 @@
       $timeout(function(){
         URLService.setQuery(query);
       });
+
+      AuthService.getUserName().then(function(userName) {
+        hc.userName = userName;
+      });
     }
 
     function checkResultsType(data){

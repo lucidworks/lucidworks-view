@@ -36,3 +36,12 @@
   height: 16px;
   width: 16px;
 }
+
+.main-panel {
+  flex-direction: row-reverse;
+}
+
+.menu-bar > li.user-name {
+  display: block;
+  text-align: center;
+}
