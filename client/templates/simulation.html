@@ -5,9 +5,9 @@ animationIn: slideInRight
 animationOut: slideOutLeft
 controller: simulationController as sc
 ---
-<link rel="stylesheet" href="./styles/simulation.css">
+<!--<link rel="stylesheet" href="./styles/simulation.css">
 <link rel="stylesheet" href="./styles/bootstrap.min.css">
-<link rel="stylesheet" href="./styles/bootstrap-theme.min.css">
+<link rel="stylesheet" href="./styles/bootstrap-theme.min.css">-->
 
 
 
@@ -613,8 +613,7 @@ controller: simulationController as sc
             </span>
 
             <!--This mark section is placeholder for any status I want to display when user hit "save" icon on field value update-->
-            <mark ng-show="actionStatus[doc.id + field]" class="text" style="margin-left: 20px; padding: 5px;"><i>{{actionStatus[doc.id
-              + field]}}</i></mark>
+            <mark ng-show="actionStatus[doc.id + field]" class="text" style="margin-left: 20px; padding: 5px;"><i>{{actionStatus[doc.id + field]}}</i></mark>
           </div>
         </span>
             <!--END OF Loop thru each field for a doc-->
@@ -839,7 +838,7 @@ controller: simulationController as sc
                  <span class="text-overflow">
                    <i ng-click="updateRules($event, rule)"
                       ng-model="(data.fusion.applicable_rules)"
-                      class="status bg-inactive mr-5"></i>
+                      class="status mr-5" ng-class="{'bg-inactive':!(rule.simulation || rule.simulation == undefined && rule.enabled) , 'bg-active': (rule.simulation || rule.simulation == undefined && rule.enabled)}"></i>
                     {{rule.id}}
                  </span>
             </a>

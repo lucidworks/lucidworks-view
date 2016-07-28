@@ -1,4 +1,4 @@
-<div class="facet-list accordion">
+<div class="facet-list accordion lw-panel">
     <div ng-repeat="facet in vm.facets" ng-switch="::facet.type">
       <facet-field ng-switch-when="facet_fields" facet-name="{{::facet.name}}" facet-label="{{::facet.label}}" facet-auto-open="{{::facet.autoOpen}}"></facet-field>
     </div>

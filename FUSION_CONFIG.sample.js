@@ -269,9 +269,14 @@ appConfig = { //eslint-disable-line
     search_within_results_enabled: false, //Set to true if you want search with results enabled by default
     stats_enabled: false, //Set to true if you want stats enabled by default
 
-    spellcheck_enabled: false, //Set to true if you want spellcheck enabled by default
-    spellcheck_requesthandler: 'spell', //Please make sure this requestHandler is configured in solrconfig.xml if you plan to use spellcheck
-    spellcheck_dictionary: 'default_text', //Please make sure this dictionary is configured in solrconfig.xml if you plan to use spellcheck
+    /*
+
+     // If you want spell check make sure this requestHandler and dictionary are configured in solrconfig.xml
+     spellCheck: {
+     requestHandler: 'spell',
+     dictionary: 'default_text'
+     },
+     */
 
 //***typeahead is auto complete feature in UI
     typeahead_retrieve_num: 5, //Number of suggestions to retrieve from any typeahead mechanisms below

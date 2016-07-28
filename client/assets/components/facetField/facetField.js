@@ -29,8 +29,10 @@
      */
 
     function fqFieldkeyValueTransformer(key, value) {
-      var escapedKey = QueryBuilderProvider.escapeSpecialChars(key);
-      return QueryBuilderProvider.keyValueString(escapedKey, value, ':');
+      //var escapedKey = QueryBuilderProvider.escapeSpecialChars(key);
+      // at least we need something smarter then simple escaping because field name can contain '-' (dash) for example
+      // and simple escaping make this field name invalid.
+      return QueryBuilderProvider.keyValueString(key, value, ':');
     }
 
     function fqFieldPreEncodeWrapper(data){

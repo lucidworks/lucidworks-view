@@ -150,7 +150,7 @@
           if(query.fq.length === 0){
             delete query.fq;
           }
-        } else { // CASE: Facet key doesnt exist ADD key AND VALUE.
+        } else { // CASE: Facet key doesn't exist ADD key AND VALUE.
           query = addQueryFacet(query, key, facet.title);
         }
 

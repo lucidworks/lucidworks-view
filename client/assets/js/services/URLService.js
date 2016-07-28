@@ -47,6 +47,7 @@
      */
     function getQueryFromUrl() {
       var queryString = $location.search()[QUERY_PARAM];
+      console.log("queryString = " + queryString);
       var queryObject;
       try{
         queryObject = queryString ? $rison.parse(decodeURIComponent(queryString)):BLANK_QUERY;

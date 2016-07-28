@@ -72,10 +72,11 @@
        * @return {string}             The URL endpoint for the query without parameters.
        */
       function getQueryUrl(isProfiles) {
-        var profilesEndpoint = getProfileEndpoint(ConfigService.getQueryProfile(), 'select');
-        var pipelinesEndpoint = getPipelineEndpoint(ConfigService.getQueryPipeline(), 'select');
-
-        return isProfiles ? profilesEndpoint : pipelinesEndpoint;
+        if (isProfiles) {
+          return getProfileEndpoint(ConfigService.getQueryProfile(), 'select');
+        } else {
+          return getPipelineEndpoint(ConfigService.getQueryPipeline(), 'select')
+        }
       }
 
       function getProfileEndpoint(profile, requestHandler){

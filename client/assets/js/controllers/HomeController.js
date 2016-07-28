@@ -46,7 +46,48 @@
         sorting.switchSort = switchSort;
         createSortList();
 
+        hc.fusion = data.fusion;
+
       });
+
+      hc.includeRulesWithTag = function (ruleTag, include) {
+        var ids = _.chain(hc.fusion.applicable_rules)
+          .filter(function (rule) {
+            return rule.tags
+              && rule.tags.length
+              && rule.tags.indexOf(ruleTag) != -1})
+          .map(function (rule) { return rule.id; })
+          .value();
+
+        console.log("===================");
+        console.log(ids);
+        if (include) {
+          _.remove(hc.simulation.excluded_ids, function(n) {
+            return ids.indexOf(n) != -1;
+          });
+        } else {
+          hc.simulation.excluded_ids = _.union(hc.simulation.excluded_ids, ids)
+        }
+
+        console.log(hc.simulation.excluded_ids);
+        doSearch();
+      };
+
+      hc.updateRules = function ($event, rule) {
+        console.log("updateRules", rule);
+        $event.stopPropagation();
+
+        var excludedIds = hc.simulation.excluded_ids;
+        var ruleIdIndex = excludedIds.indexOf(rule.id);
+        if (ruleIdIndex != -1) {
+          excludedIds.splice(ruleIdIndex, 1);
+        } else {
+          excludedIds.push(rule.id);
+        }
+
+        console.log(hc.simulation.excluded_ids);
+        doSearch();
+      };
 
       // Force set the query object to change one digest cycle later
       // than the digest cycle of the initial load-rendering
@@ -54,6 +95,21 @@
       $timeout(function(){
         URLService.setQuery(query);
       });
+    }
+
+    hc.simulation = {excluded_ids: []};
+
+    hc.simulationExcluded = function (ruleId) {
+      return hc.simulation && hc.simulation.excluded_ids &&
+             hc.simulation.excluded_ids.indexOf(ruleId) != -1;
+    };
+
+    function excludedRules() {
+      if (!hc.simulation || !hc.simulation.excluded_ids) {
+        return;
+      }
+
+      return _.chain(hc.simulation.excluded_ids).compact().value();
     }
 
     function checkResultsType(data){
@@ -108,10 +164,15 @@
       query = {
         q: hc.searchQuery,
         start: 0,
-        // TODO better solution for turning off fq on a new query
-        fq: []
+        fq: [] // TODO better solution for turning off fq on a new query
       };
 
+      var excRules = excludedRules();
+      if (excRules) {
+        query['rules.exclude'] = excRules;
+      }
+
+      console.log(query);
       URLService.setQuery(query);
     }
 

@@ -34,10 +34,6 @@
     padding: 0.2em 0;
   }
 
-  body {
-    padding-top: 50px;
-  }
-
   p {
     line-height: 1.5;
   }
@@ -282,7 +278,7 @@
     > li > a,
     > li > span,
     > li > .checkbox-right {
-      padding: 3px 10px;
+      padding: 5px 10px;
 
       .fa {
         margin-right: 5px;
@@ -796,4 +792,11 @@
             width: 100%;
           }
         }
+    }
+
+    .lw-panel {
+      width: 100%;
+      border: 1px solid rgb(233, 233, 233);
+      border-radius: 4px;
+      box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px;
     }

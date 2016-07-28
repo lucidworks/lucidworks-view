@@ -28,15 +28,18 @@
   /**
    * Main app config
    *
+   * @param  {Provider} $logProvider          Provider for log
    * @param  {Provider} $urlRouterProvider    Provider for url
    * @param  {Provider} $httpProvider         Provider for http
    * @param  {Provider} $locationProvider     Provider for location
    * @param  {Provider} ApiBaseProvider       Provider for ApiBase
    * @param  {Provider} ConfigServiceProvider Provider for ConfigService
    */
-  function config($urlRouterProvider, $httpProvider, $locationProvider, ApiBaseProvider,
+  function config($logProvider, $urlRouterProvider, $httpProvider, $locationProvider, ApiBaseProvider,
     ConfigServiceProvider, $windowProvider) {
     'ngInject';
+
+    $logProvider.debugEnabled(true);
 
     $urlRouterProvider.otherwise('search');
     $httpProvider.interceptors.push('AuthInterceptor');

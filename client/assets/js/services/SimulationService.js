@@ -7,11 +7,13 @@
 
   function SimulationService() {
 
-    this.$get = function ($http, ConfigService, ApiBase) {
+    this.$get = function ($http, $log, ConfigService, ApiBase) {
 
       var appHost = ApiBase.getEndpoint();
       var collection = ConfigService.config.collection.trim();
       var appName = '&appName=' + collection + 'AdvUI';
+
+      var config = ConfigService.config.simulation;
 
       function escape(str) {
         return  encodeURI(str).replace(/&/g, '%26').replace(/\//g, '%2F').replace(/#/g, '%23');
@@ -37,7 +39,11 @@
       }
 
       function query(q) {
-        return '?&wt=json&q=' + escape(q || '*:*') + '&debug=true&fl=score,explain:[explain style=nl]';
+        return '?wt=json' +
+               '&json.nl=arrarr' +
+               '&debug=true' +
+               '&fl=score,explain:[explain style=nl]' +
+               '&q=' + escape(q || '*:*');
       }
 
       function mm(lw) {
@@ -65,6 +71,17 @@
           $http.get(url)
             .success(success)
             .error(error);
+        },
+
+        spellCheck: function (q, success, error) {
+          if (!config.spellCheck) {
+            $log.error("spellCheck was called but wasn't configured!");
+          }
+
+          var url = appHost + 'api/apollo/solr/' + collection + '/' + config.spellCheck.requestHandler
+            + '?wt=json&spellcheck.q=' + q + '&spellcheck.dictionary=' + config.spellCheck.dictionary;
+
+          $http.get(url).success(success).error(error)
         }
       };
     };
