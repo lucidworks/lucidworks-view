@@ -21,7 +21,7 @@ appConfig = { //eslint-disable-line
    * To use https set the https server key and certificate. And set use_https to true.
    */
   host: 'http://localhost',
-  port:'8764',
+  port: '8764',
 
   proxy_allow_self_signed_cert: false, // Only turn on if you have a self signed proxy in front of fusion.
 
