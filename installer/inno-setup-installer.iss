@@ -47,9 +47,8 @@ var
   ErrorCode : Integer ;
 begin
   if CurPageID = wpFinished then
-    ShellExecAsOriginalUser('', ExpandConstant('{app}\install.cmd'), '', '',SW_SHOWNORMAL, ewNoWait, ErrorCode);
+    ShellExecAsOriginalUser('', ExpandConstant('{app}\installer\install.cmd'), '', '',SW_SHOWNORMAL, ewNoWait, ErrorCode);
 end;
 
 [Run]
-Filename: "{app}\getting-started-on-windows.md"; Description: "View the README file"; Flags: postinstall shellexec skipifsilent
-
+Filename: "{app}\installer\getting-started-on-windows.md"; Description: "View the README file"; Flags: postinstall shellexec skipifsilent

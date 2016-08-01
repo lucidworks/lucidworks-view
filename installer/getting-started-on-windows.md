@@ -6,17 +6,17 @@
 
  To stop the service go to services, right click the Lucidworks View service and select stop
 
- To uninstall the service, run the `uninstall-service.cmd` **as an administrator**.
+ To uninstall the service, run the `.\installer\uninstall-service.cmd` **as an administrator**.
 
 ## Basic Configuration
 
-The first time you run `.\view.cmd`, `FUSION_CONFIG.sample.js` is copied to `FUSION_CONFIG.js`.  Modify this file to configure View's basic options.  Documentation about the configuration keys is included in the file.
+The first time you run `.\installer\view.cmd`, `FUSION_CONFIG.sample.js` is copied to `FUSION_CONFIG.js`.  Modify this file to configure View's basic options.  Documentation about the configuration keys is included in the file.
 
 At a minimum, you _must_ configure the `collection` key to match the name of your Fusion collection.
 
 In a production environment, you must also configure `host` and `port` to point to the UI service of your Fusion deployment.  The default is `localhost:8764` for development purposes.
 
-When the app is running with `.\view.cmd`, it reloads the configuration every time you save `FUSION_CONFIG.js`.  You can modify the configuration and watch the app change in real time in your browser.
+When the app is running with `.\installer\view.cmd`, it reloads the configuration every time you save `FUSION_CONFIG.js`.  You can modify the configuration and watch the app change in real time in your browser.
 
 ## Basic Customization
 

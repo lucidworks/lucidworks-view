@@ -13,7 +13,6 @@ Do the following steps from a windows box
 	- Delete everything in **VIEW_HOME**\lib\nodejs\\*
 	- Copy all the files from **WINDOW_NODEJS_INSTALL_HOME** into **VIEW_HOME**\lib\nodejs
 	- From the lucidworks-view git directory, copy the **installer** directory to **VIEW_HOME**
-	- From the lucidworks-view git directory, copy `*.exe`, `*.cmd` and `*.md `to **VIEW_HOME**
 
 
 4. Get latest version of **inno setup** installed <http://www.jrsoftware.org/isdl.php#stable>
@@ -31,7 +30,7 @@ Do the following steps from a windows box
 
 ## How to Uninstall the Lucidworks-view service
 
- * To uninstall the service simply run the **VIEW_HOME**\uninstall-service.cmd as administrator
+ * To uninstall the service simply run the **VIEW_HOME**\installer\uninstall-service.cmd as administrator
 
 ## Common issues:
 
