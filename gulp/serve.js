@@ -42,10 +42,16 @@ gulp.task('browsersync', ['build'], function() {
     }
   }
 
+  var serverPort = 3000;
+  if(fusionConfig.server_port && fusionConfig.server_port !== false){
+    serverPort = fusionConfig.server_port;
+  }
+
   browserSync.init({
     server: browserSyncConfig,
     ghostMode: false,
-    ui: false
+    ui: false,
+    port: serverPort
   });
 
   // gulp.watch("app/scss/*.scss", ['sass']);
