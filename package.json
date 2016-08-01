@@ -26,6 +26,7 @@
   "changelog": "https://github.com/lucidworks/lucidworks-view/blob/master/CHANGELOG.md",
   "homepage": "https://lucidworks.com/products/view",
   "scripts": {
+    "start-production": "./node_modules/gulp/bin/gulp.js --production",
     "start": "./node_modules/gulp/bin/gulp.js",
     "build": "./node_modules/gulp/bin/gulp.js build --production",
     "test": "./node_modules/karma/bin/karma start karma.conf.js"
