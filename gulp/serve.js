@@ -44,7 +44,8 @@ gulp.task('browsersync', ['build'], function() {
 
   browserSync.init({
     server: browserSyncConfig,
-    ghostMode: false
+    ghostMode: false,
+    ui: false
   });
 
   // gulp.watch("app/scss/*.scss", ['sass']);
