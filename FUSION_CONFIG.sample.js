@@ -25,6 +25,9 @@ appConfig = { //eslint-disable-line
 
   proxy_allow_self_signed_cert: false, // Only turn on if you have a self signed proxy in front of fusion.
 
+  // The port from which View will be served. defaults to 3000.
+  server_port: 3000,
+
   // Serve View via https.
   // use_https: true,
   // https: {
