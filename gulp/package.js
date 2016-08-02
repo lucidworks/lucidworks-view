@@ -46,7 +46,7 @@ gulp.task('cook', function(cb) {
 //Tarballs
 gulp.task('package', function(cb){
   if(!argv.buildTarget && !(argv.buildname && argv.os && argv.platform && argv.extension)){
-    console.log('\nTo use package you need to use a valid buildTarget parameter.\n  Ex: gulp package --buildTarget=mac\n  Possible build targets: {mac, linux, linux32, sunos, sunos32}\n\nOR all of these parameters:\nbuildname, buildTarget, os, platform, extension\n  Ex: gulp build --buildname=mac --os=darwin --platform=x64 --extension=tar.gz\n');
+    console.log('\nTo use package you need to use a valid buildTarget parameter.\n  Ex: gulp package --buildTarget=mac\n  Possible build targets: {mac, linux, linux32, win64, sunos, sunos32}\n\nOR all of these parameters:\nbuildname, buildTarget, os, platform, extension\n  Ex: gulp build --buildname=mac --os=darwin --platform=x64 --extension=tar.gz\n');
     cb();
   } else {
     sequence('package:bashCommands', cb);
@@ -94,17 +94,18 @@ gulp.task('move:win64', function(cb) {
 });
 
 gulp.task('package:bashCommands', function(cb){
+  var nodeExpandPath = 'tmp/lucidworks-view/lib/nodejs';
+  var tarOptions = ' --exclude=win64 lucidworks-view/';
+  var shellCommands = [ 'mkdir -p packages/' + version ];
   var version = getVersion();
   var osTarget = getOsTarget();
 
-  var shellCommands = [
-    'mkdir -p packages/' + version
-  ];
-
-  if (osTarget.nodeVersion !== undefined) {
+  // Include nodeJS package if osTarget.nodeVersion is available, or create placeholder for nodeJS lib instead.
+  if (osTarget.nodeVersion === undefined) {
+    shellCommands.push('mkdir -p ' + nodeExpandPath);
+  } else {
     var nodePackagePath = 'tmp/node/' + packageName(osTarget);
     var nodeFilePath = nodePackagePath + '.' + osTarget.extension;
-    var nodeExpandPath = 'tmp/lucidworks-view/lib/nodejs';
 
     shellCommands.push.apply(shellCommands, [
       'mkdir -p ' + nodePackagePath,
@@ -117,13 +118,12 @@ gulp.task('package:bashCommands', function(cb){
     ]);
   }
 
-  shellCommands.push.apply(shellCommands, [
-    // Includes win64 files.
-    isWin64 ? 'cd tmp/lucidworks-view; cp -r win64/installer .; cp win64/*.* .; cd ../..' : '',
+  // For wind64 case, include files under /win64 up to package root.
+  if (isWin64) {
+    tarOptions = ' --exclude=lucidworks-view' + tarOptions + ' -C lucidworks-view/win64 . -C .. .';
+  }
 
-    // Creating tar ball
-    'cd tmp; tar -cpzf ../packages/' + version + '/lucidworks-view-'+ osTarget.os + '-' + osTarget.platform + '-' + version + '.tar.gz --exclude=lucidworks-view/win64 lucidworks-view/.'
-  ]);
+  shellCommands.push('cd tmp; tar -cpzf ../packages/' + version + '/lucidworks-view-'+ osTarget.os + '-' + osTarget.platform + '-' + version + '.tar.gz' + tarOptions);
 
   for(var index = 0; index < shellCommands.length; index++){
     var command = shellCommands[index];
@@ -140,7 +140,6 @@ function getVersion(){
   var packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
   return packageJson.version;
 }
-
 
 function buildUrl(target){
   //Format https://nodejs.org/dist/v5.8.0/node-v5.8.0-darwin-x64.tar.gz
@@ -205,22 +204,4 @@ function getOsTarget(){
   os_target.platform = argv.platform ? argv.platform: os_target.platform;
   os_target.extension = argv.extension ? argv.extension: os_target.extension;
   return os_target;
-}
-
-/**
- * If an expresion is true run a callback and log errors to console.
- * @param  {boolean}     expression  Result of an expression
- * @param  {Function}    cb          Callback to fire
- * @param  {array|false} parameters  An array of parameters to pass through to the callback
- * @return {Function}                Function to fire
- */
-function ifExpression(expression, cb, parameters){
-  if(Array.isArray(parameters)){
-    return $.if(expression, cb.apply(null, parameters).on('error', function (e) {
-      console.log(e);
-    }));
-  }
-  return $.if(expression, cb().on('error', function (e) {
-    console.log(e);
-  }));
 }
