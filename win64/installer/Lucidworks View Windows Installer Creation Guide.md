@@ -24,13 +24,13 @@ Do the following steps from a windows box
 
 ## How to use the Windows Installer:
 
- * Launch the Lucidworks-view.exe **as an administrator**.
+ * Launch the Lucidworks-View-Installer.exe **as an administrator**.
 
 **Note:** At the end of the installer, it attempts to run npm installs. If the install cmd script closes too fast, you probably didn't have admin permissions and it abruptly failed. Right click on the install.cmd and run as administrator if that happens.
 
 ## How to Uninstall the Lucidworks-view service
 
- * To uninstall the service simply run the **VIEW_HOME**\installer\uninstall-service.cmd as administrator
+ * To uninstall the service simply run the **VIEW_HOME**\uninstall-service.cmd as administrator
 
 ## Common issues:
 

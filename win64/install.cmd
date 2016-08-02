@@ -19,11 +19,7 @@ echo Installing service using View installed at %~dp0
 
 cd %~dp0
 
-copy %~dp0..\bower.json .
-
-%~dp0..\lib\nodejs\npm install && %~dp0..\lib\nodejs\npm install -g gulp bower && %~dp0..\lib\nodejs\node %~dp0..\node_modules\bower\bin\bower install && %~dp0..\lib\nodejs\npm rebuild node-sass && %~dp0..\lib\nodejs\npm install -g gulp bower
-
-rm bower.json
+%~dp0lib\nodejs\npm install && %~dp0lib\nodejs\npm install -g gulp bower && %~dp0lib\nodejs\node %~dp0node_modules\bower\bin\bower install && %~dp0lib\nodejs\npm rebuild node-sass && %~dp0lib\nodejs\npm install -g gulp bower
 
 echo Reminder: You can safely ignore any warnings on the console and close the console when this process completes.
 

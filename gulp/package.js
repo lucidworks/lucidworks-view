@@ -9,6 +9,7 @@ var sequence        = require('run-sequence');
 var child_process   = require('child_process');
 
 var nodeversion     = 'v5.2.0';
+var isWin64 = (argv.buildTarget === 'win64');
 
 var fileLocations = {
   bower: ['bower_components/*/**'],
@@ -21,6 +22,7 @@ var fileLocations = {
   docs: ['docs/**/*'],
   gulp: ['gulp/**/*', '!gulp/package.js'],
   tests: ['tests/**/*'],
+  win64: ['win64/**/*'],
   main_components: [
     '.bowerrc',
     '.eslintrc',
@@ -51,7 +53,7 @@ gulp.task('package', function(cb){
   }
 });
 
-gulp.task('move:app', ['move:bower', 'move:node_modules', 'move:client', 'move:docs', 'move:gulp', 'move:tests'], function(cb){
+gulp.task('move:app', ['move:bower', 'move:node_modules', 'move:client', 'move:docs', 'move:gulp', 'move:tests', 'move:win64'], function(cb){
   gulp.src(fileLocations.main_components)
   .pipe(gulp.dest('tmp/lucidworks-view'));
   cb();
@@ -85,20 +87,44 @@ gulp.task('move:tests', function(cb){
   cb();
 });
 
+gulp.task('move:win64', function(cb) {
+  gulp.src(fileLocations.win64)
+  .pipe(gulp.dest('tmp/lucidworks-view/win64'));
+  cb();
+});
+
 gulp.task('package:bashCommands', function(cb){
+  var version = getVersion();
+  var osTarget = getOsTarget();
+
   var shellCommands = [
-    'mkdir -p tmp/node',
-    'mkdir -p tmp/node/'+packageName(getOsTarget()),
-    'mkdir -p tmp/lucidworks-view/lib/nodejs',
-    'curl -o tmp/node/'+packageName(getOsTarget())+'.'+getOsTarget().extension+' '+buildUrl(getOsTarget()),
-    'tar -xzf tmp/node/'+packageName(getOsTarget())+'.'+getOsTarget().extension+' -C tmp/lucidworks-view/lib/nodejs --strip-components=1',
-    'mkdir -p packages',
-    'mkdir -p packages/'+getVersion(),
-    'chmod +x tmp/lucidworks-view/lib/nodejs/bin/npm',
-    'chmod +x tmp/lucidworks-view/lib/nodejs/bin/node',
-    'chmod +x tmp/lucidworks-view/lib/nodejs/lib/node_modules/npm/bin/npm',
-    'cd tmp/; tar -cpzf ../packages/'+getVersion()+'/lucidworks-view-'+getOsTarget().os+'-'+getOsTarget().platform+'-'+getVersion()+'.tar.gz lucidworks-view/.'
+    'mkdir -p packages/' + version
   ];
+
+  if (osTarget.nodeVersion !== undefined) {
+    var nodePackagePath = 'tmp/node/' + packageName(osTarget);
+    var nodeFilePath = nodePackagePath + '.' + osTarget.extension;
+    var nodeExpandPath = 'tmp/lucidworks-view/lib/nodejs';
+
+    shellCommands.push.apply(shellCommands, [
+      'mkdir -p ' + nodePackagePath,
+      'curl -o ' + nodeFilePath + ' ' + buildUrl(osTarget),
+      'mkdir -p ' + nodeExpandPath,
+      'tar -xzf ' + nodeFilePath + ' -C ' + nodeExpandPath + ' --strip-components=1',
+      'chmod +x ' + nodeExpandPath + '/bin/npm',
+      'chmod +x ' + nodeExpandPath + '/bin/node',
+      'chmod +x ' + nodeExpandPath + '/lib/node_modules/npm/bin/npm'
+    ]);
+  }
+
+  shellCommands.push.apply(shellCommands, [
+    // Includes win64 files.
+    isWin64 ? 'cd tmp/lucidworks-view; cp -r win64/installer .; cp win64/*.* .; cd ../..' : '',
+
+    // Creating tar ball
+    'cd tmp; tar -cpzf ../packages/' + version + '/lucidworks-view-'+ osTarget.os + '-' + osTarget.platform + '-' + version + '.tar.gz --exclude=lucidworks-view/win64 lucidworks-view/.'
+  ]);
+
   for(var index = 0; index < shellCommands.length; index++){
     var command = shellCommands[index];
     console.log(command);
@@ -148,6 +174,13 @@ function getOsTarget(){
       platform: 'x86',
       extension: 'tar.gz'
     },
+
+    win64: {
+      name: 'win64',
+      os: 'windows',
+      platform: 'x64'
+    },
+
     sunos: {
       name: 'sunos',
       nodeVersion: nodeversion,
