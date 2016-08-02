@@ -10,7 +10,7 @@
 
 ## Basic Configuration
 
-The first time you run `.\view.cmd`, `FUSION_CONFIG.sample.js` is copied to `FUSION_CONFIG.js`.  Modify this file to configure View's basic options.  Documentation about the configuration keys is included in the file.
+The first time you run the View service, `FUSION_CONFIG.sample.js` is copied to `FUSION_CONFIG.js`.  Modify this file to configure View's basic options.  Documentation about the configuration keys is included in the file.
 
 At a minimum, you _must_ configure the `collection` key to match the name of your Fusion collection.
 
