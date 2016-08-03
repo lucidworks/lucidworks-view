@@ -94,11 +94,11 @@ gulp.task('move:win64', function(cb) {
 });
 
 gulp.task('package:bashCommands', function(cb){
+  var version = getVersion();
+  var osTarget = getOsTarget();
   var nodeExpandPath = 'tmp/lucidworks-view/lib/nodejs';
   var tarOptions = ' --exclude=win64 lucidworks-view/';
   var shellCommands = [ 'mkdir -p packages/' + version ];
-  var version = getVersion();
-  var osTarget = getOsTarget();
 
   // Include nodeJS package if osTarget.nodeVersion is available, or create placeholder for nodeJS lib instead.
   if (osTarget.nodeVersion === undefined) {

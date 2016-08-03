@@ -4,7 +4,7 @@
 
 Do the following steps from a windows box
 
-1. Pull the latest changes from lucidworks-view repository and build the tar.gz file from Linux. (See the README.md for build instructions on how to build lucidworks-view tar ball or download the latest tar at <https://lucidworks.com/products/view>)
+1. Pull the latest changes from lucidworks-view repository and build the tar.gz file from Linux with option `--buildTarget=win64`. (See the README.md for build instructions on how to build lucidworks-view tar ball or download the latest tar at <https://lucidworks.com/products/view>)
 
 2. Download nodejs x64 MSI installer version <https://nodejs.org/en/download/> for windows same version you are using and install to some directory. We will call this **WINDOW_NODEJS_INSTALL_HOME**.
 
@@ -12,14 +12,12 @@ Do the following steps from a windows box
 
 4. Get latest version of **inno setup** installed <http://www.jrsoftware.org/isdl.php#stable>
 
-5. Delete **VIEW_HOME**\installer\Output\\*
-
-6. Launch **VIEW_HOME**\installer\create-installer.cmd
-	- This will create the Installer in **VIEW_HOME**\installer\Output directory.
+5. Launch **VIEW_HOME**\installer\create-installer.cmd
+	- This will create the Installer `Lucidworks-View-Installer.exe` in **VIEW_HOME**\installer\Output directory.
 
 ## How to use the Windows Installer:
 
- * Launch the Lucidworks-View-Installer.exe **as an administrator**.
+ * Launch the `Lucidworks-View-Installer.exe` **as an administrator**.
 
 **Note:** At the end of the installer, it attempts to run npm installs. If the install cmd script closes too fast, you probably didn't have admin permissions and it abruptly failed. Right click on the install.cmd and run as administrator if that happens.
 
