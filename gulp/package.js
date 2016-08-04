@@ -97,23 +97,24 @@ gulp.task('package:bashCommands', function(cb){
   var version = getVersion();
   var osTarget = getOsTarget();
   var tarOptions = ' --exclude=win64 lucidworks-view/';
-  var nodeExpandPath = 'tmp/lucidworks-view/lib/nodejs/';
-  var nodePackagePath = ((osTarget.unpackNode === false) ? nodeExpandPath : 'tmp/node/') + packageName(osTarget);
-  var nodeFilePath = nodePackagePath + '.' + osTarget.extension;
+  var nodeDir = 'tmp/lucidworks-view/lib/nodejs/';
+  var skipUnpack = (osTarget.unpackNode === false);
+  var nodeDownloadDest = (skipUnpack ? nodeDir : 'tmp/node/');
+  var nodeFilePath = nodeDownloadDest + packageName(osTarget) + '.' + osTarget.extension;
   var shellCommands = [ 'mkdir -p packages/' + version ];
 
   shellCommands.push.apply(shellCommands, [
-    'mkdir -p ' + nodePackagePath,
-    'rm -r ' + nodeExpandPath + '; mkdir -p ' + nodeExpandPath,
-    'curl -o ' + nodeFilePath + ' ' + buildUrl(osTarget)
+    'mkdir -p ' + nodeDownloadDest,
+    'rm -r ' + nodeDir + '; mkdir -p ' + nodeDir,
+    'curl -o ' + nodeFilePath + ' ' + getNodePackageUrl(osTarget)
   ]);
 
-  if (osTarget.unpackNode !== false) {
+  if (!skipUnpack) {
     shellCommands.push.apply(shellCommands, [
-      'tar -xzf ' + nodeFilePath + ' -C ' + nodeExpandPath + ' --strip-components=1',
-      'chmod +x ' + nodeExpandPath + '/bin/npm',
-      'chmod +x ' + nodeExpandPath + '/bin/node',
-      'chmod +x ' + nodeExpandPath + '/lib/node_modules/npm/bin/npm'
+      'tar -xzf ' + nodeFilePath + ' -C ' + nodeDir + ' --strip-components=1',
+      'chmod +x ' + nodeDir + 'bin/npm',
+      'chmod +x ' + nodeDir + 'bin/node',
+      'chmod +x ' + nodeDir + 'lib/node_modules/npm/bin/npm'
     ]);
   }
 
@@ -142,7 +143,7 @@ function getVersion(){
 }
 
 // Url with format - https://nodejs.org/dist/v5.8.0/node-v5.8.0-darwin-x64.tar.gz
-function buildUrl(target) {
+function getNodePackageUrl(target) {
   return 'http://nodejs.org/dist/' + target.nodeVersion + '/' + packageName(target) + '.' + target.extension;
 }
 
