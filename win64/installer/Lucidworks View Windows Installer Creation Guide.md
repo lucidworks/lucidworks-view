@@ -6,9 +6,9 @@ Do the following steps from a windows box
 
 1. Pull the latest changes from lucidworks-view repository and build the tar.gz file from Linux with option `--buildTarget=win64`. (See the README.md for build instructions on how to build lucidworks-view tar ball or download the latest tar at <https://lucidworks.com/products/view>)
 
-2. Download nodejs x64 MSI installer version <https://nodejs.org/en/download/> for windows same version you are using and install to some directory. We will call this **WINDOW_NODEJS_INSTALL_HOME**.
+2. Move the tar build on Linux and Untar on Windows to a directory we will refer to as **VIEW_HOME**.
 
-3. Move the tar build on Linux and Untar on Windows to a directory we will refer to as **VIEW_HOME** and from the untar'd result. Copy all the files from **WINDOW_NODEJS_INSTALL_HOME** into **VIEW_HOME**\lib\nodejs
+3. Run the nodejs x64 MSI installer located at **VIEW_HOME**\lib\nodejs. Install (or copy all installed results) at the same localtion.
 
 4. Get latest version of **inno setup** installed <http://www.jrsoftware.org/isdl.php#stable>
 
@@ -27,13 +27,11 @@ Do the following steps from a windows box
 
 ## Common issues:
 
-- When i run installer, get "cannot find bower"
+- When I run installer, get "cannot find bower"
 
-  - You forgot step 2.
+  - You forgot step 3.
 
 - File could not be access, file in use
-
-  - You forgot to delete the existing installer file, step 5.
 
   - Or you have one of the installer files open with a CMD or locked somewhere. Close it and try again.
 
