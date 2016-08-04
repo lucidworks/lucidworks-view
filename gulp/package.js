@@ -96,21 +96,20 @@ gulp.task('move:win64', function(cb) {
 gulp.task('package:bashCommands', function(cb){
   var version = getVersion();
   var osTarget = getOsTarget();
-  var nodeExpandPath = 'tmp/lucidworks-view/lib/nodejs';
   var tarOptions = ' --exclude=win64 lucidworks-view/';
+  var nodeExpandPath = 'tmp/lucidworks-view/lib/nodejs/';
+  var nodePackagePath = ((osTarget.unpackNode === false) ? nodeExpandPath : 'tmp/node/') + packageName(osTarget);
+  var nodeFilePath = nodePackagePath + '.' + osTarget.extension;
   var shellCommands = [ 'mkdir -p packages/' + version ];
 
-  // Include nodeJS package if osTarget.nodeVersion is available, or create placeholder for nodeJS lib instead.
-  if (osTarget.nodeVersion === undefined) {
-    shellCommands.push('mkdir -p ' + nodeExpandPath);
-  } else {
-    var nodePackagePath = 'tmp/node/' + packageName(osTarget);
-    var nodeFilePath = nodePackagePath + '.' + osTarget.extension;
+  shellCommands.push.apply(shellCommands, [
+    'mkdir -p ' + nodePackagePath,
+    'rm -r ' + nodeExpandPath + '; mkdir -p ' + nodeExpandPath,
+    'curl -o ' + nodeFilePath + ' ' + buildUrl(osTarget)
+  ]);
 
+  if (osTarget.unpackNode !== false) {
     shellCommands.push.apply(shellCommands, [
-      'mkdir -p ' + nodePackagePath,
-      'curl -o ' + nodeFilePath + ' ' + buildUrl(osTarget),
-      'mkdir -p ' + nodeExpandPath,
       'tar -xzf ' + nodeFilePath + ' -C ' + nodeExpandPath + ' --strip-components=1',
       'chmod +x ' + nodeExpandPath + '/bin/npm',
       'chmod +x ' + nodeExpandPath + '/bin/node',
@@ -130,6 +129,7 @@ gulp.task('package:bashCommands', function(cb){
     console.log(command);
     console.log(child_process.execSync(command).toString('utf8'));
   }
+
   cb();
 });
 
@@ -141,13 +141,15 @@ function getVersion(){
   return packageJson.version;
 }
 
-function buildUrl(target){
-  //Format https://nodejs.org/dist/v5.8.0/node-v5.8.0-darwin-x64.tar.gz
-  return 'http://nodejs.org/dist/'+target.nodeVersion+'/'+packageName(target)+'.'+target.extension;
+// Url with format - https://nodejs.org/dist/v5.8.0/node-v5.8.0-darwin-x64.tar.gz
+function buildUrl(target) {
+  return 'http://nodejs.org/dist/' + target.nodeVersion + '/' + packageName(target) + '.' + target.extension;
 }
 
 function packageName(target){
-  return 'node-'+target.nodeVersion+'-'+target.os+'-'+target.platform;
+  var suffix = target.nodeFileSuffix || (target.os + '-' + target.platform);
+
+  return 'node-' + target.nodeVersion + '-' + suffix;
 }
 
 function getOsTarget(){
@@ -176,8 +178,12 @@ function getOsTarget(){
 
     win64: {
       name: 'win64',
+      nodeVersion: nodeversion,
+      nodeFileSuffix: 'x64',
+      unpackNode: false,
       os: 'windows',
-      platform: 'x64'
+      platform: 'x64',
+      extension: 'msi'
     },
 
     sunos: {
