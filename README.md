@@ -117,3 +117,22 @@ For more details about configuring and customizing View, see the [docs](docs/) d
 ## Contributions
 
 View is open source! Pull requests welcome. This is a great way to give back to the community and help others build a better search app.
+
+## Building the the tar.gz dist
+
+```
+  npm install
+  bower install
+  gulp build
+  gulp cook
+  gulp package
+```
+
+Or if you don't have node on your path, you can do something like:
+
+~/Downloads/node-v5.2.0-linux-x64/bin/npm install
+~/Downloads/node-v5.2.0-linux-x64/bin/node bower install
+~/Downloads/node-v5.2.0-linux-x64/bin/node node_modules/gulp/bin/gulp.js build --buildTarget=linux
+~/Downloads/node-v5.2.0-linux-x64/bin/node node_modules/gulp/bin/gulp.js cook --buildTarget=linux
+~/Downloads/node-v5.2.0-linux-x64/bin/node node_modules/gulp/bin/gulp.js package --buildTarget=linux
+
