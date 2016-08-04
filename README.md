@@ -3,7 +3,7 @@
 
   You can also use View as the basis for developing a more sophisticated Web interface, using Foundation for Apps: http://foundation.zurb.com/apps/docs/
 
-  If you need help setting up Fusion, see https://doc.lucidworks.com/.
+  If you need help setting up Fusion, see https://doc.lucidworks.com/.  To ask questions about View, see the [Lucidworks View Q&A](https://support.lucidworks.com/hc/en-us/community/topics/200922728-Lucidworks-View-Q-A) site.
 
 ## Requirements
 
