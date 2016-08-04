@@ -3,7 +3,7 @@
 
   You can also use View as the basis for developing a more sophisticated Web interface, using Foundation for Apps: http://foundation.zurb.com/apps/docs/
 
-  If you need help setting up Fusion, see https://doc.lucidworks.com/.
+  If you need help setting up Fusion, see https://doc.lucidworks.com/.  To ask questions about View, see the [Lucidworks View Q&A](https://support.lucidworks.com/hc/en-us/community/topics/200922728-Lucidworks-View-Q-A) site.
 
 ## Requirements
 
@@ -122,9 +122,10 @@ View is open source! Pull requests welcome. This is a great way to give back to 
 
 Or if you don't have node on your path, you can do something like:
 
+```
 ~/Downloads/node-v5.2.0-linux-x64/bin/npm install
 ~/Downloads/node-v5.2.0-linux-x64/bin/node bower install
 ~/Downloads/node-v5.2.0-linux-x64/bin/node node_modules/gulp/bin/gulp.js build --buildTarget=linux
 ~/Downloads/node-v5.2.0-linux-x64/bin/node node_modules/gulp/bin/gulp.js cook --buildTarget=linux
 ~/Downloads/node-v5.2.0-linux-x64/bin/node node_modules/gulp/bin/gulp.js package --buildTarget=linux
-
+```
