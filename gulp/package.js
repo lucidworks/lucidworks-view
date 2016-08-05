@@ -9,7 +9,7 @@ var sequence        = require('run-sequence');
 var child_process   = require('child_process');
 
 var nodeversion     = 'v5.2.0';
-var isWin64 = (argv.buildTarget === 'win64');
+var isWindows = (argv.buildTarget === 'win64') || (argv.buildTarget === 'win32');
 
 var fileLocations = {
   bower: ['bower_components/*/**'],
@@ -46,7 +46,7 @@ gulp.task('cook', function(cb) {
 //Tarballs
 gulp.task('package', function(cb){
   if(!argv.buildTarget && !(argv.buildname && argv.os && argv.platform && argv.extension)){
-    console.log('\nTo use package you need to use a valid buildTarget parameter.\n  Ex: gulp package --buildTarget=mac\n  Possible build targets: {mac, linux, linux32, win64, sunos, sunos32}\n\nOR all of these parameters:\nbuildname, buildTarget, os, platform, extension\n  Ex: gulp build --buildname=mac --os=darwin --platform=x64 --extension=tar.gz\n');
+    console.log('\nTo use package you need to use a valid buildTarget parameter.\n  Ex: gulp package --buildTarget=mac\n  Possible build targets: {mac, linux, linux32, win64, win32, sunos, sunos32}\n\nOR all of these parameters:\nbuildname, buildTarget, os, platform, extension\n  Ex: gulp build --buildname=mac --os=darwin --platform=x64 --extension=tar.gz\n');
     cb();
   } else {
     sequence('package:bashCommands', cb);
@@ -98,29 +98,34 @@ gulp.task('package:bashCommands', function(cb){
   var osTarget = getOsTarget();
   var tarOptions = ' --exclude=win64 lucidworks-view/';
   var nodeDir = 'tmp/lucidworks-view/lib/nodejs/';
-  var skipUnpack = (osTarget.unpackNode === false);
-  var nodeDownloadDest = (skipUnpack ? nodeDir : 'tmp/node/');
-  var nodeFilePath = nodeDownloadDest + packageName(osTarget) + '.' + osTarget.extension;
+  var nodeDownloadDest = 'tmp/node/';
+  var nodePackageUrl = getNodePackageUrl(osTarget);
+  var nodePackageName = nodePackageUrl.split('/').pop();
+  var nodePackageDir = nodePackageName.replace('.' + osTarget.extension, '');
+  var nodeFilePath = nodeDownloadDest + nodePackageName;
   var shellCommands = [ 'mkdir -p packages/' + version ];
+
+  var unpackCommandMap = {
+    'tar.gz': 'tar -xzf ' + nodeFilePath + ' -C ' + nodeDir + ' --strip-components=1',
+    'zip': ['unzip -qo', nodeFilePath, '-d', nodeDir].join(' ')
+  };
 
   shellCommands.push.apply(shellCommands, [
     'mkdir -p ' + nodeDownloadDest,
     'rm -r ' + nodeDir + '; mkdir -p ' + nodeDir,
-    'curl -o ' + nodeFilePath + ' ' + getNodePackageUrl(osTarget)
+    'curl -o ' + nodeFilePath + ' ' + nodePackageUrl,
+    unpackCommandMap[osTarget.extension]
   ]);
 
-  if (!skipUnpack) {
+  if (isWindows) {
+    tarOptions = ' --exclude=lucidworks-view' + tarOptions + ' -C lucidworks-view/win64 . -C .. .';
+    shellCommands.push(['cd ' + nodeDir, 'mv ' + nodePackageDir + '/* .', 'rm -r ' + nodePackageDir, 'cd -'].join(';'));
+  } else {
     shellCommands.push.apply(shellCommands, [
-      'tar -xzf ' + nodeFilePath + ' -C ' + nodeDir + ' --strip-components=1',
       'chmod +x ' + nodeDir + 'bin/npm',
       'chmod +x ' + nodeDir + 'bin/node',
       'chmod +x ' + nodeDir + 'lib/node_modules/npm/bin/npm'
     ]);
-  }
-
-  // For wind64 case, include files under /win64 up to package root.
-  if (isWin64) {
-    tarOptions = ' --exclude=lucidworks-view' + tarOptions + ' -C lucidworks-view/win64 . -C .. .';
   }
 
   shellCommands.push('cd tmp; tar -cpzf ../packages/' + version + '/lucidworks-view-'+ osTarget.os + '-' + osTarget.platform + '-' + version + '.tar.gz' + tarOptions);
@@ -144,13 +149,13 @@ function getVersion(){
 
 // Url with format - https://nodejs.org/dist/v5.8.0/node-v5.8.0-darwin-x64.tar.gz
 function getNodePackageUrl(target) {
-  return 'http://nodejs.org/dist/' + target.nodeVersion + '/' + packageName(target) + '.' + target.extension;
+  var url = target.nodeInstallerUrl;
+
+  return url || ('http://nodejs.org/dist/' + target.nodeVersion + '/' + packageName(target) + '.' + target.extension);
 }
 
 function packageName(target){
-  var suffix = target.nodeFileSuffix || (target.os + '-' + target.platform);
-
-  return 'node-' + target.nodeVersion + '-' + suffix;
+  return 'node-' + target.nodeVersion + '-' + target.os + '-' + target.platform;
 }
 
 function getOsTarget(){
@@ -177,14 +182,22 @@ function getOsTarget(){
       extension: 'tar.gz'
     },
 
+    win32: {
+      name: 'win32',
+      nodeVersion: 'v6.2.1',
+      nodeInstallerUrl: 'https://nodejs.org/dist/v6.2.1/node-v6.2.1-win-x86.zip',
+      os: 'windows',
+      platform: 'x86',
+      extension: 'zip'
+    },
+
     win64: {
       name: 'win64',
-      nodeVersion: nodeversion,
-      nodeFileSuffix: 'x64',
-      unpackNode: false,
+      nodeVersion: 'v6.2.1',
+      nodeInstallerUrl: 'https://nodejs.org/dist/v6.2.1/node-v6.2.1-win-x64.zip',
       os: 'windows',
       platform: 'x64',
-      extension: 'msi'
+      extension: 'zip'
     },
 
     sunos: {
@@ -202,13 +215,16 @@ function getOsTarget(){
       extension: 'tar.gz'
     }
   };
+
   var os_target = argv.buildTarget ? buildTargets[argv.buildTarget] : {};
 
   // individual overrides.
   os_target.name = argv.buildname ? argv.buildname: os_target.name;
   os_target.nodeVersion = argv.nodeVersion ? argv.nodeVersion: os_target.nodeVersion;
+  os_target.nodeInstallerUrl = argv.nodeInstallerUrl || os_target.nodeInstallerUrl;
   os_target.os = argv.os ? argv.os: os_target.os;
   os_target.platform = argv.platform ? argv.platform: os_target.platform;
   os_target.extension = argv.extension ? argv.extension: os_target.extension;
+
   return os_target;
 }
