@@ -1,11 +1,11 @@
 # CHANGELOG
 
-## 1.3.0 - Pickachu's Invisible Tiara
-**New Feature**
-* Added a windows packaged build, you can now run view on windows
-* Improved performance
+## 1.3.0 - Pikachu's Invisible Tiara
+**New Features**
+* Added a Windows packaged build, you can now run View on Windows
+* Improved performance by minifying builds by default and turning off page change animations
 * You can now specify if you want view to start on a specific port
-* Introducing dev mode, which allows you to use unminified build objects
+* Introduced developer mode, which allows you to develop with unminified build objects, just ```npm run start-dev```
 
 ## 1.2.0 - Cersei's Iron Tiara - June 30, 2016
 **New Features**
