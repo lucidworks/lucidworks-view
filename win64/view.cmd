@@ -7,4 +7,4 @@ echo Checking node js version:
 set thecmd=%1
 if [%1]==[] set thecmd=start
 
-%NODEJS_EXE% %~dp0node_modules\gulp\bin\gulp.js
+%NODEJS_EXE% %~dp0node_modules\gulp\bin\gulp.js --production
