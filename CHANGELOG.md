@@ -7,6 +7,9 @@
 * You can now specify which port View runs on
 * Introduced developer mode, which allows you to develop with unminified build objects, just ```npm run start-dev```
 
+**Bug Fixes**
+* Fixed a bug in ```npm run build`` command
+
 ## 1.2.0 - Cersei's Iron Tiara - June 30, 2016
 **New Features**
 * Now support range facet type
