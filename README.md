@@ -3,7 +3,7 @@
 
   You can also use View as the basis for developing a more sophisticated Web interface, using Foundation for Apps: http://foundation.zurb.com/apps/docs/
 
-  If you need help setting up Fusion, see https://doc.lucidworks.com/.  To ask questions about View, see the [Lucidworks View Q&A](https://support.lucidworks.com/hc/en-us/community/topics/200922728-Lucidworks-View-Q-A) site.
+  If you need help setting up Fusion, see https://doc.lucidworks.com/.
 
 ## Requirements
 
@@ -74,14 +74,6 @@ To run the compiling process once, without watching any files, use the `build` c
 ```bash
 npm run build
 ```
-this command creates a built version of View which can be copied from the build folder to another folder/machine and served on your own webserver.
-
-For development purposes, you can develop without a minified build by using the command
-```bash
-npm run start-dev
-```
-
-this command runs a node server, with minimized packages, and works similarly to  the `npm start` command.
 
 ## Unit testing
 
@@ -110,10 +102,6 @@ Templates for various UI components are located in client/assets/components.
 
 Search results from different document types can use different templates.  The `client/assets/components/document` directory contains templates for some common document types, plus default templates for all others.  Data types correspond to Connectors in Fusion.  See [Customizing Documents](docs/Customizing_Documents.md) for details about working with these.
 
-## View on Windows
-
-  Download the latest view installer from <https://lucidworks.com/products/view> and run it **as an administrator**.
-
 ## What's Next
 
 For more details about configuring and customizing View, see the [docs](docs/) directory.
@@ -121,3 +109,22 @@ For more details about configuring and customizing View, see the [docs](docs/) d
 ## Contributions
 
 View is open source! Pull requests welcome. This is a great way to give back to the community and help others build a better search app.
+
+## Building the the tar.gz dist
+
+```
+  npm install
+  bower install
+  gulp build
+  gulp cook
+  gulp package
+```
+
+Or if you don't have node on your path, you can do something like:
+
+~/Downloads/node-v5.2.0-linux-x64/bin/npm install
+~/Downloads/node-v5.2.0-linux-x64/bin/node bower install
+~/Downloads/node-v5.2.0-linux-x64/bin/node node_modules/gulp/bin/gulp.js build --buildTarget=linux
+~/Downloads/node-v5.2.0-linux-x64/bin/node node_modules/gulp/bin/gulp.js cook --buildTarget=linux
+~/Downloads/node-v5.2.0-linux-x64/bin/node node_modules/gulp/bin/gulp.js package --buildTarget=linux
+

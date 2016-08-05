@@ -1,6 +1,6 @@
 {
   "name": "lucidworks-view",
-  "version": "1.3.0",
+  "version": "1.2.0",
   "description": "Lucidworks View: Create custom user experiences for your Fusion-powered apps.",
   "repository": {
     "type": "git",
@@ -26,8 +26,7 @@
   "changelog": "https://github.com/lucidworks/lucidworks-view/blob/master/CHANGELOG.md",
   "homepage": "https://lucidworks.com/products/view",
   "scripts": {
-    "start": "./node_modules/gulp/bin/gulp.js --production",
-    "start-dev": "./node_modules/gulp/bin/gulp.js",
+    "start": "./node_modules/gulp/bin/gulp.js",
     "build": "./node_modules/gulp/bin/gulp.js build --production",
     "test": "./node_modules/karma/bin/karma start karma.conf.js"
   },
