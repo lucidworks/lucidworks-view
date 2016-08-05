@@ -1,1 +1,0 @@
-"C:\Program Files (x86)\Inno Setup 5\compil32" /cc "%~dp0inno-setup-installer.iss"
