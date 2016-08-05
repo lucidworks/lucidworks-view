@@ -8,11 +8,9 @@ Do the following steps from a windows box
 
 2. Move the tar build on Linux and Untar on Windows to a directory we will refer to as **VIEW_HOME**.
 
-3. Run the nodejs x64 MSI installer located at **VIEW_HOME**\lib\nodejs. Install (or copy all installed results) at the same localtion.
+3. Get latest version of **inno setup** installed <http://www.jrsoftware.org/isdl.php#stable>
 
-4. Get latest version of **inno setup** installed <http://www.jrsoftware.org/isdl.php#stable>
-
-5. Launch **VIEW_HOME**\installer\create-installer.cmd
+4. Launch **VIEW_HOME**\installer\create-installer.cmd
 	- This will create the Installer `Lucidworks-View-Installer.exe` in **VIEW_HOME**\installer\Output directory.
 
 ## How to use the Windows Installer:
@@ -26,10 +24,6 @@ Do the following steps from a windows box
  * To uninstall the service simply run the **VIEW_HOME**\uninstall-service.cmd as administrator
 
 ## Common issues:
-
-- When I run installer, get "cannot find bower"
-
-  - You forgot step 3.
 
 - File could not be access, file in use
 
