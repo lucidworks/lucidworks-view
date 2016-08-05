@@ -74,11 +74,11 @@ To run the compiling process once, without watching any files, use the `build` c
 ```bash
 npm run build
 ```
-this command creates a built and 'productionized' version of View which can be copied from the build folder to another folder/machine and served on your own webserver.
+this command creates a built version of View which can be copied from the build folder to another folder/machine and served on your own webserver.
 
-Alternatively for deployment, you can use the command
+For development purposes, you can develop without a minified build by using the command
 ```bash
-npm run start-production
+npm run start-dev
 ```
 
 this command runs a node server, with minimized packages, and works similarly to  the `npm start` command.
