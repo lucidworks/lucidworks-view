@@ -1,6 +1,13 @@
 # CHANGELOG
 
-## 1.2.0 - Cersei's Iron Tiara
+## 1.3.0 - Pikachu's Invisible Tiara
+**New Features**
+* Added a Windows packaged build, you can now run View on Windows
+* Improved performance by minifying builds by default and turning off page change animations
+* You can now specify which port View runs on
+* Introduced developer mode, which allows you to develop with unminified build objects, just ```npm run start-dev```
+
+## 1.2.0 - Cersei's Iron Tiara - June 30, 2016
 **New Features**
 * Now support range facet type
 * Add multi select faceting, meaning you can facet on multiple items within a single query

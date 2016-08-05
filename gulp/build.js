@@ -73,10 +73,10 @@ gulp.task('uglify:app', function() {
     sourcemapsWrite = $.if(!global.isProduction, $.sourcemaps.write('.'));
 
   return gulp.src(global.paths.appJS, { base: 'client' })
-    .pipe(sourcemapsInit)
-    .pipe(uglify)
     .pipe($.plumber())
+    .pipe(sourcemapsInit)
     .pipe($.ngAnnotate())
+    .pipe(uglify)
     .pipe($.directiveReplace({root: 'client'}))
     .pipe($.concat('app.js'))
     .pipe(sourcemapsWrite)
