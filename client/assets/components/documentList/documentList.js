@@ -21,12 +21,12 @@
 
   }
 
-  function Controller($sce, $log, $anchorScroll, Orwell) {
+  function Controller($sce, $log, $anchorScroll, Orwell,ConfigService) {
     'ngInject';
     var vm = this;
     vm.docs = [];
     vm.highlighting = {};
-    vm.getDocType = getDocType;
+    vm.getDocType = ConfigService.getDocType;
     vm.groupedResults = false;
     vm.toggleGroupedResults = toggleGroupedResults;
     vm.showGroupedResults = {};
@@ -41,7 +41,7 @@
       resultsObservable.addObserver(function (data) {
         vm.docs = parseDocuments(data);
         vm.highlighting = parseHighlighting(data);
-        vm.getDoctype = getDocType;
+        //vm.getDoctype = getDocType;
         $anchorScroll('topOfMainContent');
       });
     }
@@ -51,13 +51,13 @@
      * @param  {object} doc Document object
      * @return {string}     Type of document
      */
-    function getDocType(doc){
-      // Change to your collection datasource type name
-      // if(doc['_lw_data_source_s'] === 'MyDatasource-default'){
-      //   return doc['_lw_data_source_s'];
-      // }
-      return doc['_lw_data_source_type_s'];
-    }
+    // function getDocType(doc){
+      // // Change to your collection datasource type name
+      // // if(doc['_lw_data_source_s'] === 'MyDatasource-default'){
+      // //   return doc['_lw_data_source_s'];
+      // // }
+      // return doc['_lw_data_source_type_s'];
+    // }
 
     /**
      * Decorates the document object before sending to the document directive.
@@ -117,7 +117,7 @@
           var vals = {};
           if (value) {
             _.each(Object.keys(value), function (key) {
-              $log.debug('highlight', value);
+              //$log.debug('highlight', value);
               var val = value[key];
               _.each(val, function(high){
                 vals[key] = $sce.trustAsHtml(high);

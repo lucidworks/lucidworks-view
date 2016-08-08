@@ -1,0 +1,15 @@
+<article class="grid-block document-infoblox details-RN-incident row">
+  <p></p>
+  <div class="detail-row vertical grid-content" >
+    <div class="install-doc">
+ <div ng-bind-html="vm.doc.trustedHtml">
+       <!-- pre>
+     {{::vm.doc.html_txt}}
+	 </pre -->
+      </div>
+
+  </div>
+
+
+  </div>
+</article>

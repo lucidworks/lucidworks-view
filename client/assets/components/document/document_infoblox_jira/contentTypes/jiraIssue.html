@@ -1,0 +1,44 @@
+<div class="detail jira-issue vertical grid-content document-infoblox">
+
+    <div class="detail-row">
+      <div class="jira-issue">
+        <span class="type" ng-if="::vm.doc.jira_content_type_s">
+          Jira&nbsp;<field value="::vm.doc.jira_content_type_s" highlight="::vm.highlight[doc.id]" maxlength="200"
+                           hkey="jira_content_type_s"></field>
+        </span>
+        <span class="key" ng-if="::vm.doc.key_s">
+          <a ng-href="{{::vm.doc.TargetUrl}}" ng-click="vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank">
+           <field value="::vm.doc.key_s" highlight="::vm.highlight[doc.id]" maxlength="200" hkey="key_s"></field>
+          </a>
+        </span>
+        <span class="key" ng-if="::vm.doc.jira_content_type_s == 'COMMENT'">
+          <a ng-href="{{::vm.doc.TargetUrl}}" ng-click="vm.postSignal(vm.doc.__signals_doc_id__)" rel="noopener" target="_blank">
+            <field value="::vm.doc.parent_issue_key" highlight="::vm.highlight[doc.id]" maxlength="200" hkey="parent_issue_key"></field>
+          </a>
+        </span>
+        <span class="displayName" ng-if="::vm.doc.author_displayName_s"><span class="doc-label-first doc-label">Author:</span> <field value="::vm.doc.author_displayName_s" maxlength="30"></field></span>
+        <span class="issue-type" ng-if="::vm.doc.issuetype_s"><span class="doc-label">Type:</span> <field value="::vm.doc.issuetype_s" maxlength="40"></field></span>
+        <span class="displayName" ng-if="::vm.doc.assignee_displayName_s"><span class="doc-label">Assigned to:</span> <field value="::vm.doc.assignee_displayName_s" maxlength="30"></field></span>
+        <span class="status" ng-if="::vm.doc.status_s"><span class="doc-label"> Status:</span>&nbsp;<field value="::vm.doc.status_s" maxlength="20"></field></span>
+      </div>
+
+      <div class="title large-12">
+        <!-- show head field when we have no url. -->
+        <div class="info-url">
+          <field value="::vm.doc.Title" highlight="::vm.highlight[vm.doc.id]" maxlength="300" hkey="Title"></field>
+        </div>
+      </div>
+
+      <!-- show description fields -->
+      <div class="fields">
+        <div class="large-10 xlarge-7 xx-large-6">
+          <field value="::vm.doc.Description" highlight="::vm.highlight[vm.doc.id]" maxlength="300" hkey="Description"></field>
+        </div>
+      </div>
+      <div class="date-block">
+        <span class="date-time" ng-if="::vm.doc.Updated"><span class="doc-label"> Modified:</span>&nbsp;<field value="::vm.doc.Updated_dtFormatted"></field></span>
+        <span class="date-time" ng-if="::vm.doc.Created"><span class="doc-label"> Created:</span>&nbsp;<field value="::vm.doc.Created_dtFormatted"></field></span>
+      </div>
+    </div>
+  </div>
+</div>

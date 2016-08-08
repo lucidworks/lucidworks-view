@@ -94,6 +94,8 @@
           all: getAllFields,
           get: getSpecificField
         }
+        // expose a single, shared getDocType function
+        ,getDocType:getDocType
       };
     }
 
@@ -210,6 +212,24 @@
 
     function getFieldLabels() {
       return appConfig.field_display_labels;
+    }
+    
+    /**
+     * Get the document type for the document.
+     * @param  {object} doc Document object
+     * @return {string}     Type of document
+     */
+    function getDocType(doc){
+      // Change to your collection datasource type name
+      var dtype = 'default';
+      if(doc) {
+        dtype = doc['DocType'] || 'default';
+        if (dtype && dtype === 'Jira' && doc['jira_content_type_s']) {
+          dtype = dtype + ':' + doc['jira_content_type_s'];
+        }
+      }
+      //if(window.console && window.console.log)window.console.log('dtype:' + dtype);
+      return dtype;
     }
   }
 })();

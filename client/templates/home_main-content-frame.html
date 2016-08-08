@@ -35,7 +35,13 @@
         </div>
       </div>
       <landing-page></landing-page>
-      <document-list></document-list>
+
+      <!-- documentList shows the search results -->
+      <document-list ng-show="!hc.perDocument"></document-list>
+
+      <!-- perdocument is used for viewing details of a particular document -->
+      <perdocument ng-show="hc.perDocument" doc="dc.doc"></perdocument>
+      
       <paginate></paginate>
     </div>
   </div>
