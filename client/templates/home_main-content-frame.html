@@ -36,6 +36,7 @@
         </div>
       </div>
       <landing-page></landing-page>
+      <banner></banner>
       <document-list></document-list>
       <paginate></paginate>
     </div>
@@ -195,7 +196,7 @@
         <div ng-repeat="rule in hc.fusion.applicable_rules | filter: { id: rulesQuery } track by $index">
           <a class="list-group-item collapse-by-icon"
              data-toggle="collapse" aria-expanded="false" data-parent="#rules-sidebar"
-             data-target="#{{rule.id}}">
+             data-target="#{{hc.getUIId(rule.id)}}">
                  <span class="pull-right">
                     <i class="fa fa-angle-down"></i>
                     <i class="fa fa-angle-up"></i>
@@ -207,7 +208,7 @@
                     {{rule.id}}
                  </span>
           </a>
-          <div id="{{rule.id}}" aria-expanded="false" class="collapse list-group-item-content">
+          <div id="{{hc.getUIId(rule.id)}}" aria-expanded="false" class="collapse list-group-item-content">
             <ul class="list-unstyled">
 
               <!-- RULE ACTIONS -->
@@ -258,7 +259,7 @@
               </li>
               <li class="form-group" ng-if="rule.tags">
                 <label class="small text-muted text-uppercase">Tags</label>
-                <span class="triggerTags">{{rule.tags.join(', ')}}</span>
+                <span>{{rule.tags.join(', ')}}</span>
               </li>
 
               <!--                     RULE TRIGGER

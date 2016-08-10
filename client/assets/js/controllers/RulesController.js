@@ -376,6 +376,15 @@
           });
         };
 
+        $scope.cancelRule = function () {
+          $scope.currentRule = emptyRule();
+          $scope.categories = [];
+          $scope.triggerDates = [];
+          $scope.setParams = [' '];
+
+          ruleFormReset();
+        };
+
         $scope.checkUncheckAll = function (operation) {
           var masterBox = $('#selectAllBoxes');
           var checkboxes = $('.ruleCheckbox');
@@ -671,7 +680,8 @@
           rule.dates[1].push(' ');
 
           $timeout(initInRowDateTriggers, 100);
-        }
+        };
+
       }]);
 
 })();

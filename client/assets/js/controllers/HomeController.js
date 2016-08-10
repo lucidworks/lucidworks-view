@@ -50,6 +50,10 @@
 
       });
 
+      hc.getUIId = function (id) {
+        return id && id.replace(/[^\d\w]/gi, "");
+      };
+
       hc.includeRulesWithTag = function (ruleTag, include) {
         var ids = _.chain(hc.fusion.applicable_rules)
           .filter(function (rule) {

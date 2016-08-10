@@ -1,5 +1,5 @@
-/* MODAL ENHANCE */    
-    
+/* MODAL ENHANCE */
+
     // MODAL
         .modal {
             text-align: center;
@@ -21,7 +21,7 @@
             display: inline-block;
             text-align: left;
             vertical-align: middle;
-            
+
             left: auto !important;
             right: auto !important;
             top: auto !important;
@@ -40,7 +40,7 @@
             max-width: 1200px;
         }
     }
-        
+
 
     .add-rule {
         .modal-header {
@@ -72,17 +72,17 @@
 
         label {
             display: block;
-            margin-bottom: -6px;
+            margin-bottom: -2px;
         }
 
         ol {
             margin: 0;
             counter-reset: term;
-            
+
             display: table;
             position: relative;
             width: 100%;
-                
+
             // hor. VISUAL centering
             left: 15px;
 
@@ -96,7 +96,7 @@
 
                 border-width: 0 0 0 1px;
                 border-style: dashed;
-                border-color: #ddd; //$gray-lighter;    
+                border-color: #ddd; //$gray-lighter;
             }
 
             &:before {
@@ -108,7 +108,7 @@
             }
 
             > li {
-                
+
                 // STEP COUNTERS
                 &:before {
                     counter-increment: term;

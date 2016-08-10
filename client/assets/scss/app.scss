@@ -64,6 +64,56 @@
   }
 }
 
+#addRule {
+  input:focus,
+  input:hover {
+    border: 0 none;
+  }
+}
+
+html[ng-app="lucidworksView"] {
+  input[type="checkbox"],
+  .checkbox input[type="checkbox"],
+  .checkbox-inline input[type="checkbox"] {
+     border: inherit;
+     margin-bottom: 0;
+  }
+
+  input[type="text"],
+  input[type="password"],
+  input[type="date"],
+  input[type="datetime"],
+  input[type="datetime-local"],
+  input[type="month"],
+  input[type="week"],
+  input[type="email"],
+  input[type="number"],
+  input[type="search"],
+  input[type="tel"],
+  input[type="time"],
+  input[type="url"],
+  input[type="color"],
+  textarea {
+    height: inherit;
+  }
+
+  .bootstrap-tagsinput {
+    border: none;
+    box-shadow: none;
+
+    .tag {
+      color: inherit;
+    }
+  }
+}
+
+
+@media (min-width: 1140px) {
+  html[ng-app="lucidworksView"] .container {
+    width: 90%;
+  }
+}
+
 #searchBoxEl {
   font-size: 3rem;
   height: 4rem;

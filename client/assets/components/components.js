@@ -13,5 +13,6 @@ angular.module('lucidworksView.components', [
   'lucidworksView.components.login',
   'lucidworksView.components.paginate',
   'lucidworksView.components.searchbox',
-  'lucidworksView.components.sort'
+  'lucidworksView.components.sort',
+  'lucidworksView.components.banner'
 ]);
