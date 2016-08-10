@@ -229,10 +229,6 @@ appConfig = { //eslint-disable-line
   simulation: {
 //***If you don't know what you want for some configuration items, leave them as-is and see what happens in UI.
 //***You will need to clear browser history/cache before your changes take affect.
-    host: 'http://' + window.location.hostname, //window.location.hostname is used here if UI on same Jetty as Fusion.  If not, please specify Fusion hostname here.
-    port: '8764', //Fusion port
-    authorizationHeader: {headers: {'Authorization': 'Basic ' + btoa('admin:123qweasdzxc')}}, //Please specify Fusion user:password
-
     collection: 'os_prod', //Please specify your collection name
     pipelineIdList: 'os_prod-with-rules,os_prod-default', //Please specify comma-separated list of the pipeline(s) that you want to leverage with this UI. NO SPACES.
 //1st pipeline will be default,2nd pipeline could be signal-enabled.  Add other pipelines if desired.
