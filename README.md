@@ -63,7 +63,7 @@
        ${FUSION_API_BASE}/collections/os_prod_rules
   
   # upload rules data
-  curl '$SOLR_API_BASE/os_prod_rules/update?commit=true' --data-binary @rules.json -H 'Content-type:application/js'  
+  $FUSION_HOME/apps/solr-dist/bin/post -c os_prod_rules rules.json
   ```
   
 1. All configuration such as fusion url, available rule types or documents fields should be made in FUSION_CONFIG.js 
