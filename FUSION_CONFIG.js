@@ -53,7 +53,7 @@ appConfig = { //eslint-disable-line
   },
 
   // The name of your collection
-  collection: 'MyCollection',
+  collection: 'os_prod',
 
   // Please specify a pipeline or profile that you want to leverage with this UI.
   query_pipeline_id: 'default',
@@ -63,7 +63,7 @@ appConfig = { //eslint-disable-line
   // Search UI Title
   // This title appears in a number of places in the app, including page title.
   // In the header it is replaced by the logo if one is provided.
-  search_app_title: 'Lucidworks View',
+  search_app_title: 'Lucidworks View with Rules',
   // Specify the path to your logo relative to the root app folder.
   // Or use an empty string if you don't want to use a logo.
   // This file is relative to the client folder of your app.
@@ -154,7 +154,7 @@ appConfig = { //eslint-disable-line
 
   // If enabled and a landing page is triggered via a query, the app will redirect
   // the user to the url provided.
-  landing_page_redirect: true,
+  landing_page_redirect: false,
 
   /**
    * Sorts
@@ -201,6 +201,7 @@ appConfig = { //eslint-disable-line
   typeahead_requesthandler: 'select',
 
   rules: {
+    collection: 'os_prod_rules',
     types: {
       "Filter List": "filter_list",
       "Block List": "block_list",
