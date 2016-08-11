@@ -13,7 +13,6 @@
       bindToController: true,
       scope: true
     };
-
   }
 
   function Controller($scope, Orwell) {
@@ -30,7 +29,18 @@
       }
 
       var banners = _.chain(rules)
-        .filter({display_type: ["Banner"]})
+        .filter(function (r) {
+          var type = r.display_type;
+          if (type == "Banner" || _.isArray(type) && type.indexOf("Banner") != -1) {
+            return true;
+          }
+
+          if (r.type == "response_value" && keys.indexOf("banner") != -1) {
+            return true;
+          }
+
+          return false;
+        })
         .flatMap(function (rule) { return rule.values })
         .value();
 

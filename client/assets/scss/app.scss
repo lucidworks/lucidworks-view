@@ -69,6 +69,7 @@
   input:hover {
     border: 0 none;
   }
+
 }
 
 html[ng-app="lucidworksView"] {
@@ -104,6 +105,15 @@ html[ng-app="lucidworksView"] {
     .tag {
       color: inherit;
     }
+  }
+
+  .table.rules-list {
+    margin-top: 10px;
+  }
+
+  textarea.disabledControl {
+    height: auto;
+    min-height: inherit;
   }
 }
 
