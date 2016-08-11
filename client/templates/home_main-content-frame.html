@@ -212,11 +212,11 @@
             <ul class="list-unstyled">
 
               <!-- RULE ACTIONS -->
-              <li>
+              <li class="form-group">
                 <label class="small text-muted text-uppercase"><span ng-if="rule.field_values"> {{rule.field_name.join(', ')}} </span>{{rule.display_type.toString()}}</label>
 
-                <span ng-if="rule.values">{{rule.values.join(', ')}}</span>
-                <span ng-if="rule.field_values">{{rule.field_values.join(', ')}}</span>
+                <span class="triggerKeywords" ng-if="rule.values">{{rule.values.join(', ')}}</span>
+                <span class="triggerKeywords" ng-if="rule.field_values">{{rule.field_values.join(', ')}}</span>
                 <div class="form-group" ng-if="rule.param_keys"
                      ng-repeat="param in rule.param_keys track by $index">
                   <span class="set-params">{{rule.param_keys[$index]}}</span>
@@ -247,16 +247,34 @@
                 <label class="small text-muted text-uppercase">Keywords</label>
                 <span class="triggerKeywords">{{rule.search_terms[0]}}</span>
               </li>
-              <li class="form-group"
-                  ng-repeat="caregory in ruleArrays[rule.id].filters[0] track by $index">
-                <label class="small text-muted text-uppercase">Field Value</label>
-                <select class="form-control addTriggerCategory disabledControl"
-                        ng-model="ruleArrays[rule.id].filters[0][$index]">
-                  <option ng-repeat="(value, caption) in productList" value="{{value}}">{{caption}}</option>
-                </select>
-                <input class="form-control disabledControl triggerCategory"
-                       ng-model="ruleArrays[rule.id].filters[1][$index]"/>
+              <li class="form-group" ng-if="rule.filters"`>
+                <label class="small text-muted text-uppercase">Fields Values</label>
+                <ul style="list-style: none; margin: 0;">
+                  <li ng-repeat="field in rule.filters">{{field}}</li>
+                </ul>
               </li>
+              <li class="form-group" ng-if="rule.effective_range">
+                <ul style="list-style: none; margin: 0;">
+                  <li ng-repeat="range in rule.effective_range">
+                    <div class="row hor-gut-10">
+                      <div class="col-sm-6 form-group">
+                        <label for="triggerStart" class="small text-muted text-uppercase">Start</label>
+                        <div class="datepicker-holder">
+                          <input type="text" class="form-control" id="triggerStartDate" value="{{hc.parseRange(range).startDate}}" disabled="">
+                          <input type="text" class="form-control small" id="triggerStartTime" value="{{hc.parseRange(range).startTime}}" disabled="">
+                        </div>
+                      </div>
+                      <div class="col-sm-6 form-group">
+                        <label for="triggerEnd" class="small text-muted text-uppercase">End</label>
+                        <input type="text" class="form-control" id="triggerEndDate" value="{{hc.parseRange(range).endDate}}" disabled="">
+                        <input type="text" class="form-control small" id="triggerEndTime" value="{{hc.parseRange(range).endTime}}" disabled="">
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <!-- "[2016-08-02T00:00 TO 2016-08-26T00:00]".match(/(\d\d\d\d-\d\d-\d\d)T([^\s]+) TO (\d\d\d\d-\d\d-\d\d)T([^\s]+)/) -->
+
               <li class="form-group" ng-if="rule.tags">
                 <label class="small text-muted text-uppercase">Tags</label>
                 <span>{{rule.tags.join(', ')}}</span>

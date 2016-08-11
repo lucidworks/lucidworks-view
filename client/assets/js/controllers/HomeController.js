@@ -50,6 +50,24 @@
 
       });
 
+      /**
+       *
+       * @param range DateRange string that looks like "[2016-08-02T00:00 TO 2016-08-26T00:00]"
+       * */
+      hc.parseRange = function (range) {
+        var res = range.match(/(\d\d\d\d-\d\d-\d\d)T([^\s]+) TO (\d\d\d\d-\d\d-\d\d)T(\d\d:\d\d)/);
+        if (!res) {
+          return {}
+        }
+
+        return {
+          startDate: res[1],
+          startTime: res[2],
+          endDate:   res[3],
+          endTime:   res[4]
+        }
+      };
+
       hc.getUIId = function (id) {
         return id && id.replace(/[^\d\w]/gi, "");
       };

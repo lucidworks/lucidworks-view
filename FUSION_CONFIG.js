@@ -56,14 +56,14 @@ appConfig = { //eslint-disable-line
   collection: 'os_prod',
 
   // Please specify a pipeline or profile that you want to leverage with this UI.
-  query_pipeline_id: 'default',
+  query_pipeline_id: 'os_prod-with-rules',
   query_profile_id: 'default',
-  use_query_profile: true, // Force use of query-profile
+  use_query_profile: false, // Force use of query-profile
 
   // Search UI Title
   // This title appears in a number of places in the app, including page title.
   // In the header it is replaced by the logo if one is provided.
-  search_app_title: 'Lucidworks View with Rules',
+  search_app_title: 'Lucidworks View',
   // Specify the path to your logo relative to the root app folder.
   // Or use an empty string if you don't want to use a logo.
   // This file is relative to the client folder of your app.
@@ -95,8 +95,8 @@ appConfig = { //eslint-disable-line
    *   your_project_directory/client/assets/components/document/document_default/document_default.html
    */
   //In search results, for each doc, display this field as the head field
-  head_field: 'id',
-  subhead_field: 'subtitle',
+  head_field: 'Name',
+  subhead_field: 'ProductID',
   description_field: 'description',
   //In search results, for each doc, use this field to generate link value when a user clicks on head_field
   head_url_field: 'url',
@@ -131,7 +131,7 @@ appConfig = { //eslint-disable-line
   //
   // The HTML/Angular template is located in the following directory:
   //    your_project_directory/client/assets/components/document/document.html
-  fields_to_display:['title','id','name', '*'],
+  fields_to_display:['title','id','name'],
   field_display_labels: {
     'name': 'Document Name',
     //'id': 'Identification Number'
@@ -202,6 +202,7 @@ appConfig = { //eslint-disable-line
 
   rules: {
     collection: 'os_prod_rules',
+
     types: {
       "Filter List": "filter_list",
       "Block List": "block_list",
@@ -212,7 +213,7 @@ appConfig = { //eslint-disable-line
     },
 
     set_params: {
-      policies: {
+      policies : {
         "append": "Append",
         "replace": "Replace"
       }
