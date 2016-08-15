@@ -71,6 +71,7 @@
           }
           result[result.length - 1] = {
             title: titleVal,
+            origTitle: result[result.length-1],
             amount: value,
             amountFormatted: $filter('humanizeNumberFormat')(value, 0),
             hash: FoundationApi.generateUuid(),
@@ -93,13 +94,14 @@
       if (vm.formattingHandler){
         end = vm.formattingHandler(rangeFacetData.end);
       } else {
-        end = rangeFacetData.end
+        end = rangeFacetData.end;
       }
       return _.map(arr, function(item, index){
         // TODO: Detect more data types and do proper display of the buckets
         var startOfRange = item.title;
         var endOfRange = (index + 1 >= arr.length)?end:arr[index + 1].title;
-        return _.assign(item, {start: startOfRange, end: endOfRange});
+        var origEnd = (index + 1 >= arr.length)?rangeFacetData.end:arr[index + 1].origTitle;
+        return _.assign(item, {start: startOfRange, end: endOfRange, origTitle: item.origTitle, origEnd: origEnd});
       });
     }
 
@@ -129,7 +131,9 @@
       var query = QueryService.getQueryObject();
       // CASE: fq exists.
       if (!query.hasOwnProperty('fq')) {
-        query = addRangeFacet(query, key, facet.start, facet.end);
+        query = addRangeFacet(query, key, facet.origTitle, facet.origEnd);
+        // query = addRangeFacet(query, key, facet.start, facet.end);
+        // console.log('facet', facet);
       } else {
         // Remove the key object from the query.
         // We will re-add later if we need to.
@@ -143,7 +147,8 @@
           });
           // CASE: value didn't previously exist add to values.
           if (removed.length === 0) {
-            query.fq.push(getRangeFacetObject(key, facet.start, facet.end));
+            query.fq.push(getRangeFacetObject(key, facet.origTitle, facet.origEnd));
+            // query.fq.push(getRangeFacetObject(key, facet.start, facet.end));
           }
           // CASE: there are still values in facet attach keyobject back to query.
           if (keyObj.values.length > 0) {
@@ -154,7 +159,8 @@
             delete query.fq;
           }
         } else { // CASE: Facet key doesnt exist ADD key AND VALUE.
-          query = addRangeFacet(query, key, facet.start, facet.end);
+          query = addRangeFacet(query, key, facet.origTitle, facet.origEnd);
+          // query = addRangeFacet(query, key, facet.start, facet.end);
         }
 
       }
