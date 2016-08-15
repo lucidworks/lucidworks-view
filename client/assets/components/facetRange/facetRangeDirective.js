@@ -132,8 +132,6 @@
       // CASE: fq exists.
       if (!query.hasOwnProperty('fq')) {
         query = addRangeFacet(query, key, facet.origTitle, facet.origEnd);
-        // query = addRangeFacet(query, key, facet.start, facet.end);
-        // console.log('facet', facet);
       } else {
         // Remove the key object from the query.
         // We will re-add later if we need to.
@@ -148,7 +146,6 @@
           // CASE: value didn't previously exist add to values.
           if (removed.length === 0) {
             query.fq.push(getRangeFacetObject(key, facet.origTitle, facet.origEnd));
-            // query.fq.push(getRangeFacetObject(key, facet.start, facet.end));
           }
           // CASE: there are still values in facet attach keyobject back to query.
           if (keyObj.values.length > 0) {
@@ -160,7 +157,6 @@
           }
         } else { // CASE: Facet key doesnt exist ADD key AND VALUE.
           query = addRangeFacet(query, key, facet.origTitle, facet.origEnd);
-          // query = addRangeFacet(query, key, facet.start, facet.end);
         }
 
       }
@@ -200,7 +196,6 @@
       if (!query.hasOwnProperty('fq')) {
         return false;
       }
-
       var keyObjArr = _.filter(query.fq, {key: key, transformer: 'fq:range'});
       if (_.isEmpty(keyObjArr)) {
         return false;
@@ -249,7 +244,16 @@
      * Checks if the query object's queryObject.fq item matches the associated value
      */
     function doesValueMatch(objectValue, start){
-      return objectValue.values[0] === start;
+      var tempVal, tempStart;
+      if(vm.formattingHandler){
+        tempVal = vm.formattingHandler(objectValue.values[0]);
+        tempStart = vm.formattingHandler(start);
+      }
+      else {
+        tempVal = objectValue;
+        tempStart = start;
+      }
+      return tempVal === tempStart;
     }
 
     /**
