@@ -131,31 +131,38 @@
       var query = QueryService.getQueryObject();
       // CASE: fq exists.
       if (!query.hasOwnProperty('fq')) {
+        console.log('1');
         query = addRangeFacet(query, key, facet.origTitle, facet.origEnd);
       } else {
         // Remove the key object from the query.
         // We will re-add later if we need to.
+        console.log('2');
         var keyArr = _.remove(query.fq, {key: key, transformer: 'fq:range', values: getQueryObjectValues(facet.start, facet.end)});
 
         // CASE: facet key exists in query.
         if (keyArr.length > 0) {
+          console.log('3');
           var keyObj = keyArr[0];
           var removed = _.remove(keyObj.values, function (value) {
             return doesValueMatch(value, facet.start);
           });
           // CASE: value didn't previously exist add to values.
           if (removed.length === 0) {
+            console.log('4');
             query.fq.push(getRangeFacetObject(key, facet.origTitle, facet.origEnd));
           }
           // CASE: there are still values in facet attach keyobject back to query.
           if (keyObj.values.length > 0) {
+            console.log('5');
             query.fq.push(keyObj);
           }
           // Delete 'fq' if it is now empty.
           if (query.fq.length === 0) {
+            console.log('6');
             delete query.fq;
           }
         } else { // CASE: Facet key doesnt exist ADD key AND VALUE.
+          console.log('7');
           query = addRangeFacet(query, key, facet.origTitle, facet.origEnd);
         }
 
