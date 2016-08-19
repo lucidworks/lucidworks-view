@@ -131,42 +131,33 @@
       var query = QueryService.getQueryObject();
       // CASE: fq exists.
       if (!query.hasOwnProperty('fq')) {
-        console.log('1');
         query = addRangeFacet(query, key, facet.origTitle, facet.origEnd);
       } else {
         // Remove the key object from the query.
         // We will re-add later if we need to.
-        console.log('2');
-        var keyArr = _.remove(query.fq, {key: key, transformer: 'fq:range', values: getQueryObjectValues(facet.start, facet.end)});
-
+        var keyArr = _.remove(query.fq, {key: key, transformer: 'fq:range', values: getQueryObjectValues(facet.origTitle, facet.origEnd)});
         // CASE: facet key exists in query.
         if (keyArr.length > 0) {
-          console.log('3');
           var keyObj = keyArr[0];
-          var removed = _.remove(keyObj.values, function (value) {
-            return doesValueMatch(value, facet.start);
-          });
+          var removed = _.remove(keyObj.values, function (value) { return doesValueMatch(value, facet.origTitle); });
           // CASE: value didn't previously exist add to values.
           if (removed.length === 0) {
-            console.log('4');
             query.fq.push(getRangeFacetObject(key, facet.origTitle, facet.origEnd));
           }
           // CASE: there are still values in facet attach keyobject back to query.
           if (keyObj.values.length > 0) {
-            console.log('5');
             query.fq.push(keyObj);
           }
           // Delete 'fq' if it is now empty.
           if (query.fq.length === 0) {
-            console.log('6');
             delete query.fq;
           }
         } else { // CASE: Facet key doesnt exist ADD key AND VALUE.
-          console.log('7');
           query = addRangeFacet(query, key, facet.origTitle, facet.origEnd);
         }
 
       }
+      // console.log('yo',query);
       // Set the query and trigger the refresh.
       updateFacetQuery(query);
     }
@@ -199,7 +190,9 @@
      * @return {Boolean}       [description]
      */
     function isFacetActive(key, value) {
+
       var query = QueryService.getQueryObject();
+
       if (!query.hasOwnProperty('fq')) {
         return false;
       }
@@ -207,9 +200,7 @@
       if (_.isEmpty(keyObjArr)) {
         return false;
       }
-      if (_.isEmpty(_.filter(keyObjArr, function (obj) {
-        return doesValueMatch(obj.values[0], value);
-      }))) {
+      if (_.isEmpty(_.filter(keyObjArr, function(obj) {return doesValueMatch(obj.values[0], value);}))) {
         return false;
       }
       return true;
@@ -251,16 +242,7 @@
      * Checks if the query object's queryObject.fq item matches the associated value
      */
     function doesValueMatch(objectValue, start){
-      var tempVal, tempStart;
-      if(vm.formattingHandler){
-        tempVal = vm.formattingHandler(objectValue.values[0]);
-        tempStart = vm.formattingHandler(start);
-      }
-      else {
-        tempVal = objectValue;
-        tempStart = start;
-      }
-      return tempVal === tempStart;
+      return objectValue.values[0] === start;
     }
 
     /**
