@@ -1,24 +1,18 @@
 /*eslint-disable */
 module.exports = {
   "rules": {
-    "indent": [
-      2,
-      2
-    ],
-    "quotes": [
-      2,
-      "single"
-    ],
+    "indent": ["error", 2, {"SwitchCase": 1 }],
+    "quotes": [ "error", "single"],
     "linebreak-style": [
-      2,
+      "error",
       "unix"
     ],
     "semi": [
-        2,
-        "always"
+      "error",
+      "always"
     ],
-    "no-extra-semi": 1,            // disallow unnecessary semicolons
-    "no-inner-declarations": 2,    // disallow function or variable declarations in nested blocks
+    "no-extra-semi": "warn",            // disallow unnecessary semicolons
+    "no-inner-declarations": "error",    // disallow function or variable declarations in nested blocks
   },
   "extends": [
     "eslint:recommended"

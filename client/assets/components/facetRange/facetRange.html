@@ -10,7 +10,7 @@
       </li>
       <li ng-repeat = "facet in vm.facetCounts |filter: vm.facetFilter | limitTo: vm.getLimitAmount()" ng-class="{'facet-active':facet.active}">
         <input type="checkbox" id="{{::facet.hash}}" ng-model="facet.active" ng-click="vm.toggleFacet(facet)">
-        <label for="{{::facet.hash}}">{{facet.start}} - {{facet.end}} <span>({{facet.amountFormatted}})</span></label>
+        <label for="{{::facet.hash}}">{{facet.start}} - {{facet.end}} <span>({{facet.amount|humanizeNumberFormat:0}})</span></label>
       </li>
       <li class="facet-more-link right" ng-if="vm.facetCounts.length > 5">
         <a ng-click="vm.toggleMore()">{{(vm.facetCounts.length - 5)}} {{vm.more ? 'less' :' more'}}</a>
