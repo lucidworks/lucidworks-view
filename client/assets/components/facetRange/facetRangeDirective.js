@@ -91,7 +91,7 @@
         return;
       } else {
         var rangeFacet = _.get(data, 'facet_counts.facet_ranges.' + vm.facetName);
-        vm.gap = _.get(data, 'responseHeader.params[\'facet.range.gap\']');
+        vm.gap = gapFromResponse(data, vm.facetName);
         vm.facetCounts = arrayToObjectArray(rangeFacet.counts);
         setActiveState();
       }
@@ -222,9 +222,9 @@
 
     //////////////
     ///UTILS
-    /**
-     * Checks if the query object's queryObject.fq item matches the associated value
-     */
+    function gapFromResponse(response, facetName){
+      return _.get(response, 'responseHeader.params[\'f.'+facetName+'.facet.range.gap\']') || _.get(response, 'responseHeader.params[\'facet.range.gap\']');
+    }
 
     /**
      * Spits out range facet queryObject portion

@@ -17,7 +17,7 @@
     if(isDateString(start)){
       end = getEndDate(start, gapStr);
     } else if(!(isNaN(start) || isNaN(gapStr))){
-      end = Number(start) - Number(gapStr);
+      end = Number(start) + Number(gapStr);
     } else {
       end = null;
     }
