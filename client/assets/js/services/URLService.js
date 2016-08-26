@@ -42,6 +42,7 @@
       $state.go('home', newStateObject, {notify: false, reloadOnSearch: false});
     }
 
+
     /**
      * Gets query object from URL
      */

@@ -1,5 +1,6 @@
 <div id="documentList">
   <div ng-repeat="doc in vm.docs" ng-switch="::vm.getDocType(doc)">
+  <related-items id="doc.id" ng-click="vm.getRelatedItems(doc)"> click for related items! </related-items> 
     <!-- <document-example ng-switch-when="string_matching_data_connector" doc="doc" highlight="vm.highlighting"></document-example> -->
     <document-file ng-switch-when="lucid.anda/file" doc="doc" position="vm.getDocPosition(doc,vm.docs)" highlight="vm.highlighting"></document-file>
     <document-jira ng-switch-when="lucid.anda/jira" doc="doc" position="vm.getDocPosition(doc,vm.docs)" highlight="vm.highlighting"></document-jira>

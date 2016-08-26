@@ -32,6 +32,10 @@
       hc.sorting = {};
       hc.grouped = false;
 
+      // Recommendations Logic 
+      // hc.hasId = false; 
+      hc.showRecommendations = false; 
+
       query = URLService.getQueryFromUrl();
       //Setting the query object... also populating the the view model
       hc.searchQuery = _.get(query,'q','*');
@@ -46,6 +50,8 @@
         sorting.switchSort = switchSort;
         createSortList();
 
+        // Get the recommendations
+        checkRecommendations(data);
       });
 
       // Force set the query object to change one digest cycle later
@@ -54,6 +60,14 @@
       $timeout(function(){
         URLService.setQuery(query);
       });
+    }
+
+    function checkRecommendations(data) {
+      // console.log("In the check recommendations portion of the home controller!");
+      if (data.hasOwnProperty('moreLikeThis')){
+        console.log("We have more like this!! Set the home controller to true");
+        hc.showRecommendations = true;
+      }
     }
 
     function checkResultsType(data){

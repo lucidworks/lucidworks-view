@@ -142,5 +142,9 @@
     function getDocPosition(doc, docs){
       return _.findIndex(docs, doc);
     }
+
+    function getRelatedItems(doc) {
+      console.log("Find related items here!");
+    }
   }
 })();
