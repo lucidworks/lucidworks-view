@@ -31,6 +31,7 @@
       hc.lastQuery = '';
       hc.sorting = {};
       hc.grouped = false;
+      hc.isLoading = false;
 
       query = URLService.getQueryFromUrl();
       //Setting the query object... also populating the the view model
@@ -38,14 +39,16 @@
       // Use an observable to get the contents of a queryResults after it is updated.
       resultsObservable = Orwell.getObservable('queryResults');
       resultsObservable.addObserver(function(data) {
+        hc.isLoading = true;
         // updateStatus();
         checkResultsType(data);
         updateStatus();
         // Initializing sorting
         sorting = hc.sorting;
         sorting.switchSort = switchSort;
+        // console.log('aslfjlskflsf')
         createSortList();
-
+        endLoading();
       });
 
       // Force set the query object to change one digest cycle later
@@ -54,6 +57,12 @@
       $timeout(function(){
         URLService.setQuery(query);
       });
+    }
+
+    function endLoading(){
+      hc.isLoading = false;
+      console.log(hc.isLoading);
+      console.log('end the maddness');
     }
 
     function checkResultsType(data){
@@ -133,6 +142,7 @@
       });
       sorting.sortOptions = sortOptions;
       sorting.selectedSort = sorting.sortOptions[0];
+      console.log('end loading???');
     }
 
     /**

@@ -17,7 +17,8 @@
         formattingHandler: '=',
         facetName: '@',
         facetLabel: '@',
-        facetAutoOpen: '@'
+        facetAutoOpen: '@',
+        isLoading: '='
       }
     };
   }
@@ -25,6 +26,7 @@
   function Controller(ConfigService, FacetRangeService, QueryService, QueryDataService, Orwell, FoundationApi, URLService) {
     'ngInject';
     var vm = this;
+    console.log(vm.isLoading, 'lsjdflksf')
     vm.facetCounts = [];
     vm.toggleFacet = toggleFacet;
     vm.toggleMore = toggleMore;
@@ -101,7 +103,15 @@
      * Toggles a facet on or off depending on it's current state.
      * @param  {object} facet The facet object
      */
+    function toggleLoading() {
+      vm.isLoading = true;
+    }
+
     function toggleFacet(facet) {
+      console.log('start the maddness???');
+
+      toggleLoading();
+      console.log(vm.isLoading)
       var key = vm.facetName;
       var query = QueryService.getQueryObject();
       // CASE: fq exists.
@@ -140,6 +150,7 @@
       }
 
       // Set the query and trigger the refresh.
+      console.log('hiiii there');
       updateFacetQuery(query);
     }
 

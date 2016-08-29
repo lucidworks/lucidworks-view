@@ -13,7 +13,9 @@
       scope: true,
       controller: Controller,
       controllerAs: 'vm',
-      bindToController: {}
+      bindToController: {
+        isLoading: '='
+      }
     };
 
     return directive;
@@ -52,6 +54,7 @@
     }
 
     function activate() {
+      console.log(vm.isLoading);
       resultsObservable.addObserver(function (data) {
         // Exit early if there are no facets in the response.
         if (!data.hasOwnProperty('facet_counts')) return;

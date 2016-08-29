@@ -1,6 +1,6 @@
-<section class="accordion-item" class="block-list" ng-class="{'is-active': vm.active}">
+<section class="accordion-item" class="block-list" ng-class="{'is-active': vm.active, 'disabled':vm.isLoading}" ng-disabled="vm.isLoading">
   <div class="accordion-title" ng-click="vm.active = !vm.active">
-    {{vm.facetLabel ? vm.facetLabel : vm.facetName}}
+    {{vm.facetLabel ? vm.facetLabel : vm.facetName}}loading {{vm.isLoading}}
     <span ng-click="vm.clearAppliedFilters($event)">Clear all</span>
   </div>
   <div class="accordion-content">
@@ -8,9 +8,9 @@
       <li>
         <input type="text" placeholder="{{vm.facetLabel ? vm.facetLabel : vm.facetName}} filter"  ng-model="vm.facetFilter">
       </li>
-      <li ng-repeat = "facet in vm.facetCounts |filter: vm.facetFilter | limitTo: vm.getLimitAmount()" ng-class="{'facet-active':facet.active}">
+      <li ng-repeat = "facet in vm.facetCounts |filter: vm.facetFilter | limitTo: vm.getLimitAmount()" ng-class="{'facet-active':facet.active}" ng-disabled="vm.isLoading">
         <input type="checkbox" id="{{::facet.hash}}" ng-model="facet.active" ng-click="vm.toggleFacet(facet)">
-        <label for="{{::facet.hash}}">{{facet.start}} - {{facet.end}} <span>({{facet.amount|humanizeNumberFormat:0}})</span></label>
+        <label for="{{::facet.hash}}" >{{facet.start}} - {{facet.end}} <span>({{facet.amount|humanizeNumberFormat:0}})</span></label>
       </li>
       <li class="facet-more-link right" ng-if="vm.facetCounts.length > 5">
         <a ng-click="vm.toggleMore()">{{(vm.facetCounts.length - 5)}} {{vm.more ? 'less' :' more'}}</a>

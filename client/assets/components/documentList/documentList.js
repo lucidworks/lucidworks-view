@@ -42,6 +42,7 @@
         vm.docs = parseDocuments(data);
         vm.highlighting = parseHighlighting(data);
         vm.getDoctype = getDocType;
+        console.log('is this where things go???')
         $anchorScroll('topOfMainContent');
       });
     }
