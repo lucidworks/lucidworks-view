@@ -1,9 +1,8 @@
 .facet-list div.accordion-title {
   display: flex;
   justify-content: space-between;
-  border: 2px solid pink;
 }
-.disabled{
-  background-color: red;
-  border: 2px solid blue;
+
+.block-list li.disabled>label:hover{
+  cursor: not-allowed;
 }

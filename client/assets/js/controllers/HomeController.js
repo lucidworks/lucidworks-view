@@ -46,7 +46,6 @@
         // Initializing sorting
         sorting = hc.sorting;
         sorting.switchSort = switchSort;
-        // console.log('aslfjlskflsf')
         createSortList();
         endLoading();
       });
@@ -61,8 +60,6 @@
 
     function endLoading(){
       hc.isLoading = false;
-      console.log(hc.isLoading);
-      console.log('end the maddness');
     }
 
     function checkResultsType(data){
