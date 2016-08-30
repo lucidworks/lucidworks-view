@@ -56,7 +56,6 @@
           .catch(failure);
 
         function success(response) {
-          console.log("Success!!!! getting response");
           console.log(response);
           // Set the content to populate the rest of the ui.
           queryResultsObservable.setContent(response.data);
@@ -80,7 +79,7 @@
         var queryString = QueryBuilder.objectToURLString(query);
 
         var fullUrl = getMltQueryUrl() + '?' + queryString;
-        console.log('urllll', fullUrl);
+        console.log("Full MLT Query URL Is as Follows", fullUrl);
 
         $http
           .get(fullUrl)
@@ -88,7 +87,6 @@
           .catch(failure);
 
         function success(response) {
-          console.log('responseeee', response.data.moreLikeThis);
           mltResultsObservable.setContent(response.data.moreLikeThis);
           deferred.resolve(response.data.moreLikeThis);
         }

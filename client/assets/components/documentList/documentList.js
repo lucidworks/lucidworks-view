@@ -31,8 +31,8 @@
     vm.toggleGroupedResults = toggleGroupedResults;
     vm.showGroupedResults = {};
     vm.getDocPosition = getDocPosition;
-    vm.getRelatedItems = getRelatedItems;
-    vm.launchMlt = launchMlt;
+    vm.getMoreLikeThisFromObservable = getMoreLikeThisFromObservable;
+    vm.getMoreLikeThisByLaunchingQuery = getMoreLikeThisByLaunchingQuery;
 
 
 
@@ -147,21 +147,24 @@
       return _.findIndex(docs, doc);
     }
 
-    function getRelatedItems(doc) {
-      // There are two ways of doing this, the first is by getting the MLT results and checking against the 
-      // document  name using the general MLT stage (this is slower because it loads mlt for every document thus
-      // slowing the inital search.
-      console.log("Find related items here by querying solr correctly!");
-      var resultsObservable = Orwell.getObservable('queryResults');
+    /** 
+     * Get the moreLikethis recommendations from a query pipeline in Fusion. This particular method gets the results from 
+     * an observable that gets populated on page load.
+     * @param {object} doc       Doc of which the id is required to return the appropriate mlt results
+     * @return {list} moreLikeThisForDoc  List of "more like this" responses to the document in question
+     */
+    function getMoreLikeThisFromObservable(doc) {
+      var mltResultsObservable = Orwell.getObservable('mltResults');
+      console.log("mltResultsObservable is populated with ", mltResultsObservable)
+      console.log("The doc is", doc);
       var docs;
-      var finalList = []; 
+      var moreLikeThisForDoc = []; 
 
-      if (resultsObservable.content.moreLikeThis != null) {
-        console.log("Inside the getRelatedItems!");
-        console.log(resultsObservable.content.moreLikeThis);
-        for (var item in resultsObservable.content.moreLikeThis) {
+      if (mltResultsObservable != null) {
+        console.log("We have More Like This Results, Lets Find the Right One");
+        for (var item in mltResultsObservable.content) {
           if (item == doc.id) {
-            docs = resultsObservable.content.moreLikeThis[item].docs;
+            docs = mltResultsObservable[item].docs;
             break;
           }
         }
@@ -172,28 +175,29 @@
         }
         else {
           for (var doc in docs){ 
-            finalList.push(docs[doc].title);
+            moreLikeThisForDoc.push(docs[doc].title);
           }
         }
-        return finalList;
       }
+      return moreLikeThisForDoc;
     }
 
-    function launchMlt(doc) {
-      console.log("launching mlt");
-      console.log(doc.id);
-      vm.id = doc.id
+    /**
+     * Get moreLikeThis recommendations from a query pipeline in fusion. This particular method gets the 
+     * results by launching the mlt search for the particular doc in question and returning the results.
+     * @param {object} doc       Doc of which the id is required to launch the appropriate query 
+     * @return {list} mltResults List of "more Like This" responses to the document in question
+     */
+    function getMoreLikeThisByLaunchingQuery(doc) {
+      console.log("launching query based on doc ", vm.id);
+      vm.id = doc.id;
 
       QueryDataService.getMltQueryResults({q: "id:" + vm.id, wt: 'json'}).then(manipulate_mlt);
 
       function manipulate_mlt(response){
-        console.log("Done getting the stuff");
-        console.log(vm.id);
         var mltResults = Orwell.getObservable('mltResults').content[vm.id].docs;
         return mltResults;
       }
-
     }
-
   }
 })();

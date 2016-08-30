@@ -1,8 +1,10 @@
 <div id="documentList">
   <div ng-repeat="doc in vm.docs" ng-switch="::vm.getDocType(doc)">
-    <span data-tooltip aria-haspop=true class="has-tip" title="{{vm.getRelatedItems(doc)}}" style="cursor:pointer"> Related Items </span>
+<!--     <span data-tooltip aria-haspop=true class="has-tip" title="{{vm.getMoreLikeThisFromObservable}}" style="cursor:pointer"> Related Items </span> -->
     <!-- <document-example ng-switch-when="string_matching_data_connector" doc="doc" highlight="vm.highlighting"></document-example> -->
-    <mlt ng-click="vm.launchMlt(doc)"> click here to launch!</mlt>
+    
+    <mlt2 ng-click = "vm.getMoreLikeThisFromObservable(doc)"> click to find! </mlt2>
+    <mlt ng-click="vm.getMoreLikeThisByLaunchingQuery(doc)"> click here to launch!</mlt>
     
     <document-file ng-switch-when="lucid.anda/file" doc="doc" position="vm.getDocPosition(doc,vm.docs)" highlight="vm.highlighting"></document-file>
     <document-jira ng-switch-when="lucid.anda/jira" doc="doc" position="vm.getDocPosition(doc,vm.docs)" highlight="vm.highlighting"></document-jira>

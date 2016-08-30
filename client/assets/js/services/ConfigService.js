@@ -79,7 +79,6 @@
         getQueryProfile: getQueryProfile,
         getCollectionName: getCollectionName,
         getQueryPipeline: getQueryPipeline,
-        getMltPipeline: getMltPipeline,
         getLoginCredentials: getLoginCredentials,
         getIfQueryProfile: getIfQueryProfile,
         getFieldLabels: getFieldLabels,

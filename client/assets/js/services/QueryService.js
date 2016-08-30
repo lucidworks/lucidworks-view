@@ -31,7 +31,10 @@
 
       queryObservable.addObserver(function (query) {
         QueryDataService.getQueryResults(query);
+      });
 
+      queryObservable.addObserver(function (query) {
+        QueryDataService.getMltQueryResults(query);
       });
 
       return {
