@@ -39,7 +39,8 @@
       // Use an observable to get the contents of a queryResults after it is updated.
       resultsObservable = Orwell.getObservable('queryResults');
       resultsObservable.addObserver(function(data) {
-        hc.isLoading = true;
+        // Locking the service to prevent multiple queries currently this only works for facet ranges (since it is very slow) but could add an ng-disabled to other areas and toggle on or off a disabled class
+        startLoading();
         // updateStatus();
         checkResultsType(data);
         updateStatus();
@@ -57,6 +58,11 @@
         URLService.setQuery(query);
       });
     }
+
+    function startLoading(){
+      hc.isLoading = true;
+    }
+
 
     function endLoading(){
       hc.isLoading = false;
@@ -139,7 +145,6 @@
       });
       sorting.sortOptions = sortOptions;
       sorting.selectedSort = sorting.sortOptions[0];
-      console.log('end loading???');
     }
 
     /**

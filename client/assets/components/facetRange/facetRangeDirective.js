@@ -102,12 +102,12 @@
      * Toggles a facet on or off depending on it's current state.
      * @param  {object} facet The facet object
      */
-    function toggleLoading() {
+    function setIsLoading() {
       vm.isLoading = true;
     }
 
     function toggleFacet(facet) {
-      toggleLoading();
+      setIsLoading();
       var key = vm.facetName;
       var query = QueryService.getQueryObject();
       // CASE: fq exists.
