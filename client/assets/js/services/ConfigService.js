@@ -79,6 +79,7 @@
         getQueryProfile: getQueryProfile,
         getCollectionName: getCollectionName,
         getQueryPipeline: getQueryPipeline,
+        getMltPipeline: getMltPipeline,
         getLoginCredentials: getLoginCredentials,
         getIfQueryProfile: getIfQueryProfile,
         getFieldLabels: getFieldLabels,
@@ -121,6 +122,10 @@
 
     function getQueryPipeline() {
       return appConfig.query_pipeline_id;
+    }
+
+    function getMltPipeline() {
+      return appConfig.recommender_pipeline_id;
     }
 
     function getQueryProfile() {

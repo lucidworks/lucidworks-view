@@ -21,7 +21,7 @@
 
   }
 
-  function Controller($sce, $log, $anchorScroll, Orwell) {
+  function Controller($sce, $log, $anchorScroll, Orwell, QueryDataService) {
     'ngInject';
     var vm = this;
     vm.docs = [];
@@ -31,6 +31,10 @@
     vm.toggleGroupedResults = toggleGroupedResults;
     vm.showGroupedResults = {};
     vm.getDocPosition = getDocPosition;
+    vm.getRelatedItems = getRelatedItems;
+    vm.launchMlt = launchMlt;
+
+
 
     activate();
 
@@ -144,7 +148,52 @@
     }
 
     function getRelatedItems(doc) {
-      console.log("Find related items here!");
+      // There are two ways of doing this, the first is by getting the MLT results and checking against the 
+      // document  name using the general MLT stage (this is slower because it loads mlt for every document thus
+      // slowing the inital search.
+      console.log("Find related items here by querying solr correctly!");
+      var resultsObservable = Orwell.getObservable('queryResults');
+      var docs;
+      var finalList = []; 
+
+      if (resultsObservable.content.moreLikeThis != null) {
+        console.log("Inside the getRelatedItems!");
+        console.log(resultsObservable.content.moreLikeThis);
+        for (var item in resultsObservable.content.moreLikeThis) {
+          if (item == doc.id) {
+            docs = resultsObservable.content.moreLikeThis[item].docs;
+            break;
+          }
+        }
+      }
+      if (docs != undefined) {
+        if (docs.length == 0) {
+          return "No Related Items Found!"
+        }
+        else {
+          for (var doc in docs){ 
+            finalList.push(docs[doc].title);
+          }
+        }
+        return finalList;
+      }
     }
+
+    function launchMlt(doc) {
+      console.log("launching mlt");
+      console.log(doc.id);
+      vm.id = doc.id
+
+      QueryDataService.getMltQueryResults({q: "id:" + vm.id, wt: 'json'}).then(manipulate_mlt);
+
+      function manipulate_mlt(response){
+        console.log("Done getting the stuff");
+        console.log(vm.id);
+        var mltResults = Orwell.getObservable('mltResults').content[vm.id].docs;
+        return mltResults;
+      }
+
+    }
+
   }
 })();

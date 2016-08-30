@@ -13,6 +13,7 @@
   function Config(OrwellProvider) {
     'ngInject';
     OrwellProvider.createObservable('queryResults', {});
+    OrwellProvider.createObservable('mltResults', {poop:"poop"});
   }
 
   function QueryDataService() {
@@ -24,10 +25,13 @@
     function $get($q, $http, ConfigService, ApiBase, Orwell, QueryBuilder) {
       'ngInject';
       var queryResultsObservable = Orwell.getObservable('queryResults');
+      var mltResultsObservable = Orwell.getObservable('mltResults');
       return {
         getQueryResults: getQueryResults,
         getProfileEndpoint: getProfileEndpoint,
-        getPipelineEndpoint: getPipelineEndpoint
+        getPipelineEndpoint: getPipelineEndpoint,
+        getMltQueryResults: getMltQueryResults,
+        getMltQueryUrl: getMltQueryUrl
       };
 
       /**
@@ -42,7 +46,9 @@
 
         var queryString = QueryBuilder.objectToURLString(query);
 
+        console.log("In getqueryresults and trying to access mlt pipeline");
         var fullUrl = getQueryUrl(ConfigService.getIfQueryProfile()) + '?' + queryString;
+        console.log(fullUrl);
 
         $http
           .get(fullUrl)
@@ -50,6 +56,8 @@
           .catch(failure);
 
         function success(response) {
+          console.log("Success!!!! getting response");
+          console.log(response);
           // Set the content to populate the rest of the ui.
           queryResultsObservable.setContent(response.data);
           deferred.resolve(response.data);
@@ -62,6 +70,35 @@
           deferred.reject(err.data);
         }
 
+        return deferred.promise;
+      }
+
+
+      function getMltQueryResults(query, id) {
+        var deferred = $q.defer();
+
+        var queryString = QueryBuilder.objectToURLString(query);
+
+        var fullUrl = getMltQueryUrl() + '?' + queryString;
+        console.log('urllll', fullUrl);
+
+        $http
+          .get(fullUrl)
+          .then(success)
+          .catch(failure);
+
+        function success(response) {
+          console.log('responseeee', response.data.moreLikeThis);
+          mltResultsObservable.setContent(response.data.moreLikeThis);
+          deferred.resolve(response.data.moreLikeThis);
+        }
+
+        function failure(err) {
+          mltResultsObservable.setContent({
+            numFound: 0
+          });
+          deferred.reject(err.data);
+        }
         return deferred.promise;
       }
 
@@ -88,6 +125,11 @@
         return ApiBase.getEndpoint() + 'api/apollo/query-pipelines/' +
           pipeline + '/collections/' + ConfigService.getCollectionName() +
           '/' + requestHandler;
+      }
+
+      function getMltQueryUrl(){
+        var pipelinesEndpoint = getPipelineEndpoint(ConfigService.getMltPipeline(), 'select');
+        return pipelinesEndpoint;
       }
 
     }

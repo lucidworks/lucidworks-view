@@ -38,16 +38,16 @@
         checkRecommendations(data);
       });
 
-      function checkRecommendations(data) {
-      // console.log("In the check recommendations portion of the home controller!");
-        if (data.hasOwnProperty('moreLikeThis')){
-          console.log("We have more like this! Let's populate the rc");
-          for (var key in data.moreLikeThis) {
-            rc.mltDocs.push(data.moreLikeThis[key].docs);
-          }
-          console.log(rc.mltDocs);
+    function checkRecommendations(data) {
+    // console.log("In the check recommendations portion of the home controller!");
+      if (data.hasOwnProperty('moreLikeThis')){
+        console.log("We have more like this! Let's populate the rc");
+        for (var key in data.moreLikeThis) {
+          rc.mltDocs.push(data.moreLikeThis[key].docs);
         }
+        console.log(rc.mltDocs);
       }
+    }
 
     }
   }
