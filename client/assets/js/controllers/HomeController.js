@@ -31,6 +31,7 @@
       hc.lastQuery = '';
       hc.sorting = {};
       hc.grouped = false;
+      hc.isLoading = false;
 
       query = URLService.getQueryFromUrl();
       //Setting the query object... also populating the the view model
@@ -38,6 +39,8 @@
       // Use an observable to get the contents of a queryResults after it is updated.
       resultsObservable = Orwell.getObservable('queryResults');
       resultsObservable.addObserver(function(data) {
+        // Locking the service to prevent multiple queries currently this only works for facet ranges (since it is very slow) but could add an ng-disabled to other areas and toggle on or off a disabled class
+        startLoading();
         // updateStatus();
         checkResultsType(data);
         updateStatus();
@@ -45,7 +48,7 @@
         sorting = hc.sorting;
         sorting.switchSort = switchSort;
         createSortList();
-
+        endLoading();
       });
 
       // Force set the query object to change one digest cycle later
@@ -54,6 +57,15 @@
       $timeout(function(){
         URLService.setQuery(query);
       });
+    }
+
+    function startLoading(){
+      hc.isLoading = true;
+    }
+
+
+    function endLoading(){
+      hc.isLoading = false;
     }
 
     function checkResultsType(data){

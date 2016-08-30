@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -17,12 +17,13 @@
         formattingHandler: '=',
         facetName: '@',
         facetLabel: '@',
-        facetAutoOpen: '@'
+        facetAutoOpen: '@',
+        isLoading: '='
       }
     };
   }
 
-  function Controller(ConfigService, QueryService, QueryDataService, Orwell, FoundationApi, URLService, $log, $filter) {
+  function Controller(ConfigService, FacetRangeService, QueryService, QueryDataService, Orwell, FoundationApi, URLService) {
     'ngInject';
     var vm = this;
     vm.facetCounts = [];
@@ -61,18 +62,17 @@
      * @return {array}     An array of objects
      */
     function arrayToObjectArray(arr) {
-      return _.transform(arr, function (result, value, index) {
+      return _.transform(arr, function(result, value, index) {
         if (index % 2 === 1) {
-          var titleVal;
-          if (vm.formattingHandler){
-            titleVal = vm.formattingHandler(result[result.length - 1]);
-          } else {
-            titleVal = result[result.length - 1];
-          }
+          var rawStart = result[result.length - 1];
+          var rawEnd = FacetRangeService.getEnd(rawStart, vm.gap);
+
           result[result.length - 1] = {
-            title: titleVal,
+            start: vm.formattingHandler ? vm.formattingHandler(rawStart) : rawStart,
+            rawStart: rawStart,
+            end: vm.formattingHandler ? vm.formattingHandler(rawEnd) : rawEnd,
+            rawEnd: rawEnd,
             amount: value,
-            amountFormatted: $filter('humanizeNumberFormat')(value, 0),
             hash: FoundationApi.generateUuid(),
             active: isFacetActive(vm.facetName, result[result.length - 1])
           };
@@ -83,39 +83,17 @@
     }
 
     /**
-     * [transformObjectArray Adds start,end to array items according to the facet data]
-     * @param  {Array} arr            [array of facet objects]
-     * @param  {Object} rangeFacetData [rangeFacetData]
-     * @return {Array}                [array of facet objects]
-     */
-    function transformObjectArray(arr, rangeFacetData){
-      var end;
-      if (vm.formattingHandler){
-        end = vm.formattingHandler(rangeFacetData.end);
-      } else {
-        end = rangeFacetData.end
-      }
-      return _.map(arr, function(item, index){
-        // TODO: Detect more data types and do proper display of the buckets
-        var startOfRange = item.title;
-        var endOfRange = (index + 1 >= arr.length)?end:arr[index + 1].title;
-        return _.assign(item, {start: startOfRange, end: endOfRange});
-      });
-    }
-
-    /**
      * [parseFacets Parse facets and get stuff going in the scope]
      * @param  {[type]} data [description]
      * @return {[type]}      [description]
      */
-    function parseFacets(data){
-      if(!_.has(data.facet_counts, 'facet_ranges.' + vm.facetName)){
+    function parseFacets(data) {
+      if (!_.has(data.facet_counts, 'facet_ranges.' + vm.facetName)) {
         return;
-      }
-      else {
-        var rangeFacet = data.facet_counts.facet_ranges[vm.facetName];
-        var rangeFacetsObjects = arrayToObjectArray(rangeFacet.counts);
-        vm.facetCounts = transformObjectArray(rangeFacetsObjects, rangeFacet);
+      } else {
+        var rangeFacet = _.get(data, 'facet_counts.facet_ranges.' + vm.facetName);
+        vm.gap = gapFromResponse(data, vm.facetName);
+        vm.facetCounts = arrayToObjectArray(rangeFacet.counts);
         setActiveState();
       }
     }
@@ -124,26 +102,34 @@
      * Toggles a facet on or off depending on it's current state.
      * @param  {object} facet The facet object
      */
+    function setIsLoading() {
+      vm.isLoading = true;
+    }
+
     function toggleFacet(facet) {
+      setIsLoading();
       var key = vm.facetName;
       var query = QueryService.getQueryObject();
       // CASE: fq exists.
       if (!query.hasOwnProperty('fq')) {
-        query = addRangeFacet(query, key, facet.start, facet.end);
+        query = addRangeFacet(query, key, facet.rawStart, facet.rawEnd);
       } else {
         // Remove the key object from the query.
         // We will re-add later if we need to.
-        var keyArr = _.remove(query.fq, {key: key, transformer: 'fq:range', values: getQueryObjectValues(facet.start, facet.end)});
-
+        var keyArr = _.remove(query.fq, {
+          key: key,
+          transformer: 'fq:range',
+          values: getQueryObjectValues(facet.rawStart, facet.rawEnd)
+        });
         // CASE: facet key exists in query.
         if (keyArr.length > 0) {
           var keyObj = keyArr[0];
-          var removed = _.remove(keyObj.values, function (value) {
-            return doesValueMatch(value, facet.start);
+          var removed = _.remove(keyObj.values, function(value) {
+            return value.values[0] === facet.rawStart;
           });
           // CASE: value didn't previously exist add to values.
           if (removed.length === 0) {
-            query.fq.push(getRangeFacetObject(key, facet.start, facet.end));
+            query.fq.push(getRangeFacetObject(key, facet.rawStart, facet.rawEnd));
           }
           // CASE: there are still values in facet attach keyobject back to query.
           if (keyObj.values.length > 0) {
@@ -154,10 +140,11 @@
             delete query.fq;
           }
         } else { // CASE: Facet key doesnt exist ADD key AND VALUE.
-          query = addRangeFacet(query, key, facet.start, facet.end);
+          query = addRangeFacet(query, key, facet.rawStart, facet.rawEnd);
         }
 
       }
+
       // Set the query and trigger the refresh.
       updateFacetQuery(query);
     }
@@ -190,18 +177,20 @@
      * @return {Boolean}       [description]
      */
     function isFacetActive(key, value) {
+
       var query = QueryService.getQueryObject();
+
       if (!query.hasOwnProperty('fq')) {
         return false;
       }
-
-      var keyObjArr = _.filter(query.fq, {key: key, transformer: 'fq:range'});
+      var keyObjArr = _.filter(query.fq, {
+        key: key,
+        transformer: 'fq:range'
+      });
       if (_.isEmpty(keyObjArr)) {
         return false;
       }
-      if (_.isEmpty(_.filter(keyObjArr, function (obj) {
-        return doesValueMatch(obj.values[0], value);
-      }))) {
+      if (_.isEmpty(_.filter(keyObjArr, function(obj) {return obj.values[0].values[0] === value; }))) {
         return false;
       }
       return true;
@@ -210,7 +199,7 @@
     /**
      * Sets the facet panel open
      */
-    function setActiveState(){
+    function setActiveState() {
       var active = true;
       // If we have autoOpen set active to this state.
       if (angular.isDefined(vm.facetAutoOpen) && vm.facetAutoOpen === 'false') {
@@ -222,16 +211,16 @@
     /**
      * Toggles the more button for the facet.
      */
-    function toggleMore(){
+    function toggleMore() {
       vm.more = !vm.more;
     }
 
-   /**
-    * Gets the amount to limit by
-    * @return {integer|undefined} The amount to return or undefined.
-    */
-    function getLimitAmount(){
-      if(vm.more){
+    /**
+     * Gets the amount to limit by
+     * @return {integer|undefined} The amount to return or undefined.
+     */
+    function getLimitAmount() {
+      if (vm.more) {
         return undefined;
       }
       return 5;
@@ -239,17 +228,14 @@
 
     //////////////
     ///UTILS
-    /**
-     * Checks if the query object's queryObject.fq item matches the associated value
-     */
-    function doesValueMatch(objectValue, start){
-      return objectValue.values[0] === start;
+    function gapFromResponse(response, facetName){
+      return _.get(response, 'responseHeader.params[\'f.'+facetName+'.facet.range.gap\']') || _.get(response, 'responseHeader.params[\'facet.range.gap\']');
     }
 
     /**
      * Spits out range facet queryObject portion
      */
-    function getRangeFacetObject(key, start, end){
+    function getRangeFacetObject(key, start, end) {
       return {
         key: key,
         values: getQueryObjectValues(start, end),
@@ -257,31 +243,34 @@
       };
     }
 
+
     /**
      * Spits out queryObject compatible value for range facet entity
      */
-    function getQueryObjectValues(start, end){
-      return [
-        {
-          values: [start, end],
-          transformer: 'TO'
-        }
-      ];
+    function getQueryObjectValues(start, end) {
+      return [{
+        values: [start, end],
+        transformer: 'TO'
+      }];
     }
 
     /**
      * remove all filters applied on a facet
      * @param  {object} e event object to stopPropagation of click
      */
-    function clearAppliedFilters(e){
+    function clearAppliedFilters(e) {
       e.stopPropagation();
       var query = QueryService.getQueryObject();
-      if(query.hasOwnProperty('fq')){
-        var clearedFilter = _.remove(query.fq, {key: vm.facetName, transformer: 'fq:range'});
-        if(clearedFilter.length){
+      if (query.hasOwnProperty('fq')) {
+        var clearedFilter = _.remove(query.fq, {
+          key: vm.facetName,
+          transformer: 'fq:range'
+        });
+        if (clearedFilter.length) {
           updateFacetQuery(query);
         }
       }
     }
+
   }
 })();

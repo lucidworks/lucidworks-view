@@ -1,7 +1,7 @@
 /*eslint-env node*/
 var $               = require('gulp-load-plugins')();
 var gulp            = require('gulp');
-var browserSync     = require('browser-sync').create();
+// var browserSync     = require('browser-sync').create();
 
 // Compiles Sass
 gulp.task('sass', function () {
@@ -18,6 +18,6 @@ gulp.task('sass', function () {
     }))
     .pipe(cssnano)
     .pipe($.plumber())
-    .pipe(browserSync.stream())
     .pipe(gulp.dest('./build/assets/css/'));
+    // .pipe(browserSync.stream())
 });
