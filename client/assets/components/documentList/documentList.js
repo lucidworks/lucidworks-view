@@ -159,18 +159,20 @@
      * @return {list} moreLikeThisForDoc  List of "more like this" responses to the document in question
      */
     function getMoreLikeThisFromObservable(doc) {
-      var mltResultsObservable = Orwell.getObservable('mltResults');
+      var mltResultsObservable2 = Orwell.getObservable('mltResults2');
+      console.log(mltResultsObservable2.content);
       var docs;
       var moreLikeThisForDoc = [];
 
-      if (mltResultsObservable.content == null || mltResultsObservable.content == undefined) {
+      if (mltResultsObservable2.content == null || mltResultsObservable2.content == undefined) {
+        console.log("We have no more like This");
         return moreLikeThisForDoc;
       }
 
-      else if (mltResultsObservable.content != null) {
-        for (var item in mltResultsObservable.content) {
+      else if (mltResultsObservable2.content != null) {
+        for (var item in mltResultsObservable2.content) {
           if (item == doc.id) {
-            docs = mltResultsObservable[item].docs;
+            docs = mltResultsObservable2[item].docs;
             break;
           }
         }
@@ -185,6 +187,7 @@
           }
         }
       }
+      console.log(moreLikeThisForDoc);
       return moreLikeThisForDoc;
     }
 
@@ -197,7 +200,6 @@
      */
     function getMoreLikeThisByLaunchingQuery(doc) {
       vm.overlay();
-      console.log("launching query based on doc ", vm.id);
       vm.id = doc.id;
       QueryDataService.getMoreLikeThisForOneDoc({q: "{!mlt qf=body}" + vm.id, wt:'json'}).then(manipulate_mlt); 
 
@@ -216,11 +218,62 @@
           }
         }
         
-        console.log("The Results Are as follows", parsedMoreLikeThisResults);
         document.getElementById('MoreLikeThisByDocIdResults').innerHTML = parsedMoreLikeThisResults;
         return parsedMoreLikeThisResults;
       }
     }
+
+    function putJSON(path, id, success, error) {
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE){
+          if (xhr.status === 200) {
+            if (success) 
+              success(JSON.parse(xhr.responseText));
+          } else {
+            if (error)
+              error(xhr);
+          }
+        }
+      };
+      xhr.open('PUT', path);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          var userInfo = JSON.parse(xhr.responseText);
+        }
+      };
+      xhr.send(JSON.stringify(
+          {
+            "id" : "default_mlt",
+            "stages" : [ {
+              "type" : "MoreLikeThis",
+              "id" : "62186129-876c-4a2e-9a08-7c34504ec7c3",
+              "MoreLikeThisFields" : [ {
+                "field" : "body"
+              } ],
+              "useQueryParser" : true,
+              "mindf" : 2,
+              "maxdf" : 100000,
+              "docId" : id,
+              "type" : "MoreLikeThis",
+              "skip" : false,
+              "label" : "MoreLikeThis"
+            }, {
+              "type" : "solr-query",
+              "id" : "91817c00-fb19-4348-912a-35be342938fc",
+              "allowedRequestHandlers" : [ ],
+              "httpMethod" : "POST",
+              "allowFederatedSearch" : false,
+              "type" : "solr-query",
+              "skip" : false,
+              "label" : "solr-query"
+            } ],
+            "properties" : { }
+        }
+      ));
+    }
+
 
     function loadJSON(path, success, error) {
       var xhr = new XMLHttpRequest();
@@ -245,23 +298,32 @@
      * @return {list} mltResults List of "more Like This" responses to the document in question
      */
     function getMoreLikeThisByLaunchingQueryAgainstPipeline(doc){
-      // loadJSON('api/apollo/query-pipelines/default_mlt/', function(data) {console.log(data); }, function(xhr) {console.error(xhr)}); 
+      vm.overlay();
+      putJSON('/api/apollo/query-pipelines/default_mlt/', doc.id, function(data) {
+        console.log(data);
+        QueryDataService.getMoreLikeThisForAllDocs({wt:'json'}).then(displayResults); 
+        
+        function displayResults(response){
+        var rawMoreLikeThisResults = Orwell.getObservable('mltResults2').content.response.docs;
+        console.log(rawMoreLikeThisResults);
 
-      // var newName = 'John Smith';
-      // var xhr = new XMLHttpRequest();
-      // xhr.open('POST', 'api/apollo/query-pipelines/default_mlt');
-      // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      // xhr.onload = function() {
-      //   if (xhr.status === 200 && xhr.responseText !== newName){
-      //     alert('Something went wrong! Nemw is now' + xhr.responseText);
-      //   }
-      //   else if (xhr.status !== 200) {
-      //     alert ("Request failed. Returned wrong status");
-      //   }
-      // };
-      // xhr.send(encodeURI('name=' + newName));
+        var parsedMoreLikeThisResults = ""
 
-      
+        for (var resultIndex in rawMoreLikeThisResults) {
+          var moreLikeThisToParse = rawMoreLikeThisResults[resultIndex];
+          var index = parseInt(resultIndex) + 1
+          if (moreLikeThisToParse.title != null) {
+            parsedMoreLikeThisResults += index.toString() + ": " + moreLikeThisToParse.title + "\n";
+          }
+          else{
+            parsedMoreLikeThisResults += moreLikeThisToParse.id + "\n";
+          }
+        }
+        
+        document.getElementById('MoreLikeThisOverallResults').innerHTML = parsedMoreLikeThisResults;
+        return parsedMoreLikeThisResults;
+      }
+      }, function(xhr) {console.error(xhr)}); 
     }
   }
 })();

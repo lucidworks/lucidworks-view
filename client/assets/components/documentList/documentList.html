@@ -1,12 +1,18 @@
 <div id="documentList">
   <div ng-repeat="doc in vm.docs" ng-switch="::vm.getDocType(doc)">
-<!--     <span data-tooltip aria-haspop=true class="has-tip" title="{{vm.getMoreLikeThisFromObservable}}" style="cursor:pointer"> Related Items </span> -->
-    <!-- <document-example ng-switch-when="string_matching_data_connector" doc="doc" highlight="vm.highlighting"></document-example> -->
-    
-    <span data-tooltip aria-haspopup = "true" class="has-tip[tip-top tip-bottom tip-left tip-right] [radius round]" title={{vm.getMoreLikeThisFromObservable(doc)}} style="cursor:pointer;"> click to find!  </span>
+<!--     
+    <span data-tooltip aria-haspopup = "true" class="has-tip[tip-top tip-bottom tip-left tip-right] [radius round]" title={{vm.getMoreLikeThisFromObservable(doc)}} style="cursor:pointer;"> click to find!  </span> -->
+<!-- 
+    <mlt ng-click="vm.getMoreLikeThisFromObservable(doc)"> Click Here To Find More Like This Document In A Different Way <mlt> -->
   
-    <a href='#' ng-click="vm.getMoreLikeThisByLaunchingQuery(doc)"> Click Here to Find More Like This Document </a>
 
+    <a href='#' ng-click="vm.getMoreLikeThisByLaunchingQueryAgainstPipeline(doc)"> Click Here to Change the Query Pipeline </a>
+    <div id="overlay"> 
+      <pre id ="MoreLikeThisOverallResults" ng-click="vm.overlay()">
+      </pre>
+    </div>
+
+    <a href='#' ng-click="vm.getMoreLikeThisByLaunchingQuery(doc)"> Click Here to Find More Like This Document </a>
     <div id="overlay"> 
       <pre id ="MoreLikeThisByDocIdResults" ng-click="vm.overlay()">
       </pre>
