@@ -152,76 +152,6 @@
       return _.findIndex(docs, doc);
     }
 
-    /** 
-     * Get the moreLikethis recommendations from a query pipeline in Fusion. This particular method gets the results from 
-     * an observable that gets populated on page load.
-     * @param {object} doc       Doc of which the id is required to return the appropriate mlt results
-     * @return {list} moreLikeThisForDoc  List of "more like this" responses to the document in question
-     */
-    function getMoreLikeThisFromObservable(doc) {
-      var mltResultsObservable2 = Orwell.getObservable('mltResults2');
-      console.log(mltResultsObservable2.content);
-      var docs;
-      var moreLikeThisForDoc = [];
-
-      if (mltResultsObservable2.content == null || mltResultsObservable2.content == undefined) {
-        console.log("We have no more like This");
-        return moreLikeThisForDoc;
-      }
-
-      else if (mltResultsObservable2.content != null) {
-        for (var item in mltResultsObservable2.content) {
-          if (item == doc.id) {
-            docs = mltResultsObservable2[item].docs;
-            break;
-          }
-        }
-      }
-      if (docs != undefined) {
-        if (docs.length == 0) {
-          return "No Related Items Found!"
-        }
-        else {
-          for (var doc in docs){ 
-            moreLikeThisForDoc.push(docs[doc].title);
-          }
-        }
-      }
-      console.log(moreLikeThisForDoc);
-      return moreLikeThisForDoc;
-    }
-
-    /**
-     * Get moreLikeThis recommendations from a direct query to fusion specifying the document
-     * id and necessary mlt. This particular method gets the 
-     * results by launching the mlt search for the particular doc in question and returning the results.
-     * @param {object} doc       Doc of which the id is required to launch the appropriate query 
-     * @return {list} mltResults List of "more Like This" responses to the document in question
-     */
-    function getMoreLikeThisByLaunchingQuery(doc) {
-      vm.overlay();
-      vm.id = doc.id;
-      QueryDataService.getMoreLikeThisForOneDoc({q: "{!mlt qf=body}" + vm.id, wt:'json'}).then(manipulate_mlt); 
-
-      function manipulate_mlt(response){
-        var rawMoreLikeThisResults = Orwell.getObservable('mltResults').content.response.docs;
-        var parsedMoreLikeThisResults = ""
-
-        for (var resultIndex in rawMoreLikeThisResults) {
-          var moreLikeThisToParse = rawMoreLikeThisResults[resultIndex];
-          var index = parseInt(resultIndex) + 1
-          if (moreLikeThisToParse.title != null) {
-            parsedMoreLikeThisResults += index.toString() + ": " + moreLikeThisToParse.title + "\n";
-          }
-          else{
-            parsedMoreLikeThisResults += moreLikeThisToParse.id + "\n";
-          }
-        }
-        
-        document.getElementById('MoreLikeThisByDocIdResults').innerHTML = parsedMoreLikeThisResults;
-        return parsedMoreLikeThisResults;
-      }
-    }
 
     function putJSON(path, id, success, error) {
       var xhr = new XMLHttpRequest();
@@ -274,23 +204,82 @@
       ));
     }
 
+    function manipulateResults() {
+      var rawMoreLikeThisResults = Orwell.getObservable('mltResults').content.response.docs;
+      // console.log(rawMoreLikeThisResults);
+      var parsedMoreLikeThisResults = ""
 
-    function loadJSON(path, success, error) {
-      var xhr = new XMLHttpRequest();
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE){
-          if (xhr.status === 200) {
-            if (success) 
-              success(JSON.parse(xhr.responseText));
-          } else {
-            if (error)
-              error(xhr);
+      for (var resultIndex in rawMoreLikeThisResults) {
+        var moreLikeThisToParse = rawMoreLikeThisResults[resultIndex];
+        var index = parseInt(resultIndex) + 1
+        if (moreLikeThisToParse.title != null) {
+          parsedMoreLikeThisResults += index.toString() + ": " + moreLikeThisToParse.title + "\n";
+        }
+        else{
+          parsedMoreLikeThisResults += moreLikeThisToParse.id + "\n";
+        }
+      }
+      // console.log(parsedMoreLikeThisResults);
+      return parsedMoreLikeThisResults;
+    }
+
+    /** 
+     * Get the moreLikethis recommendations from a query pipeline in Fusion. This particular method gets the results from 
+     * an observable that gets populated on page load.
+     * @param {object} doc       Doc of which the id is required to return the appropriate mlt results
+     * @return {list} moreLikeThisForDoc  List of "more like this" responses to the document in question
+     */
+    function getMoreLikeThisFromObservable(doc) {
+      var mltResultsObservable = Orwell.getObservable('mltResults');
+      console.log(mltResultsObservable.content);
+      var docs;
+      var moreLikeThisForDoc = [];
+
+      if (mltResultsObservable.content == null || mltResultsObservable.content == undefined) {
+        console.log("We have no more like This");
+        return moreLikeThisForDoc;
+      }
+
+      else if (mltResultsObservable.content != null) {
+        for (var item in mltResultsObservable.content) {
+          if (item == doc.id) {
+            docs = mltResultsObservable[item].docs;
+            break;
           }
         }
-      };
-      xhr.open("GET", path, true);
-      xhr.send();
+      }
+      if (docs != undefined) {
+        if (docs.length == 0) {
+          return "No Related Items Found!"
+        }
+        else {
+          for (var doc in docs){ 
+            moreLikeThisForDoc.push(docs[doc].title);
+          }
+        }
+      }
+      console.log(moreLikeThisForDoc);
+      return moreLikeThisForDoc;
     }
+
+    /**
+     * Get moreLikeThis recommendations from a direct query to fusion specifying the document
+     * id and necessary mlt. This particular method gets the 
+     * results by launching the mlt search for the particular doc in question and returning the results.
+     * @param {object} doc       Doc of which the id is required to launch the appropriate query 
+     * @return {list} mltResults List of "more Like This" responses to the document in question
+     */
+    function getMoreLikeThisByLaunchingQuery(doc) {
+      vm.overlay();
+      QueryDataService.getMoreLikeThisResults({q: "{!mlt qf=body}".concat(doc.id.toString()), wt:'json'}, false).then(displayResults); 
+
+      function displayResults(response){
+        var parsedMoreLikeThisResults = manipulateResults();
+        // console.log(parsedMoreLikeThisResults);
+        document.getElementById('MoreLikeThisByDocIdResults').innerHTML = parsedMoreLikeThisResults;
+      }
+    }
+
     /**
      * Get moreLikeThis recommendations from a query pipeline in fusion. This particular method gets the 
      * results by launching the mlt search for the particular doc in question and returning the results.
@@ -300,29 +289,14 @@
     function getMoreLikeThisByLaunchingQueryAgainstPipeline(doc){
       vm.overlay();
       putJSON('/api/apollo/query-pipelines/default_mlt/', doc.id, function(data) {
-        console.log(data);
-        QueryDataService.getMoreLikeThisForAllDocs({wt:'json'}).then(displayResults); 
+        // console.log(data);
+        QueryDataService.getMoreLikeThisResults({wt:'json'}, true).then(displayResults); 
         
         function displayResults(response){
-        var rawMoreLikeThisResults = Orwell.getObservable('mltResults2').content.response.docs;
-        console.log(rawMoreLikeThisResults);
-
-        var parsedMoreLikeThisResults = ""
-
-        for (var resultIndex in rawMoreLikeThisResults) {
-          var moreLikeThisToParse = rawMoreLikeThisResults[resultIndex];
-          var index = parseInt(resultIndex) + 1
-          if (moreLikeThisToParse.title != null) {
-            parsedMoreLikeThisResults += index.toString() + ": " + moreLikeThisToParse.title + "\n";
-          }
-          else{
-            parsedMoreLikeThisResults += moreLikeThisToParse.id + "\n";
-          }
+          var parsedMoreLikeThisResults = manipulateResults();
+          // console.log(parsedMoreLikeThisResults);
+          document.getElementById('MoreLikeThisResultsFromPipeline').innerHTML = parsedMoreLikeThisResults;
         }
-        
-        document.getElementById('MoreLikeThisOverallResults').innerHTML = parsedMoreLikeThisResults;
-        return parsedMoreLikeThisResults;
-      }
       }, function(xhr) {console.error(xhr)}); 
     }
   }

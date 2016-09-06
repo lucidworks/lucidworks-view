@@ -6,13 +6,13 @@
     <mlt ng-click="vm.getMoreLikeThisFromObservable(doc)"> Click Here To Find More Like This Document In A Different Way <mlt> -->
   
 
-    <a href='#' ng-click="vm.getMoreLikeThisByLaunchingQueryAgainstPipeline(doc)"> Click Here to Change the Query Pipeline </a>
+    <div href='#' ng-click="vm.getMoreLikeThisByLaunchingQueryAgainstPipeline(doc)" style="cursor:pointer"> Click Here to Change the Query Pipeline </div>
     <div id="overlay"> 
-      <pre id ="MoreLikeThisOverallResults" ng-click="vm.overlay()">
+      <pre id ="MoreLikeThisResultsFromPipeline" ng-click="vm.overlay()">
       </pre>
     </div>
 
-    <a href='#' ng-click="vm.getMoreLikeThisByLaunchingQuery(doc)"> Click Here to Find More Like This Document </a>
+    <div href='#' ng-click="vm.getMoreLikeThisByLaunchingQuery(doc)" style="cursor:pointer"> Click Here to Find More Like This Document </div>
     <div id="overlay"> 
       <pre id ="MoreLikeThisByDocIdResults" ng-click="vm.overlay()">
       </pre>

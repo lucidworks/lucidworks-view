@@ -33,10 +33,6 @@
         QueryDataService.getQueryResults(query);
       });
 
-      queryObservable.addObserver(function (query) {
-        QueryDataService.getMoreLikeThisForAllDocs(query);
-      });
-
       return {
         setQuery: setQuery,
         getQueryObservable: getQueryObservable,

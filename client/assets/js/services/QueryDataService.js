@@ -27,12 +27,11 @@
       'ngInject';
       var queryResultsObservable = Orwell.getObservable('queryResults');
       var mltResultsObservable = Orwell.getObservable('mltResults');
-      var mltResultsObservable2 = Orwell.getObservable('mltResults2');
       return {
         getQueryResults: getQueryResults,
         getProfileEndpoint: getProfileEndpoint,
         getPipelineEndpoint: getPipelineEndpoint,
-        getMoreLikeThisForAllDocs: getMoreLikeThisForAllDocs,
+        getMoreLikeThisResults: getMoreLikeThisResults,
         getMoreLikeThisForOneDoc: getMoreLikeThisForOneDoc,
       };
 
@@ -72,12 +71,18 @@
         return deferred.promise;
       }
 
-      function getMoreLikeThisForAllDocs(query, id) {
+      function getMoreLikeThisResults(query, pipeline) {
         var deferred = $q.defer();
 
         var queryString = QueryBuilder.objectToURLString(query);
-
-        var fullUrl = getMltQueryUrl(ConfigService.getIfQueryProfile()) + '?' + queryString;
+        var fullUrl; 
+        if (pipeline == true) {
+          fullUrl = getMltQueryUrl(ConfigService.getIfQueryProfile()) + '?' + queryString;
+        }
+        else {
+          console.log("We are doing this individually!");
+          fullUrl = getQueryUrl(ConfigService.getIfQueryProfile()) + '?' + queryString;
+        }
         console.log("Full MLT Query URL Is as Follows", fullUrl);
 
         $http
@@ -86,12 +91,12 @@
           .catch(failure);
 
         function success(response) {
-          mltResultsObservable2.setContent(response.data);
-          deferred.resolve(response.data.moreLikeThis);
+          mltResultsObservable.setContent(response.data);
+          deferred.resolve(response.data);
         }
 
         function failure(err) {
-          mltResultsObservable2.setContent({
+          mltResultsObservable.setContent({
             numFound: 0
           });
           deferred.reject(err.data);
@@ -113,12 +118,12 @@
           .catch(failure);
 
         function success(response) {
-          mltResultsObservable2.setContent(response.data);
+          mltResultsObservable.setContent(response.data);
           deferred.resolve(response.data);
         }
 
         function failure(err) {
-          mltResultsObservable2.setContent({
+          mltResultsObservable.setContent({
             numFound: 0
           });
           deferred.reject(err.data);
