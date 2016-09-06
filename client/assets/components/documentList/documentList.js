@@ -21,7 +21,7 @@
 
   }
 
-  function Controller($sce, $log, $anchorScroll, Orwell, QueryDataService) {
+  function Controller($sce, $log, $anchorScroll, Orwell, QueryDataService, ConfigService) {
     'ngInject';
     var vm = this;
     vm.docs = [];
@@ -152,7 +152,12 @@
       return _.findIndex(docs, doc);
     }
 
-
+    /**
+     * @param  String path      local filepath you want to change
+     * @param  String id        id you wish to query on
+     * @param  {object} success function you want to execute upon success of PUT
+     * @param  {object} failure function you want to execute upon failut
+    */
     function putJSON(path, id, success, error) {
       var xhr = new XMLHttpRequest();
       xhr.onreadystatechange = function() {
@@ -175,12 +180,12 @@
       };
       xhr.send(JSON.stringify(
           {
-            "id" : "default_mlt",
+            "id" : ConfigService.getRecommenderPipeline(),
             "stages" : [ {
               "type" : "MoreLikeThis",
               "id" : "62186129-876c-4a2e-9a08-7c34504ec7c3",
               "MoreLikeThisFields" : [ {
-                "field" : "body"
+                "field" : ConfigService.getRecommenderField(),
               } ],
               "useQueryParser" : true,
               "mindf" : 2,
@@ -204,6 +209,10 @@
       ));
     }
 
+    /*
+    * Manipulates the mlt results to make them more readable in the css
+    * @returns String parsedMoreLikeThisResults String to supply the html
+    */
     function manipulateResults() {
       var rawMoreLikeThisResults = Orwell.getObservable('mltResults').content.response.docs;
       // console.log(rawMoreLikeThisResults);

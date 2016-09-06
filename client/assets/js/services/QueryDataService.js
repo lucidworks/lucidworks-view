@@ -31,8 +31,7 @@
         getQueryResults: getQueryResults,
         getProfileEndpoint: getProfileEndpoint,
         getPipelineEndpoint: getPipelineEndpoint,
-        getMoreLikeThisResults: getMoreLikeThisResults,
-        getMoreLikeThisForOneDoc: getMoreLikeThisForOneDoc,
+        getMoreLikeThisResults: getMoreLikeThisResults
       };
 
       /**
@@ -71,6 +70,15 @@
         return deferred.promise;
       }
 
+      /**
+       * Make a query to the query profiles endpoint
+       * @param  {object} query  Should have all the query params, like
+       *                         For select?q=query&fq=blah you need to pass in an object
+       *                         {'q': 'query', 'fq': 'blah'}
+       * @param {boolean} object Boolean specifying whether to use the default mlt query pipeline
+       *                         or not. 
+       * @return {Promise}       Promise that resolve with a Fusion response coming from Solr
+       */
       function getMoreLikeThisResults(query, pipeline) {
         var deferred = $q.defer();
 
@@ -83,33 +91,6 @@
           console.log("We are doing this individually!");
           fullUrl = getQueryUrl(ConfigService.getIfQueryProfile()) + '?' + queryString;
         }
-        console.log("Full MLT Query URL Is as Follows", fullUrl);
-
-        $http
-          .get(fullUrl)
-          .then(success)
-          .catch(failure);
-
-        function success(response) {
-          mltResultsObservable.setContent(response.data);
-          deferred.resolve(response.data);
-        }
-
-        function failure(err) {
-          mltResultsObservable.setContent({
-            numFound: 0
-          });
-          deferred.reject(err.data);
-        }
-        return deferred.promise;
-      }
-
-      function getMoreLikeThisForOneDoc(query, id) {
-        var deferred = $q.defer();
-
-        var queryString = QueryBuilder.objectToURLString(query);
-
-        var fullUrl = getQueryUrl(ConfigService.getIfQueryProfile()) + '?' + queryString;
         console.log("Full MLT Query URL Is as Follows", fullUrl);
 
         $http
@@ -144,8 +125,15 @@
         return isProfiles ? profilesEndpoint : pipelinesEndpoint;
       }
 
+      /**
+       * Returns the appropriate base url for a more like this endpoint, namely the one
+       * containing the default_mlt pipeline
+       *
+       * @param  {Boolean} isProfiles Determines which endpoint type to return;
+       * @return {string}             The URL endpoint for the query without parameters.
+       */
       function getMltQueryUrl(){
-        var pipelinesEndpoint = getPipelineEndpoint(ConfigService.getMltPipeline(), 'select');
+        var pipelinesEndpoint = getPipelineEndpoint(ConfigService.getRecommenderPipeline(), 'select');
         return pipelinesEndpoint;
       }
 
