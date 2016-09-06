@@ -33,12 +33,17 @@
     vm.getDocPosition = getDocPosition;
     vm.getMoreLikeThisFromObservable = getMoreLikeThisFromObservable;
     vm.getMoreLikeThisByLaunchingQuery = getMoreLikeThisByLaunchingQuery;
-
-
+    vm.getMoreLikeThisByLaunchingQueryAgainstPipeline = getMoreLikeThisByLaunchingQueryAgainstPipeline;
+    vm.overlay = overlay;
 
     activate();
 
     ////////
+
+    function overlay() {
+      var el = document.getElementById("overlay");
+      el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
+    }
 
     function activate() {
       var resultsObservable = Orwell.getObservable('queryResults');
@@ -155,13 +160,14 @@
      */
     function getMoreLikeThisFromObservable(doc) {
       var mltResultsObservable = Orwell.getObservable('mltResults');
-      console.log("mltResultsObservable is populated with ", mltResultsObservable)
-      console.log("The doc is", doc);
       var docs;
-      var moreLikeThisForDoc = []; 
+      var moreLikeThisForDoc = [];
 
-      if (mltResultsObservable != null) {
-        console.log("We have More Like This Results, Lets Find the Right One");
+      if (mltResultsObservable.content == null || mltResultsObservable.content == undefined) {
+        return moreLikeThisForDoc;
+      }
+
+      else if (mltResultsObservable.content != null) {
         for (var item in mltResultsObservable.content) {
           if (item == doc.id) {
             docs = mltResultsObservable[item].docs;
@@ -183,21 +189,79 @@
     }
 
     /**
-     * Get moreLikeThis recommendations from a query pipeline in fusion. This particular method gets the 
+     * Get moreLikeThis recommendations from a direct query to fusion specifying the document
+     * id and necessary mlt. This particular method gets the 
      * results by launching the mlt search for the particular doc in question and returning the results.
      * @param {object} doc       Doc of which the id is required to launch the appropriate query 
      * @return {list} mltResults List of "more Like This" responses to the document in question
      */
     function getMoreLikeThisByLaunchingQuery(doc) {
+      vm.overlay();
       console.log("launching query based on doc ", vm.id);
       vm.id = doc.id;
-
-      QueryDataService.getMltQueryResults({q: "id:" + vm.id, wt: 'json'}).then(manipulate_mlt);
+      QueryDataService.getMoreLikeThisForOneDoc({q: "{!mlt qf=body}" + vm.id, wt:'json'}).then(manipulate_mlt); 
 
       function manipulate_mlt(response){
-        var mltResults = Orwell.getObservable('mltResults').content[vm.id].docs;
-        return mltResults;
+        var rawMoreLikeThisResults = Orwell.getObservable('mltResults').content.response.docs;
+        var parsedMoreLikeThisResults = ""
+
+        for (var resultIndex in rawMoreLikeThisResults) {
+          var moreLikeThisToParse = rawMoreLikeThisResults[resultIndex];
+          var index = parseInt(resultIndex) + 1
+          if (moreLikeThisToParse.title != null) {
+            parsedMoreLikeThisResults += index.toString() + ": " + moreLikeThisToParse.title + "\n";
+          }
+          else{
+            parsedMoreLikeThisResults += moreLikeThisToParse.id + "\n";
+          }
+        }
+        
+        console.log("The Results Are as follows", parsedMoreLikeThisResults);
+        document.getElementById('MoreLikeThisByDocIdResults').innerHTML = parsedMoreLikeThisResults;
+        return parsedMoreLikeThisResults;
       }
+    }
+
+    function loadJSON(path, success, error) {
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE){
+          if (xhr.status === 200) {
+            if (success) 
+              success(JSON.parse(xhr.responseText));
+          } else {
+            if (error)
+              error(xhr);
+          }
+        }
+      };
+      xhr.open("GET", path, true);
+      xhr.send();
+    }
+    /**
+     * Get moreLikeThis recommendations from a query pipeline in fusion. This particular method gets the 
+     * results by launching the mlt search for the particular doc in question and returning the results.
+     * @param {object} doc       Doc of which the id is required to launch the appropriate query 
+     * @return {list} mltResults List of "more Like This" responses to the document in question
+     */
+    function getMoreLikeThisByLaunchingQueryAgainstPipeline(doc){
+      // loadJSON('api/apollo/query-pipelines/default_mlt/', function(data) {console.log(data); }, function(xhr) {console.error(xhr)}); 
+
+      // var newName = 'John Smith';
+      // var xhr = new XMLHttpRequest();
+      // xhr.open('POST', 'api/apollo/query-pipelines/default_mlt');
+      // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      // xhr.onload = function() {
+      //   if (xhr.status === 200 && xhr.responseText !== newName){
+      //     alert('Something went wrong! Nemw is now' + xhr.responseText);
+      //   }
+      //   else if (xhr.status !== 200) {
+      //     alert ("Request failed. Returned wrong status");
+      //   }
+      // };
+      // xhr.send(encodeURI('name=' + newName));
+
+      
     }
   }
 })();

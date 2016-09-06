@@ -13,7 +13,7 @@
   function Config(OrwellProvider) {
     'ngInject';
     OrwellProvider.createObservable('queryResults', {});
-    OrwellProvider.createObservable('mltResults', {poop:"poop"});
+    OrwellProvider.createObservable('mltResults', {});
   }
 
   function QueryDataService() {
@@ -30,8 +30,8 @@
         getQueryResults: getQueryResults,
         getProfileEndpoint: getProfileEndpoint,
         getPipelineEndpoint: getPipelineEndpoint,
-        getMltQueryResults: getMltQueryResults,
-        getMltQueryUrl: getMltQueryUrl
+        getMoreLikeThisForAllDocs: getMoreLikeThisForAllDocs,
+        getMoreLikeThisForOneDoc: getMoreLikeThisForOneDoc,
       };
 
       /**
@@ -45,11 +45,8 @@
         var deferred = $q.defer();
 
         var queryString = QueryBuilder.objectToURLString(query);
-
-        console.log("In getqueryresults and trying to access mlt pipeline");
         var fullUrl = getQueryUrl(ConfigService.getIfQueryProfile()) + '?' + queryString;
-        console.log(fullUrl);
-
+        
         $http
           .get(fullUrl)
           .then(success)
@@ -72,13 +69,12 @@
         return deferred.promise;
       }
 
-
-      function getMltQueryResults(query, id) {
+      function getMoreLikeThisForAllDocs(query, id) {
         var deferred = $q.defer();
 
         var queryString = QueryBuilder.objectToURLString(query);
 
-        var fullUrl = getMltQueryUrl() + '?' + queryString;
+        var fullUrl = getQueryUrl(ConfigService.getIfQueryProfile()) + '?' + queryString;
         console.log("Full MLT Query URL Is as Follows", fullUrl);
 
         $http
@@ -89,6 +85,33 @@
         function success(response) {
           mltResultsObservable.setContent(response.data.moreLikeThis);
           deferred.resolve(response.data.moreLikeThis);
+        }
+
+        function failure(err) {
+          mltResultsObservable.setContent({
+            numFound: 0
+          });
+          deferred.reject(err.data);
+        }
+        return deferred.promise;
+      }
+
+      function getMoreLikeThisForOneDoc(query, id) {
+        var deferred = $q.defer();
+
+        var queryString = QueryBuilder.objectToURLString(query);
+
+        var fullUrl = getQueryUrl(ConfigService.getIfQueryProfile()) + '?' + queryString;
+        console.log("Full MLT Query URL Is as Follows", fullUrl);
+
+        $http
+          .get(fullUrl)
+          .then(success)
+          .catch(failure);
+
+        function success(response) {
+          mltResultsObservable.setContent(response.data);
+          deferred.resolve(response.data);
         }
 
         function failure(err) {

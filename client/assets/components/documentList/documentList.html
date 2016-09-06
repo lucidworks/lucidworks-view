@@ -3,9 +3,15 @@
 <!--     <span data-tooltip aria-haspop=true class="has-tip" title="{{vm.getMoreLikeThisFromObservable}}" style="cursor:pointer"> Related Items </span> -->
     <!-- <document-example ng-switch-when="string_matching_data_connector" doc="doc" highlight="vm.highlighting"></document-example> -->
     
-    <mlt2 ng-click = "vm.getMoreLikeThisFromObservable(doc)"> click to find! </mlt2>
-    <mlt ng-click="vm.getMoreLikeThisByLaunchingQuery(doc)"> click here to launch!</mlt>
-    
+    <span data-tooltip aria-haspopup = "true" class="has-tip[tip-top tip-bottom tip-left tip-right] [radius round]" title={{vm.getMoreLikeThisFromObservable(doc)}} style="cursor:pointer;"> click to find!  </span>
+  
+    <a href='#' ng-click="vm.getMoreLikeThisByLaunchingQuery(doc)"> Click Here to Find More Like This Document </a>
+
+    <div id="overlay"> 
+      <pre id ="MoreLikeThisByDocIdResults" ng-click="vm.overlay()">
+      </pre>
+    </div>
+
     <document-file ng-switch-when="lucid.anda/file" doc="doc" position="vm.getDocPosition(doc,vm.docs)" highlight="vm.highlighting"></document-file>
     <document-jira ng-switch-when="lucid.anda/jira" doc="doc" position="vm.getDocPosition(doc,vm.docs)" highlight="vm.highlighting"></document-jira>
     <document-slack ng-switch-when="lucid.slack/slack" doc="doc" position="vm.getDocPosition(doc,vm.docs)" highlight="vm.highlighting"></document-slack>

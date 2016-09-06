@@ -77,6 +77,7 @@
         config: appConfig,
         getFusionUrl: getFusionUrl,
         getQueryProfile: getQueryProfile,
+        getMltPipeline: getMltPipeline, 
         getCollectionName: getCollectionName,
         getQueryPipeline: getQueryPipeline,
         getLoginCredentials: getLoginCredentials,

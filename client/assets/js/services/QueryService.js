@@ -34,7 +34,7 @@
       });
 
       queryObservable.addObserver(function (query) {
-        QueryDataService.getMltQueryResults(query);
+        QueryDataService.getMoreLikeThisForAllDocs(query);
       });
 
       return {
