@@ -298,9 +298,10 @@
     function getMoreLikeThisByLaunchingQueryAgainstPipeline(doc){
       vm.overlay();
       console.log("The Id is", doc.id);
-      console.log("The Field we want to Id on is", ConfigService.getRecommenderIdField);
+      var idField = ConfigService.getRecommenderIdField();
+      console.log("The Field we want to Id on is", idField);
 
-      QueryDataService.getMoreLikeThisResults({q:ConfigService.getRecommenderIdField + doc.id, wt:'json'}, true).then(displayResults); 
+      QueryDataService.getMoreLikeThisResults({q: idField + "=" + doc.id, wt:'json'}, true).then(displayResults); 
         
       function displayResults(response){
         var parsedMoreLikeThisResults = manipulateResults();
