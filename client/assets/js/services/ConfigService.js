@@ -79,6 +79,7 @@
         getQueryProfile: getQueryProfile,
         getRecommenderPipeline: getRecommenderPipeline, 
         getRecommenderField: getRecommenderField,
+        getRecommenderIdField: getRecommenderIdField,
         getCollectionName: getCollectionName,
         getQueryPipeline: getQueryPipeline,
         getLoginCredentials: getLoginCredentials,
@@ -131,6 +132,10 @@
 
     function getRecommenderField(){
       return appConfig.recommender_field;
+    }
+
+    function getRecommenderIdField(){
+      return appConfig.recommender_id_field;
     }
 
     function getQueryProfile() {
