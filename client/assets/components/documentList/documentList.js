@@ -205,7 +205,7 @@
               "label" : "solr-query"
             } ],
             "properties" : { }
-        }
+          }
       ));
     }
 
@@ -297,16 +297,26 @@
      */
     function getMoreLikeThisByLaunchingQueryAgainstPipeline(doc){
       vm.overlay();
-      putJSON('/api/apollo/query-pipelines/default_mlt/', doc.id, function(data) {
-        // console.log(data);
-        QueryDataService.getMoreLikeThisResults({wt:'json'}, true).then(displayResults); 
+      console.log("The Id is", doc.id);
+
+      QueryDataService.getMoreLikeThisResults({q:"id=" + doc.id, wt:'json'}, true).then(displayResults); 
         
-        function displayResults(response){
-          var parsedMoreLikeThisResults = manipulateResults();
-          // console.log(parsedMoreLikeThisResults);
-          document.getElementById('MoreLikeThisResultsFromPipeline').innerHTML = parsedMoreLikeThisResults;
-        }
-      }, function(xhr) {console.error(xhr)}); 
+      function displayResults(response){
+        var parsedMoreLikeThisResults = manipulateResults();
+        // console.log(parsedMoreLikeThisResults);
+        document.getElementById('MoreLikeThisResultsFromPipeline').innerHTML = parsedMoreLikeThisResults;
+      }
+
+      // putJSON('/api/apollo/query-pipelines/default_mlt/', doc.id, function(data) {
+      //   // console.log(data);
+      //   QueryDataService.getMoreLikeThisResults({wt:'json'}, true).then(displayResults); 
+        
+      //   function displayResults(response){
+      //     var parsedMoreLikeThisResults = manipulateResults();
+      //     // console.log(parsedMoreLikeThisResults);
+      //     document.getElementById('MoreLikeThisResultsFromPipeline').innerHTML = parsedMoreLikeThisResults;
+      //   }
+      // }, function(xhr) {console.error(xhr)}); 
     }
   }
 })();
