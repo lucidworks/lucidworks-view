@@ -152,63 +152,6 @@
       return _.findIndex(docs, doc);
     }
 
-    /**
-     * @param  String path      local filepath you want to change
-     * @param  String id        id you wish to query on
-     * @param  {object} success function you want to execute upon success of PUT
-     * @param  {object} failure function you want to execute upon failut
-    */
-    function putJSON(path, id, success, error) {
-      var xhr = new XMLHttpRequest();
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE){
-          if (xhr.status === 200) {
-            if (success) 
-              success(JSON.parse(xhr.responseText));
-          } else {
-            if (error)
-              error(xhr);
-          }
-        }
-      };
-      xhr.open('PUT', path);
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.onload = function() {
-        if (xhr.status === 200) {
-          var userInfo = JSON.parse(xhr.responseText);
-        }
-      };
-      xhr.send(JSON.stringify(
-          {
-            "id" : ConfigService.getRecommenderPipeline(),
-            "stages" : [ {
-              "type" : "MoreLikeThis",
-              "id" : "62186129-876c-4a2e-9a08-7c34504ec7c3",
-              "MoreLikeThisFields" : [ {
-                "field" : ConfigService.getRecommenderField(),
-              } ],
-              "useQueryParser" : true,
-              "mindf" : 2,
-              "maxdf" : 100000,
-              "docId" : id,
-              "type" : "MoreLikeThis",
-              "skip" : false,
-              "label" : "MoreLikeThis"
-            }, {
-              "type" : "solr-query",
-              "id" : "91817c00-fb19-4348-912a-35be342938fc",
-              "allowedRequestHandlers" : [ ],
-              "httpMethod" : "POST",
-              "allowFederatedSearch" : false,
-              "type" : "solr-query",
-              "skip" : false,
-              "label" : "solr-query"
-            } ],
-            "properties" : { }
-          }
-      ));
-    }
-
     /*
     * Manipulates the mlt results to make them more readable in the css
     * @returns String parsedMoreLikeThisResults String to supply the html
@@ -299,26 +242,21 @@
       vm.overlay();
       console.log("The Id is", doc.id);
       var idField = ConfigService.getRecommenderIdField();
+      
       console.log("The Field we want to Id on is", idField);
-
-      QueryDataService.getMoreLikeThisResults({q: idField + "=" + doc.id, wt:'json'}, true).then(displayResults); 
+      if (idField == null) {
+        console.log("We don't have an id field!");
+        QueryDataService.getMoreLikeThisResults({q: doc.id, wt:'json'}, true).then(displayResults); 
+      }
+      else {
+        console.log("We have an id field!");
+        QueryDataService.getMoreLikeThisResults({q: idField + "=" + doc.id, wt:'json'}, true).then(displayResults);   
+      }
         
       function displayResults(response){
         var parsedMoreLikeThisResults = manipulateResults();
-        // console.log(parsedMoreLikeThisResults);
         document.getElementById('MoreLikeThisResultsFromPipeline').innerHTML = parsedMoreLikeThisResults;
-      }
-
-      // putJSON('/api/apollo/query-pipelines/default_mlt/', doc.id, function(data) {
-      //   // console.log(data);
-      //   QueryDataService.getMoreLikeThisResults({wt:'json'}, true).then(displayResults); 
-        
-      //   function displayResults(response){
-      //     var parsedMoreLikeThisResults = manipulateResults();
-      //     // console.log(parsedMoreLikeThisResults);
-      //     document.getElementById('MoreLikeThisResultsFromPipeline').innerHTML = parsedMoreLikeThisResults;
-      //   }
-      // }, function(xhr) {console.error(xhr)}); 
+      } 
     }
   }
 })();
