@@ -32,8 +32,7 @@
     vm.showGroupedResults = {};
     vm.getDocPosition = getDocPosition;
     vm.getMoreLikeThisFromObservable = getMoreLikeThisFromObservable;
-    vm.getMoreLikeThisByLaunchingQuery = getMoreLikeThisByLaunchingQuery;
-    vm.getMoreLikeThisByLaunchingQueryAgainstPipeline = getMoreLikeThisByLaunchingQueryAgainstPipeline;
+    vm.getMoreLikeThis = getMoreLikeThis;
     vm.overlay = overlay;
 
     activate();
@@ -215,30 +214,12 @@
     }
 
     /**
-     * Get moreLikeThis recommendations from a direct query to fusion specifying the document
-     * id and necessary mlt. This particular method gets the 
-     * results by launching the mlt search for the particular doc in question and returning the results.
-     * @param {object} doc       Doc of which the id is required to launch the appropriate query 
-     * @return {list} mltResults List of "more Like This" responses to the document in question
-     */
-    function getMoreLikeThisByLaunchingQuery(doc) {
-      vm.overlay();
-      QueryDataService.getMoreLikeThisResults({q: "{!mlt qf=body}".concat(doc.id.toString()), wt:'json'}, false).then(displayResults); 
-
-      function displayResults(response){
-        var parsedMoreLikeThisResults = manipulateResults();
-        // console.log(parsedMoreLikeThisResults);
-        document.getElementById('MoreLikeThisByDocIdResults').innerHTML = parsedMoreLikeThisResults;
-      }
-    }
-
-    /**
      * Get moreLikeThis recommendations from a query pipeline in fusion. This particular method gets the 
      * results by launching the mlt search for the particular doc in question and returning the results.
      * @param {object} doc       Doc of which the id is required to launch the appropriate query 
      * @return {list} mltResults List of "more Like This" responses to the document in question
      */
-    function getMoreLikeThisByLaunchingQueryAgainstPipeline(doc){
+    function getMoreLikeThis(doc){
       vm.overlay();
       console.log("The Id is", doc.id);
       var idField = ConfigService.getRecommenderIdField();
@@ -246,13 +227,19 @@
       console.log("The Field we want to Id on is", idField);
       if (idField == null) {
         console.log("We don't have an id field!");
-        QueryDataService.getMoreLikeThisResults({q: doc.id, wt:'json'}, true).then(displayResults); 
+        idField = "id"; 
       }
       else {
-        console.log("We have an id field!");
-        QueryDataService.getMoreLikeThisResults({q: idField + "=" + doc.id, wt:'json'}, true).then(displayResults);   
+        console.log("We have an id field!", idField);  
       }
-        
+      
+      var obj = {};
+      obj[idField] = doc.id;
+      obj['wt'] = 'json';
+
+      console.log(obj);
+      QueryDataService.getMoreLikeThisResults(obj, true).then(displayResults);
+      
       function displayResults(response){
         var parsedMoreLikeThisResults = manipulateResults();
         document.getElementById('MoreLikeThisResultsFromPipeline').innerHTML = parsedMoreLikeThisResults;

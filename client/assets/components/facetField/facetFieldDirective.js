@@ -6,7 +6,6 @@
     .directive('facetField', facetField);
 
   function facetField() {
-    console.log("In the facetfield constructor");
     'ngInject';
     return {
       restrict: 'EA',
