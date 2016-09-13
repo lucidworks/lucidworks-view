@@ -46,7 +46,6 @@
 
         var queryString = QueryBuilder.objectToURLString(query);
         var fullUrl = getQueryUrl(ConfigService.getIfQueryProfile()) + '?' + queryString;
-        console.log("Full Url in the getQueryResults Portion", fullUrl);
 
         $http
           .get(fullUrl)
@@ -54,7 +53,6 @@
           .catch(failure);
 
         function success(response) {
-          console.log(response);
           // Set the content to populate the rest of the ui.
           queryResultsObservable.setContent(response.data);
           deferred.resolve(response.data);
@@ -88,10 +86,8 @@
           fullUrl = getMltQueryUrl(ConfigService.getIfQueryProfile()) + '?' + queryString;
         }
         else {
-          console.log("We are doing this individually!");
           fullUrl = getQueryUrl(ConfigService.getIfQueryProfile()) + '?' + queryString;
         }
-        console.log("Full MLT Query URL Is as Follows", fullUrl);
 
         $http
           .get(fullUrl)

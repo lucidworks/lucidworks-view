@@ -156,22 +156,40 @@
     * @returns String parsedMoreLikeThisResults String to supply the html
     */
     function manipulateResults() {
-      var rawMoreLikeThisResults = Orwell.getObservable('mltResults').content.response.docs;
-      // console.log(rawMoreLikeThisResults);
-      var parsedMoreLikeThisResults = ""
+      var parsedMoreLikeThisResults = "";
+      var rawMoreLikeThisResults; 
 
-      for (var resultIndex in rawMoreLikeThisResults) {
-        var moreLikeThisToParse = rawMoreLikeThisResults[resultIndex];
-        var index = parseInt(resultIndex) + 1
-        if (moreLikeThisToParse.title != null) {
-          parsedMoreLikeThisResults += index.toString() + ": " + moreLikeThisToParse.title + "\n";
+      try {
+        rawMoreLikeThisResults = Orwell.getObservable('mltResults').content.response.docs;
+      }
+      catch (err) {
+        $log.debug(err);
+        if (error.name === 'TypeError'){
+          return "There was an Error querying Fusion. Check your defaults" ;
         }
-        else{
-          parsedMoreLikeThisResults += moreLikeThisToParse.id + "\n";
+        else {
+          return "Something went wrong!";
         }
       }
-      // console.log(parsedMoreLikeThisResults);
-      return parsedMoreLikeThisResults;
+      // If there are no results this means something about the parameters was off 
+      if (rawMoreLikeThisResults.length == 0) {
+        return "There are no Related Items that fit the provided parameters. Try changing some of the parameters in your query pipeline";
+      }
+
+      // Otherwise we can go ahead and return what we intended 
+      else {
+        for (var resultIndex in rawMoreLikeThisResults) {
+          var moreLikeThisToParse = rawMoreLikeThisResults[resultIndex];
+          var index = parseInt(resultIndex) + 1
+          if (moreLikeThisToParse.title != null) {
+            parsedMoreLikeThisResults += index.toString() + ": " + moreLikeThisToParse.title + "\n";
+          }
+          else{
+            parsedMoreLikeThisResults += moreLikeThisToParse.id + "\n";
+          }
+        }
+        return parsedMoreLikeThisResults;
+      }     
     }
 
     /** 
@@ -182,12 +200,11 @@
      */
     function getMoreLikeThisFromObservable(doc) {
       var mltResultsObservable = Orwell.getObservable('mltResults');
-      console.log(mltResultsObservable.content);
       var docs;
       var moreLikeThisForDoc = [];
 
       if (mltResultsObservable.content == null || mltResultsObservable.content == undefined) {
-        console.log("We have no more like This");
+        $log.debug("We have no more like This");
         return moreLikeThisForDoc;
       }
 
@@ -209,7 +226,7 @@
           }
         }
       }
-      console.log(moreLikeThisForDoc);
+      $log.debug(moreLikeThisForDoc);
       return moreLikeThisForDoc;
     }
 
@@ -221,27 +238,28 @@
      */
     function getMoreLikeThis(doc){
       vm.overlay();
-      console.log("The Id is", doc.id);
       var idField = ConfigService.getRecommenderIdField();
-      
-      console.log("The Field we want to Id on is", idField);
       if (idField == null) {
-        console.log("We don't have an id field!");
+        $log.debug("We don't have an id field! Setting it to id");
         idField = "id"; 
       }
-      else {
-        console.log("We have an id field!", idField);  
-      }
-      
+    
       var obj = {};
       obj[idField] = doc.id;
       obj['wt'] = 'json';
 
-      console.log(obj);
-      QueryDataService.getMoreLikeThisResults(obj, true).then(displayResults);
+      // Clear the innerhtml to prevent a split second confusion
+      document.getElementById('MoreLikeThisResultsFromPipeline').innerHTML = "";
+      QueryDataService.getMoreLikeThisResults(obj, true).then(displayResults, solrError);
       
+      function solrError(response) {
+        $log.debug(response);
+        document.getElementById('MoreLikeThisResultsFromPipeline').innerHTML = response.details;
+      }
+
       function displayResults(response){
         var parsedMoreLikeThisResults = manipulateResults();
+        $log.debug("The results are " + parsedMoreLikeThisResults);
         document.getElementById('MoreLikeThisResultsFromPipeline').innerHTML = parsedMoreLikeThisResults;
       } 
     }

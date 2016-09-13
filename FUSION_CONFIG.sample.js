@@ -64,7 +64,7 @@ appConfig = { //eslint-disable-line
   use_query_profile: true, // Force use of query-profile
 
   // The name of the recommender pipeline you want to use
-  recommender_pipeline_id: 'default_mlt',
+  recommender_pipeline_id: 'related_items',
 
   // The field you want to recommend on 
   recommender_field: 'body',
