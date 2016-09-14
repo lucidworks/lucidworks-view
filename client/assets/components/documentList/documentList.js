@@ -164,10 +164,12 @@
       }
       catch (err) {
         $log.debug(err);
-        if (error.name === 'TypeError'){
+        if (err.name === 'TypeError'){
+          $log.error(err); 
           return "There was an Error querying Fusion. Check your defaults" ;
         }
         else {
+          $log.error(err);
           return "Something went wrong!";
         }
       }
@@ -253,7 +255,7 @@
       QueryDataService.getMoreLikeThisResults(obj, true).then(displayResults, solrError);
       
       function solrError(response) {
-        $log.debug(response);
+        $log.error(response);
         document.getElementById('MoreLikeThisResultsFromPipeline').innerHTML = response.details;
       }
 
