@@ -8,7 +8,10 @@
 
 **Bug Fixes**
 * Only show pagination arrows when pagination is possible
-* Updated ESLint to most recent version
+
+**Package Updates**
+* Updated ESLint to version 3.3.1.
+
 
 ## 1.3.0 - Pikachu's Invisible Tiara - August 5, 2016
 **New Features**
