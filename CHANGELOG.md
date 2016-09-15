@@ -2,9 +2,9 @@
 
 ## 1.4.0 - Zenobia's Topaz Tiara
 **New Features**
-* Added support for date range facets
+* Add support for date range facets types
 * Add support for simple grouped results
-* New loading state for range facets to prevents multiple selections
+* New loading state for range facets to prevent multiple and invalid selections while page is loading
 
 **Bug Fixes**
 * Only show pagination arrows when pagination is possible
