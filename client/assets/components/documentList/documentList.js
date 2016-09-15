@@ -95,14 +95,20 @@
 
     function parseGrouping(results){
       _.each(results, function(item){
-        _.each(item.groups, function(group){
-          if(_.has(group, 'groupValue') && group.groupValue !== null){
-            vm.showGroupedResults[group.groupValue] = false;
-          }
-          else{
-            vm.showGroupedResults['noGroupedValue'] = true;
-          };
-        });
+        if (_.has(item, 'groups')){
+          _.each(item.groups, function(group){
+            if(_.has(group, 'groupValue') && group.groupValue !== null){
+              vm.showGroupedResults[group.groupValue] = false;
+            }
+            else{
+              vm.showGroupedResults['noGroupedValue'] = true;
+            };
+          });
+        }
+        else{
+          vm.groupedDocs = item.doclist.docs;
+          vm.showGroupedResults['simpleGrouped'] = true;
+        }
       });
     }
 
