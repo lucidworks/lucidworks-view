@@ -1,17 +1,16 @@
 # CHANGELOG
 
-## 1.4.0 - Zenobia's Topaz Tiara - September 19th, 2016
+## 1.4.0 - Zenobia's Topaz Tiara
 **New Features**
 * Added support for date range facets
-* Improved error messaging
-* Updated ESLint to most recent version
 * Add support for simple grouped results
+* New loading state for range facets to prevents multiple selections
 
 **Bug Fixes**
-* New loading state for range facets to prevents multiple selections
 * Only show pagination arrows when pagination is possible
+* Updated ESLint to most recent version
 
-## 1.3.0 - Pikachu's Invisible Tiara
+## 1.3.0 - Pikachu's Invisible Tiara - August 5, 2016
 **New Features**
 * Added a Windows packaged build, you can now run View on Windows
 * Improved performance by minifying builds by default and turning off page change animations
