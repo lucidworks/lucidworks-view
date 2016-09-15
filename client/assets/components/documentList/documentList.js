@@ -82,12 +82,8 @@
         docs = data.response.docs;
       }
       else if(isGrouped(data)){
-        console.log('grouped resutls')
         vm.groupedResults = data.grouped;
         parseGrouping(vm.groupedResults);
-      }
-      else{
-        console.log('what are my grouped results???')
       }
       return docs;
     }
@@ -99,11 +95,8 @@
 
     function parseGrouping(results){
       _.each(results, function(item){
-        console.log(item, 'item');
         if (_.has(item, 'groups')){
-          console.log('hllasdkfsldfj not this case');
           _.each(item.groups, function(group){
-            console.log('what are the grouped results???')
             if(_.has(group, 'groupValue') && group.groupValue !== null){
               vm.showGroupedResults[group.groupValue] = false;
             }
@@ -115,9 +108,7 @@
         else{
           vm.groupedDocs = item.doclist.docs;
           vm.showGroupedResults['simpleGrouped'] = true;
-
         }
-
       });
     }
 
