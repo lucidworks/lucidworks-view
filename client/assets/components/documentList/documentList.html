@@ -1,11 +1,17 @@
 <div id="documentList">
   <div ng-repeat="doc in vm.docs" ng-switch="::vm.getDocType(doc)">
 
-    <div href='#' ng-click="vm.getMoreLikeThis(doc)" style="cursor:pointer"> Show Related Items </div>
-    <div id="overlay"> 
+    <a href='#' ng-click="vm.getMoreLikeThis(doc); showItems = ! showItems"> Related Items </a>
+    <div ng-show="doc.id === vm.docId">
+      <div class ="moreLikeThisText" ng-show="showItems"> 
+        <div ng-repeat="test in vm.test" >{{test.title}}</div>
+      </div>
+    </div>
+<!--     <div id="overlay"> 
       <pre id ="MoreLikeThisResultsFromPipeline" ng-click="vm.overlay()">
       </pre>
-    </div>
+   
+    </div> -->
 
     <document-file ng-switch-when="lucid.anda/file" doc="doc" position="vm.getDocPosition(doc,vm.docs)" highlight="vm.highlighting"></document-file>
     <document-jira ng-switch-when="lucid.anda/jira" doc="doc" position="vm.getDocPosition(doc,vm.docs)" highlight="vm.highlighting"></document-jira>

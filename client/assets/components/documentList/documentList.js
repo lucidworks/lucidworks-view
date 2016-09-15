@@ -180,6 +180,7 @@
 
       // Otherwise we can go ahead and return what we intended 
       else {
+        vm.test = rawMoreLikeThisResults;
         for (var resultIndex in rawMoreLikeThisResults) {
           var moreLikeThisToParse = rawMoreLikeThisResults[resultIndex];
           var index = parseInt(resultIndex) + 1
@@ -239,7 +240,8 @@
      * @return {list} mltResults List of "more Like This" responses to the document in question
      */
     function getMoreLikeThis(doc){
-      vm.overlay();
+      // vm.overlay();
+      vm.docId = doc.id;
       var idField = ConfigService.getRecommenderIdField();
       if (idField == null) {
         $log.debug("We don't have an id field! Setting it to id");
@@ -251,18 +253,19 @@
       obj['wt'] = 'json';
 
       // Clear the innerhtml to prevent a split second confusion
-      document.getElementById('MoreLikeThisResultsFromPipeline').innerHTML = "";
+      // document.getElementById('MoreLikeThisResultsFromPipeline').innerHTML = "";
       QueryDataService.getMoreLikeThisResults(obj, true).then(displayResults, solrError);
       
       function solrError(response) {
         $log.error(response);
-        document.getElementById('MoreLikeThisResultsFromPipeline').innerHTML = response.details;
+        // document.getElementById('MoreLikeThisResultsFromPipeline').innerHTML = response.details;
       }
 
       function displayResults(response){
+        // console.log(response.response.docs);
         var parsedMoreLikeThisResults = manipulateResults();
         $log.debug("The results are " + parsedMoreLikeThisResults);
-        document.getElementById('MoreLikeThisResultsFromPipeline').innerHTML = parsedMoreLikeThisResults;
+        // document.getElementById('MoreLikeThisResultsFromPipeline').innerHTML = parsedMoreLikeThisResults;
       } 
     }
   }
