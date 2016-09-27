@@ -251,7 +251,8 @@
     .module('lucidworksView.controllers.rules', [
         'lucidworksView.services.rules',
         'lucidworksView.services.config',
-        'lucidworksView.services.auth'
+        'lucidworksView.services.auth',
+        'ngTagsInput'
     ])
     .controller('rulesController', ['$scope', '$http', '$timeout', 'RulesService', 'ConfigService', 'AuthService',
       function ($scope, $http, $timeout, rulesService, ConfigService, AuthService) {
@@ -260,6 +261,7 @@
         $scope.types = rulesConfig.types;
         $scope.policyList = rulesConfig.set_params.policies;
         $scope.productList = rulesConfig.documentFields;
+        $scope.predefinedTags = rulesConfig.tags;
 
         function pageInit() {
           moment().calendar();
@@ -280,16 +282,6 @@
               setModalMaxHeight($('.modal.in'));
             }
           });
-
-          $('.triggerTags').tagsinput({
-            tagClass: "label label-default",
-            typeaheadjs: {
-              source: rulesConfig.tags
-            },
-            freeInput: !rulesConfig.tags
-          });
-          console.log("ConfigService.config.rules.tags = " + rulesConfig.tags);
-          console.log("ConfigService.config.rules.tags = " + !rulesConfig.tags);
 
           $('.disabledControl').prop('disabled', true);
 
@@ -354,7 +346,6 @@
 
         $scope.checkSession = function () {
           var res = AuthService.getSession();
-          console.log("AuthService.setSession(): ", res);
         };
 
         $scope.addRule = function () {
@@ -411,9 +402,8 @@
             }
           }
 
-          var triggerTags = $('.addTriggerTags')[0];
-          if (triggerTags && triggerTags.value) {
-            rule.tags = triggerTags.value.split(',');
+          if (rule.tags) {
+            rule.tags = _.map(rule.tags, 'text');
           }
 
           if ($scope.currentRule.ruleCategoryType[0]) {
@@ -530,26 +520,20 @@
               var rule = $scope.rules[findIndexById(ruleArray[i].value)];
               if (remove) {
                 if (rule.tags) {
-                  var index = rule.tags.indexOf(tag);
-                  if (index > -1) {
-                    rule.tags.splice(index, 1);
-                  } else {
-                    console.log("error:index for tag '" + tag + "' not found");
-                  }
+                  _.remove(rule.tags, function(tagO) {
+                    return tagO && tagO.text === tag;
+                  });
                 }
               } else {
                 if (!rule.tags) {
                   rule.tags = [];
                 }
-                rule.tags.push(tag);
+
+                if (!_.find(rule.tags, function (t) { return t.text === tag })) {
+                  rule.tags.push({text: tag});
+                }
               }
 
-              var tagsInput = $('tr[data-ruleId="' + rule.id + '"] .triggerTags');
-              var tempTags = rule.tags;
-              tagsInput.tagsinput('removeAll');
-              if (tempTags && tempTags.length > 0) {
-                tagsInput.tagsinput('add', tempTags.join(","));
-              }
               if (isNewTag) {
                 $scope.facets.tags.push([tag, 1]);
               }
@@ -569,7 +553,8 @@
             bulkActions.removeAttr('disabled');
             bulkDropdown.css('visibility', 'visible');
           }
-          $('.triggerTags').tagsinput({tagClass: "label label-default"});
+          // TODO enable tags inputs
+          //$('.triggerTags').tagsinput({tagClass: "label label-default"});
           $('.datepicker').datetimepicker({format: "YYYY-MM-DDTHH:mm"});
 
           return checkedCount;
@@ -614,10 +599,10 @@
             }
           }
 
-          var ruleTriggerTags = $('tr[data-ruleId="' + rule.id + '"] .triggerTags');
-          if (ruleTriggerTags.length != 0) {
-            rule.tags = ruleTriggerTags[0].value.split(',');
+          if (rule.tags) {
+            rule.tags = _.map(rule.tags, 'text');
           }
+
           if (rule.tags && rule.tags[0] == "" || rule.tags == "") {
             delete rule.tags;
           }
@@ -699,6 +684,12 @@
             docs.forEach(function (item, i) {
               if (item && !item.ruleName) {
                 item.ruleName = item.id;
+              }
+
+              if (item && item.tags) {
+                item.tags = _.map(item.tags, function (tag) {
+                  return {text: tag};
+                })
               }
 
               var rulesSub = {};

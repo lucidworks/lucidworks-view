@@ -377,7 +377,10 @@ controller: rulesController as rc
                       </div>
                       <div class="form-group" ng-if="rule.tags">
                         <label class="small text-muted text-uppercase">Tags</label>
-                        <input type="text" class="form-control disabledControl triggerTags" aria-describedby="triggerTags"  placeholder='Enter tags' ng-model="rule.tags"/>
+                        <tags-input ng-model="rule.tags" remove-tag-symbol="X" add-from-autocomplete-only="{{predefinedTags && predefinedTags.length > 0}}">
+                          <auto-complete source="predefinedTags" load-on-down-arrow="true" load-on-empty="true" min-length="1"></auto-complete>
+                        </tags-input>
+                        <!--<input type="text" class="form-control disabledControl triggerTags" aria-describedby="triggerTags"  placeholder='Enter tags' ng-model="rule.tags"/>-->
                         <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="rule.tags = ''"></i></a>
                       </div>
                     </fieldset>
@@ -540,7 +543,10 @@ controller: rulesController as rc
                       </div>
                       <div class="form-group" ng-if="currentRule.tagsFlag">
                         <label class="small text-muted text-uppercase">Tags</label>
-                        <input type="text" class="form-control triggerTags addTriggerTags" aria-describedby="triggerTags"  placeholder='Enter tags' ng-model="currentRule.ruleTags"/>
+                        <tags-input ng-model="currentRule.ruleTags" remove-tag-symbol="X" add-from-autocomplete-only="{{predefinedTags && predefinedTags.length > 0}}">
+                          <auto-complete source="predefinedTags" load-on-down-arrow="true" load-on-empty="true" min-length="1"></auto-complete>
+                        </tags-input>
+
                         <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="currentRule.tagsFlag = false; currentRule.ruleTags = '';"></i></a>
                       </div>
                     </fieldset>

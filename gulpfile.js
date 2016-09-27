@@ -56,6 +56,7 @@ global.paths = {
     '!bower_components/foundation-apps/js/angular/app.js',
     'bower_components/ng-orwell/Orwell.js',
     'bower_components/humanize/humanize.js',
+    'bower_components/ng-tags-input/ng-tags-input.js',
     'bower_components/angularjs-humanize/src/angular-humanize.js'
   ],
   // These files are for your app's JavaScript

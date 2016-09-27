@@ -18,10 +18,6 @@ table .col-xs-5, table .col-xs-6{
   display: inline-block;
   width: 45%;
 }
-.addTriggerKeywords, .addTriggerTags{
-  display: inline-block;
-  width: 92%;
-}
 input.addTriggerCategory{
   margin-left: 2px;
 }
@@ -100,4 +96,61 @@ div.table-footer .btn.btn-sm.btn-link.text-muted{
 
 .modal.add-rule {
   max-width: 100%;
+}
+
+tags-input .tags {
+  border: none;
+  box-shadow: none;
+}
+
+tags-input .tags.focused {
+  box-shadow: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  /*border-bottom: 1px solid blue;*/
+}
+
+tags-input .tags .tag-item {
+  font-weight: 400;
+  font-size: 11px;
+  border-radius: 10px;
+  background: #eee;
+  color: #777;
+  display: inline;
+  padding: .2em .6em .3em;
+  vertical-align: baseline;
+  line-height: 1;
+  white-space: nowrap;
+  text-align: center;
+  margin: 2px;
+  font: inherit;
+  border: none;
+  height: inherit;
+  line-height: inherit;
+}
+
+.inactive tags-input .tags .tag-item .remove-button {
+  display: none;
+}
+
+tags-input .tags .tag-item .remove-button {
+  color: #bbb;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 400;
+  font-family: Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+tags-input .host {
+  margin-top: 0;
+}
+
+.rules-list.table td label {
+  line-height: 1;
+  margin-bottom: -2px;
+}
+
+.inactive .tags .input {
+  display: none;
 }
