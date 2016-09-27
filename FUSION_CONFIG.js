@@ -203,6 +203,10 @@ appConfig = { //eslint-disable-line
   rules: {
     collection: 'os_prod_rules',
 
+    tags: [
+      "PROD", "TEST", "SIMULATION", "MOBILE"
+    ],
+
     types: {
       "Filter List": "filter_list",
       "Block List": "block_list",

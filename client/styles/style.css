@@ -37,10 +37,27 @@ input.addTriggerCategory{
   width: 45%;
   display: inline-block;
 }
-.set-params{
-  width: 30%;
-  display: inline-block;
+
+#addRule input.form-control.set-params {
+  height: 20px;
+  margin-bottom: 0;
 }
+
+#addRule .addRuleForm .row {
+  margin: 0;
+}
+
+.addRuleForm .row .col-xs-4,
+.addRuleForm .row .col-xs-3,
+.addRuleForm .row .col-xs-2,
+.addRuleForm .row .col-xs-1 {
+  margin: 2px;
+  padding: 0;
+}
+
+.table.rules-list .inactive .btn-default.disabledControl { display: none; }
+.table.rules-list .active .btn-default.disabledControl { display: block; }
+
 .table>tbody>tr.inactive>td.inline-icons .btn-cancel{
   display: none;
 }

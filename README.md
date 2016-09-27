@@ -52,7 +52,23 @@
        "multiValued":true,
        "stored":false }
   }' $SOLR_API_BASE/os_prod/schema
-
+  
+  curl -X POST -H 'Content-type:application/json' --data-binary '{
+    "replace-field":{
+       "name":"createdAt",
+       "type":"tlong",
+       "stored":true,
+       "multiValued":false}
+  }' $SOLR_API_BASE/os_prod_rules/schema
+  
+  curl -X POST -H 'Content-type:application/json' --data-binary '{
+    "replace-field":{
+       "name":"updatedAt",
+       "type":"tlong",
+       "stored":true,
+       "multiValued":false}
+  }' $SOLR_API_BASE/os_prod_rules/schema
+  
   # set up -with-products pipeline for products (os_prod) collection
   curl -u $FUSION_API_CREDENTIALS -X DELETE ${FUSION_API_BASE}/query-pipelines/os_prod-with-rules
   curl -u $FUSION_API_CREDENTIALS -X POST -H 'Content-type: application/json' -d @os_prod-with-rules-query-pipeline.json ${FUSION_API_BASE}/query-pipelines

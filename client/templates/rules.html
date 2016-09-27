@@ -78,7 +78,10 @@ controller: rulesController as rc
   <div class="row">
     <!-- SIDEBAR -->
     <div class="col-sm-2">
-      <a data-toggle="modal" data-target="#addRule" class="btn btn-lg btn-block btn-default lead-btn">
+      <a data-toggle="modal"
+         data-target="#addRule"
+         ng-click="checkSession()"
+         class="btn btn-lg btn-block btn-default lead-btn" >
         <i class="fa fa-plus"></i>
         Add rule
       </a>
@@ -257,6 +260,9 @@ controller: rulesController as rc
           </div>
         </div>
       </div>
+      <div>
+        {{filter.values.sortByCond}}
+      </div>
       <!-- TABLE -->
       <table class="table table-bordered table-hover rules-list">
         <!-- THEAD -->
@@ -267,8 +273,8 @@ controller: rulesController as rc
           <th style="width:28%">Type</th>
           <th style="width:20%"><div class="column-header-holder"><span>General </span></div></th>
           <th style="width:30%">Trigger</th>
-          <th><div class="column-header-holder">Created on<a href="javascript:void(0);" class="text-muted"></a></div></th>
-          <th><div class="column-header-holder">Edited on<a href="javascript:void(0);" class="text-muted"></a></div></th>
+          <th><div class="column-header-holder">Created on<a href="javascript:void(0);" ng-click="sortBy('createdAt')" class="text-muted"><i class="fa" ng-class="{'fa-sort': filter.values.sortByCond == null || !filter.values.sortByCond.createdAt, 'fa-sort-asc': filter.values.sortByCond.createdAt === true, 'fa-sort-desc': filter.values.sortByCond.createdAt === false}"></i></a></div></th>
+          <th><div class="column-header-holder">Edited on<a href="javascript:void(0);" ng-click="sortBy('updatedAt')" class="text-muted"><i class="fa" ng-class="{'fa-sort': filter.values.sortByCond == null || !filter.values.sortByCond.updatedAt, 'fa-sort-asc': filter.values.sortByCond.updatedAt === true, 'fa-sort-desc': filter.values.sortByCond.updatedAt === false}"></i></a></div></th>
           <th></th>
         </tr>
         </thead>
@@ -297,12 +303,21 @@ controller: rulesController as rc
                   </select>
                   <textarea type='text' class="form-control disabledControl actionProductList" id="actionProductList" value="product list" ng-if="rule.values" ng-model="rule.values"></textarea>
                   <textarea type='text' class="form-control disabledControl actionProductList" id="actionProductList" value="product list" ng-if="rule.field_values" ng-model="rule.field_values" ng-list></textarea>
-                  <div class="form-group" ng-if="rule.param_keys" ng-repeat="param in rule.param_keys track by $index">
-                    <input type='text' class="form-control set-params disabledControl" ng-model="rule.param_keys[$index]"/>
-                    <input type='text' class="form-control set-params disabledControl" ng-model="rule.param_values[$index]"/>
-                    <select class="form-control addTriggerCategory set-params disabledControl" ng-model="rule.param_policies[$index]">
-                      <option ng-repeat="(value, caption) in policyList" value="{{value}}">{{caption}}</option>
-                    </select>
+                  <div class="row" ng-if="rule.param_keys" ng-repeat="param in rule.param_keys track by $index">
+                    <div class="col-xs-3" >
+                        <input type='text' class="form-control set-params disabledControl" ng-model="rule.param_keys[$index]"/>
+                    </div>
+                    <div class="col-xs-4">
+                        <input type='text' class="form-control set-params disabledControl" ng-model="rule.param_values[$index]"/>
+                    </div>
+                    <div class="col-xs-3">
+                        <select class="form-control set-params disabledControl" ng-model="rule.param_policies[$index]">
+                          <option ng-repeat="(value, caption) in policyList" value="{{value}}">{{caption}}</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-1">
+                        <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="rule.param_keys.splice([$index],1); rule.param_values.splice([$index],1); rule.param_policies.splice([$index],1);"></i></a>
+                    </div>
                   </div>
                   <button type="button" class="btn btn-sm btn-default disabledControl" ng-click="rule.param_keys.push(' '); rule.param_values.push(' '); rule.param_policies.push(' ');" ng-if="rule.param_keys">Add param</button>
                 </fieldset>
@@ -312,7 +327,7 @@ controller: rulesController as rc
           </td>
           <td>
             <div class="column-holder">
-              <h2 id="2"><input type="text" class="form-control disabledControl rule-name" ng-model="rule.id"/></h2>
+              <h2 id="2"><input type="text" class="form-control disabledControl rule-name" ng-model="rule.ruleName"/></h2>
               <p class="lead">
                 <textarea rows="3" class="form-control disabledControl"
                           ng-model="rule.description" disabled>{{rule.description}}</textarea>
@@ -427,8 +442,8 @@ controller: rulesController as rc
           </td>
           <td class="text-nowrap inline-icons">
             <div class="column-holder">
-              <a class="text-muted" href="javascript:void(0);"><i class="fa fa-pencil"></i></a>
-              <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="removeRule(rule.id)"></i></a>
+              <a class="text-muted" href="javascript:void(0);" ng-click="checkSession()"><i class="fa fa-pencil"></i></a>
+              <a class="text-muted" href="javascript:void(0);" ><i class="fa fa-times" ng-click="removeRule(rule.id)"></i></a>
               <div class="edit-buttons">
                 <a href="javascript:void(0);" class="btn btn-sm btn-default btn-save" ng-click="updateRule(rule.id)"><i class="fa fa-check-circle"></i>Save</a>
                 <a href="javascript:void(0);" class="btn btn-sm btn-default btn-cancel" ng-click=""><i class="fa fa-trash"></i>Cancel</a>
@@ -577,17 +592,24 @@ controller: rulesController as rc
                       <div class="form-group" ng-if="currentRule.displayRuleType == 'Redirect'">
                         <input type='text' placeholder="Please write redirect value here" class="form-control" id="redirect" value="redirect" ng-model="currentRule.ruleValues"/>
                       </div>
-                      <div class="form-group" ng-if="currentRule.displayRuleType == 'Set Params'" ng-repeat="param in setParams track by $index">
-                        <span>
-                        <input type='text' placeholder="Key" class="form-control set-params param-key" ng-model="currentRule.ruleSetParams.param_keys[$index]"/></span>
-                        <input type='text' placeholder="Value" class="form-control set-params" ng-model="currentRule.ruleSetParams.param_values[$index]"/>
-                        <select class="form-control addTriggerCategory set-params" ng-model="currentRule.ruleSetParams.param_policies[$index]">
-                          <!--<option value="Param policy" selected style="display:none;">Choose rule type</option>-->
-                          <option ng-repeat="(value, caption) in policyList" value="{{value}}">{{caption}}</option>
-                        </select>
-                        <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="setParams.pop();  currentRule.ruleSetParams.param_keys.splice([$index],1); currentRule.ruleSetParams.param_values.splice([$index],1); currentRule.ruleSetParams.param_policies.splice([$index],1);"></i></a>
+                      <div class="row" ng-if="currentRule.displayRuleType == 'Set Params'" ng-repeat="param in setParams track by $index">
+                        <div class="col-xs-3" >
+                          <input type='text' placeholder="Key" class="form-control set-params param-key" ng-model="currentRule.ruleSetParams.param_keys[$index]"/>
+                        </div>
+                        <div class="col-xs-4">
+                          <input type='text' placeholder="Value" class="form-control set-params" ng-model="currentRule.ruleSetParams.param_values[$index]"/>
+                        </div>
+                        <div class="col-xs-3">
+                          <select class="form-control set-params" ng-model="currentRule.ruleSetParams.param_policies[$index]">
+                            <!--<option value="Param policy" selected style="display:none;">Choose rule type</option>-->
+                            <option ng-repeat="(value, caption) in policyList" value="{{value}}">{{caption}}</option>
+                          </select>
+                        </div>
+                        <div class="col-xs-1">
+                          <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="setParams.pop();  currentRule.ruleSetParams.param_keys.splice([$index],1); currentRule.ruleSetParams.param_values.splice([$index],1); currentRule.ruleSetParams.param_policies.splice([$index],1);"></i></a>
+                        </div>
                       </div>
-                      <button type="button" class="btn btn-sm btn-default" ng-click="setParams.push(' ');" ng-if="currentRule.displayRuleType == 'Set Params'">Add param</button>
+                      <button type="button" class="btn btn-sm btn-default" ng-click="setParams.push(' ');" ng-if="currentRule.displayRuleType == 'Set Params'" style="margin-top: 10px;">Add param</button>
                     </fieldset>
                   </form>
                 </div>
@@ -595,7 +617,7 @@ controller: rulesController as rc
             </ol>
           </div>
         </div>
-        <div class="alert add-rule-error" >
+        <div class="alert add-rule-error hidden" >
           <div class="err">
             <span class="err-code"></span>
             <span class="err-message"></span>

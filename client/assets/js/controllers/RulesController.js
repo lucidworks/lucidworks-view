@@ -20,6 +20,8 @@
         endDate: null,
         status: null,
 
+        sortByCond: null,
+
         facets: {}
       },
 
@@ -55,6 +57,35 @@
          }
 
          console.log("Facet value '" + field + " - " + value + "' not found in ", facet);*/
+      },
+
+      sortBy: function (by) {
+        if (!this.values.sortByCond) {
+          this.values.sortByCond = {};
+          this.values.sortByCond[by] = true
+        } else if (this.values.sortByCond[by]){
+          this.values.sortByCond[by] = false;
+        } else {
+          this.values.sortByCond = null;
+        }
+      },
+
+      sortByIcon: function (by) {
+        console.log("sortByIcon(" + by + ")");
+
+        if (this.values.sortByCond === null) {
+          return 'fa-sort';
+        }
+
+        if (this.values.sortByCond[by] === true) {
+          return 'fa-sort-asc';
+        }
+
+        if (this.values.sortByCond[by] === false) {
+          return 'fa-sort-desc';
+        }
+
+        return 'fa-sort';
       },
 
       hasNext: function (rulesTotal) {
@@ -101,10 +132,12 @@
           res += "&fq=" + filterQuery.join("&fq=");
         }
 
-        /*      if (this.values.facets.length > 0) {
-         res += "&fq=" + this.values.facets.map(
-         function (f) {return f[0] + ":" + f[1].trim()}).join(" ");
-         }*/
+        // : sort=<field name>+<direction>,<field name>+<direction>],...
+        if (this.values.sortByCond) {
+          res += "&sort=" + _.transform(this.values.sortByCond, function(result, value, key) {
+              result.push(key + " " + (value ? 'asc' : 'desc'));
+            }, []).join(",");
+        }
 
         return res;
       },
@@ -127,47 +160,23 @@
     $('.trigger-end').one('click', datePickerOnFocus);
   }
 
-  function pageInit() {
-    moment().calendar();
-    $(".datepicker").datetimepicker({defaultDate: "now", format: "YYYY-MM-DDTHH:mm"});
-    autosize($("textarea"));
+  function setModalMaxHeight(element) {
+    var $element = $(element),
+      $content = $element.find('.modal-content');
+    var borderWidth = $content.outerHeight() - $content.innerHeight();
+    var dialogMargin = $(window).width() < 768 ? 20 : 60;
+    var contentHeight = $(window).height() - (dialogMargin + borderWidth);
+    var headerHeight = $element.find('.modal-header').outerHeight() || 0;
+    var footerHeight = $element.find('.modal-footer').outerHeight() || 0;
+    var maxHeight = contentHeight - (headerHeight + footerHeight);
 
-    $('.triggerTags').tagsinput({tagClass: "label label-default"});
-    $('.disabledControl').prop('disabled', true);
+    $content.css({ 'overflow': 'hidden'});
 
-    function activate() {
-      var row = $(this).closest("tr");
-
-      var active = row.hasClass("active");
-      console.log("make row active: " + active);
-      if (active) {
-        row.find(".disabledControl").prop('disabled', true);
-        row.removeClass("active");
-        row.addClass("inactive");
-      } else {
-        row.find(".disabledControl").prop('disabled', false);
-        row.removeClass("inactive");
-        row.addClass("active");
-      }
-    }
-
-    function setActivator(elsSelector) {
-      $(elsSelector).each(function (index, el) {
-        if (el && el.dataset["initialized"]) {
-          return;
-        }
-
-        el.dataset["initialized"] = true;
-        $(el).on("click", activate);
-      });
-    }
-
-    //setActivator(".rules-list h2");
-    setActivator(".fa-pencil");
-    setActivator(".rules-list .btn-save");
-    setActivator(".rules-list .btn-cancel");
-
-    initInRowDateTriggers();
+    $element
+      .find('.modal-body').css({
+      'max-height': maxHeight,
+      'overflow-y': 'auto'
+    });
   }
 
   function emptyRule() {
@@ -252,6 +261,73 @@
         $scope.policyList = rulesConfig.set_params.policies;
         $scope.productList = rulesConfig.documentFields;
 
+        function pageInit() {
+          moment().calendar();
+          $(".datepicker").datetimepicker({defaultDate: "now", format: "YYYY-MM-DDTHH:mm"});
+          autosize($("textarea"));
+
+          $('.modal').on('show.bs.modal', function() {
+            $(this).show();
+            setModalMaxHeight(this);
+          });
+
+          $('.modal').on('shown.bs.modal', function() {
+            autosize.update($('textarea'));
+          });
+
+          $(window).resize(function() {
+            if ($('.modal.in').length != 0) {
+              setModalMaxHeight($('.modal.in'));
+            }
+          });
+
+          $('.triggerTags').tagsinput({
+            tagClass: "label label-default",
+            typeaheadjs: {
+              source: rulesConfig.tags
+            },
+            freeInput: !rulesConfig.tags
+          });
+          console.log("ConfigService.config.rules.tags = " + rulesConfig.tags);
+          console.log("ConfigService.config.rules.tags = " + !rulesConfig.tags);
+
+          $('.disabledControl').prop('disabled', true);
+
+          function activate() {
+            var row = $(this).closest("tr");
+
+            var active = row.hasClass("active");
+            console.log("make row active: " + active);
+            if (active) {
+              row.find(".disabledControl").prop('disabled', true);
+              row.removeClass("active");
+              row.addClass("inactive");
+            } else {
+              row.find(".disabledControl").prop('disabled', false);
+              row.removeClass("inactive");
+              row.addClass("active");
+            }
+          }
+
+          function setActivator(elsSelector) {
+            $(elsSelector).each(function (index, el) {
+              if (el && el.dataset["initialized"]) {
+                return;
+              }
+
+              el.dataset["initialized"] = true;
+              $(el).on("click", activate);
+            });
+          }
+
+          //setActivator(".rules-list h2");
+          setActivator(".fa-pencil");
+          setActivator(".rules-list .btn-save");
+          setActivator(".rules-list .btn-cancel");
+
+          initInRowDateTriggers();
+        }
+
         var keys = {
           "Redirect": "redirect",
           "Banner": "banner"
@@ -276,12 +352,17 @@
 
         $scope.filter = Filter;
 
+        $scope.checkSession = function () {
+          var res = AuthService.getSession();
+          console.log("AuthService.setSession(): ", res);
+        };
+
         $scope.addRule = function () {
           var rule = {
             display_type: $scope.currentRule.displayRuleType,
-            id: $scope.currentRule.ruleName,
-            createdAt: [Date.now()],
-            updatedAt: [Date.now()],
+            ruleName: $scope.currentRule.ruleName,
+            createdAt: Date.now(),
+            updatedAt: Date.now(),
             enabled: [true]
           };
 
@@ -611,11 +692,15 @@
           $scope.filter.values.pageNum = (pageNum || 0);
 
           rulesService.search($scope.filter, function (response) {
-            $scope.rules = response.data.response.docs;
+            var docs = response.data.response.docs;
             console.log("Rules loaded: ");
-            console.log($scope.rules);
+            console.log(docs);
 
-            $scope.rules.forEach(function (item, i) {
+            docs.forEach(function (item, i) {
+              if (item && !item.ruleName) {
+                item.ruleName = item.id;
+              }
+
               var rulesSub = {};
 
               if (item && item.filters) {
@@ -629,7 +714,7 @@
                 }
                 rulesSub.filters = actualFiltersArray;
               }
-              var range = $scope.rules[i].effective_range;
+              var range = docs[i].effective_range;
               if (range) {
                 rulesSub.dates = [[], []];
                 for (var j = 0, k = range.length; j < k; j++) {
@@ -643,6 +728,8 @@
 
               $scope.ruleArrays[item.id] = rulesSub;
             });
+
+            $scope.rules = docs;
             $scope.rulesTotal = response.data.response.numFound;
             $scope.facets = response.data.facet_counts.facet_fields;
 
@@ -661,6 +748,14 @@
           if ($scope.filter.hasPrev()) {
             $scope.search($scope.filter.prev());
           }
+        };
+
+        $scope.sortBy = function (by) {
+          console.log("$scope.sortBy(" + by + ")");
+          Filter.sortBy(by);
+
+          console.log('sortBy', Filter.values);
+          $scope.search();
         };
 
         $scope.filterBy = function (key, value) {
