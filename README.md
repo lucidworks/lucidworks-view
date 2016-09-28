@@ -81,6 +81,9 @@
   curl -u $FUSION_API_CREDENTIALS -X PUT -H 'Content-type: application/json' \
        -d '{"solrParams":{"replicationFactor":1,"numShards":1}}' \
        ${FUSION_API_BASE}/collections/os_prod_rules
+       
+  curl -u $FUSION_API_CREDENTIALS -X PUT -H Content-type:application/json \
+       -d '{"enabled":true}' ${FUSION_API_BASE}/collections/os_prod/features/signals
 
   # upload rules data
   $FUSION_HOME/apps/solr-dist/bin/post -c os_prod_rules rules.json
