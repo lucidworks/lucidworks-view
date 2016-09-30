@@ -352,8 +352,8 @@
           var rule = {
             display_type: $scope.currentRule.displayRuleType,
             ruleName: $scope.currentRule.ruleName,
-            createdAt: Date.now(),
-            updatedAt: Date.now(),
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
             enabled: [true]
           };
 
@@ -430,14 +430,27 @@
             $scope.triggerDates = [];
             $scope.setParams = [' '];
 
-            $scope.rules = [rule].concat($scope.rules);
-            $scope.rulesTotal++;
+            rulesService.findByName(rule.ruleName, function (response) {
+              var data = response.data.response;
 
-            if ($scope.rules[$scope.rules.length - 1] == undefined) {
-              $scope.rules.pop();
-            }
+              if (data.numFound < 1) {
+                console.log("!!! Error saving rule");
+              } else if (data.numFound == 1) {
+                rule.id = data.docs[0].id;
 
-            $timeout(pageInit, 1);
+                $scope.rules = [rule].concat($scope.rules);
+                $scope.rulesTotal++;
+
+                if ($scope.rules[$scope.rules.length - 1] == undefined) {
+                  $scope.rules.pop();
+                }
+
+                $timeout(pageInit, 1);
+              } else {
+                console.log("!!! Founded more then one rule with the same name :(");
+              }
+            });
+
           }, function (resp) {
             var addRule = $('#addRule');
             addRule.find('.alert').addClass('alert-warning');
@@ -572,7 +585,7 @@
           var rule = $scope.rules[findIndexById(id)];
           var ruleArray = $scope.ruleArrays[rule.id];
 
-          rule.updatedAt = Date.now();
+          rule.updatedAt = new Date().toISOString();
 
           if (rule.values) {
             rule.values = [rule.values];

@@ -56,7 +56,7 @@
   curl -X POST -H 'Content-type:application/json' --data-binary '{
     "replace-field":{
        "name":"createdAt",
-       "type":"tlong",
+       "type":"tdate",
        "stored":true,
        "multiValued":false}
   }' $SOLR_API_BASE/os_prod_rules/schema
@@ -64,7 +64,7 @@
   curl -X POST -H 'Content-type:application/json' --data-binary '{
     "replace-field":{
        "name":"updatedAt",
-       "type":"tlong",
+       "type":"tdate",
        "stored":true,
        "multiValued":false}
   }' $SOLR_API_BASE/os_prod_rules/schema

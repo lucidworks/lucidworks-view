@@ -80,7 +80,7 @@ controller: rulesController as rc
     <div class="col-sm-2">
       <a data-toggle="modal"
          data-target="#addRule"
-         ng-click="checkSession()"
+         ng-mousedown="checkSession()"
          class="btn btn-lg btn-block btn-default lead-btn" >
         <i class="fa fa-plus"></i>
         Add rule
@@ -260,9 +260,7 @@ controller: rulesController as rc
           </div>
         </div>
       </div>
-      <div>
-        {{filter.values.sortByCond}}
-      </div>
+
       <!-- TABLE -->
       <table class="table table-bordered table-hover rules-list">
         <!-- THEAD -->
