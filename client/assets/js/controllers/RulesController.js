@@ -244,6 +244,7 @@
         validFlag = false;
       }
     }
+
     return validFlag;
   }
 
@@ -349,6 +350,20 @@
         };
 
         $scope.addRule = function () {
+          function errorMessage(errorCode, status, message) {
+            var addRule = $('#addRule');
+            addRule.find('.alert').addClass('alert-warning');
+            addRule.find('.err-code').html(errorCode);
+            if (message) {
+              addRule.find('.err-more').show();
+              $('#addRuleErrorDetails').html(message);
+            } else {
+              addRule.find('.err-more').hide();
+            }
+            addRule.find('.err-message').html(status);
+          }
+
+
           var rule = {
             display_type: $scope.currentRule.displayRuleType,
             ruleName: $scope.currentRule.ruleName,
@@ -364,6 +379,18 @@
           if (!validateRuleCreation(rule, ruleName)) {
             return;
           }
+
+          console.log("----------------------------");
+          console.log($scope.addRuleTriggerForm);
+          var tags = $scope.addRuleTriggerForm.tags;
+          console.log(tags);
+          console.log(tags.$valid);
+          if (tags && !tags.$valid) {
+            errorMessage(null, "invalid tag name");
+            return;
+          }
+          console.log("----------------------------");
+
 
           //ruleName[0].placeholder = 'Enter rule name';
           //addRuleButton.attr('data-dismiss', 'modal');
@@ -417,6 +444,7 @@
             rule.filters = rule.filters.trim();
           }
 
+
           rulesService.add(rule, function () {
             addRuleButton.attr('data-dismiss', 'modal');
             $('#addRule').modal('hide');
@@ -452,11 +480,7 @@
             });
 
           }, function (resp) {
-            var addRule = $('#addRule');
-            addRule.find('.alert').addClass('alert-warning');
-            addRule.find('.err-code').html(resp.status);
-            addRule.find('.err-message').html(resp.statusText);
-            $('#addRuleErrorDetails').html(resp.data);
+            errorMessage(resp.status, resp.statusText, resp.data);
           });
         };
 
@@ -489,12 +513,19 @@
         };
 
         $scope.removeRule = function (id) {
-          if (!confirm('Are you sure want to delete rule "' + id + '"')) {
+          var ruleIndex = findIndexById(id);
+          var rule = $scope.rules[ruleIndex];
+          if (!rule) {
+            console.log("delete error: rule with id '" + id + "' not found.");
+            return;
+          }
+
+          if (!confirm('Are you sure want to delete rule "' + (rule.ruleName || id) + '"')) {
             return;
           }
 
           console.log("delete - " + id);
-          $scope.rules.splice(findIndexById(id), 1);
+          $scope.rules.splice(ruleIndex, 1);
           $scope.rulesTotal -= 1;
 
           rulesService.delete(id);

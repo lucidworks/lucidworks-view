@@ -80,7 +80,7 @@ controller: rulesController as rc
     <div class="col-sm-2">
       <a data-toggle="modal"
          data-target="#addRule"
-         ng-mousedown="checkSession()"
+         ng-mouseenter="checkSession()"
          class="btn btn-lg btn-block btn-default lead-btn" >
         <i class="fa fa-plus"></i>
         Add rule
@@ -507,7 +507,7 @@ controller: rulesController as rc
               <li>
                 <h4>Trigger</h4>
                 <div class="wiz-step">
-                  <form action="" class="addRuleForm">
+                  <form name="addRuleTriggerForm" id="addRuleTriggerForm" action="" class="addRuleForm">
                     <fieldset>
                       <div class="form-group">
                         <div class="row hor-gut-10px" ng-repeat="triggerDate in triggerDates track by $index">
@@ -541,7 +541,7 @@ controller: rulesController as rc
                       </div>
                       <div class="form-group" ng-if="currentRule.tagsFlag">
                         <label class="small text-muted text-uppercase">Tags</label>
-                        <tags-input ng-model="currentRule.ruleTags" remove-tag-symbol="X" add-from-autocomplete-only="{{predefinedTags && predefinedTags.length > 0}}">
+                        <tags-input name="tags" ng-model="currentRule.ruleTags" remove-tag-symbol="X" add-from-autocomplete-only="{{predefinedTags && predefinedTags.length > 0}}">
                           <auto-complete source="predefinedTags" load-on-down-arrow="true" load-on-empty="true" min-length="1"></auto-complete>
                         </tags-input>
 
@@ -621,11 +621,11 @@ controller: rulesController as rc
             </ol>
           </div>
         </div>
-        <div class="alert add-rule-error hidden" >
+        <div class="alert add-rule-error" >
           <div class="err">
             <span class="err-code"></span>
             <span class="err-message"></span>
-            <a class="" data-toggle="collapse" href="#addRuleErrorDetails"
+            <a class="err-more" data-toggle="collapse" href="#addRuleErrorDetails"
                aria-expanded="false" aria-controls="addRuleErrorDetails">
               more
             </a>
