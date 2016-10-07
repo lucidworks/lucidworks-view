@@ -375,7 +375,7 @@ controller: rulesController as rc
                       </div>
                       <div class="form-group" ng-if="rule.tags">
                         <label class="small text-muted text-uppercase">Tags</label>
-                        <tags-input ng-model="rule.tags" remove-tag-symbol="X" add-from-autocomplete-only="{{predefinedTags && predefinedTags.length > 0}}">
+                        <tags-input ng-model="rule.tags" min-length="1" remove-tag-symbol="X" add-from-autocomplete-only="{{predefinedTags && predefinedTags.length > 0}}">
                           <auto-complete source="predefinedTags" load-on-down-arrow="true" load-on-empty="true" min-length="1"></auto-complete>
                         </tags-input>
                         <!--<input type="text" class="form-control disabledControl triggerTags" aria-describedby="triggerTags"  placeholder='Enter tags' ng-model="rule.tags"/>-->
@@ -541,7 +541,12 @@ controller: rulesController as rc
                       </div>
                       <div class="form-group" ng-if="currentRule.tagsFlag">
                         <label class="small text-muted text-uppercase">Tags</label>
-                        <tags-input name="tags" ng-model="currentRule.ruleTags" remove-tag-symbol="X" add-from-autocomplete-only="{{predefinedTags && predefinedTags.length > 0}}">
+                        <tags-input name="tags"
+                                    min-length="1"
+                                    ng-model="currentRule.ruleTags"
+                                    remove-tag-symbol="X"
+                                    add-from-autocomplete-only="{{predefinedTags && predefinedTags.length > 0}}"
+                                    >
                           <auto-complete source="predefinedTags" load-on-down-arrow="true" load-on-empty="true" min-length="1"></auto-complete>
                         </tags-input>
 

@@ -349,21 +349,38 @@
           var res = AuthService.getSession();
         };
 
-        $scope.addRule = function () {
-          function errorMessage(errorCode, status, message) {
-            var addRule = $('#addRule');
-            addRule.find('.alert').addClass('alert-warning');
-            addRule.find('.err-code').html(errorCode);
-            if (message) {
-              addRule.find('.err-more').show();
-              $('#addRuleErrorDetails').html(message);
-            } else {
-              addRule.find('.err-more').hide();
-            }
-            addRule.find('.err-message').html(status);
+        function errorMessage(errorCode, status, message) {
+          var addRule = $('#addRule');
+          if (status == null && status == null) {
+            addRule.find('.alert').removeClass('alert-warning');
+            addRule.find('.alert').hide();
           }
 
+          addRule.find('.alert').addClass('alert-warning');
+          addRule.find('.err-code').html(errorCode);
+          if (message) {
+            addRule.find('.err-more').show();
+            $('#addRuleErrorDetails').html(message);
+          } else {
+            addRule.find('.err-more').hide();
+          }
+          addRule.find('.err-message').html(status);
+        }
 
+        $scope.validateTags = function() {
+          var tags = $scope.addRuleTriggerForm.tags;
+          console.log("----------------------------------------");
+          console.log(tags);
+          console.log(tags.$valid);
+          if (tags && tags.$valid === false) {
+            errorMessage(null, "invalid tag name");
+            return;
+          } else if (tags && tags.$valid === true) {
+            errorMessage(null, null);
+          }
+        };
+
+        $scope.addRule = function () {
           var rule = {
             display_type: $scope.currentRule.displayRuleType,
             ruleName: $scope.currentRule.ruleName,
@@ -376,20 +393,21 @@
           var addRuleButton = $('#addRuleButton');
 
           addRuleButton.removeAttr('data-dismiss');
+          var tags = $scope.addRuleTriggerForm.tags;
+          console.log("----------------------------------------");
+          console.log(tags);
+          console.log(tags.$valid);
+          if (tags && tags.$valid === false) {
+            errorMessage(null, "invalid tag name");
+            return;
+          } else if (tags && tags.$valid === true) {
+            errorMessage(null, null);
+          }
+
+
           if (!validateRuleCreation(rule, ruleName)) {
             return;
           }
-
-          console.log("----------------------------");
-          console.log($scope.addRuleTriggerForm);
-          var tags = $scope.addRuleTriggerForm.tags;
-          console.log(tags);
-          console.log(tags.$valid);
-          if (tags && !tags.$valid) {
-            errorMessage(null, "invalid tag name");
-            return;
-          }
-          console.log("----------------------------");
 
 
           //ruleName[0].placeholder = 'Enter rule name';
