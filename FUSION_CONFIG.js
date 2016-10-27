@@ -48,7 +48,7 @@ appConfig = { //eslint-disable-line
    * to use anonymous access.
    */
   anonymous_access: {
-    username: 'search-user',
+    username: 'search-user'
   //  password: 'search-user-password-here'
   },
 
@@ -102,6 +102,7 @@ appConfig = { //eslint-disable-line
   head_url_field: 'url',
   //In search results, display a image in each doc page (leave empty for no image).
   image_field: 'image',
+
 
   // ADDING ADDITIONAL FIELDS TO DEFAULT DOCUMENTS
   //

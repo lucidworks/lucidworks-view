@@ -295,6 +295,8 @@
               row.find(".disabledControl").prop('disabled', true);
               row.removeClass("active");
               row.addClass("inactive");
+              console.log(row.find("tags-input.ng-invalid .tags"));
+              row.find("tags-input.ng-invalid").removeClass("ng-invalid");
             } else {
               row.find(".disabledControl").prop('disabled', false);
               row.removeClass("inactive");
@@ -327,8 +329,17 @@
         };
 
         function findIndexById(id) {
+          if ($scope.rules.length == 0) {
+            return null;
+          }
+
           for (var i = 0; i < $scope.rules.length; i++) {
             var r = $scope.rules[i];
+            if (!r) {
+              console.log("Error: rule for index '" + i + "' is empty rules from '" + (i - 5) + "' to '" + (i + 5) + "'");
+              console.log("Error: ", $scope.rules.slice(i-5, i+5));
+              return null;
+            }
             if (r.id == id) {
               return i;
             }
@@ -368,10 +379,6 @@
         }
 
         $scope.validateTags = function() {
-          var tags = $scope.addRuleTriggerForm.tags;
-          console.log("----------------------------------------");
-          console.log(tags);
-          console.log(tags.$valid);
           if (tags && tags.$valid === false) {
             errorMessage(null, "invalid tag name");
             return;
@@ -394,9 +401,6 @@
 
           addRuleButton.removeAttr('data-dismiss');
           var tags = $scope.addRuleTriggerForm.tags;
-          console.log("----------------------------------------");
-          console.log(tags);
-          console.log(tags.$valid);
           if (tags && tags.$valid === false) {
             errorMessage(null, "invalid tag name");
             return;
@@ -631,7 +635,8 @@
         $scope.updateRule = function (id) {
           console.log("update - " + id);
 
-          var rule = $scope.rules[findIndexById(id)];
+          var ruleIndex = findIndexById(id);
+          var rule = _.extend({}, $scope.rules[ruleIndex]);
           var ruleArray = $scope.ruleArrays[rule.id];
 
           rule.updatedAt = new Date().toISOString();
@@ -684,16 +689,17 @@
           delete rule._version_;
 
           rulesService.update(id, rule);
+
+          $scope.rules[ruleIndex].tagsText = null;
+          $scope.rules[ruleIndex].tagsInvalid = null;
+
           updateRulesInfo();
         };
 
         $scope.changeStatus = function (id) {
           var rule = $scope.rules[findIndexById(id)];
-          if (rule.enabled == undefined || rule.enabled === true) {
-            rule.enabled = false;
-          } else {
-            rule.enabled = true;
-          }
+          rule.enabled = rule.enabled != undefined && rule.enabled === false;
+
           $scope.updateRule(id);
         };
 
@@ -734,6 +740,45 @@
           }, 1000);
         }
 
+        function transformRule (r) {
+          if (r && !r.ruleName) {
+            r.ruleName = r.id;
+          }
+
+          if (r && r.tags) {
+            r.tags = _.map(r.tags, function (tag) {
+              return {text: tag};
+            })
+          }
+
+          var rulesSub = {};
+
+          if (r && r.filters) {
+            if (r.filters.length) {
+              r.filters = r.filters[0];
+            }
+            var filtersArray = r.filters.split(/[ ,:]+/);
+            var actualFiltersArray = [[], []];
+            for (var j = 0, k = filtersArray.length; j < k; j++) {
+              actualFiltersArray[j % 2].push(filtersArray[j]);
+            }
+            rulesSub.filters = actualFiltersArray;
+          }
+          var range = r.effective_range;
+          if (range) {
+            rulesSub.dates = [[], []];
+            for (var j = 0, k = range.length; j < k; j++) {
+              var split = range[j].split(' TO ');
+              rulesSub.dates[0][j] = split[0];
+              rulesSub.dates[0][j] = rulesSub.dates[0][j].replace("[", "");
+              rulesSub.dates[1][j] = split[1];
+              rulesSub.dates[1][j] = rulesSub.dates[1][j].replace("]", "");
+            }
+          }
+
+          $scope.ruleArrays[r.id] = rulesSub;
+        }
+
         $scope.search = function (pageNum) {
           console.log("searching (" + pageNum + ")...");
           $scope.filter.values.pageNum = (pageNum || 0);
@@ -743,44 +788,7 @@
             console.log("Rules loaded: ");
             console.log(docs);
 
-            docs.forEach(function (item, i) {
-              if (item && !item.ruleName) {
-                item.ruleName = item.id;
-              }
-
-              if (item && item.tags) {
-                item.tags = _.map(item.tags, function (tag) {
-                  return {text: tag};
-                })
-              }
-
-              var rulesSub = {};
-
-              if (item && item.filters) {
-                if (item.filters.length) {
-                  item.filters = item.filters[0];
-                }
-                var filtersArray = item.filters.split(/[ ,:]+/);
-                var actualFiltersArray = [[], []];
-                for (var j = 0, k = filtersArray.length; j < k; j++) {
-                  actualFiltersArray[j % 2].push(filtersArray[j]);
-                }
-                rulesSub.filters = actualFiltersArray;
-              }
-              var range = docs[i].effective_range;
-              if (range) {
-                rulesSub.dates = [[], []];
-                for (var j = 0, k = range.length; j < k; j++) {
-                  var split = range[j].split(' TO ');
-                  rulesSub.dates[0][j] = split[0];
-                  rulesSub.dates[0][j] = rulesSub.dates[0][j].replace("[", "");
-                  rulesSub.dates[1][j] = split[1];
-                  rulesSub.dates[1][j] = rulesSub.dates[1][j].replace("]", "");
-                }
-              }
-
-              $scope.ruleArrays[item.id] = rulesSub;
-            });
+            docs.forEach(transformRule);
 
             $scope.rules = docs;
             $scope.rulesTotal = response.data.response.numFound;
