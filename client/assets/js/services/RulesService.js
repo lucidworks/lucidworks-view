@@ -23,7 +23,7 @@
 
         findByName: function (name, callback) {
           var url = appHost + "api/apollo/query-pipelines/" + rulesCollection + "-default/collections/" + rulesCollection + "/select?" +
-            "wt=json&fl=*&json.nl=arrarr&rows=10&q=ruleName:" + name;
+            "wt=json&fl=*&json.nl=arrarr&rows=10&q=ruleName:\"" + name + "\"";
 
           $http.get(url).then(callback);
         },
