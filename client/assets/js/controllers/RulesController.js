@@ -1,153 +1,6 @@
 (function () {
   'use strict';
 
-  var Filter = (function () {
-
-    var facets = {
-      display_type: {name: "Rules type"},
-      tags: {name: "Tags"},
-      enabled: {name: "Enabled"}
-    };
-
-    return {
-
-      values: {
-        query: "",
-        pageSize: 10,
-        pageNum: 0,
-
-        startDate: null,
-        endDate: null,
-        status: null,
-
-        sortByCond: null,
-
-        facets: {}
-      },
-
-      rulesFrom: function () {
-        return this.values.pageNum * this.values.pageSize;
-      },
-
-      rulesTo: function () {
-        return (this.values.pageNum + 1) * this.values.pageSize
-      },
-
-      filterBy: function (field, value) {
-        this.values.facets[field] = {};
-        this.values.facets[field][value] = true;
-
-        /*var filter = this.values.facets.find(
-         function (f) { return f[0] === field;});
-
-         if (!filter) {
-         this.values.facets.push([field, value]);
-         }*/
-
-        /*var facet = this.values.facets[field];
-         if (!facet) {
-         throw "Wrong facet name '" + facet + "'";
-         }
-
-         for (var i = 0; i < facet.length; i++) {
-         if(facet[i][0] === value) {
-         facet[2] = true;
-         return;
-         }
-         }
-
-         console.log("Facet value '" + field + " - " + value + "' not found in ", facet);*/
-      },
-
-      sortBy: function (by) {
-        if (!this.values.sortByCond) {
-          this.values.sortByCond = {};
-          this.values.sortByCond[by] = true
-        } else if (this.values.sortByCond[by]){
-          this.values.sortByCond[by] = false;
-        } else {
-          this.values.sortByCond = null;
-        }
-      },
-
-      sortByIcon: function (by) {
-        console.log("sortByIcon(" + by + ")");
-
-        if (this.values.sortByCond === null) {
-          return 'fa-sort';
-        }
-
-        if (this.values.sortByCond[by] === true) {
-          return 'fa-sort-asc';
-        }
-
-        if (this.values.sortByCond[by] === false) {
-          return 'fa-sort-desc';
-        }
-
-        return 'fa-sort';
-      },
-
-      hasNext: function (rulesTotal) {
-        return (this.values.pageNum + 1) * this.values.pageSize < (rulesTotal || 0)
-      },
-
-      next: function () {
-        this.values.pageNum += 1;
-        return this.values.pageNum;
-      },
-
-      hasPrev: function () {
-        return this.values.pageNum > 0;
-      },
-
-      prev: function () {
-        this.values.pageNum -= 1;
-        return this.values.pageNum;
-      },
-
-      toUrlString: function () {
-        var res = "";
-        res += "&q=" + (this.values.query || '*');
-        res += "&facet=true";
-
-        for (var f in facets) {
-          res += "&facet.field=" + f;
-        }
-
-        res += "&start=" + this.values.pageNum * this.values.pageSize;
-        res += "&rows=" + this.values.pageSize;
-
-        var filterQuery = [];
-        for (var key in this.values.facets) {
-          var facet = this.values.facets[key];
-          for (var name in facet) {
-            if (facet[name]) {
-              filterQuery.push(key + ":" + name);
-            }
-          }
-        }
-
-        if (filterQuery.length > 0) {
-          res += "&fq=" + filterQuery.join("&fq=");
-        }
-
-        // : sort=<field name>+<direction>,<field name>+<direction>],...
-        if (this.values.sortByCond) {
-          res += "&sort=" + _.transform(this.values.sortByCond, function(result, value, key) {
-              result.push(key + " " + (value ? 'asc' : 'desc'));
-            }, []).join(",");
-        }
-
-        return res;
-      },
-
-      logout: function (){
-        AuthService.destroySession();
-      }
-    }
-  })();
-
   function initInRowDateTriggers() {
     function datePickerOnFocus() { // TODO why we need this function
       $(this).addClass('datepicker');
@@ -181,25 +34,28 @@
 
   function emptyRule() {
     return {
-      currentDate: Date.now(),
-      ruleType: '',
-      displayRuleType: 'Choose rule type',
+      createdAt: Date.now(),
+
+      display_type: 'Choose rule type',
       ruleName: '',
-      ruleDescription: '',
-      ruleStart: '',
-      ruleEnd: '',
-      ruleKeywords: [],
-      ruleCategoryType: [],
-      ruleCategoryValue: [],
-      ruleTags: '',
-      ruleFieldName: '',
-      ruleFieldValues: [],
-      ruleValues: [],
-      ruleSetParams: {
-        param_keys: [],
-        param_values: [],
-        param_policies: []
-      },
+      description: '',
+
+      search_terms: undefined,
+
+      viewFilters: [[], []],
+      viewDates: [[], []],
+      viewTags: '',
+
+      values: [],
+
+      // Set Params Type params
+      param_keys: [],
+      param_values: [],
+      param_policies: [],
+
+      // response_value rule type
+      field_name: undefined,
+      field_values: undefined,
 
       keywordsFlag: false,
       categoryFlag: false,
@@ -251,12 +107,14 @@
   angular
     .module('lucidworksView.controllers.rules', [
         'lucidworksView.services.rules',
+        'lucidworksView.services.rules.transformer',
+        'lucidworksView.services.rules.filter',
         'lucidworksView.services.config',
         'lucidworksView.services.auth',
         'ngTagsInput'
     ])
-    .controller('rulesController', ['$scope', '$http', '$timeout', 'RulesService', 'ConfigService', 'AuthService',
-      function ($scope, $http, $timeout, rulesService, ConfigService, AuthService) {
+    .controller('rulesController', ['$scope', '$http', '$timeout', 'RulesService', 'RulesTransformerService', 'RulesFilterService', 'ConfigService', 'AuthService',
+      function ($scope, $http, $timeout, rulesService, rulesTransformerService,  rulesFilterService, ConfigService, AuthService) {
 
         var rulesConfig = ConfigService.config.rules;
         $scope.types = rulesConfig.types;
@@ -347,14 +205,22 @@
           return null;
         }
 
+        function findRuleById(id) {
+          var rule = $scope.rules[findIndexById(id)];
+          if (rule) {
+            return rule;
+          }
+
+          throw "Error: rule with '" + id + "' not found.";
+        }
+
         $scope.triggerDates = [];
         $scope.categories = [];
-        $scope.ruleArrays = [];
         $scope.setParams = [' '];
 
         $scope.currentRule = emptyRule();
 
-        $scope.filter = Filter;
+        $scope.filter = rulesFilterService;
 
         $scope.checkSession = function () {
           var res = AuthService.getSession();
@@ -387,10 +253,32 @@
           }
         };
 
+        function setViewDates(rule, triggerStartArray, triggerEndArray) {
+          if (triggerStartArray[0] && triggerStartArray[0].value) {
+            for (var i = 0; i < triggerStartArray.length; i++) {
+              rule.viewDates[0][i] = triggerStartArray[i].value.trim() || "*";
+              rule.viewDates[1][i] = triggerEndArray[i].value.trim() || "*";
+            }
+          }
+        }
+
         $scope.addRule = function () {
           var rule = {
-            display_type: $scope.currentRule.displayRuleType,
+            display_type: $scope.currentRule.display_type,
             ruleName: $scope.currentRule.ruleName,
+            description: $scope.currentRule.description,
+            search_terms: $scope.currentRule.search_terms,
+
+            viewTags: $scope.currentRule.viewTags,
+            viewDates: $scope.currentRule.viewDates,
+
+            param_keys: $scope.currentRule.param_keys,
+            param_values: $scope.currentRule.param_values,
+            param_policies: $scope.currentRule.param_policies,
+
+            field_name: $scope.currentRule.field_name,
+            field_values: $scope.currentRule.field_values,
+
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
             enabled: [true]
@@ -408,66 +296,26 @@
             errorMessage(null, null);
           }
 
-
           if (!validateRuleCreation(rule, ruleName)) {
             return;
           }
 
-
           //ruleName[0].placeholder = 'Enter rule name';
           //addRuleButton.attr('data-dismiss', 'modal');
 
-          rule.description = $scope.currentRule.ruleDescription;
-          rule.search_terms = $scope.currentRule.ruleKeywords;
-          rule.tags = $scope.currentRule.ruleTags || [];
           rule.type = $scope.types[rule.display_type];
 
           if (rule.type == 'set_params') {
-            rule.param_keys = $scope.currentRule.ruleSetParams.param_keys;
-            rule.param_values = $scope.currentRule.ruleSetParams.param_values;
-            rule.param_policies = $scope.currentRule.ruleSetParams.param_policies;
           } else if (rule.type != 'response_value') {
-            rule.field_name = $scope.currentRule.ruleFieldName;
-            rule.field_values = $scope.currentRule.ruleFieldValues;
           } else {
             rule.keys = [];
             rule.keys.push(keys[rule.display_type]);
-            rule.values = [$scope.currentRule.ruleValues];
+            rule.values = [$scope.currentRule.values];
           }
 
-          var triggerStartArray = $('.add-trigger-start');
-          var triggerEndArray = $('.add-trigger-end');
+          setViewDates(rule, $('.add-trigger-start'), $('.add-trigger-end'));
 
-          if (!$scope.ruleArrays[rule.id]) {
-            $scope.ruleArrays[rule.id] = {dates: [[], []], filters: [[], []]};
-          }
-
-          if (triggerStartArray[0] && triggerStartArray[0].value) {
-            rule.effective_range = [];
-            for (var i = 0, l = triggerStartArray.length; i < l; i++) {
-              rule.effective_range.push("[" + triggerStartArray[i].value + " TO " + triggerEndArray[i].value + "]");
-              $scope.ruleArrays[rule.id].dates[0].push(triggerStartArray[i].value);
-              $scope.ruleArrays[rule.id].dates[1].push(triggerEndArray[i].value);
-            }
-          }
-
-          if (rule.tags) {
-            rule.tags = _.map(rule.tags, 'text');
-          }
-
-          if ($scope.currentRule.ruleCategoryType[0]) {
-            rule.filters = "";
-            //for (var i = 0, l = $scope.currentRule.ruleCategoryType.length; i<l; i++) {
-            $scope.currentRule.ruleCategoryType.forEach(function (item, i) {
-              rule.filters += item + ':' + $scope.currentRule.ruleCategoryValue[i] + ' ';
-              $scope.ruleArrays[rule.id].filters[0].push(item);
-              $scope.ruleArrays[rule.id].filters[1].push($scope.currentRule.ruleCategoryValue[i]);
-            });
-            rule.filters = rule.filters.trim();
-          }
-
-
-          rulesService.add(rule, function () {
+          rulesService.add(rulesTransformerService.viewRuleToModel(rule), function () {
             addRuleButton.attr('data-dismiss', 'modal');
             $('#addRule').modal('hide');
 
@@ -567,8 +415,7 @@
           var ruleArray = $('.ruleCheckbox');
           for (var i = 0, l = ruleArray.length; i < l; i++) {
             if (ruleArray[i].checked) {
-              var rule = $scope.rules[findIndexById(ruleArray[i].value)];
-              rule.enabled = enabled;
+              findRuleById(ruleArray[i].value).enabled = enabled;
               $scope.updateRule(ruleArray[i].value);
             }
           }
@@ -583,20 +430,20 @@
           var ruleArray = $('.ruleCheckbox');
           for (var i = 0, l = ruleArray.length; i < l; i++) {
             if (ruleArray[i].checked) {
-              var rule = $scope.rules[findIndexById(ruleArray[i].value)];
+              var rule = findRuleById(ruleArray[i].value);
               if (remove) {
-                if (rule.tags) {
-                  _.remove(rule.tags, function(tagO) {
+                if (rule.viewTags) {
+                  _.remove(rule.viewTags, function(tagO) {
                     return tagO && tagO.text === tag;
                   });
                 }
               } else {
-                if (!rule.tags) {
-                  rule.tags = [];
+                if (!rule.viewTags) {
+                  rule.viewTags = [];
                 }
 
-                if (!_.find(rule.tags, function (t) { return t.text === tag })) {
-                  rule.tags.push({text: tag});
+                if (!_.find(rule.viewTags, function (t) { return t.text === tag })) {
+                  rule.viewTags.push({text: tag});
                 }
               }
 
@@ -637,7 +484,6 @@
 
           var ruleIndex = findIndexById(id);
           var rule = _.extend({}, $scope.rules[ruleIndex]);
-          var ruleArray = $scope.ruleArrays[rule.id];
 
           rule.updatedAt = new Date().toISOString();
 
@@ -645,20 +491,9 @@
             rule.values = [rule.values];
           }
 
-          var triggerStartArray = $('tr[data-ruleId="' + rule.id + '"] .trigger-start');
-          var triggerEndArray = $('tr[data-ruleId="' + rule.id + '"] .trigger-end');
-
-          if (!rule.effective_range) {
-            rule.effective_range = [];
-          }
-
-          for (var i = 0, l = triggerStartArray.length; i < l; i++) {
-            rule.effective_range[i] = "[" + triggerStartArray[i].value + " TO " + triggerEndArray[i].value + "]";
-            ruleArray.dates[0][i] = triggerStartArray[i].value;
-            ruleArray.dates[1][i] = triggerEndArray[i].value;
-
-            console.log(ruleArray.dates[0][i], " - ", ruleArray.dates[1][i]);
-          }
+          setViewDates(rule,
+            $('tr[data-ruleId="' + rule.id + '"] .trigger-start'),
+            $('tr[data-ruleId="' + rule.id + '"] .trigger-end'));
 
           if (rule.search_terms) {
             if (rule.search_terms[0] == '' || rule.search_terms == "") {
@@ -666,68 +501,39 @@
             }
           }
 
-          if (rule.tags) {
-            rule.tags = _.map(rule.tags, 'text');
-          }
-
-          if (rule.tags && rule.tags[0] == "" || rule.tags == "") {
-            delete rule.tags;
-          }
-          rule.filters = "";
-          if (ruleArray && ruleArray.filters && ruleArray.filters[0]) {
-            for (var i = 0, l = ruleArray.filters[0].length; i < l; i++) {
-              //ruleArray.filters.forEach(function(item, i){
-              rule.filters += ruleArray.filters[0][i] + ':' + ruleArray.filters[1][i] + ' ';
-            }
-            rule.filters = rule.filters.trim();
-          }
-
-          if (rule.filters == ":") {
-            delete rule.filters;
-          }
-
           delete rule._version_;
 
-          rulesService.update(id, rule);
+          rulesService.update(id, rulesTransformerService.viewRuleToModel(rule));
 
           $scope.rules[ruleIndex].tagsText = null;
-          $scope.rules[ruleIndex].tagsInvalid = null;
 
           updateRulesInfo();
         };
 
         $scope.changeStatus = function (id) {
-          var rule = $scope.rules[findIndexById(id)];
+          var rule = findRuleById(id);
           rule.enabled = rule.enabled != undefined && rule.enabled === false;
 
           $scope.updateRule(id);
         };
 
         $scope.addTrigger = function (id, name) {
-          var rule = $scope.rules[findIndexById(id)];
+          var rule = findRuleById(id);
 
           if (name == 'search_terms') {
             rule.search_terms = rule.search_terms || ["keyword"];
           } else if (name == 'tags') {
-            rule.tags = rule.tags || [""];
-          } else if (name == 'category') {
-            rule.filters = rule.filters || [["field"], ["value"]];
+            rule.viewTags = rule.viewTags || [];
           }
         };
 
         $scope.addFilter = function (id) {
-          var rule = $scope.ruleArrays[id];
-          if (!rule.filters) {
-            rule.filters = [[], []];
+          var rule = findRuleById(id);
+          if (!rule.viewFilters) {
+            rule.viewFilters = [[], []];
           }
-          rule.filters[0].push(' ');
-          rule.filters[1].push(' ');
-        };
-
-        $scope.checkActionCount = function (id) {
-          var actionCount = 0;
-          var rule = $scope.rules[findIndexById(id)];
-          return actionCount;
+          rule.viewFilters[0].push(' ');
+          rule.viewFilters[1].push(' ');
         };
 
         function updateRulesInfo() {
@@ -740,45 +546,6 @@
           }, 1000);
         }
 
-        function transformRule (r) {
-          if (r && !r.ruleName) {
-            r.ruleName = r.id;
-          }
-
-          if (r && r.tags) {
-            r.tags = _.map(r.tags, function (tag) {
-              return {text: tag};
-            })
-          }
-
-          var rulesSub = {};
-
-          if (r && r.filters) {
-            if (r.filters.length) {
-              r.filters = r.filters[0];
-            }
-            var filtersArray = r.filters.split(/[ ,:]+/);
-            var actualFiltersArray = [[], []];
-            for (var j = 0, k = filtersArray.length; j < k; j++) {
-              actualFiltersArray[j % 2].push(filtersArray[j]);
-            }
-            rulesSub.filters = actualFiltersArray;
-          }
-          var range = r.effective_range;
-          if (range) {
-            rulesSub.dates = [[], []];
-            for (var j = 0, k = range.length; j < k; j++) {
-              var split = range[j].split(' TO ');
-              rulesSub.dates[0][j] = split[0];
-              rulesSub.dates[0][j] = rulesSub.dates[0][j].replace("[", "");
-              rulesSub.dates[1][j] = split[1];
-              rulesSub.dates[1][j] = rulesSub.dates[1][j].replace("]", "");
-            }
-          }
-
-          $scope.ruleArrays[r.id] = rulesSub;
-        }
-
         $scope.search = function (pageNum) {
           console.log("searching (" + pageNum + ")...");
           $scope.filter.values.pageNum = (pageNum || 0);
@@ -788,9 +555,7 @@
             console.log("Rules loaded: ");
             console.log(docs);
 
-            docs.forEach(transformRule);
-
-            $scope.rules = docs;
+            $scope.rules = docs.map(rulesTransformerService.modelRuleToView);
             $scope.rulesTotal = response.data.response.numFound;
             $scope.facets = response.data.facet_counts.facet_fields;
 
@@ -813,9 +578,9 @@
 
         $scope.sortBy = function (by) {
           console.log("$scope.sortBy(" + by + ")");
-          Filter.sortBy(by);
+          rulesFilterService.sortBy(by);
 
-          console.log('sortBy', Filter.values);
+          console.log('sortBy', rulesFilterService.values);
           $scope.search();
         };
 
@@ -827,17 +592,29 @@
         $scope.search();
 
         $scope.addDates = function (ruleId) {
-          var rule = $scope.ruleArrays[ruleId];
+          var rule = findRuleById(ruleId);
 
-          if (!rule.dates) {
-            rule.dates = [[], []];
+          if (!rule.viewDates) {
+            rule.viewDates = [[], []];
           }
-          rule.dates[0].push(' ');
-          rule.dates[1].push(' ');
+          rule.viewDates[0].push(' ');
+          rule.viewDates[1].push(' ');
 
           $timeout(initInRowDateTriggers, 100);
         };
 
+        $scope.resetFilter = function () {
+          $scope.filter.reset();
+
+          $scope.search();
+        };
+
+        $scope.applyFilter = function () {
+          $scope.filter.values.startDate = $('#filterStart')[0].value;
+          $scope.filter.values.endDate = $('#filterEnd')[0].value;
+
+          $scope.search();
+        };
       }]);
 
 })();

@@ -8,6 +8,8 @@ angular.module('lucidworksView.services', [
   'lucidworksView.services.query',
   'lucidworksView.services.queryData',
   'lucidworksView.services.signals',
+  'lucidworksView.services.rules.filter',
+  'lucidworksView.services.rules.transformer',
   'lucidworksView.services.rules',
   'lucidworksView.services.url'
 ]);

@@ -226,19 +226,19 @@
               </li>
 
               <!-- Trigger Date and Time -->
-              <li class="col-xs-5" ng-repeat="ruleDate in ruleArrays[rule.id].dates[0] track by $index">
+              <li class="col-xs-5" ng-repeat="ruleDate in rule.viewDates[0] track by $index">
                 <div class="form-group datepicker-inline trigger-date">
                   <label for="triggerStart" class="small text-muted text-uppercase">Start</label>
                   <div class="datepicker-holder">
                     <input type='text' class="form-control  trigger-start disabledControl" id="triggerStart"
-                           ng-model="ruleArrays[rule.id].dates[0][$index]"/>
+                           ng-model="rule.viewDates[0][$index]"/>
                   </div>
                 </div>
                 <div class="form-group datepicker-inline trigger-date">
                   <label for="triggerEnd" class="small text-muted text-uppercase">End</label>
                   <div class="datepicker-holder">
                     <input type='text' class="form-control  trigger-end disabledControl" id="triggerEnd"
-                           ng-model="ruleArrays[rule.id].dates[1][$index]"/>
+                           ng-model="rule.viewDates[1][$index]"/>
                   </div>
                 </div>
               </li>
