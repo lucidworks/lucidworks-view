@@ -10,6 +10,7 @@
     var simple = [
       'display_type',
       'id',
+      'type',
       'ruleName',
       'description',
 
