@@ -271,6 +271,7 @@
 
             viewTags: $scope.currentRule.viewTags,
             viewDates: $scope.currentRule.viewDates,
+            viewFilters: $scope.currentRule.viewFilters,
 
             param_keys: $scope.currentRule.param_keys,
             param_values: $scope.currentRule.param_values,
