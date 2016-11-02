@@ -46,7 +46,7 @@
       viewDates: [[], []],
       viewTags: '',
 
-      values: [],
+      values: '',
 
       // Set Params Type params
       param_keys: [],
@@ -181,11 +181,6 @@
           initInRowDateTriggers();
         }
 
-        var keys = {
-          "Redirect": "redirect",
-          "Banner": "banner"
-        };
-
         function findIndexById(id) {
           if ($scope.rules.length == 0) {
             return null;
@@ -303,16 +298,6 @@
 
           //ruleName[0].placeholder = 'Enter rule name';
           //addRuleButton.attr('data-dismiss', 'modal');
-
-          rule.type = $scope.types[rule.display_type];
-
-          if (rule.type == 'set_params') {
-          } else if (rule.type != 'response_value') {
-          } else {
-            rule.keys = [];
-            rule.keys.push(keys[rule.display_type]);
-            rule.values = [$scope.currentRule.values];
-          }
 
           setViewDates(rule, $('.add-trigger-start'), $('.add-trigger-end'));
 
@@ -488,19 +473,9 @@
 
           rule.updatedAt = new Date().toISOString();
 
-          if (rule.values) {
-            rule.values = [rule.values];
-          }
-
           setViewDates(rule,
             $('tr[data-ruleId="' + rule.id + '"] .trigger-start'),
             $('tr[data-ruleId="' + rule.id + '"] .trigger-end'));
-
-          if (rule.search_terms) {
-            if (rule.search_terms[0] == '' || rule.search_terms == "") {
-              delete rule.search_terms;
-            }
-          }
 
           delete rule._version_;
 

@@ -311,9 +311,11 @@ controller: rulesController as rc
                         <input type='text' class="form-control set-params disabledControl" ng-model="rule.param_values[$index]"/>
                     </div>
                     <div class="col-xs-3">
-                        <select class="form-control set-params disabledControl" ng-model="rule.param_policies[$index]">
-                          <option ng-repeat="(value, caption) in policyList" value="{{value}}">{{caption}}</option>
-                        </select>
+                      <select class="form-control set-params disabledControl"
+                              ng-init="rule.param_policies[$index] = rule.param_policies[$index] || 'append'"
+                              ng-model="rule.param_policies[$index]"
+                              ng-options="key as value for (key, value) in policyList">
+                      </select>
                     </div>
                     <div class="col-xs-1">
                         <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="rule.param_keys.splice([$index],1); rule.param_values.splice([$index],1); rule.param_policies.splice([$index],1);"></i></a>
@@ -362,10 +364,10 @@ controller: rulesController as rc
                 <div class="col-xs-6">
                   <form name="editRuleForm" id="editRuleForm" action="">
                     <fieldset>
-                      <div class="form-group" ng-if="rule.search_terms[0]">
+                      <div class="form-group" ng-if="rule.search_terms">
                         <label class="small text-muted text-uppercase">Keywords</label>
-                        <textarea rows="1" class="form-control disabledControl triggerKeywords" ng-model="rule.search_terms[0]"></textarea>
-                        <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="rule.search_terms[0] = ''"></i></a>
+                        <textarea rows="1" class="form-control disabledControl triggerKeywords" ng-model="rule.search_terms"></textarea>
+                        <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="rule.search_terms = ''"></i></a>
                       </div>
                       <div class="form-group" ng-repeat="caregory in rule.viewFilters[0] track by $index">
                         <label class="small text-muted text-uppercase">Field Value</label>
@@ -533,8 +535,8 @@ controller: rulesController as rc
                       </div>
                       <div class="form-group" ng-if="currentRule.keywordsFlag">
                         <label class="small text-muted text-uppercase">Keywords</label>
-                        <textarea rows="1" class="form-control addTriggerKeywords" ng-model="currentRule.search_terms[0]"></textarea>
-                        <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="currentRule.keywordsFlag = false; currentRule.search_terms[0] = '';"></i></a>
+                        <textarea rows="1" class="form-control addTriggerKeywords" ng-model="currentRule.search_terms"></textarea>
+                        <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="currentRule.keywordsFlag = false; currentRule.search_terms = '';"></i></a>
                       </div>
                       <div class="form-group" ng-repeat="x in categories track by $index">
                         <label class="small text-muted text-uppercase">Field Value</label>
@@ -614,9 +616,10 @@ controller: rulesController as rc
                           <input type='text' placeholder="Value" class="form-control set-params" ng-model="currentRule.param_values[$index]"/>
                         </div>
                         <div class="col-xs-3">
-                          <select class="form-control set-params" ng-model="currentRule.param_policies[$index]">
-                            <!--<option value="Param policy" selected style="display:none;">Choose rule type</option>-->
-                            <option ng-repeat="(value, caption) in policyList" value="{{value}}">{{caption}}</option>
+                          <select class="form-control set-params"
+                                  ng-init="currentRule.param_policies[$index] = 'append'"
+                                  ng-model="currentRule.param_policies[$index]"
+                                  ng-options="key as value for (key, value) in policyList">
                           </select>
                         </div>
                         <div class="col-xs-1">
