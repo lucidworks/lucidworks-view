@@ -6,6 +6,7 @@
       'ui.router',
       'ngAnimate',
       'ngSanitize',
+      'nvd3',
 
       // Foundation
       'foundation',
