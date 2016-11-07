@@ -23,6 +23,8 @@
           $http.get(apiUrl)
             .then(function (response) {
               user = response.data.user;
+              console.log("-------------------------");
+              console.log("-- Current user - " + user.username);
               console.log(user);
             }, function () {
               // TODO error handling

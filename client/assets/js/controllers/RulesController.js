@@ -109,18 +109,21 @@
         'lucidworksView.services.rules',
         'lucidworksView.services.rules.transformer',
         'lucidworksView.services.rules.filter',
+        "lucidworksView.services.user",
         'lucidworksView.services.config',
         'lucidworksView.services.auth',
         'ngTagsInput'
     ])
-    .controller('rulesController', ['$scope', '$http', '$timeout', 'RulesService', 'RulesTransformerService', 'RulesFilterService', 'ConfigService', 'AuthService',
-      function ($scope, $http, $timeout, rulesService, rulesTransformerService,  rulesFilterService, ConfigService, AuthService) {
+    .controller('rulesController', ['$scope', '$http', '$timeout', 'RulesService', 'RulesTransformerService', 'RulesFilterService', "UserService", 'ConfigService', 'AuthService',
+      function ($scope, $http, $timeout, rulesService, rulesTransformerService,  rulesFilterService, UserService, ConfigService, AuthService) {
 
         var rulesConfig = ConfigService.config.rules;
         $scope.types = rulesConfig.types;
         $scope.policyList = rulesConfig.set_params.policies;
         $scope.productList = rulesConfig.documentFields;
         $scope.predefinedTags = rulesConfig.tags;
+
+        UserService.init();
 
         function pageInit() {
           moment().calendar();

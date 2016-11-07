@@ -24,45 +24,42 @@
           //CASE: If there are usable anon creds, then try it out
           if(useAnonCreds()){
             $log.info('Creating anonymous session with credentials from FUSION_CONFIG.js');
-            getAnonSession().then(function(){
-              //CASE: If anonymous session creation is successful, go home
-              $log.info('Created anonymous session');
-              deferred.reject();
-              $state.go('rules',{query:'(q:\'*\')'}); // TODO we should go back we we come from
-            },function(err){
-              // TODO: Investigate why 201 is going to error handler...
-              // If it's the expected behaviour, figure out a better solution
-              //CASE: If anonymous login succeeded with a 201 response, go to `home`
-              if(err.status === 201){
+            getAnonSession()
+              .then(function() {
+                //CASE: If anonymous session creation is successful, go home
                 $log.info('Created anonymous session');
+                deferred.reject();
                 $state.go('rules',{query:'(q:\'*\')'}); // TODO we should go back we we come from
-              }
-              //CASE: If anonymous login failed, then go to login
-              else{
-                $log.info('Failed to create anonymous session');
-                $state.go('login');
-              }
-              deferred.reject(err);
-            });
-          }
-          else{
+              }, function(err) {
+                if (err.status === 201) {
+                  // TODO: Investigate why 201 is going to error handler...
+                  // If it's the expected behaviour, figure out a better solution
+                  //CASE: If anonymous login succeeded with a 201 response, go to `home`
+
+                  $log.info('Created anonymous session');
+                  $state.go('rules', {query: '(q:\'*\')'}); // TODO we should go back we we come from
+                } else {
+                  //CASE: If anonymous login failed, then go to login
+                  $log.info('Failed to create anonymous session');
+                  $state.go('login');
+                }
+                deferred.reject(err);
+              });
+          } else{
             //CASE: If anonymous login creds are unusable then go to login
             deferred.reject();
             $state.go('login');
           }
-        }
-        //CASE: If trying anon login, then that promise chain will take care of stuff
-        else{
+        } else{
+          //CASE: If trying anon login, then that promise chain will take care of stuff
           deferred.reject();
         }
-      }
-      //CASE: If unauthorized, don't bother.
-      else if(resp.status === 403){
+      } else if(resp.status === 403){
+        //CASE: If unauthorized, don't bother.
         // TODO handle unauthorized users.
         $log.warn('You are unauthorized to access that endpoint');
         deferred.reject(false);
-      }
-      else{
+      } else{
         deferred.reject(resp);
       }
       // In all cases reject the promise chain
