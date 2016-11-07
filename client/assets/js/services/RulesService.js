@@ -17,7 +17,7 @@
       var solrUrl = appHost + "api/apollo/solr";
       var rulesCollection = ConfigService.config.rules.collection.trim();
 
-      UserService.initInfo();
+      UserService.init();
 
       return {
 

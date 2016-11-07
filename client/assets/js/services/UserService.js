@@ -10,19 +10,19 @@
 
     this.$get = function ($http, ConfigService, ApiBase) {
 
-      var apiUrl = ApiBase.getEndpoint() + "api/users";
+      var apiUrl = ApiBase.getEndpoint() + "api/session";
       var user = null;
 
       return {
 
-        initInfo: function () {
+        init: function () {
           if (user != null) {
             return;
           }
 
           $http.get(apiUrl)
             .then(function (response) {
-              user = response.data[0];
+              user = response.data.user;
               console.log(user);
             }, function () {
               // TODO error handling

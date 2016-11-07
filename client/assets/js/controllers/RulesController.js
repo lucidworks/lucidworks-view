@@ -268,6 +268,8 @@
             viewDates: $scope.currentRule.viewDates,
             viewFilters: $scope.currentRule.viewFilters,
 
+            values: $scope.currentRule.values,
+
             param_keys: $scope.currentRule.param_keys,
             param_values: $scope.currentRule.param_values,
             param_policies: $scope.currentRule.param_policies,

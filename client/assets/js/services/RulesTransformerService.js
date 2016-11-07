@@ -66,6 +66,10 @@
           },
 
           modelToView: function (view, model) {
+            if (!model.search_terms) {
+              return;
+            }
+
             if (model.search_terms.length) {
               view.search_terms = model.search_terms[0];
             } else {
