@@ -364,12 +364,19 @@ controller: rulesController as rc
                 <div class="col-xs-6">
                   <form name="editRuleForm" id="editRuleForm" action="">
                     <fieldset>
-                      <div class="form-group" ng-if="rule.search_terms">
-                        <label class="small text-muted text-uppercase">Keywords</label>
-                        <textarea rows="1" class="form-control disabledControl triggerKeywords" ng-model="rule.search_terms"></textarea>
+                      <div class="form-group triggerKeywords" ng-if="rule.search_terms">
+                        <label class="small text-muted text-uppercase">
+                          Search Terms
+                        </label>
                         <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="rule.search_terms = ''"></i></a>
+                        <select class="form-control searchTermsType disabledControl"
+                                ng-model="rule.search_terms_type"
+                                ng-options="key as value for (key, value) in rulesConfig.searchTermsTypes"
+                        >
+                        </select>
+                        <textarea rows="1" class="form-control disabledControl" ng-model="rule.search_terms"></textarea>
                       </div>
-                      <div class="form-group" ng-repeat="caregory in rule.viewFilters[0] track by $index">
+                      <div class="form-group triggerFieldValue" ng-repeat="caregory in rule.viewFilters[0] track by $index">
                         <label class="small text-muted text-uppercase">Field Value</label>
                         <select class="form-control addTriggerCategory disabledControl"  ng-model="rule.viewFilters[0][$index]">
                           <option ng-repeat="(value, caption) in productList" value="{{value}}">{{caption}}</option>
@@ -377,15 +384,15 @@ controller: rulesController as rc
                         <input class="form-control disabledControl triggerCategory" ng-model="rule.viewFilters[1][$index]" />
                         <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="rule.viewFilters[0].splice($index, 1); rule.viewFilters[1].splice($index, 1)"></i></a>
                       </div>
-                      <div class="form-group" ng-if="rule.viewTags">
+                      <div class="form-group triggerTags" ng-if="rule.viewTags">
                         <label class="small text-muted text-uppercase">Tags</label>
+                        <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="rule.viewTags = ''"></i></a>
                         <tags-input name="tags"
                                     text="rule.tagsText"
                                     ng-model="rule.viewTags"
                                     min-length="1" remove-tag-symbol="X" add-from-autocomplete-only="{{predefinedTags && predefinedTags.length > 0}}">
                           <auto-complete source="predefinedTags" load-on-down-arrow="true" load-on-empty="true" min-length="1"></auto-complete>
                         </tags-input>
-                        <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="rule.viewTags = ''"></i></a>
                       </div>
                     </fieldset>
                   </form>
@@ -402,7 +409,7 @@ controller: rulesController as rc
                     <a href="javascript:void(0);" ng-click="addDates(rule.id)">ADD DATE</a>
                   </li>
                   <li ng-if="!rule.search_terms">
-                    <a href="javascript:void(0);" ng-click="addTrigger(rule.id, 'search_terms')">KEYWORDS</a>
+                    <a href="javascript:void(0);" ng-click="addTrigger(rule.id, 'search_terms')">SEARCH TERMS</a>
                   </li>
                   <li>
                     <a href="javascript:void(0);" ng-click="addFilter(rule.id || rule.name)">FIELD VALUE</a>
@@ -533,12 +540,20 @@ controller: rulesController as rc
                           <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="triggerDates.pop();"></i></a>
                         </div>
                       </div>
-                      <div class="form-group" ng-if="currentRule.keywordsFlag">
-                        <label class="small text-muted text-uppercase">Keywords</label>
-                        <textarea rows="1" class="form-control addTriggerKeywords" ng-model="currentRule.search_terms"></textarea>
+                      <div class="form-group triggerKeywords" ng-if="currentRule.keywordsFlag">
+                        <label class="small text-muted text-uppercase"> Search Terms </label>
                         <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="currentRule.keywordsFlag = false; currentRule.search_terms = '';"></i></a>
+                        <select class="form-control searchTermsType"
+                                ng-init="currentRule.search_terms_type = currentRule.search_terms_type || 'contains'"
+                                ng-model="currentRule.search_terms_type"
+                                ng-options="key as value for (key, value) in rulesConfig.searchTermsTypes"
+                        >
+                        </select>
+
+                        <textarea rows="1" class="form-control addTriggerKeywords" ng-model="currentRule.search_terms"></textarea>
+
                       </div>
-                      <div class="form-group" ng-repeat="x in categories track by $index">
+                      <div class="form-group triggerFieldValue" ng-repeat="x in categories track by $index">
                         <label class="small text-muted text-uppercase">Field Value</label>
                         <select class="form-control addTriggerCategory" ng-model="currentRule.viewFilters[0][$index]">
                           <option ng-repeat="(value, caption) in productList" value="{{value}}">{{caption}}</option>
@@ -546,8 +561,9 @@ controller: rulesController as rc
                         <input class="form-control addTriggerCategory" ng-model="currentRule.viewFilters[1][$index]"/>
                         <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="categories.pop(); currentRule.viewFilters[0].splice($index, 1); currentRule.viewFilters[1].splice($index, 1)"></i></a>
                       </div>
-                      <div class="form-group" ng-if="currentRule.tagsFlag">
+                      <div class="form-group triggerTags" ng-if="currentRule.tagsFlag">
                         <label class="small text-muted text-uppercase">Tags</label>
+                        <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="currentRule.tagsFlag = false; currentRule.viewTags = '';"></i></a>
                         <tags-input name="tags"
                                     min-length="1"
                                     ng-model="currentRule.viewTags"
@@ -556,8 +572,6 @@ controller: rulesController as rc
                                     >
                           <auto-complete source="predefinedTags" load-on-down-arrow="true" load-on-empty="true" min-length="1"></auto-complete>
                         </tags-input>
-
-                        <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="currentRule.tagsFlag = false; currentRule.viewTags = '';"></i></a>
                       </div>
                     </fieldset>
                   </form>
@@ -572,7 +586,7 @@ controller: rulesController as rc
                         <a href="javascript:void(0);" ng-click="triggerDates.push(' '); rule.viewDates.push(' ')">ADD DATES</a>
                       </li>
                       <li ng-if="!currentRule.keywordsFlag">
-                        <a href="javascript:void(0);" ng-click="currentRule.keywordsFlag = true">KEYWORDS</a>
+                        <a href="javascript:void(0);" ng-click="currentRule.keywordsFlag = true">SEARCH TERMS</a>
                       </li>
                       <li ng-if="!currentRule.categoryFlag">
                         <a href="javascript:void(0);" ng-click="categories.push('')">FIELD VALUE</a>

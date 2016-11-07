@@ -21,11 +21,19 @@ table .col-xs-5, table .col-xs-6{
 input.addTriggerCategory{
   margin-left: 2px;
 }
-.triggerKeywords{
+.triggerFieldValue label,
+.triggerTags label,
+.triggerKeywords label {
   display: inline-block;
-  width: 91%;
+  width: 91.5%;
 }
-.addRuleForm .bootstrap-tagsinput, table .bootstrap-tagsinput{
+
+.triggerKeywords select {
+  width: 98%;
+}
+
+.addRuleForm .bootstrap-tagsinput,
+table .bootstrap-tagsinput{
   display: inline-block;
   width: 92%;
 }
@@ -74,12 +82,11 @@ input.addTriggerCategory{
   content: "";
   color: #bbb;
 }
-.table>tbody>tr.inactive>td.btn-bottom-holder .fa-times  {
-   display: none;
-}
-.table>tbody>tr.inactive>td.btn-bottom-holder .tag span  {
+.table .inactive > td.btn-bottom-holder .fa-times,
+.table .inactive > td.btn-bottom-holder .tag span  {
   display: none;
 }
+
 div.table-footer .btn.btn-sm.btn-link.text-muted{
   background: none;
   color:#bbb;
@@ -147,6 +154,8 @@ tags-input .host {
 }
 
 .rules-list.table td label {
+  display: inline-block;
+
   line-height: 1;
   margin-bottom: -2px;
 }

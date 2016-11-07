@@ -62,6 +62,7 @@
           viewToModel: function (view, model) {
             if (view.search_terms && view.search_terms.trim().length > 0) {
               model.search_terms = view.search_terms;
+              model.search_terms_type = view.search_terms_type;
             }
           },
 
@@ -75,6 +76,7 @@
             } else {
               view.search_terms = model.search_terms
             }
+            view.search_terms_type = model.search_terms_type;
           }
         },
 

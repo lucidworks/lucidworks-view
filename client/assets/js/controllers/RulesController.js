@@ -41,6 +41,7 @@
       description: '',
 
       search_terms: undefined,
+      search_terms_type: undefined,
 
       viewFilters: [[], []],
       viewDates: [[], []],
@@ -118,6 +119,8 @@
       function ($scope, $http, $timeout, rulesService, rulesTransformerService,  rulesFilterService, UserService, ConfigService, AuthService) {
 
         var rulesConfig = ConfigService.config.rules;
+
+        $scope.rulesConfig = rulesConfig;
         $scope.types = rulesConfig.types;
         $scope.policyList = rulesConfig.set_params.policies;
         $scope.productList = rulesConfig.documentFields;
@@ -266,6 +269,7 @@
             ruleName: $scope.currentRule.ruleName,
             description: $scope.currentRule.description,
             search_terms: $scope.currentRule.search_terms,
+            search_terms_type: $scope.currentRule.search_terms_type,
 
             viewTags: $scope.currentRule.viewTags,
             viewDates: $scope.currentRule.viewDates,
