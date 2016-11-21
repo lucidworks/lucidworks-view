@@ -126,8 +126,10 @@
           }
 
           if (this.values.startDate || this.values.endDate) {
-            var start = this.values.startDate ? this.values.startDate + ":00Z" : "*";
-            var end = this.values.endDate ? this.values.endDate + ":00Z" : "*";
+            var start = this.values.startDate ?
+                  new Date(this.values.startDate.replace("T", " ")).toISOString() : "*";
+            var end = this.values.endDate ?
+                  new Date(this.values.endDate.replace("T", " ")).toISOString() : "*";
 
             res += "&fq=updatedAt:[" + start + " TO " + end + "]";
           }

@@ -53,7 +53,7 @@
 
           modelToView : function (view, model) {
             if (model.type == 'response_value') {
-              view.values = model.values[0] || model.values;
+              view.values = (model.values && model.values.length && model.values[0]) || model.values;
             }
           }
         },
@@ -62,7 +62,7 @@
           viewToModel: function (view, model) {
             if (view.search_terms && view.search_terms.trim().length > 0) {
               model.search_terms = view.search_terms;
-              model.search_terms_type = view.search_terms_type;
+              model.matching = view.matching;
             }
           },
 
@@ -76,7 +76,7 @@
             } else {
               view.search_terms = model.search_terms
             }
-            view.search_terms_type = model.search_terms_type;
+            view.matching = model.matching;
           }
         },
 

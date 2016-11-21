@@ -217,8 +217,8 @@ appConfig = { //eslint-disable-line
       "Set Params": "set_params"
     },
 
-    searchTermsTypes: {
-      exact: "Exact",
+    searchTermsMatching: {
+      text: "Text",
       keywords: "Keywords",
       contains: "Contains"
     },

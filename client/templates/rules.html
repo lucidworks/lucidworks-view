@@ -198,20 +198,22 @@ controller: rulesController as rc
               <span class="caret"></span>
             </a><ul class="dropdown-menu dropdown-menu-right with-states" id="filterMenu">
             <li>
-              <div class="btn-group btn-group-justified filter-range" role="group">
-                <div class="btn">
-                  <label for="filterStart" class="small text-muted text-uppercase">Start</label>
-                  <div class="datepicker-holder">
-                    <input type='text' class="form-control datepicker" id="filterStart" placeholder="Enter start date"/>
+              <form class="filter-form" action="">
+                <div class="btn-group btn-group-justified filter-range" role="group">
+                  <div class="btn">
+                    <label for="filterStart" class="small text-muted text-uppercase">Start</label>
+                    <div class="datepicker-holder">
+                      <input type='text' class="form-control datepicker" id="filterStart" placeholder="Enter start date"/>
+                    </div>
+                  </div>
+                  <div class="btn text-left">
+                    <label for="filterEnd" class="small text-muted text-uppercase" >End</label>
+                    <div class="datepicker-holder">
+                      <input type='text' class="form-control datepicker" id="filterEnd" placeholder="Enter end date"/>
+                    </div>
                   </div>
                 </div>
-                <div class="btn text-left">
-                  <label for="filterEnd" class="small text-muted text-uppercase" >End</label>
-                  <div class="datepicker-holder">
-                    <input type='text' class="form-control datepicker" id="filterEnd" placeholder="Enter end date"/>
-                  </div>
-                </div>
-              </div>
+              </form>
             </li>
             <li class="divider"></li>
             <li>
@@ -244,7 +246,7 @@ controller: rulesController as rc
             <li class="text-right">
               <div class="btn-group" role="group" id="applyFilters">
                 <div>
-                  <button class="btn btn-sm btn-link" type="button" ng-click="filter.values = { query: '', pageSize: 10, pageNum: 0, startDate: null, endDate: null, status: null, facets: {}}; search()"><i class="fa fa-undo"></i>Reset</button>
+                  <button class="btn btn-sm btn-link" type="button" ng-click="resetFilter()"><i class="fa fa-undo"></i>Reset</button>
                 </div>
                 <div>
                   <button class="btn btn-sm btn-link" type="button"><i class="fa fa-times"></i>Cancel</button>
@@ -370,8 +372,8 @@ controller: rulesController as rc
                         </label>
                         <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="rule.search_terms = ''"></i></a>
                         <select class="form-control searchTermsType disabledControl"
-                                ng-model="rule.search_terms_type"
-                                ng-options="key as value for (key, value) in rulesConfig.searchTermsTypes"
+                                ng-model="rule.matching"
+                                ng-options="key as value for (key, value) in rulesConfig.searchTermsMatching"
                         >
                         </select>
                         <textarea rows="1" class="form-control disabledControl" ng-model="rule.search_terms"></textarea>
@@ -544,9 +546,9 @@ controller: rulesController as rc
                         <label class="small text-muted text-uppercase"> Search Terms </label>
                         <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="currentRule.keywordsFlag = false; currentRule.search_terms = '';"></i></a>
                         <select class="form-control searchTermsType"
-                                ng-init="currentRule.search_terms_type = currentRule.search_terms_type || 'contains'"
-                                ng-model="currentRule.search_terms_type"
-                                ng-options="key as value for (key, value) in rulesConfig.searchTermsTypes"
+                                ng-init="currentRule.matching = currentRule.matching || 'keywords'"
+                                ng-model="currentRule.matching"
+                                ng-options="key as value for (key, value) in rulesConfig.searchTermsMatching"
                         >
                         </select>
 

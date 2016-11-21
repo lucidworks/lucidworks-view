@@ -41,7 +41,7 @@
       description: '',
 
       search_terms: undefined,
-      search_terms_type: undefined,
+      matching: undefined,
 
       viewFilters: [[], []],
       viewDates: [[], []],
@@ -269,7 +269,7 @@
             ruleName: $scope.currentRule.ruleName,
             description: $scope.currentRule.description,
             search_terms: $scope.currentRule.search_terms,
-            search_terms_type: $scope.currentRule.search_terms_type,
+            matching: $scope.currentRule.matching,
 
             viewTags: $scope.currentRule.viewTags,
             viewDates: $scope.currentRule.viewDates,
@@ -590,6 +590,9 @@
 
         $scope.resetFilter = function () {
           $scope.filter.reset();
+          $('.filter-form').each(function (index, form) {
+            form.reset()
+          });
 
           $scope.search();
         };
