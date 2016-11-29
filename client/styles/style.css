@@ -163,3 +163,21 @@ tags-input .host {
 .inactive .tags .input {
   display: none;
 }
+
+
+.datepicker, datepicker, [datepicker] {
+  float: none;
+}
+._720kb-datepicker-calendar-header:nth-child(odd),
+._720kb-datepicker-calendar-days-header {
+  background: #fff;
+}
+._720kb-datepicker-calendar-month,
+._720kb-datepicker-calendar-month span {
+  color: #666;
+  font-weight: bold;
+  font-size: 13px;
+}
+._720kb-datepicker-calendar._720kb-datepicker-open {
+  top: 26px;
+}

@@ -16,45 +16,6 @@ controller: rulesController as rc
       </button>
     </div>
     <div class="navbar-collapse collapse" id="navbar-main">
-<!--
-      <ul class="nav navbar-nav">
-        <li>
-          <a href="#">Link #1</a>
-        </li>
-        <li>
-          <a href="#">Link #2</a>
-        </li>
-        <li>
-          <a href="#">Link #3</a>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-            Dropdown
-            <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu">
-            <li>
-              <a href="#">Action</a>
-            </li>
-            <li>
-              <a href="#">Another action</a>
-            </li>
-            <li>
-              <a href="#">Something else here</a>
-            </li>
-            <li role="separator" class="divider"></li>
-            <li>
-              <a href="#">Separated link</a>
-            </li>
-            <li role="separator" class="divider"></li>
-            <li>
-              <a href="#">One more separated link</a>
-            </li>
-          </ul>
-        </li>
-      </ul>
--->
-
       <ul class="nav navbar-nav navbar-right">
         <li>
           <a ui-sref="home">Simulation</a>
@@ -491,7 +452,7 @@ controller: rulesController as rc
             <ol class="list-inline">
               <li>
                 <h4>General</h4>
-                <div class="wiz-step">
+                <div class="wiz-step add-rule-section">
                   <form action="" class="addRuleForm">
                     <fieldset>
                       <div class="form-group rule-type-select">
@@ -522,7 +483,7 @@ controller: rulesController as rc
               </li>
               <li>
                 <h4>Trigger</h4>
-                <div class="wiz-step">
+                <div class="wiz-step add-rule-section">
                   <form name="addRuleTriggerForm" id="addRuleTriggerForm" action="" class="addRuleForm">
                     <fieldset>
                       <div class="form-group">
@@ -578,23 +539,23 @@ controller: rulesController as rc
                     </fieldset>
                   </form>
                   <div class="btn-group btn-group-sm">
-                    <a href="javascript:void(0);" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <a href="javascript:void(0);" class="btn btn-default dropdown-toggle" ng-click="setScrollToBottom(1)" data-toggle="dropdown">
                       <i class="fa fa-plus"></i>
                       Add trigger
                       <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                       <li>
-                        <a href="javascript:void(0);" ng-click="triggerDates.push(' '); rule.viewDates.push(' ')">ADD DATES</a>
+                        <a href="javascript:void(0);" ng-click="triggerDates.push(' '); rule.viewDates.push(' '); setScrollToBottom(1)">ADD DATES</a>
                       </li>
                       <li ng-if="!currentRule.keywordsFlag">
-                        <a href="javascript:void(0);" ng-click="currentRule.keywordsFlag = true">SEARCH TERMS</a>
+                        <a href="javascript:void(0);" ng-click="currentRule.keywordsFlag = true; setScrollToBottom(1)">SEARCH TERMS</a>
                       </li>
                       <li ng-if="!currentRule.categoryFlag">
-                        <a href="javascript:void(0);" ng-click="categories.push('')">FIELD VALUE</a>
+                        <a href="javascript:void(0);" ng-click="categories.push(''); setScrollToBottom(1)">FIELD VALUE</a>
                       </li>
                       <li ng-if="!currentRule.tagsFlag">
-                        <a href="javascript:void(0);" ng-click="currentRule.tagsFlag = true">TAGS</a>
+                        <a href="javascript:void(0);" ng-click="currentRule.tagsFlag = true; setScrollToBottom(1)">TAGS</a>
                       </li>
                     </ul>
                   </div>
@@ -602,7 +563,7 @@ controller: rulesController as rc
               </li>
               <li>
                 <h4>{{currentRule.display_type}}</h4>
-                <div class="wiz-step">
+                <div class="wiz-step add-rule-section">
                   <form action="" class="addRuleForm">
                     <fieldset>
                       <select class="form-control addTriggerCategory" ng-model="currentRule.field_name" ng-if="currentRule.display_type == 'Filter List' || currentRule.display_type == 'Block List' || currentRule.display_type == 'Boost List'">
@@ -642,7 +603,7 @@ controller: rulesController as rc
                           <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="setParams.pop();  currentRule.param_keys.splice([$index],1); currentRule.param_values.splice([$index],1); currentRule.param_policies.splice([$index],1);"></i></a>
                         </div>
                       </div>
-                      <button type="button" class="btn btn-sm btn-default" ng-click="setParams.push(' ');" ng-if="currentRule.display_type == 'Set Params'" style="margin-top: 10px;">Add param</button>
+                      <button type="button" class="btn btn-sm btn-default" ng-click="setParams.push(' '); setScrollToBottom(2)" ng-if="currentRule.display_type == 'Set Params'" style="margin-top: 10px;">Add param</button>
                     </fieldset>
                   </form>
                 </div>

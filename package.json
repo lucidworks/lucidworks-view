@@ -73,5 +73,8 @@
     "sass-lint": "^1.5.1",
     "yargs": "^3.15.0"
   },
-  "engine": "node >=5.2.0"
+  "engine": "node >=5.2.0",
+  "dependencies": {
+    "angularjs-datepicker": "^2.1.7"
+  }
 }

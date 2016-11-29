@@ -47,6 +47,18 @@
     <!--APPLICABLE RULES-->
     <div class="well well-sm well-transp well-outline {{hc.fusion.applicable_rules && 'showrules' || 'hidden' }} lw-panel"
          id="rules-sidebar">
+      <!--<div class="datepicker">
+        <datepicker date-set="{{newDateObject.toString()}}" date-format="M/d/yy h:mm a">
+          <input ng-model="date" type="text" placeholder="{{newDateObject.toString()}}"/>
+        </datepicker>
+      </div>-->
+      <datepicker date-format="M/d/yy h:mm a" selector="form-control" date-typer="true">
+        <div class="input-group">
+          <input class="form-control" placeholder="Choose a date"/>
+          <span class="input-group-addon" style="cursor: pointer">
+        </span>
+        </div>
+      </datepicker>
       <p class="small text-nowrap text-muted mt-5 well-title">
         <span>{{hc.fusion.applicable_rules.length}}</span> of <span>{{hc.fusion.applicable_rules.length}}</span> applicable rules
         <a data-toggle="collapse" data-target="#rules-filters-side-panel"
@@ -159,7 +171,8 @@
                           <li class="divider"></li>-->
             <li ng-repeat="f in hc.fusion.applicable_rules_data.facet_counts.facet_fields.tags track by $index"
                 ng-if="($index % 2) == 0">
-              <div class="btn-group btn-group-sm pull-right" data-toggle="buttons">
+              <div class="btn-group btn-group-sm pull-right" data-toggle="buttons"
+                   ng-if="$index != (hc.fusion.applicable_rules_data.facet_counts.facet_fields.tags.length-2)">
                 <label class="btn btn-link" ng-click="hc.includeRulesWithTag(f, true)">
                   <input type="radio" name="options" id="option1" autocomplete="off">Include
                 </label>
@@ -205,13 +218,18 @@
                    <i ng-click="hc.updateRules($event, rule)"
                       ng-model="(hc.fusion.applicable_rules)"
                       class="status mr-5" ng-class="{'bg-inactive':hc.simulation.excluded_ids.indexOf(rule.id) != -1 , 'bg-active': hc.simulation.excluded_ids.indexOf(rule.id) == -1}"></i>
-                    {{rule.id}}
+                   <span ng-if="rule.ruleName">{{rule.ruleName.toString()}}</span>
+                   <span ng-if="!rule.ruleName">{{rule.id}}</span>
                  </span>
           </a>
           <div id="{{hc.getUIId(rule.id)}}" aria-expanded="false" class="collapse list-group-item-content">
             <ul class="list-unstyled">
 
               <!-- RULE ACTIONS -->
+              <li class="form-group" ng-if="rule.description[0]">
+                <label class="small text-muted text-uppercase">Description</label>
+                <span class="triggerKeywords">{{rule.description.toString()}}</span>
+              </li>
               <li class="form-group">
                 <label class="small text-muted text-uppercase"><span ng-if="rule.field_values"> {{rule.field_name.join(', ')}} </span>{{rule.display_type.toString()}}</label>
 
@@ -224,7 +242,6 @@
                   <span class="set-params addTriggerCategory">{{rule.param_policies[$index]}}</span>
                 </div>
               </li>
-
               <!-- Trigger Date and Time -->
               <li class="col-xs-5" ng-repeat="ruleDate in rule.viewDates[0] track by $index">
                 <div class="form-group datepicker-inline trigger-date">

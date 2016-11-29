@@ -32,13 +32,21 @@
         'param_values',
         'param_policies',
 
-        'field_name',
         'field_values',
 
         'createdAt',
         'updatedAt',
         'enabled'
       ];
+
+      function modelArrToViewElement (viewElement, modelArr) {
+        if (modelArr && modelArr.length) {
+          viewElement = modelArr[0];
+        } else {
+          viewElement = modelArr;
+        }
+        return viewElement;
+      };
 
       var transformers = {
         type: {
@@ -55,6 +63,15 @@
             if (model.type == 'response_value') {
               view.values = (model.values && model.values.length && model.values[0]) || model.values;
             }
+          }
+        },
+        field_name: {
+          viewToModel : function (view, model) {
+            model.field_name = view.field_name;
+          },
+
+          modelToView : function (view, model) {
+            view.field_name = modelArrToViewElement (view.field_name, model.field_name);
           }
         },
 
@@ -76,7 +93,7 @@
             } else {
               view.search_terms = model.search_terms
             }
-            view.matching = model.matching;
+            view.matching = modelArrToViewElement (view.matching, model.matching);
           }
         },
 

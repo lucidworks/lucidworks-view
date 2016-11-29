@@ -19,7 +19,10 @@
       // Fusion Seed App
       'lucidworksView.components',
       'lucidworksView.services',
-      'lucidworksView.controllers'
+      'lucidworksView.controllers',
+
+      //Datepicker
+      '720kb.datepicker'
     ])
     .constant('_', window._) //eslint-disable-line
     .config(config)
@@ -42,8 +45,6 @@
     $logProvider.debugEnabled(true);
 
     $urlRouterProvider.otherwise('search');
-    $httpProvider.interceptors.push('AuthInterceptor');
-    $httpProvider.defaults['withCredentials'] = true; //eslint-disable-line
 
 /*
     $locationProvider.html5Mode({
@@ -54,10 +55,13 @@
 */
 
     // If using a proxy use the same url.
+    $httpProvider.interceptors.push('AuthInterceptor');
+
     if (ConfigServiceProvider.config.use_proxy) {
       var $window = $windowProvider.$get();
-      ApiBaseProvider.setEndpoint($window.location.protocol + '//' + $window.location.host +
-        '/');
+      ApiBaseProvider.setEndpoint($window.location.protocol + '//' + $window.location.host + '/');
+      $httpProvider.defaults['withCredentials'] = true;
+
     } else {
       ApiBaseProvider.setEndpoint(ConfigServiceProvider.getFusionUrl());
     }

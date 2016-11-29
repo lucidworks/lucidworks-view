@@ -20,15 +20,15 @@
     var dialogMargin = $(window).width() < 768 ? 20 : 60;
     var contentHeight = $(window).height() - (dialogMargin + borderWidth);
     var headerHeight = $element.find('.modal-header').outerHeight() || 0;
+    var alertHeight = $element.find('.add-rule-error').outerHeight() || 0;
     var footerHeight = $element.find('.modal-footer').outerHeight() || 0;
-    var maxHeight = contentHeight - (headerHeight + footerHeight);
+    var maxHeight = contentHeight - (headerHeight + footerHeight + alertHeight);
 
     $content.css({ 'overflow': 'hidden'});
 
     $element
       .find('.modal-body').css({
-      'max-height': maxHeight,
-      'overflow-y': 'auto'
+      'height': maxHeight
     });
   }
 
@@ -603,6 +603,18 @@
 
           $scope.search();
         };
+        $scope.setScrollToBottom = function(sectionNum, $scope, $element) {
+          console.log ('ToBotom');
+          setTimeout(function () {
+            var section = angular.element($('div.add-rule-section'))[sectionNum];
+            var isScrolledToBottom = section.scrollHeight - section.clientHeight <= section.scrollTop;
+            console.log(sectionNum);
+            if (!isScrolledToBottom) {
+              section.scrollTop = section.scrollHeight - section.clientHeight + 160;
+              console.log(section.scrollTop);
+            }
+          }, 0);
+        }
       }]);
 
 })();
