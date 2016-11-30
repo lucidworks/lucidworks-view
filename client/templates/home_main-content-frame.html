@@ -52,13 +52,6 @@
           <input ng-model="date" type="text" placeholder="{{newDateObject.toString()}}"/>
         </datepicker>
       </div>-->
-      <datepicker date-format="M/d/yy h:mm a" selector="form-control" date-typer="true">
-        <div class="input-group">
-          <input class="form-control" placeholder="Choose a date"/>
-          <span class="input-group-addon" style="cursor: pointer">
-        </span>
-        </div>
-      </datepicker>
       <p class="small text-nowrap text-muted mt-5 well-title">
         <span>{{hc.fusion.applicable_rules.length}}</span> of <span>{{hc.fusion.applicable_rules.length}}</span> applicable rules
         <a data-toggle="collapse" data-target="#rules-filters-side-panel"
@@ -169,6 +162,15 @@
                             </div>
                           </li>
                           <li class="divider"></li>-->
+
+            Date: <datepicker date-format="M/d/yy h:mm a" selector="form-control" date-typer="true">
+              <div class="input-group">
+                <input class="form-control" placeholder="Choose a date"/>
+                <span class="input-group-addon" style="cursor: pointer"></span>
+              </div>
+            </datepicker>
+
+            Tags:
             <li ng-repeat="f in hc.fusion.applicable_rules_data.facet_counts.facet_fields.tags track by $index"
                 ng-if="($index % 2) == 0">
               <div class="btn-group btn-group-sm pull-right" data-toggle="buttons"
