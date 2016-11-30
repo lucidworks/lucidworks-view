@@ -206,10 +206,11 @@
       <!-- /.side-filters-panel -->
 
       <div class="list-group list-group-no-outline mb-0" id="rules-list-sidebar">
-        <div ng-repeat="rule in hc.fusion.applicable_rules | filter: { id: rulesQuery } track by $index">
+        <div ng-repeat="rule in hc.fusion.applicable_rules | filter: { ruleName: rulesQuery } track by $index">
           <a class="list-group-item collapse-by-icon"
              data-toggle="collapse" aria-expanded="false" data-parent="#rules-sidebar"
-             data-target="#{{hc.getUIId(rule.id)}}">
+             data-target="#{{hc.getUIId(rule.id)}}"
+             ng-if="hc.excluded_ids.indexOf(rule.id) == -1">
                  <span class="pull-right">
                     <i class="fa fa-angle-down"></i>
                     <i class="fa fa-angle-up"></i>
@@ -217,7 +218,7 @@
                  <span class="text-overflow">
                    <i ng-click="hc.updateRules($event, rule)"
                       ng-model="(hc.fusion.applicable_rules)"
-                      class="status mr-5" ng-class="{'bg-inactive':hc.simulation.excluded_ids.indexOf(rule.id) != -1 , 'bg-active': hc.simulation.excluded_ids.indexOf(rule.id) == -1}"></i>
+                      class="status mr-5" ng-class="{'bg-inactive':hc.singleExcluded_ids.indexOf(rule.id) != -1 , 'bg-active': hc.singleExcluded_ids.indexOf(rule.id) == -1}"></i>
                    <span ng-if="rule.ruleName">{{rule.ruleName.toString()}}</span>
                    <span ng-if="!rule.ruleName">{{rule.id}}</span>
                  </span>

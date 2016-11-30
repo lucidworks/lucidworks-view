@@ -31,6 +31,8 @@
       hc.lastQuery = '';
       hc.sorting = {};
       hc.grouped = false;
+      hc.excluded_ids = [];
+      hc.singleExcluded_ids = [];
 
       query = URLService.getQueryFromUrl();
       //Setting the query object... also populating the the view model
@@ -84,14 +86,14 @@
         console.log("===================");
         console.log(ids);
         if (include) {
-          _.remove(hc.simulation.excluded_ids, function(n) {
+          _.remove(hc.excluded_ids, function(n) {
             return ids.indexOf(n) != -1;
           });
         } else {
-          hc.simulation.excluded_ids = _.union(hc.simulation.excluded_ids, ids)
+          hc.excluded_ids = _.union(hc.excluded_ids, ids)
         }
 
-        console.log(hc.simulation.excluded_ids);
+        console.log(hc.excluded_ids);
         doSearch();
       };
 
@@ -99,15 +101,17 @@
         console.log("updateRules", rule);
         $event.stopPropagation();
 
-        var excludedIds = hc.simulation.excluded_ids;
-        var ruleIdIndex = excludedIds.indexOf(rule.id);
+        var singleExcludedIds = hc.singleExcluded_ids;
+        var ruleIdIndex = singleExcludedIds.indexOf(rule.id);
         if (ruleIdIndex != -1) {
-          excludedIds.splice(ruleIdIndex, 1);
+          singleExcludedIds.splice(ruleIdIndex, 1);
         } else {
-          excludedIds.push(rule.id);
+          singleExcludedIds.push(rule.id);
         }
+        hc.singleExcluded_ids = singleExcludedIds;
 
-        console.log(hc.simulation.excluded_ids);
+        console.log("singleExcluded_ids");
+        console.log(hc.singleExcluded_ids);
         doSearch();
       };
 
@@ -123,13 +127,21 @@
 
     hc.simulationExcluded = function (ruleId) {
       return hc.simulation && hc.simulation.excluded_ids &&
-             hc.simulation.excluded_ids.indexOf(ruleId) != -1;
+        hc.simulation.excluded_ids.indexOf(ruleId) != -1;
     };
 
     function excludedRules() {
+      console.log('excludedRules: EI, SEI, simEI');
+      console.log(hc.excluded_ids);
+      console.log(hc.singleExcluded_ids);
+      console.log(hc.simulation.singleExcluded_ids);
+      hc.simulation.excluded_ids = _.union(hc.excluded_ids, hc.singleExcluded_ids);
+      console.log('excludedRules-unoin');
+      console.log(hc.simulation.excluded_ids);
       if (!hc.simulation || !hc.simulation.excluded_ids) {
         return;
       }
+
 
       return _.chain(hc.simulation.excluded_ids).compact().value();
     }
@@ -183,17 +195,24 @@
      * Initializes a new search.
      */
     function doSearch() {
+      var prevSearchQuery = query.q;
+      console.log(prevSearchQuery);
       query = {
         q: hc.searchQuery,
         start: 0,
         fq: [] // TODO better solution for turning off fq on a new query
       };
-
-      var excRules = excludedRules();
-      if (excRules) {
-        query['rules.exclude'] = excRules;
+      if (prevSearchQuery == query.q || typeof(prevSearchQuery) == "undefined") {
+        var excRules = excludedRules();
+        if (excRules) {
+          query['rules.exclude'] = excRules;
+        }
+      }
+      else {
+        query['rules.exclude'] = [];
       }
 
+      console.log('doSearch');
       console.log(query);
       URLService.setQuery(query);
     }
@@ -218,13 +237,13 @@
       sorting.selectedSort = sort;
       var query = QueryService.getQueryObject();
       switch(sort.type) {
-      case 'text':
-        query.sort = sort.label+' '+sort.order;
-        URLService.setQuery(query);
-        break;
-      default:
-        delete query.sort;
-        URLService.setQuery(query);
+        case 'text':
+          query.sort = sort.label+' '+sort.order;
+          URLService.setQuery(query);
+          break;
+        default:
+          delete query.sort;
+          URLService.setQuery(query);
       }
     }
 

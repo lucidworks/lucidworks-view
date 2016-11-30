@@ -3,6 +3,8 @@ ul.dropdown-menu>li input{
 }
 ul.dropdown-menu>li input.addNewTag{
   float:none;
+  margin-bottom: 0;
+  padding-bottom: 10px;
 }
 .rule-name{
   font-size: 18px!important;

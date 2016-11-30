@@ -65,7 +65,7 @@
   }
 
   .well {
-
+    background: none;
     .with-states .btn-group-justified .btn + .btn {
       border-left-color: $well-bg;
     }
@@ -797,8 +797,20 @@
     .lw-panel {
       width: 100%;
       border: 1px solid rgb(233, 233, 233);
-      border-radius: 4px;
-      box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px;
+     /* border-radius: 4px;
+      box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px;*/
+      .is-active {
+        > .accordion-title {
+          background: #eeeeee;
+        }
+        > .accordion-content {
+          padding-top: 0;
+          padding-bottom: 0;
+          .block-list {
+            margin-bottom: 0;
+          }
+        }
+      }
     }
 
     //simulation applicable rules sidebar

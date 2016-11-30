@@ -6,11 +6,10 @@
 #sidebar {
   //padding: 0 !important;
   //background: #f9f9f9 !important;
-  background: #f9f9f9;
+  //  background: #f9f9f9;
   border-right: 1px solid #e7e7e7;
   // transition-timing-function: cubic-bezier(.76, -.245, .24, 1.245);
 }
-
 .search-box-outer{
   flex: 1;
 }
@@ -18,7 +17,10 @@
 .search-label{
   margin-bottom: 0;
 }
-
+.card {
+  border-radius: 0;
+  box-shadow: none;
+}
 .card-result-comment {
   margin-top: .75rem;
   .card-get-started,
