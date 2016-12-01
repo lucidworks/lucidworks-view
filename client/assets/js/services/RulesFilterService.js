@@ -109,7 +109,7 @@
             var facet = this.values.facets[key];
             for (var name in facet) {
               if (facet[name]) {
-                filterQuery.push(key + ":" + name);
+                filterQuery.push(key + ":\"" + name + "\"");
               }
             }
           }
