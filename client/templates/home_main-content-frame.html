@@ -52,13 +52,14 @@
           <input ng-model="date" type="text" placeholder="{{newDateObject.toString()}}"/>
         </datepicker>
       </div>-->
-      <datepicker date-format="M/d/yy h:mm a" selector="form-control" date-typer="true">
+
+      <!--<datepicker date-format="M/d/yy h:mm a" selector="form-control" date-typer="true">
         <div class="input-group">
           <input class="form-control" placeholder="Choose a date"/>
           <span class="input-group-addon" style="cursor: pointer">
         </span>
         </div>
-      </datepicker>
+      </datepicker>-->
       <p class="small text-nowrap text-muted mt-5 well-title">
         <span>{{hc.fusion.applicable_rules.length}}</span> of <span>{{hc.fusion.applicable_rules.length}}</span> applicable rules
         <a data-toggle="collapse" data-target="#rules-filters-side-panel"
@@ -84,6 +85,9 @@
       <!-- side-filters-panel -->
       <div class="well-holder collapse" id="rules-filters-side-panel">
         <div class="well">
+          <h6>Date</h6>
+          <adm-dtp ng-model='date' options="{default:'today'}"></adm-dtp>
+          <h6>Tags</h6>
           <ul class="list-unstyled with-states">
             <!--              <li>
                             <div class="row hor-gut-10">

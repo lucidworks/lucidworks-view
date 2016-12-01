@@ -817,3 +817,118 @@
     .showrules {
       overflow-y: auto;
     }
+    // ANGULAR DATEPICKER
+    .ADMdtp-container {
+      .masterInput {
+        input, input:focus {
+          border: none;
+          border-bottom: 1px solid #ddd;
+          border-radius: 0;
+          box-shadow: none;
+          font-size: 1em;
+        }
+        .iconContainer, .removeIcon {
+          display: none;
+        }
+      }
+      .ADMdtp-calendar-container {
+        width: 17em;
+        height: 22em;
+        font-size: 1em;
+        font-family: Roboto;
+        header {
+          font-size: 1.1em;
+          font-weight: bold;
+        }
+        .arrow.right:hover,
+        .arrow.left:hover {
+          color: #666;
+        }
+        .daysNames {
+          font-size: 0.8em;
+          > span {
+            color: #666;
+          }
+        }
+        .days>span {
+          >span.selected {
+            width: 2.4em;
+            height: 2.4em;
+            background: #337ab7 !important;
+          }
+          >span:not(.disable):hover {
+            background: #ddd;
+            color: #666;
+          }
+          >span.today:after {
+            border-bottom: 0.7em solid #337ab7;
+          }
+        }
+        footer {
+          height: 1.9em;
+          .calTypeContainer {
+            display: none;
+          }
+          .today {
+            color: #666;
+          }
+          .timeSelectIcon {
+            fill: #666;
+          }
+          .timeSelectIcon:hover {
+            fill: #444;
+          }
+        }
+        .timePickerContainer {
+          .timePicker {
+            span.dtpIcon svg,
+            span.dtpIcon svg:hover {
+              fill: #666;
+            }
+            span.dtpIcon:hover:before {
+              background: #ddd;
+            }
+          }
+          .calendarIcon:after {
+            border-top: 3em solid #337ab7;
+          }
+        }
+        .monthPickerContainer {
+          background: none;
+          .calendarIcon:after {
+            border-top: 3em solid #337ab7;
+          }
+          .monthContainer {
+            span > span {
+              background: none;
+              border: none;
+              border-radius: 0;
+              &.selected {
+                background: #337ab7;
+                color: #fff;
+              }
+            }
+            .yearContainer {
+              p:before {
+                padding-top: 5px;
+              }
+              p:hover, p:hover:before {
+                color: #444;
+                border-color: #444;
+              }
+              .arrow {
+                font-size: 0.8em;
+                top: -0.3em;
+              }
+            }
+          }
+        }
+        .monthPickerContainer:before,
+        .monthPickerContainer:after {
+          background: none;
+        }
+        .dtpNewBox .calendarIcon:after {
+          border-top: 3em solid #337ab7;
+        }
+      }
+    }

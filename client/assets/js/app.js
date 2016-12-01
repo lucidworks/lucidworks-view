@@ -22,7 +22,7 @@
       'lucidworksView.controllers',
 
       //Datepicker
-      '720kb.datepicker'
+      'ADM-dateTimePicker'
     ])
     .constant('_', window._) //eslint-disable-line
     .config(config)
