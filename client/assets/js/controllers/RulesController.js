@@ -15,7 +15,7 @@
 
   function setModalMaxHeight(element) {
     var $element = $(element),
-      $content = $element.find('.modal-content');
+      $content = $element.find('#addRule .modal-content');
     var borderWidth = $content.outerHeight() - $content.innerHeight();
     var dialogMargin = $(window).width() < 768 ? 20 : 60;
     var contentHeight = $(window).height() - (dialogMargin + borderWidth);
@@ -125,6 +125,9 @@
         $scope.policyList = rulesConfig.set_params.policies;
         $scope.productList = rulesConfig.documentFields;
         $scope.predefinedTags = rulesConfig.tags;
+        $scope.checkedRulesIds = [];
+        $scope.noConfirmRemove = {bulkRemove: {checked: false, activated: false}, singleRemove: {checked: false, activated: false}};
+        $scope.masterBox = false;
 
         UserService.init();
 
@@ -359,51 +362,66 @@
         };
 
         $scope.checkUncheckAll = function (operation) {
-          var masterBox = $('#selectAllBoxes');
-          var checkboxes = $('.ruleCheckbox');
+          var masterBox = $scope.masterBox;
+          var firstOnPage = rulesFilterService.rulesFrom();
+          var lastOnPage = rulesFilterService.rulesTo();
           if (operation == 'all') {
-            masterBox[0].checked = true;
+            masterBox = true;
           } else if (operation == 'none') {
-            masterBox[0].checked = false;
+            masterBox = false;
           }
-          if (masterBox[0].checked) {
-            for (var i = 0; i < checkboxes.length; i++) {
-              checkboxes[i].checked = true;
-            }
+          if (masterBox) {
+            var checkedRulesIds = $scope.rules.map(function(item, key) {if ((key >= firstOnPage) && (key <= lastOnPage)) {return item.id;}});
+            checkedRulesIds = $.grep(checkedRulesIds,function(n){ return n == 0 || n });
+            $scope.checkedRulesIds = angular.copy(checkedRulesIds, $scope.checkedRulesIds);
           } else {
-            for (var i = 0; i < checkboxes.length; i++) {
-              checkboxes[i].checked = false;
-            }
+            $scope.checkedRulesIds.splice(0, $scope.checkedRulesIds.length);
+            masterBox = false;
           }
+          $scope.masterBox = masterBox;
+          // $scope.getCheckedBoxesCount();
         };
 
         $scope.removeRule = function (id) {
           var ruleIndex = findIndexById(id);
+          var checkedRuleIndex = $scope.checkedRulesIds.indexOf(id);
           var rule = $scope.rules[ruleIndex];
           if (!rule) {
             console.log("delete error: rule with id '" + id + "' not found.");
             return;
           }
-
-          if (!confirm('Are you sure want to delete rule "' + (rule.ruleName || id) + '"')) {
-            return;
-          }
-
           console.log("delete - " + id);
           $scope.rules.splice(ruleIndex, 1);
+          $scope.checkedRulesIds.splice(checkedRuleIndex, 1);
           $scope.rulesTotal -= 1;
 
           rulesService.delete(id);
         };
 
-        $scope.bulkRemoveRules = function () {
-          var ruleArray = $('.ruleCheckbox');
-          var masterBox = $('#selectAllBoxes');
-          masterBox.checked = false;
-          for (var i = 0, l = ruleArray.length; i < l; i++) {
-            if (ruleArray[i].checked)
-              $scope.removeRule(ruleArray[i].value);
+        $scope.checkNoConfirmDelete = function () {
+          var bulkRemoveNoConfirm = $scope.noConfirmRemove.bulkRemove.activated;
+          var singleRemoveNoConfirm = $scope.noConfirmRemove.singleRemove.activated;
+          var checkedRules = $scope.checkedRulesIds;
+
+          if (checkedRules.length == 1 && singleRemoveNoConfirm) {
+            $scope.removeRule(checkedRules[0]);
           }
+          if (checkedRules.length > 1 && bulkRemoveNoConfirm) {
+            $scope.bulkRemoveRules();
+          }
+        };
+
+        $scope.bulkRemoveRules = function () {
+          var checkedRules = $scope.checkedRulesIds;
+
+          var i = checkedRules.length;
+          while (i--) {
+            $scope.removeRule(checkedRules[i]);
+          }
+
+          $scope.masterBox = false;
+          $scope.noConfirmRemove.bulkRemove.activated = $scope.noConfirmRemove.bulkRemove.checked;
+          $scope.noConfirmRemove.singleRemove.activated = $scope.noConfirmRemove.singleRemove.checked;
         };
 
         $scope.bulkStatus = function (enabled) {
@@ -451,16 +469,7 @@
         };
 
         $scope.getCheckedBoxesCount = function () {
-          var checkedCount = document.querySelectorAll('input.ruleCheckbox:checked').length;
-          var bulkActions = $('#bulk-actions');
-          var bulkDropdown = $('#bulk-dropdown');
-          if (checkedCount == 0) {
-            bulkActions.attr('disabled', 'disabled');
-            bulkDropdown.css('visibility', 'hidden');
-          } else {
-            bulkActions.removeAttr('disabled');
-            bulkDropdown.css('visibility', 'visible');
-          }
+          var checkedCount = $scope.checkedRulesIds.length;
           // TODO enable tags inputs
           //$('.triggerTags').tagsinput({tagClass: "label label-default"});
           $('.datepicker').datetimepicker({format: "YYYY-MM-DDTHH:mm"});

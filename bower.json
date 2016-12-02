@@ -41,7 +41,8 @@
     "angular-mocks": "~1.5.0",
     "html5-boilerplate": "^5.3.0",
     "ng-tags-input": "^3.1.1",
-    "adm-dtp": "^1.1.4"
+    "adm-dtp": "*",
+    "checklist-model": "^0.10.0"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.10"

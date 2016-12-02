@@ -78,7 +78,7 @@ controller: rulesController as rc
           <div class="btn-group checkbox-inside">
             <div class="btn">
               <div class="checkbox">
-                <label><input type="checkbox" id="selectAllBoxes" ng-click="checkUncheckAll(); resetFocus();"></label>
+                <label><input type="checkbox" id="selectAllBoxes" ng-click="checkUncheckAll(); resetFocus();" ng-model="masterBox" ng-value="true"></label>
               </div>
             </div>
             <a href="javascript:void(0);" class="btn dropdown-toggle" data-toggle="dropdown">
@@ -94,16 +94,21 @@ controller: rulesController as rc
               </li>
             </ul>
           </div>
-          <span class="small text-muted checkbox-inside-hint">{{getCheckedBoxesCount() + (getCheckedBoxesCount()==1 ? ' rule selected':' rules selected')}}</span>
+          <span class="small text-muted checkbox-inside-hint">{{checkedRulesIds.length + (checkedRulesIds.length==1 ? ' rule selected':' rules selected')}}</span>
           <div class="btn-group btn-group-lg">
-            <a href="javascript:void(0);" class="btn btn-link dropdown-toggle" data-toggle="dropdown" id="bulk-actions">
+            <a href="javascript:void(0);" class="btn btn-link dropdown-toggle" data-toggle="dropdown" id="bulk-actions" ng-disabled="checkedRulesIds.length == 0">
               <i class="fa fa-clone"></i>
               Bulk actions
               <span class="caret"></span>
             </a>
-            <ul class="dropdown-menu with-states min-w-280" id="bulk-dropdown">
+            <ul class="dropdown-menu with-states min-w-280" ng-class="{'hidden':checkedRulesIds.length == 0}" id="bulk-dropdown">
               <li>
-                <a class="text-overflow" href="javascript:void(0);" ng-click="bulkRemoveRules()"><i class="fa fa-times"></i>Delete selected rules</a>
+                <a class="text-overflow" href="javascript:void(0);" data-toggle="modal" data-target="#singleDeleteConfirm"
+                   ng-click="checkNoConfirmDelete()"
+                   ng-if="checkedRulesIds.length == 1"><i class="fa fa-times"></i>Delete selected rules</a>
+                <a class="text-overflow" href="javascript:void(0);" data-toggle="modal" data-target="#bulkDeleteConfirm"
+                   ng-click="checkNoConfirmDelete()"
+                   ng-if="checkedRulesIds.length > 1"><i class="fa fa-times"></i>Delete selected rules</a>
               </li>
               <li class="divider"></li>
               <li>
@@ -243,11 +248,12 @@ controller: rulesController as rc
         </thead>
         <!-- TBODY -->
         <tbody>
-        <tr class="inactive {{rule.id}}" data-ruleId="{{rule.id}}" ng-repeat="rule in rules">
+        <tr class="inactive {{rule.id}}" data-ruleId="{{rule.id}}" ng-repeat="rule in rules track by $index"
+            ng-if="($index >= filter.rulesFrom()) && ($index <= filter.rulesTo())">
           <td>
             <div class="column-holder">
               <div class="checkbox">
-                <label><input type="checkbox" class="ruleCheckbox" ng-value="rule.id" ng-click="getCheckedBoxesCount(); resetFocus();"></label>
+                <label><input type="checkbox" class="ruleCheckbox" checklist-model="checkedRulesIds" checklist-value="rule.id"  ng-click="getCheckedBoxesCount(); resetFocus();"></label>
               </div>
             </div>
           </td>
@@ -433,7 +439,7 @@ controller: rulesController as rc
       </table>
       <div class="row table-footer">
         <div class="col-sm-6">
-          <p class="small text-nowrap"><span>Rules {{filter.rulesFrom()}} - {{rulesTotal < filter.rulesTo() ? rulesTotal : filter.rulesTo()}}</span> of <span>{{rulesTotal}}</span> </p>
+          <p class="small text-nowrap"><span>Rules {{rulesTotal == 0 ? rulesTotal : filter.rulesFrom()+1}} - {{rulesTotal < filter.rulesTo() ? rulesTotal : filter.rulesTo()+1}}</span> of <span>{{rulesTotal}}</span> </p>
         </div>
         <div class="col-sm-6 text-right">
           <a href="javascript:void(0)" class="btn btn-sm btn-link" ng-click="prev()" ng-class="filter.hasPrev() ? '' : 'text-muted'" ><i class="fa fa-angle-left"></i>Previous</a>
@@ -633,4 +639,45 @@ controller: rulesController as rc
     </div>
   </div>
 
+  <div id="singleDeleteConfirm" data-show="true" class="modal fade deleteRule"
+       ng-if="checkedRulesIds.length == 1 && !noConfirmRemove.singleRemove.activated">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <p>
+          Are you sure want to delete rule:
+          <span ng-repeat="rule in rules |  filter: { id: checkedRulesIds[0] }">{{rule.ruleName.toString()}}</span>
+        </p>
+        <div class="modal-footer">
+          <label>Remember
+            <input type="checkbox"
+                   ng-model="noConfirmRemove.singleRemove.checked"
+                   ng-value="true">
+          </label>
+          <button type="button" class="btn btn-link text-muted" data-dismiss="modal" aria-hidden="true"></i> Cancel</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="singleDeleteConfirmButton" aria-hidden="true" ng-click="bulkRemoveRules()"> Delete</button>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+  <div id="bulkDeleteConfirm" data-show="true" class="modal fade deleteRule"
+       ng-if="checkedRulesIds.length > 1 && !noConfirmRemove.bulkRemove.activated">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <p>
+          Are you sure want to delete rules:
+          <ul><li  ng-repeat="rule in rules" ng-if="checkedRulesIds.indexOf(rule.id) != -1">{{rule.ruleName.toString()}}</li></ul>
+        </p>
+        <div class="modal-footer">
+          <label>Remember
+            <input type="checkbox"
+                   ng-model="noConfirmRemove.bulkRemove.checked"
+                   ng-value="true">
+          </label>
+          <button type="button" class="btn btn-link text-muted" data-dismiss="modal" aria-hidden="true"> Cancel</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="bulkDeleteConfirmButton" aria-hidden="true" ng-click="bulkRemoveRules()"> Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

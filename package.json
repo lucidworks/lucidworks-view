@@ -75,6 +75,7 @@
   },
   "engine": "node >=5.2.0",
   "dependencies": {
-    "adm-dtp": "^1.1.4"
+    "adm-dtp": "^1.1.4",
+    "checklist-model": "^0.10.0"
   }
 }

@@ -834,6 +834,7 @@
       .ADMdtp-calendar-container {
         width: 17em;
         height: 22em;
+        height: 24em;
         font-size: 1em;
         font-family: Roboto;
         header {
@@ -865,7 +866,7 @@
           }
         }
         footer {
-          height: 1.9em;
+          height: 3em;
           .calTypeContainer {
             display: none;
           }
@@ -929,6 +930,33 @@
         }
         .dtpNewBox .calendarIcon:after {
           border-top: 3em solid #337ab7;
+        }
+      }
+    }
+    .deleteRule {
+      margin: auto;
+      .modal-content {
+        padding: 30px;
+        line-height: 2;
+        p {
+          font-size: 1em;
+        }
+        ul {
+          padding-left: 20px;
+          font-size: 1em;
+          overflow-y: auto;
+          max-height: calc(100vh - 210px);
+        }
+        .modal-footer {
+          padding: 40px 0 0 0;
+          label {
+            padding-right: 70px;
+            position: relative;
+            left: 0;
+            input {
+              margin: 0 10px;
+            }
+          }
         }
       }
     }

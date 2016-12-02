@@ -22,7 +22,9 @@
       'lucidworksView.controllers',
 
       //Datepicker
-      'ADM-dateTimePicker'
+      'ADM-dateTimePicker',
+
+      'checklist-model'
     ])
     .constant('_', window._) //eslint-disable-line
     .config(config)

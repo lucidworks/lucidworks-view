@@ -35,7 +35,7 @@
         },
 
         rulesTo: function () {
-          return (this.values.pageNum + 1) * this.values.pageSize
+          return (this.values.pageNum + 1) * this.values.pageSize -1;
         },
 
         filterBy: function (field, value) {
