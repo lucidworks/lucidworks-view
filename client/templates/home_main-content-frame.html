@@ -184,9 +184,6 @@
                 <label class="btn btn-link" ng-click="hc.includeRulesWithTag(f, true)">
                   <input type="radio" name="options" id="option1" autocomplete="off">Include
                 </label>
-                <label class="btn-uncheckable btn-link disabled active">
-                  <input type="radio" name="options" id="option2" autocomplete="off" disabled="" checked="">N/A
-                </label>
                 <label class="btn btn-link" ng-click="hc.includeRulesWithTag(f, false)">
                   <input type="radio" name="options" id="option3" autocomplete="off">Exclude
                 </label>
@@ -194,8 +191,6 @@
                   <span class="text-overflow ng-binding">
                      <i class="fa fa-tag text-muted-light"></i>
                     {{hc.fusion.applicable_rules_data.facet_counts.facet_fields.tags[$index]}}
-                    ({{hc.fusion.applicable_rules_data.facet_counts.facet_fields.tags[$index+1]}} /
-                    {{hc.fusion.applicable_rules_data.facet_counts.facet_fields.drill_down_tags[$index+1]}})
                   </span>
             </li>
             <!-- </ul> -->

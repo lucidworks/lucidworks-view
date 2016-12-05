@@ -128,6 +128,7 @@
         $scope.checkedRulesIds = [];
         $scope.noConfirmRemove = {bulkRemove: {checked: false, activated: false}, singleRemove: {checked: false, activated: false}};
         $scope.masterBox = false;
+        $scope.checkedTags = {};
 
         UserService.init();
 
@@ -188,6 +189,13 @@
           setActivator(".rules-list .btn-cancel");
 
           initInRowDateTriggers();
+
+          function setTagsCheck () {
+            for (var i = 0, l = $scope.facets.tags.length; i < l; i++) {
+              $scope.checkedTags[$scope.facets.tags[i][0]] = -1;
+            }
+          }
+          setTagsCheck ();
         }
 
         function findIndexById(id) {
@@ -256,6 +264,26 @@
             errorMessage(null, null);
           }
         };
+
+        $scope.changeTagsChecked = function (val, tag) {
+          console.log(val);
+          if (val == "na") {
+            var tags = {}
+              $.each( $scope.checkedTags, function( key, value ) {
+              tags[key]= -1;
+            });
+            $scope.checkedTags = tags;
+            console.log('na');
+            console.log($scope.checkedTags)
+          }
+          if (val == "off") {
+            $scope.checkedTags[tag] = 0;
+          }
+          if (val == "on") {
+            $scope.checkedTags[tag] = 1;
+          }
+
+        }
 
         function setViewDates(rule, triggerStartArray, triggerEndArray) {
           if (triggerStartArray[0] && triggerStartArray[0].value) {
@@ -467,6 +495,7 @@
             }
             $scope.updateRule(rule.id);
           }
+          console.log($scope.facets);
         };
 
         $scope.getCheckedBoxesCount = function () {
@@ -561,6 +590,7 @@
         $scope.next = function () {
           if ($scope.filter.hasNext($scope.rulesTotal)) {
             $scope.search($scope.filter.next());
+            $scope.checkUncheckAll('none');
           }
         };
 
@@ -568,6 +598,7 @@
           // TODO change logic
           if ($scope.filter.hasPrev()) {
             $scope.search($scope.filter.prev());
+            $scope.checkUncheckAll('none');
           }
         };
 

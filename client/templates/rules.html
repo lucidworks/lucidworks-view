@@ -130,14 +130,14 @@ controller: rulesController as rc
 
               <li ng-repeat="f in facets.tags">
                 <div class="btn-group btn-group-sm pull-right" data-toggle="buttons">
-                  <label class="btn btn-link" ng-click="bulkAddTag(f[0], false)">
-                    <input type="radio" name="options" id="option1" autocomplete="off">On
+                  <label class="btn btn-link" ng-click="bulkAddTag(f[0], false); changeTagsChecked('on', f[0])"ng-class="{active: checkedTags[f[0]] == 1}">
+                    <input type="radio" name="{{f[0]}}" id="option1" autocomplete="off">On
                   </label>
-                  <label class="btn-uncheckable btn-link disabled active">
-                    <input type="radio" name="options" id="option2" autocomplete="off" disabled checked>N/A
+                  <label class="btn-uncheckable btn-link disabled" ng-class="{active: checkedTags[f[0]] == -1}">
+                    <input type="radio" name="{{f[0]}}" id="option2" autocomplete="off" disabled checked>N/A
                   </label>
-                  <label class="btn btn-link" ng-click="bulkAddTag(f[0], true)">
-                    <input type="radio" name="options" id="option3" autocomplete="off">Off
+                  <label class="btn btn-link" ng-class="{active: checkedTags[f[0]] == 0}" ng-click="bulkAddTag(f[0], true); changeTagsChecked('off', f[0])">
+                    <input type="radio" name="{{f[0]}}" id="option3" autocomplete="off">Off
                   </label>
                 </div>
                   <span class="text-overflow">
@@ -157,8 +157,10 @@ controller: rulesController as rc
           </div>
         </div>
         <div class="col-sm-6 text-right">
+          <hide-dropdown></hide-dropdown>
           <div class="btn-group btn-group-lg">
-            <a href="javascript:void(0);" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+            <a href="javascript:void(0);" class="btn btn-link dropdown-toggle" data-toggle="dropdown" >
+
               <i class="mi-filter_list"></i>
               Filter
               <span class="caret"></span>
@@ -212,11 +214,11 @@ controller: rulesController as rc
             <li class="text-right">
               <div class="btn-group" role="group" id="applyFilters">
                 <div>
-                  <button class="btn btn-sm btn-link" type="button" ng-click="resetFilter()"><i class="fa fa-undo"></i>Reset</button>
+                  <button class="btn btn-sm btn-link" type="button" ng-click="resetFilter()" data-toggle="dropdown"><i class="fa fa-undo"></i>Reset</button>
                 </div>
                 <div>
-                  <button class="btn btn-sm btn-link" type="button"><i class="fa fa-times"></i>Cancel</button>
-                  <a class="btn btn-sm btn-default" href="javascript:void(0);" ng-click="applyFilter()"><i class="fa fa-check"></i> Apply</a>
+                  <button class="btn btn-sm btn-link" type="button" data-toggle="dropdown"><i class="fa fa-times"></i>Cancel</button>
+                  <a class="btn btn-sm btn-default" href="javascript:void(0);" ng-click="applyFilter()" data-toggle="dropdown"><i class="fa fa-check"></i> Apply</a>
                 </div>
               </div>
             </li>
@@ -253,7 +255,7 @@ controller: rulesController as rc
           <td>
             <div class="column-holder">
               <div class="checkbox">
-                <label><input type="checkbox" class="ruleCheckbox" checklist-model="checkedRulesIds" checklist-value="rule.id"  ng-click="getCheckedBoxesCount(); resetFocus();"></label>
+                <label><input type="checkbox" class="ruleCheckbox" checklist-model="checkedRulesIds" checklist-value="rule.id"  ng-click="getCheckedBoxesCount(); resetFocus(); changeTagsChecked('na')"></label>
               </div>
             </div>
           </td>
