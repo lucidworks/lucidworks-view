@@ -145,7 +145,7 @@ controller: rulesController as rc
                   </span>
               </li>
 
-              <li>
+              <li ng-if="facets.tags.length == 0">
                 <div class="complex-input mb-20">
                   <span class="input-addon"><i class="fa fa-tag text-muted"></i></span>
                   <form ng-submit="bulkAddTag(customTag, false, true)">

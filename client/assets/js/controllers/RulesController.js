@@ -440,31 +440,32 @@
          * @param remove {Boolean} true if we want to remove tag, otherwise add them
          */
         $scope.bulkAddTag = function (tag, remove, isNewTag) {
-          var ruleArray = $('.ruleCheckbox');
-          for (var i = 0, l = ruleArray.length; i < l; i++) {
-            if (ruleArray[i].checked) {
-              var rule = findRuleById(ruleArray[i].value);
-              if (remove) {
-                if (rule.viewTags) {
-                  _.remove(rule.viewTags, function(tagO) {
-                    return tagO && tagO.text === tag;
-                  });
-                }
-              } else {
-                if (!rule.viewTags) {
-                  rule.viewTags = [];
-                }
-
-                if (!_.find(rule.viewTags, function (t) { return t.text === tag })) {
-                  rule.viewTags.push({text: tag});
-                }
+          var firstOnPage = rulesFilterService.rulesFrom();
+          var lastOnPage = rulesFilterService.rulesTo();
+          var ruleArray = $scope.rules.slice(firstOnPage, lastOnPage+1);
+          var checkedRuleArray = $scope.checkedRulesIds;
+          for (var i = 0, l = checkedRuleArray.length; i < l; i++) {
+            var rule = findRuleById(checkedRuleArray[i]);
+            if (remove) {
+              if (rule.viewTags) {
+                _.remove(rule.viewTags, function(tagO) {
+                  return tagO && tagO.text === tag;
+                });
+              }
+            } else {
+              if (!rule.viewTags) {
+                rule.viewTags = [];
               }
 
-              if (isNewTag) {
-                $scope.facets.tags.push([tag, 1]);
+              if (!_.find(rule.viewTags, function (t) { return t.text === tag })) {
+                rule.viewTags.push({text: tag});
               }
-              $scope.updateRule(ruleArray[i].value);
             }
+
+            if (isNewTag) {
+              $scope.facets.tags.push([tag, 1]);
+            }
+            $scope.updateRule(rule.id);
           }
         };
 
