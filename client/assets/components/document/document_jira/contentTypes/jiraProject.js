@@ -36,6 +36,7 @@
     }
 
     function processDocument(doc) {
+      doc._lw_id_decoded = doc.id ? decodeURIComponent(doc.id) : doc.id;
       doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(doc);
       doc.page = PaginateService.getNormalizedCurrentPage();
       return doc;
