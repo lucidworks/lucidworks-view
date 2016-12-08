@@ -62,7 +62,7 @@
 
       doc.lw_image = getField('image', doc);
 
-      doc.lw_url = getField('head_url', doc);
+      doc.lw_url = decodeURIComponent(getField('head_url', doc));
 
       doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(doc);
       doc.position = vm.position;
