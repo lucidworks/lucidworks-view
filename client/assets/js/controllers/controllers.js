@@ -4,5 +4,6 @@ angular.module('lucidworksView.controllers', [
   'lucidworksView.controllers.login',
   'lucidworksView.controllers.rules',
   'lucidworksView.controllers.config',
-  'lucidworksView.controllers.simulation'
+  'lucidworksView.controllers.simulation',
+  'lucidworksView.controllers.addRules'
 ]);

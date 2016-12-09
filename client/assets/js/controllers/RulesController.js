@@ -20,38 +20,6 @@
     });
   }
 
-  function emptyRule() {
-    return {
-      createdAt: Date.now(),
-
-      display_type: 'Choose rule type',
-      ruleName: '',
-      description: '',
-
-      search_terms: undefined,
-      matching: undefined,
-
-      viewFilters: [[], []],
-      viewDates: [[], []],
-      viewTags: '',
-
-      values: '',
-
-      // Set Params Type params
-      param_keys: [],
-      param_values: [],
-      param_policies: [],
-
-      // response_value rule type
-      field_name: undefined,
-      field_values: undefined,
-
-      keywordsFlag: false,
-      categoryFlag: false,
-      tagsFlag: false
-    };
-  }
-
   angular
     .module('lucidworksView.controllers.rules', [
         'lucidworksView.services.rules',
@@ -60,8 +28,7 @@
         "lucidworksView.services.user",
         'lucidworksView.services.config',
         'lucidworksView.services.auth',
-        'ngTagsInput',
-        'ADM-dateTimePicker'
+        'ngTagsInput'
     ])
     .controller('rulesController', ['$scope', '$http', '$timeout', 'RulesService', 'RulesTransformerService', 'RulesFilterService', "UserService", 'ConfigService', 'AuthService',
       function ($scope, $http, $timeout, rulesService, rulesTransformerService,  rulesFilterService, UserService, ConfigService, AuthService) {
@@ -78,9 +45,6 @@
         $scope.masterBox = false;
         $scope.checkedTags = {};
         $scope.disabledRuleEdit = true;
-        $scope.addRuleInvalid = {'general': false, 'trigger': false, 'params': false};
-        $scope.invalidDeteRange = [];
-        $scope.emptyDete = [];
 
         UserService.init();
 
@@ -178,50 +142,17 @@
           throw "Error: rule with '" + id + "' not found.";
         }
 
-        $scope.triggerDates = [];
-        $scope.categories = [];
-        $scope.setParams = [' '];
-
-        $scope.currentRule = emptyRule();
-
         $scope.filter = rulesFilterService;
 
         $scope.checkSession = function () {
           var res = AuthService.getSession();
         };
 
-        function errorMessage(errorCode, status, message) {
-          var addRule = $('#addRule');
-          if (status == null && status == null) {
-            addRule.find('.alert').removeClass('alert-warning');
-            addRule.find('.alert').hide();
-          }
-
-          addRule.find('.alert').addClass('alert-warning');
-          addRule.find('.err-code').html(errorCode);
-          if (message) {
-            addRule.find('.err-more').show();
-            $('#addRuleErrorDetails').html(message);
-          } else {
-            addRule.find('.err-more').hide();
-          }
-          addRule.find('.err-message').html(status);
-        }
-
-        $scope.validateTags = function() {
-          if (tags && tags.$valid === false) {
-            errorMessage(null, "invalid tag name");
-            return;
-          } else if (tags && tags.$valid === true) {
-            errorMessage(null, null);
-          }
-        };
-
         $scope.changeTagsChecked = function (val, tag) {
           console.log(val);
           if (val == "na") {
-            var tags = {}
-              $.each( $scope.checkedTags, function( key, value ) {
+            var tags = {};
+            $.each( $scope.checkedTags, function( key, value ) {
               tags[key]= -1;
             });
             $scope.checkedTags = tags;
@@ -234,8 +165,7 @@
           if (val == "on") {
             $scope.checkedTags[tag] = 1;
           }
-
-        }
+        };
 
         function setViewDates(rule, triggerStartArray, triggerEndArray) {
           if (triggerStartArray[0] && triggerStartArray[0].value) {
@@ -245,149 +175,6 @@
             }
           }
         }
-
-
-        $scope.addRule = function () {
-          var rule = {
-            display_type: $scope.currentRule.display_type,
-            ruleName: $scope.currentRule.ruleName,
-            description: $scope.currentRule.description,
-            search_terms: $scope.currentRule.search_terms,
-            matching: $scope.currentRule.matching,
-
-            viewTags: $scope.currentRule.viewTags,
-            viewDates: $scope.currentRule.viewDates,
-            viewFilters: $scope.currentRule.viewFilters,
-
-            values: $scope.currentRule.values,
-
-            param_keys: $scope.currentRule.param_keys,
-            param_values: $scope.currentRule.param_values,
-            param_policies: $scope.currentRule.param_policies,
-
-            field_name: $scope.currentRule.field_name,
-            field_values: $scope.currentRule.field_values,
-
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-            enabled: [true]
-          };
-
-
-          var ruleName = $('#addRuleName');
-          var addRuleButton = $('#addRuleButton');
-
-          addRuleButton.removeAttr('data-dismiss');
-          var tags = $scope.addRuleTriggerForm.tags;
-          if (tags && tags.$valid === false) {
-            errorMessage(null, "invalid tag name");
-            return;
-          } else if (tags && tags.$valid === true) {
-            errorMessage(null, null);
-          }
-
-          if (!$scope.validateRuleCreation(rule)) {
-            return;
-          }
-
-          //ruleName[0].placeholder = 'Enter rule name';
-          //addRuleButton.attr('data-dismiss', 'modal');
-
-          setViewDates(rule, $('.add-trigger-start'), $('.add-trigger-end'));
-
-          rulesService.add(rulesTransformerService.viewRuleToModel(rule), function () {
-            addRuleButton.attr('data-dismiss', 'modal');
-            $('#addRule').modal('hide');
-
-            $('.addRuleForm').each(function (index, form) {
-              form.reset()
-            });
-
-            $scope.currentRule = emptyRule();
-            $scope.categories = [];
-            $scope.triggerDates = [];
-            $scope.setParams = [' '];
-            $scope.invalidFormMarkersClear ();
-
-            rulesService.findByName(rule.ruleName, function (response) {
-              var data = response.data.response;
-
-              if (data.numFound < 1) {
-                console.log("!!! Error saving rule");
-              } else if (data.numFound == 1) {
-                rule.id = data.docs[0].id;
-
-                $scope.rules = [rule].concat($scope.rules);
-                $scope.rulesTotal++;
-
-                if ($scope.rules[$scope.rules.length - 1] == undefined) {
-                  $scope.rules.pop();
-                }
-
-                $timeout(pageInit, 1);
-              } else {
-                console.log("!!! Founded more then one rule with the same name :(");
-              }
-            });
-
-          }, function (resp) {
-            errorMessage(resp.status, resp.statusText, resp.data);
-          });
-        };
-
-        $scope.invalidRangeClear = function (index) {
-          $scope.invalidDeteRange[index] = false;
-        };
-
-        $scope.invalidFormMarkersClear = function () {
-          $scope.addRuleInvalid.general = false;
-          $scope.addRuleInvalid.trigger = false;
-          $scope.addRuleInvalid.params = false;
-        };
-
-        $scope.validateRuleCreation = function (rule) {
-          $scope.invalidFormMarkersClear ();
-          if ($scope.currentRule.display_type == 'Choose rule type') {
-            $scope.generalForm.chooseRuleType.$setValidity("required", false);
-          }
-
-          if (rule.viewDates[0].length) {
-            for (var i = 0, l = rule.viewDates[0].length; i < l; i++) {
-              var start = new Date(rule.viewDates[0][i]).getTime();
-              var end = new Date(rule.viewDates[1][i]).getTime();
-              $scope.invalidDeteRange[i] = false;
-              console.log(start);
-              console.log(end);
-              if (start >= end && end) {
-                $scope.addRuleInvalid.trigger = true;
-                $scope.invalidDeteRange[i] = true;
-              }
-              if (!start && !end) {
-                $scope.addRuleInvalid.trigger = true;
-                $scope.emptyDete[i] = true;
-              }
-            }
-          }
-          if(!$scope.generalForm.$valid) {
-            $scope.addRuleInvalid.general = true;
-          }
-          if(!$scope.addRuleTriggerForm.$valid || $scope.addRuleInvalid.trigger) {
-            $scope.addRuleInvalid.trigger = true;
-          }
-          if(!$scope.paramsForm.$valid) {
-            $scope.addRuleInvalid.params = true;
-          }
-          return (!$scope.addRuleInvalid.general && !$scope.addRuleInvalid.trigger && !$scope.addRuleInvalid.params);
-        };
-
-        $scope.cancelRule = function () {
-          $scope.currentRule = emptyRule();
-          $scope.categories = [];
-          $scope.triggerDates = [];
-          $scope.setParams = [' '];
-          $scope.invalidFormMarkersClear ();
-          ruleFormReset();
-        };
 
         $scope.checkUncheckAll = function (operation) {
           var masterBox = $scope.masterBox;
@@ -629,18 +416,6 @@
           $scope.filter.values.endDate = $('#filterEnd')[0].value;
 
           $scope.search();
-        };
-        $scope.setScrollToBottom = function(sectionNum, $scope, $element) {
-          console.log ('ToBotom');
-          setTimeout(function () {
-            var section = angular.element($('div.add-rule-section'))[sectionNum];
-            var isScrolledToBottom = section.scrollHeight - section.clientHeight <= section.scrollTop;
-            console.log(sectionNum);
-            if (!isScrolledToBottom) {
-              section.scrollTop = section.scrollHeight - section.clientHeight + 160;
-              console.log(section.scrollTop);
-            }
-          }, 0);
         };
     }]);
 
