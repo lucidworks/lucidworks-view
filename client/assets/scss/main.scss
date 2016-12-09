@@ -1021,7 +1021,13 @@
   }
 }
 
+tags-input.ng-invalid .tags {
+  box-shadow: none;
+}
 form.invalid-form {
+  tags-input.ng-invalid .tags input{
+    border-bottom: 3px solid #e51c23;
+  }
   input.ng-invalid,
   select.ng-invalid,
   textarea.ng-invalid {
@@ -1053,6 +1059,8 @@ form.invalid-form {
     color: #e51c23;
   }
 }
+
+
 .date-error {
   display: block;
   width: 100%;

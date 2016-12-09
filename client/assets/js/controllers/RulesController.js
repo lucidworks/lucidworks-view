@@ -1,5 +1,6 @@
 (function () {
   'use strict';
+/*
 
   function setModalMaxHeight(element) {
     var $element = $(element),
@@ -19,6 +20,7 @@
       'height': maxHeight
     });
   }
+*/
 
   angular
     .module('lucidworksView.controllers.rules', [
@@ -28,7 +30,8 @@
         "lucidworksView.services.user",
         'lucidworksView.services.config',
         'lucidworksView.services.auth',
-        'ngTagsInput'
+        'ngTagsInput',
+        'ADM-dateTimePicker'
     ])
     .controller('rulesController', ['$scope', '$http', '$timeout', 'RulesService', 'RulesTransformerService', 'RulesFilterService', "UserService", 'ConfigService', 'AuthService',
       function ($scope, $http, $timeout, rulesService, rulesTransformerService,  rulesFilterService, UserService, ConfigService, AuthService) {
@@ -45,6 +48,9 @@
         $scope.masterBox = false;
         $scope.checkedTags = {};
         $scope.disabledRuleEdit = true;
+        /*$scope.addRuleInvalid = {'general': false, 'trigger': false, 'params': false};
+        $scope.invalidDeteRange = [];
+        $scope.emptyDete = [];*/
 
         UserService.init();
 
@@ -52,18 +58,18 @@
 
           $('.modal').on('show.bs.modal', function() {
             $(this).show();
-            setModalMaxHeight(this);
+            /*setModalMaxHeight(this);*/
           });
 
           $('.modal').on('shown.bs.modal', function() {
             autosize.update($('textarea'));
           });
 
-          $(window).resize(function() {
+         /* $(window).resize(function() {
             if ($('.modal.in').length != 0) {
               setModalMaxHeight($('.modal.in'));
             }
-          });
+          });*/
 
           $('.disabledControl').prop('disabled', true);
 
@@ -417,6 +423,19 @@
 
           $scope.search();
         };
+
+       /* $scope.setScrollToBottom = function(sectionNum, $scope, $element) {
+          console.log ('ToBotom');
+          setTimeout(function () {
+            var section = angular.element($('div.add-rule-section'))[sectionNum];
+            var isScrolledToBottom = section.scrollHeight - section.clientHeight <= section.scrollTop;
+            console.log(sectionNum);
+            if (!isScrolledToBottom) {
+              section.scrollTop = section.scrollHeight - section.clientHeight + 160;
+              console.log(section.scrollTop);
+            }
+          }, 0);
+        };*/
     }]);
 
 })();

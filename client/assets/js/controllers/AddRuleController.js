@@ -100,13 +100,6 @@
           var addRuleButton = $('#addRuleButton');
 
           addRuleButton.removeAttr('data-dismiss');
-          var tags = $scope.addRuleTriggerForm.tags;
-          if (tags && tags.$valid === false) {
-            errorMessage(null, "invalid tag name");
-            return;
-          } else if (tags && tags.$valid === true) {
-            errorMessage(null, null);
-          }
 
           if (!$scope.validateRuleCreation(rule)) {
             return;
@@ -199,6 +192,7 @@
               }
             }
           }
+          var tags = $scope.addRuleTriggerForm.tags;
           if(!$scope.generalForm.$valid) {
             $scope.addRuleInvalid.general = true;
           }
@@ -219,6 +213,7 @@
           $scope.invalidFormMarkersClear ();
           ruleFormReset();
         };
+
 
         $scope.setScrollToBottom = function(sectionNum, $scope, $element) {
           setTimeout(function () {
