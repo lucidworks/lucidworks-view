@@ -1,18 +1,6 @@
 (function () {
   'use strict';
 
-  function initInRowDateTriggers() {
-    function datePickerOnFocus() { // TODO why we need this function
-      $(this).addClass('datepicker');
-      $(".datepicker").datetimepicker({format: "YYYY-MM-DDTHH:mm"});
-      $(this).blur();
-      $(this).focus();
-    }
-
-    $('.trigger-start').one('click', datePickerOnFocus);
-    $('.trigger-end').one('click', datePickerOnFocus);
-  }
-
   function setModalMaxHeight(element) {
     var $element = $(element),
       $content = $element.find('#addRule .modal-content');
@@ -64,47 +52,6 @@
     };
   }
 
-  function validateRuleCreation(rule, ruleName) {
-    var validFlag = true;
-    if (rule.display_type == 'Choose rule type') {
-      var ruleType = $('.rule-type-select');
-      ruleType.addClass('has-error');
-      ruleType.find('select').css('color', '#e51c23');
-      ruleType.on('click', function () {
-        $(this).removeClass('has-error');
-        $(this).find('select').css('color', '#666');
-      });
-      validFlag = false;
-    }
-
-    if (ruleName[0].value == '') {
-      ruleName[0].placeholder = 'Rule name is required';
-      var ruleNameDiv = $('.rule-name-input');
-      ruleNameDiv.addClass('has-error');
-      ruleName.addClass('has-error');
-      ruleNameDiv.on('click', function () {
-        $(this).removeClass('has-error');
-        ruleName.removeClass('has-error');
-      });
-      validFlag = false;
-    }
-
-    if (rule.display_type == 'Set Params') {
-      var paramKey = $('.param-key.ng-empty');
-      paramKey.addClass('has-error');
-      paramKey.parent().addClass('has-error');
-      paramKey.on('click', function () {
-        $(this).removeClass('has-error');
-        $(this).parent().removeClass('has-error');
-      });
-      if (paramKey.length != 0) {
-        validFlag = false;
-      }
-    }
-
-    return validFlag;
-  }
-
   angular
     .module('lucidworksView.controllers.rules', [
         'lucidworksView.services.rules',
@@ -113,7 +60,8 @@
         "lucidworksView.services.user",
         'lucidworksView.services.config',
         'lucidworksView.services.auth',
-        'ngTagsInput'
+        'ngTagsInput',
+        'ADM-dateTimePicker'
     ])
     .controller('rulesController', ['$scope', '$http', '$timeout', 'RulesService', 'RulesTransformerService', 'RulesFilterService', "UserService", 'ConfigService', 'AuthService',
       function ($scope, $http, $timeout, rulesService, rulesTransformerService,  rulesFilterService, UserService, ConfigService, AuthService) {
@@ -129,13 +77,14 @@
         $scope.noConfirmRemove = {bulkRemove: {checked: false, activated: false}, singleRemove: {checked: false, activated: false}};
         $scope.masterBox = false;
         $scope.checkedTags = {};
+        $scope.disabledRuleEdit = true;
+        $scope.addRuleInvalid = {'general': false, 'trigger': false, 'params': false};
+        $scope.invalidDeteRange = [];
+        $scope.emptyDete = [];
 
         UserService.init();
 
         function pageInit() {
-          moment().calendar();
-          $(".datepicker").datetimepicker({defaultDate: "now", format: "YYYY-MM-DDTHH:mm"});
-          autosize($("textarea"));
 
           $('.modal').on('show.bs.modal', function() {
             $(this).show();
@@ -154,18 +103,21 @@
 
           $('.disabledControl').prop('disabled', true);
 
+
           function activate() {
             var row = $(this).closest("tr");
 
             var active = row.hasClass("active");
             console.log("make row active: " + active);
             if (active) {
+              $scope.disabledRuleEdit = true;
               row.find(".disabledControl").prop('disabled', true);
               row.removeClass("active");
               row.addClass("inactive");
               console.log(row.find("tags-input.ng-invalid .tags"));
               row.find("tags-input.ng-invalid").removeClass("ng-invalid");
             } else {
+              $scope.disabledRuleEdit = false;
               row.find(".disabledControl").prop('disabled', false);
               row.removeClass("inactive");
               row.addClass("active");
@@ -188,7 +140,7 @@
           setActivator(".rules-list .btn-save");
           setActivator(".rules-list .btn-cancel");
 
-          initInRowDateTriggers();
+
 
           function setTagsCheck () {
             for (var i = 0, l = $scope.facets.tags.length; i < l; i++) {
@@ -294,6 +246,7 @@
           }
         }
 
+
         $scope.addRule = function () {
           var rule = {
             display_type: $scope.currentRule.display_type,
@@ -320,6 +273,7 @@
             enabled: [true]
           };
 
+
           var ruleName = $('#addRuleName');
           var addRuleButton = $('#addRuleButton');
 
@@ -332,7 +286,7 @@
             errorMessage(null, null);
           }
 
-          if (!validateRuleCreation(rule, ruleName)) {
+          if (!$scope.validateRuleCreation(rule)) {
             return;
           }
 
@@ -353,6 +307,7 @@
             $scope.categories = [];
             $scope.triggerDates = [];
             $scope.setParams = [' '];
+            $scope.invalidFormMarkersClear ();
 
             rulesService.findByName(rule.ruleName, function (response) {
               var data = response.data.response;
@@ -380,12 +335,57 @@
           });
         };
 
+        $scope.invalidRangeClear = function (index) {
+          $scope.invalidDeteRange[index] = false;
+        };
+
+        $scope.invalidFormMarkersClear = function () {
+          $scope.addRuleInvalid.general = false;
+          $scope.addRuleInvalid.trigger = false;
+          $scope.addRuleInvalid.params = false;
+        };
+
+        $scope.validateRuleCreation = function (rule) {
+          $scope.invalidFormMarkersClear ();
+          if ($scope.currentRule.display_type == 'Choose rule type') {
+            $scope.generalForm.chooseRuleType.$setValidity("required", false);
+          }
+
+          if (rule.viewDates[0].length) {
+            for (var i = 0, l = rule.viewDates[0].length; i < l; i++) {
+              var start = new Date(rule.viewDates[0][i]).getTime();
+              var end = new Date(rule.viewDates[1][i]).getTime();
+              $scope.invalidDeteRange[i] = false;
+              console.log(start);
+              console.log(end);
+              if (start >= end && end) {
+                $scope.addRuleInvalid.trigger = true;
+                $scope.invalidDeteRange[i] = true;
+              }
+              if (!start && !end) {
+                $scope.addRuleInvalid.trigger = true;
+                $scope.emptyDete[i] = true;
+              }
+            }
+          }
+          if(!$scope.generalForm.$valid) {
+            $scope.addRuleInvalid.general = true;
+          }
+          if(!$scope.addRuleTriggerForm.$valid || $scope.addRuleInvalid.trigger) {
+            $scope.addRuleInvalid.trigger = true;
+          }
+          if(!$scope.paramsForm.$valid) {
+            $scope.addRuleInvalid.params = true;
+          }
+          return (!$scope.addRuleInvalid.general && !$scope.addRuleInvalid.trigger && !$scope.addRuleInvalid.params);
+        };
+
         $scope.cancelRule = function () {
           $scope.currentRule = emptyRule();
           $scope.categories = [];
           $scope.triggerDates = [];
           $scope.setParams = [' '];
-
+          $scope.invalidFormMarkersClear ();
           ruleFormReset();
         };
 
@@ -407,7 +407,6 @@
             masterBox = false;
           }
           $scope.masterBox = masterBox;
-          // $scope.getCheckedBoxesCount();
         };
 
         $scope.removeRule = function (id) {
@@ -498,15 +497,6 @@
           console.log($scope.facets);
         };
 
-        $scope.getCheckedBoxesCount = function () {
-          var checkedCount = $scope.checkedRulesIds.length;
-          // TODO enable tags inputs
-          //$('.triggerTags').tagsinput({tagClass: "label label-default"});
-          $('.datepicker').datetimepicker({format: "YYYY-MM-DDTHH:mm"});
-
-          return checkedCount;
-        };
-
         $scope.resetFocus = function () {
           var bulkActions = $('#bulk-actions');
           bulkActions.focus();
@@ -530,7 +520,7 @@
           rulesService.update(id, rulesTransformerService.viewRuleToModel(rule));
 
           $scope.rules[ruleIndex].tagsText = null;
-
+          console.log(rule.viewDates);
           updateRulesInfo();
         };
 
@@ -590,7 +580,6 @@
         $scope.next = function () {
           if ($scope.filter.hasNext($scope.rulesTotal)) {
             $scope.search($scope.filter.next());
-            $scope.checkUncheckAll('none');
           }
         };
 
@@ -598,7 +587,6 @@
           // TODO change logic
           if ($scope.filter.hasPrev()) {
             $scope.search($scope.filter.prev());
-            $scope.checkUncheckAll('none');
           }
         };
 
@@ -623,10 +611,8 @@
           if (!rule.viewDates) {
             rule.viewDates = [[], []];
           }
-          rule.viewDates[0].push(' ');
-          rule.viewDates[1].push(' ');
-
-          $timeout(initInRowDateTriggers, 100);
+          rule.viewDates[0].push(undefined);
+          rule.viewDates[1].push(undefined);
         };
 
         $scope.resetFilter = function () {
@@ -655,7 +641,7 @@
               console.log(section.scrollTop);
             }
           }, 0);
-        }
-      }]);
+        };
+    }]);
 
 })();

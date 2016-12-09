@@ -791,6 +791,12 @@
             height: 0;
             width: 100%;
           }
+          span {
+            padding: 0;
+            color: #ccc!important;
+            border: none;
+            box-shadow: none;
+          }
         }
     }
 
@@ -818,14 +824,34 @@
       overflow-y: auto;
     }
     // ANGULAR DATEPICKER
+    #addRule {
+      .ADMdtp-container {
+        .masterInput {
+          input, input:focus, input:hover {
+            border: none;
+            border-bottom: 1px solid #ddd;
+            border-radius: 0;
+          }
+        }
+      }
+    }
+    #addRule .invalid-date-range,
+    #addRule .empty-date {
+      .ADMdtp-container {
+        .masterInput input {
+          border-bottom: 3px solid #e51c23;
+        }
+      }
+    }
     .ADMdtp-container {
       .masterInput {
-        input, input:focus {
+        input, input:focus, input:hover {
           border: none;
           border-bottom: 1px solid #ddd;
           border-radius: 0;
           box-shadow: none;
           font-size: 1em;
+          padding: 0;
         }
         .iconContainer, .removeIcon {
           display: none;
@@ -834,9 +860,13 @@
       .ADMdtp-calendar-container {
         width: 17em;
         height: 22em;
-        height: 24em;
+        height: 23em;
         font-size: 1em;
         font-family: Roboto;
+        bottom: 0!important;
+        top: 27px!important;
+        border-radius: 0;
+        white-space: normal;
         header {
           font-size: 1.1em;
           font-weight: bold;
@@ -856,10 +886,12 @@
             width: 2.4em;
             height: 2.4em;
             background: #337ab7 !important;
+            border-radius: 0;
           }
           >span:not(.disable):hover {
             background: #ddd;
             color: #666;
+            border-radius: 0;
           }
           >span.today:after {
             border-bottom: 0.7em solid #337ab7;
@@ -874,10 +906,15 @@
             color: #666;
           }
           .timeSelectIcon {
-            fill: #666;
+            fill: #888;
+            margin-left: -10px;
+            left: 50%;
           }
           .timeSelectIcon:hover {
             fill: #444;
+          }
+          .today {
+            display: none;
           }
         }
         .timePickerContainer {
@@ -933,6 +970,21 @@
         }
       }
     }
+
+    .date-end {
+      .ADMdtp-calendar-container {
+        right: 0!important;
+        left: initial!important;
+      }
+    }
+    tr.inactive {
+      .ADMdtp-container .masterInput input[disabled] {
+        border: none;
+        color: #7a7a7a;
+        background: transparent;
+        cursor: default !important;
+      }
+    }
     .deleteRule {
       margin: auto;
       .modal-content {
@@ -960,3 +1012,51 @@
         }
       }
     }
+.date-holder {
+  span {
+    padding: 0;
+    color: #ccc!important;
+    border: none;
+    box-shadow: none;
+  }
+}
+
+form.invalid-form {
+  input.ng-invalid,
+  select.ng-invalid,
+  textarea.ng-invalid {
+    border-bottom: 1px solid #e51c23;
+    box-shadow: inset 0 -2px 0 #e51c23;
+    color: #e51c23;
+  }
+  select.ng-invalid {
+    border-bottom: 1px solid #e51c23;
+    box-shadow: inset 0 -2px 0 #e51c23;
+  }
+  select.ng-invalid option {
+    color: #000;
+  }
+  input.ng-invalid::-webkit-input-placeholder,
+  textarea.ng-invalid::-webkit-input-placeholder {
+    color: #e51c23;
+  }
+  input.ng-invalid::-moz-placeholder,
+  textarea.ng-invalid::-moz-placeholder {
+    color: #e51c23;
+  }
+  input.ng-invalid:-moz-placeholder,
+  textarea.ng-invalid:-moz-placeholder {
+    color: #e51c23;
+  }
+  input.ng-invalid:-ms-input-placeholder,
+  textarea.ng-invalid:-ms-input-placeholder {
+    color: #e51c23;
+  }
+}
+.date-error {
+  display: block;
+  width: 100%;
+  padding-left: 15px;
+  padding-top: 30px;
+  color: #e51c23;
+}

@@ -170,15 +170,11 @@ controller: rulesController as rc
                 <div class="btn-group btn-group-justified filter-range" role="group">
                   <div class="btn">
                     <label for="filterStart" class="small text-muted text-uppercase">Start</label>
-                    <div class="datepicker-holder">
-                      <input type='text' class="form-control datepicker" id="filterStart" placeholder="Enter start date"/>
-                    </div>
+                    <adm-dtp  id="filterStart" ng-model='filter.values.startDate' options="{default: 'today', autoClose:'true'}"></adm-dtp>
                   </div>
-                  <div class="btn text-left">
+                  <div class="btn text-left  date-end">
                     <label for="filterEnd" class="small text-muted text-uppercase" >End</label>
-                    <div class="datepicker-holder">
-                      <input type='text' class="form-control datepicker" id="filterEnd" placeholder="Enter end date"/>
-                    </div>
+                    <adm-dtp  id="filterEnd" ng-model='filter.values.endDate' options="{default: 'today', autoClose:'true'}"></adm-dtp>
                   </div>
                 </div>
               </form>
@@ -250,8 +246,7 @@ controller: rulesController as rc
         </thead>
         <!-- TBODY -->
         <tbody>
-        <tr class="inactive {{rule.id}}" data-ruleId="{{rule.id}}" ng-repeat="rule in rules track by $index"
-            ng-if="($index >= filter.rulesFrom()) && ($index <= filter.rulesTo())">
+        <tr class="inactive {{rule.id}}" data-ruleId="{{rule.id}}" ng-repeat="rule in rules track by $index">
           <td>
             <div class="column-holder">
               <div class="checkbox">
@@ -317,15 +312,11 @@ controller: rulesController as rc
                     <fieldset>
                       <div class="form-group datepicker-inline trigger-date">
                         <label for="triggerStart" class="small text-muted text-uppercase">Start</label>
-                        <div class="datepicker-holder">
-                          <input type='text' class="form-control  trigger-start disabledControl" id="triggerStart" ng-model="rule.viewDates[0][$index]"/>
-                        </div>
+                        <adm-dtp  disable='{{disabledRuleEdit}}' id="triggerStart" ng-model='rule.viewDates[0][$index]' options="{autoClose:'true'}"></adm-dtp>
                       </div>
-                      <div class="form-group datepicker-inline trigger-date">
+                      <div class="form-group datepicker-inline trigger-date date-end">
                         <label for="triggerEnd" class="small text-muted text-uppercase">End</label>
-                        <div class="datepicker-holder">
-                          <input type='text' class="form-control  trigger-end disabledControl" id="triggerEnd" ng-model="rule.viewDates[1][$index]"/>
-                        </div>
+                        <adm-dtp  disable='{{disabledRuleEdit}}' id="triggerEnd" ng-model='rule.viewDates[1][$index]' options="{autoClose:'true'}"></adm-dtp>
                       </div>
                       <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="rule.viewDates[0].splice($index, 1); rule.viewDates[1].splice($index, 1)"></i></a>
                     </fieldset>
@@ -398,14 +389,14 @@ controller: rulesController as rc
             <div class="column-holder">
               <div class="form-group">
                 <label for="rule-1-created-date" class="small text-muted text-uppercase">Date</label>
-                <div class="datepicker-holder">
-                  <input type='text' class="form-control" id="rule-1-created-date" value="{{rule.createdAt.toString() | date: 'MM/dd/yyyy'}}" disabled />
+                <div class="date-holder">
+                  <span class="form-control" id="rule-1-created-date">{{rule.createdAt.toString() | date: 'MM/dd/yyyy'}}</span>
                 </div>
               </div>
               <div class="form-group">
                 <label for="rule-1-created-Time" class="small text-muted text-uppercase">Time</label>
-                <div class="datepicker-holder">
-                  <input type='text' class="form-control" id="rule-1-created-Time" value="{{rule.createdAt.toString() | date: 'hh:mm a'}}" disabled />
+                <div class="date-holder">
+                  <span class="form-control" id="rule-1-created-Time">{{rule.createdAt.toString() | date: 'hh:mm a'}}</span>
                 </div>
               </div>
             </div>
@@ -414,14 +405,14 @@ controller: rulesController as rc
             <div class="column-holder">
               <div class="form-group">
                 <label for="rule-1-edited-date" class="small text-muted text-uppercase">Date</label>
-                <div class="datepicker-holder">
-                  <input type='text' class="form-control" id="rule-1-edited-date" value="{{rule.updatedAt.toString() | date: 'MM/dd/yyyy'}}" disabled />
+                <div class="date-holder">
+                  <span class="form-control" id="rule-1-edited-date">{{rule.updatedAt.toString() | date: 'MM/dd/yyyy'}}</span>
                 </div>
               </div>
               <div class="form-group">
                 <label for="rule-1-edited-Time" class="small text-muted text-uppercase">Time</label>
-                <div class="datepicker-holder">
-                  <input type='text' class="form-control" id="rule-1-edited-Time" value="{{rule.updatedAt.toString() | date: 'hh:mm a'}}" disabled />
+                <div class="date-holder">
+                  <span class="form-control" id="rule-1-edited-Time">{{rule.updatedAt.toString() | date: 'hh:mm a'}}</span>
                 </div>
               </div>
             </div>
@@ -461,11 +452,12 @@ controller: rulesController as rc
               <li>
                 <h4>General</h4>
                 <div class="wiz-step add-rule-section">
-                  <form action="" class="addRuleForm">
+                  <form action="" class="addRuleForm" ng-class="{'invalid-form': addRuleInvalid.general}" name="generalForm">
                     <fieldset>
                       <div class="form-group rule-type-select">
                         <label for="chooseRuleType" class="small text-muted text-uppercase">Rule type</label>
-                        <select class="form-control" id="chooseRuleType" ng-model="currentRule.display_type">
+                        <select name="chooseRuleType" class="form-control" id="chooseRuleType" ng-model="currentRule.display_type"
+                                ng-change="invalidFormMarkersClear()" required>
                           <option value="Choose rule type" selected style="display:none;">Choose rule type</option>
                           <option ng-repeat="(key, value) in types" value="{{key}}">{{key}}</option>
                         </select>
@@ -473,7 +465,7 @@ controller: rulesController as rc
 
                       <div class="form-group rule-name-input">
                         <label for="addRuleName" class="small text-muted text-uppercase">Rule name</label>
-                        <input type='text' class="form-control" id="addRuleName" placeholder="Enter rule name" ng-model="currentRule.ruleName"/>
+                        <input type='text' class="form-control" id="addRuleName" placeholder="Enter rule name" ng-model="currentRule.ruleName" required />
                       </div>
                       <div class="form-group">
                         <label for="addRuleDescription" class="small text-muted text-uppercase">Description</label>
@@ -481,8 +473,8 @@ controller: rulesController as rc
                       </div>
                       <div class="form-group">
                         <label for="rule-1-created-date" class="small text-muted text-uppercase">Date</label>
-                        <div class="datepicker-holder">
-                          <input type='text' class="form-control" id="rule-1-created-date" value="{{currentRule.createdAt | date: 'MM/dd/yyyy , hh:mm a'}}" disabled/>
+                        <div class="date-holder">
+                          <span class="form-control" id="rule-1-created-date">{{currentRule.createdAt | date: 'MM/dd/yyyy , hh:mm a'}}</span>
                         </div>
                       </div>
                     </fieldset>
@@ -492,23 +484,21 @@ controller: rulesController as rc
               <li>
                 <h4>Trigger</h4>
                 <div class="wiz-step add-rule-section">
-                  <form name="addRuleTriggerForm" id="addRuleTriggerForm" action="" class="addRuleForm">
+                  <form name="addRuleTriggerForm" id="addRuleTriggerForm" action="" class="addRuleForm" ng-class="{'invalid-form': addRuleInvalid.trigger}" >
                     <fieldset>
                       <div class="form-group">
-                        <div class="row hor-gut-10px" ng-repeat="triggerDate in triggerDates track by $index">
+                        <div class="row hor-gut-10px" ng-class="{'invalid-date-range': invalidDeteRange[$index], 'empty-date': emptyDete[$index]}" ng-repeat="triggerDate in triggerDates track by $index">
                           <div class="col-sm-6 datepicker-inline">
                             <label for="addTriggerStart" class="small text-muted text-uppercase">Start</label>
-                            <div class="datepicker-holder">
-                              <input type='text' class="form-control datepicker add-trigger-start" id="addTriggerStart"/>
-                            </div>
+
+                            <adm-dtp id="addTriggerStart" ng-model='currentRule.viewDates[0][$index]' on-open="invalidRangeClear($index)" options="{autoClose:'true'}"></adm-dtp>
                           </div>
-                          <div class="col-sm-6 datepicker-inline">
+                          <div class="col-sm-6 datepicker-inline date-end">
                             <label for="addTriggerEnd" class="small text-muted text-uppercase">End</label>
-                            <div class="datepicker-holder">
-                              <input type='text' class="form-control datepicker add-trigger-end" id="addTriggerEnd"/>
-                            </div>
+                            <adm-dtp  id="addTriggerEnd" ng-model='currentRule.viewDates[1][$index]' on-open="invalidRangeClear($index)" options="{autoClose:'true'}"></adm-dtp>
                           </div>
-                          <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="triggerDates.pop();"></i></a>
+                          <span class="date-error" ng-show="invalidDeteRange[$index]">Please check dates order</span>
+                          <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="triggerDates.pop(); currentRule.viewDates[0].pop(); currentRule.viewDates[1].pop();"></i></a>
                         </div>
                       </div>
                       <div class="form-group triggerKeywords" ng-if="currentRule.keywordsFlag">
@@ -521,16 +511,16 @@ controller: rulesController as rc
                         >
                         </select>
 
-                        <textarea rows="1" class="form-control addTriggerKeywords" ng-model="currentRule.search_terms"></textarea>
+                        <textarea rows="1" class="form-control addTriggerKeywords" ng-model="currentRule.search_terms" required></textarea>
 
                       </div>
                       <div class="form-group triggerFieldValue" ng-repeat="x in categories track by $index">
                         <label class="small text-muted text-uppercase">Field Value</label>
-                        <select class="form-control addTriggerCategory" ng-model="currentRule.viewFilters[0][$index]">
+                        <select class="form-control addTriggerCategory" ng-model="currentRule.viewFilters[0][$index]" required>
                           <option ng-repeat="(value, caption) in productList" value="{{value}}">{{caption}}</option>
                         </select>
-                        <input class="form-control addTriggerCategory" ng-model="currentRule.viewFilters[1][$index]"/>
-                        <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="categories.pop(); currentRule.viewFilters[0].splice($index, 1); currentRule.viewFilters[1].splice($index, 1)"></i></a>
+                        <input class="form-control addTriggerCategory" ng-model="currentRule.viewFilters[1][$index]" required/>
+                        <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="categories.pop(); currentRule.viewFilters[0].splice($index, 1); currentRule.viewFilters[1].splice($index, 1)" ></i></a>
                       </div>
                       <div class="form-group triggerTags" ng-if="currentRule.tagsFlag">
                         <label class="small text-muted text-uppercase">Tags</label>
@@ -539,6 +529,7 @@ controller: rulesController as rc
                                     min-length="1"
                                     ng-model="currentRule.viewTags"
                                     remove-tag-symbol="X"
+                                    min-tags="1"
                                     add-from-autocomplete-only="{{predefinedTags && predefinedTags.length > 0}}"
                                     >
                           <auto-complete source="predefinedTags" load-on-down-arrow="true" load-on-empty="true" min-length="1"></auto-complete>
@@ -572,33 +563,33 @@ controller: rulesController as rc
               <li>
                 <h4>{{currentRule.display_type}}</h4>
                 <div class="wiz-step add-rule-section">
-                  <form action="" class="addRuleForm">
+                  <form action="" class="addRuleForm" ng-class="{'invalid-form': addRuleInvalid.params}" name="paramsForm">
                     <fieldset>
-                      <select class="form-control addTriggerCategory" ng-model="currentRule.field_name" ng-if="currentRule.display_type == 'Filter List' || currentRule.display_type == 'Block List' || currentRule.display_type == 'Boost List'">
+                      <select class="form-control addTriggerCategory" ng-model="currentRule.field_name" ng-if="currentRule.display_type == 'Filter List' || currentRule.display_type == 'Block List' || currentRule.display_type == 'Boost List'"  required>
                         <option ng-repeat="(value, caption) in productList" value="{{value}}">{{caption}}</option>
                       </select>
                       <label class="small text-muted text-uppercase" ng-if="currentRule.display_type == 'Filter List' || currentRule.display_type == 'Block List' || currentRule.display_type == 'Boost List'">Document ID List</label>
                       <div class="form-group" ng-if="currentRule.display_type == 'Filter List'">
-                        <textarea rows="5" placeholder="Please write a comma separated list of product ids" class="form-control actionTextArea" id="filter-list" value="filter list" ng-model="currentRule.field_values" ng-list=","></textarea>
+                        <textarea rows="5" placeholder="Please write a comma separated list of product ids" class="form-control actionTextArea" id="filter-list" value="filter list" ng-model="currentRule.field_values" ng-list=","  required></textarea>
                       </div>
                       <div class="form-group" ng-if="currentRule.display_type == 'Block List'">
-                        <textarea rows="5" placeholder="Please write a comma separated list of product ids" class="form-control actionTextArea" id="block-list" value="/screens/touch-technology" ng-model="currentRule.field_values" ng-list=","></textarea>
+                        <textarea rows="5" placeholder="Please write a comma separated list of product ids" class="form-control actionTextArea" id="block-list" value="/screens/touch-technology" ng-model="currentRule.field_values" ng-list=","  required></textarea>
                       </div>
                       <div class="form-group" ng-if="currentRule.display_type == 'Banner'">
-                        <input type='text' placeholder="Please write banner value here" class="form-control" id="banner" value="banner"  ng-model="currentRule.values"/>
+                        <input type='text' placeholder="Please write banner value here" class="form-control" id="banner" value="banner"  ng-model="currentRule.values"  required />
                       </div>
                       <div class="form-group" ng-if="currentRule.display_type == 'Boost List'">
-                        <textarea rows="5" placeholder="Please write a comma separated list of product ids" class="form-control actionTextArea" id="boost-list" value="boost list" ng-model="currentRule.field_values" ng-list=","></textarea>
+                        <textarea rows="5" placeholder="Please write a comma separated list of product ids" class="form-control actionTextArea" id="boost-list" value="boost list" ng-model="currentRule.field_values" ng-list=","  required></textarea>
                       </div>
                       <div class="form-group" ng-if="currentRule.display_type == 'Redirect'">
-                        <input type='text' placeholder="Please write redirect value here" class="form-control" id="redirect" value="redirect" ng-model="currentRule.values"/>
+                        <input type='text' placeholder="Please write redirect value here" class="form-control" id="redirect" value="redirect" ng-model="currentRule.values"  required /> >
                       </div>
                       <div class="row" ng-if="currentRule.display_type == 'Set Params'" ng-repeat="param in setParams track by $index">
                         <div class="col-xs-3" >
-                          <input type='text' placeholder="Key" class="form-control set-params param-key" ng-model="currentRule.param_keys[$index]"/>
+                          <input type='text' placeholder="Key" name="setParamsKye" class="form-control set-params param-key" ng-model="currentRule.param_keys[$index]" required/>
                         </div>
                         <div class="col-xs-4">
-                          <input type='text' placeholder="Value" class="form-control set-params" ng-model="currentRule.param_values[$index]"/>
+                          <input type='text' placeholder="Value" class="form-control set-params" ng-model="currentRule.param_values[$index]"  required />
                         </div>
                         <div class="col-xs-3">
                           <select class="form-control set-params"
