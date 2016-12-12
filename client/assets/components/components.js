@@ -14,5 +14,6 @@ angular.module('lucidworksView.components', [
   'lucidworksView.components.paginate',
   'lucidworksView.components.searchbox',
   'lucidworksView.components.sort',
-  'lucidworksView.components.banner'
+  'lucidworksView.components.banner',
+  'lucidworksView.components.dragAndDropFile'
 ]);

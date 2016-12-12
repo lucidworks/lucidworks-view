@@ -569,17 +569,17 @@ controller: rulesController as rc
                         <option ng-repeat="(value, caption) in productList" value="{{value}}">{{caption}}</option>
                       </select>
                       <label class="small text-muted text-uppercase" ng-if="currentRule.display_type == 'Filter List' || currentRule.display_type == 'Block List' || currentRule.display_type == 'Boost List'">Document ID List</label>
-                      <div class="form-group" ng-if="currentRule.display_type == 'Filter List'">
-                        <textarea rows="5" placeholder="Please write a comma separated list of product ids" class="form-control actionTextArea" id="filter-list" value="filter list" ng-model="currentRule.field_values" ng-list=","  required></textarea>
+                      <div  class="form-group" ng-if="currentRule.display_type == 'Filter List'">
+                        <textarea drag-and-drop-file rows="5" placeholder="Please write a comma separated list of product ids" class="form-control actionTextArea" id="filter-list" value="filter list" ng-model="currentRule.field_values" ng-list=","  required></textarea>
                       </div>
                       <div class="form-group" ng-if="currentRule.display_type == 'Block List'">
-                        <textarea rows="5" placeholder="Please write a comma separated list of product ids" class="form-control actionTextArea" id="block-list" value="/screens/touch-technology" ng-model="currentRule.field_values" ng-list=","  required></textarea>
+                        <textarea drag-and-drop-file rows="5" placeholder="Please write a comma separated list of product ids" class="form-control actionTextArea" id="block-list" value="/screens/touch-technology" ng-model="currentRule.field_values" ng-list=","  required></textarea>
                       </div>
                       <div class="form-group" ng-if="currentRule.display_type == 'Banner'">
-                        <input type='text' placeholder="Please write banner value here" class="form-control" id="banner" value="banner"  ng-model="currentRule.values"  required />
+                        <input drag-and-drop-file type='text' placeholder="Please write banner value here" class="form-control" id="banner" value="banner"  ng-model="currentRule.values"  required />
                       </div>
                       <div class="form-group" ng-if="currentRule.display_type == 'Boost List'">
-                        <textarea rows="5" placeholder="Please write a comma separated list of product ids" class="form-control actionTextArea" id="boost-list" value="boost list" ng-model="currentRule.field_values" ng-list=","  required></textarea>
+                        <textarea drag-and-drop-file rows="5" placeholder="Please write a comma separated list of product ids" class="form-control actionTextArea" id="boost-list" value="boost list" ng-model="currentRule.field_values" ng-list=","  required></textarea>
                       </div>
                       <div class="form-group" ng-if="currentRule.display_type == 'Redirect'">
                         <input type='text' placeholder="Please write redirect value here" class="form-control" id="redirect" value="redirect" ng-model="currentRule.values"  required /> >
