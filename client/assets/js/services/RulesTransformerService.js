@@ -155,8 +155,11 @@
             }
 
             for (var i = 0; i < view.viewDates[0].length; i++) {
+              var startDate = view.viewDates[0][i].replace(/\//g, "-").replace(' ', 'T').concat(':00Z');
+              var endDate = view.viewDates[1][i].replace(/\//g, "-").replace(' ', 'T').concat(':00Z');
+
               model.effective_range[i] =
-                "[" + view.viewDates[0][i] + " TO " + view.viewDates[1][i] + "]";
+                "[" + startDate + " TO " + endDate + "]";
             }
           },
 
@@ -169,8 +172,10 @@
                 var split = model.effective_range[j].split(' TO ');
                 view.viewDates[0][j] = split[0];
                 view.viewDates[0][j] = view.viewDates[0][j].replace("[", "");
+                view.viewDates[0][j] = view.viewDates[0][j].substr(0, 16).replace(/\r/g, "/").replace("T", " ");
                 view.viewDates[1][j] = split[1];
                 view.viewDates[1][j] = view.viewDates[1][j].replace("]", "");
+                view.viewDates[1][j] = view.viewDates[1][j].substr(0, 16).replace(/\r/g, "/").replace("T", " ");
               }
             }
           }

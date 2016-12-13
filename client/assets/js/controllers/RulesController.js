@@ -47,10 +47,8 @@
         $scope.noConfirmRemove = {bulkRemove: {checked: false, activated: false}, singleRemove: {checked: false, activated: false}};
         $scope.masterBox = false;
         $scope.checkedTags = {};
-        $scope.disabledRuleEdit = true;
-        /*$scope.addRuleInvalid = {'general': false, 'trigger': false, 'params': false};
-        $scope.invalidDeteRange = [];
-        $scope.emptyDete = [];*/
+        $scope.disabledRuleEdit = {};
+
 
         UserService.init();
 
@@ -73,44 +71,11 @@
 
           $('.disabledControl').prop('disabled', true);
 
+          var rules = $scope.rules;
 
-          function activate() {
-            var row = $(this).closest("tr");
-
-            var active = row.hasClass("active");
-            console.log("make row active: " + active);
-            if (active) {
-              $scope.disabledRuleEdit = true;
-              row.find(".disabledControl").prop('disabled', true);
-              row.removeClass("active");
-              row.addClass("inactive");
-              console.log(row.find("tags-input.ng-invalid .tags"));
-              row.find("tags-input.ng-invalid").removeClass("ng-invalid");
-            } else {
-              $scope.disabledRuleEdit = false;
-              row.find(".disabledControl").prop('disabled', false);
-              row.removeClass("inactive");
-              row.addClass("active");
-            }
+          for (var i = 0, l = rules.length; i < l; i++) {
+            $scope.activate(rules.id);
           }
-
-          function setActivator(elsSelector) {
-            $(elsSelector).each(function (index, el) {
-              if (el && el.dataset["initialized"]) {
-                return;
-              }
-
-              el.dataset["initialized"] = true;
-              $(el).on("click", activate);
-            });
-          }
-
-          //setActivator(".rules-list h2");
-          setActivator(".fa-pencil");
-          setActivator(".rules-list .btn-save");
-          setActivator(".rules-list .btn-cancel");
-
-
 
           function setTagsCheck () {
             for (var i = 0, l = $scope.facets.tags.length; i < l; i++) {
@@ -119,6 +84,16 @@
           }
           setTagsCheck ();
         }
+
+        $scope.activate = function (id) {
+          if ($scope.disabledRuleEdit[id] == true) {
+            $scope.disabledRuleEdit[id] = false;
+          } else {
+            $scope.disabledRuleEdit[id] = true;
+          }
+
+        };
+
 
         function findIndexById(id) {
           if ($scope.rules.length == 0) {

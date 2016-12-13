@@ -105,6 +105,8 @@
             return;
           }
 
+          console.log($scope.currentRule.field_values)
+
           setViewDates(rule, $('.add-trigger-start'), $('.add-trigger-end'));
 
           rulesService.add(rulesTransformerService.viewRuleToModel(rule), function () {
@@ -136,7 +138,7 @@
                   $scope.rules.pop();
                 }
 
-                $timeout(pageInit, 1);
+                $timeout($scope.activate(rule.id), 1);
               } else {
                 console.log("!!! Founded more then one rule with the same name :(");
               }
@@ -145,6 +147,14 @@
           }, function (resp) {
             errorMessage(resp.status, resp.statusText, resp.data);
           });
+        };
+
+        $scope.activate = function (id) {
+          if ($scope.disabledRuleEdit[id] == true) {
+            $scope.disabledRuleEdit[id] = false;
+          } else {
+            $scope.disabledRuleEdit[id] = true;
+          }
         };
 
         function setViewDates(rule, triggerStartArray, triggerEndArray) {

@@ -66,7 +66,7 @@
   }
 }
 
-#addRule {
+.add-rule {
   input:focus,
   input:hover {
     border: 0 none;
@@ -98,6 +98,7 @@ html[ng-app="lucidworksView"] {
   input[type="color"],
   textarea {
     height: inherit;
+    margin-bottom: 0;
   }
 
   .bootstrap-tagsinput {
@@ -110,7 +111,7 @@ html[ng-app="lucidworksView"] {
   }
 
   .table.rules-list {
-    margin-top: 10px;
+    margin-top: 20px;
   }
 
   textarea.disabledControl {

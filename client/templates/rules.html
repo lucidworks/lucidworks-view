@@ -72,7 +72,7 @@ controller: rulesController as rc
     <!-- /.SIDEBAR -->
 
     <!-- MAIN -->
-    <div class="col-sm-10">
+    <div class="col-sm-10 main-rules-table">
       <div class="row">
         <div class="col-sm-6">
           <div class="btn-group checkbox-inside">
@@ -237,8 +237,9 @@ controller: rulesController as rc
           <th></th>
           <th>Enabled</th>
           <th style="width:28%">Type</th>
-          <th style="width:20%"><div class="column-header-holder"><span>General </span></div></th>
           <th style="width:30%">Trigger</th>
+          <th style="width:20%"><div class="column-header-holder"><span>General </span></div></th>
+          <th style="width:28%">Type</th>
           <th><div class="column-header-holder">Created on<a href="javascript:void(0);" ng-click="sortBy('createdAt')" class="text-muted"><i class="fa" ng-class="{'fa-sort': filter.values.sortByCond == null || !filter.values.sortByCond.createdAt, 'fa-sort-asc': filter.values.sortByCond.createdAt === true, 'fa-sort-desc': filter.values.sortByCond.createdAt === false}"></i></a></div></th>
           <th><div class="column-header-holder">Edited on<a href="javascript:void(0);" ng-click="sortBy('updatedAt')" class="text-muted"><i class="fa" ng-class="{'fa-sort': filter.values.sortByCond == null || !filter.values.sortByCond.updatedAt, 'fa-sort-asc': filter.values.sortByCond.updatedAt === true, 'fa-sort-desc': filter.values.sortByCond.updatedAt === false}"></i></a></div></th>
           <th></th>
@@ -246,7 +247,7 @@ controller: rulesController as rc
         </thead>
         <!-- TBODY -->
         <tbody>
-        <tr class="inactive {{rule.id}}" data-ruleId="{{rule.id}}" ng-repeat="rule in rules track by $index">
+        <tr class="{{rule.id}}" ng-class="{'inactive': !disabledRuleEdit[rule.id], 'active': disabledRuleEdit[rule.id]}" data-ruleId="{{rule.id}}" ng-repeat="rule in rules track by $index">
           <td>
             <div class="column-holder">
               <div class="checkbox">
@@ -268,13 +269,13 @@ controller: rulesController as rc
                     <option ng-repeat="(value, caption) in productList" value="{{value}}">{{caption}}</option>
                   </select>
                   <textarea type='text' class="form-control disabledControl actionProductList" id="actionProductList" value="product list" ng-if="rule.values" ng-model="rule.values"></textarea>
-                  <textarea type='text' class="form-control disabledControl actionProductList" id="actionProductList" value="product list" ng-if="rule.field_values" ng-model="rule.field_values" ng-list></textarea>
+                  <textarea drag-and-drop-file type='text' class="form-control disabledControl actionProductList" id="actionProductList" value="product list" ng-if="rule.field_values" ng-model="rule.field_values" ng-list></textarea>
                   <div class="row set-params" ng-if="rule.param_keys" ng-repeat="param in rule.param_keys track by $index">
                     <div class="col-xs-4" >
-                        <input type='text' class="form-control set-params disabledControl" ng-model="rule.param_keys[$index]"/>
+                      <input type='text' class="form-control set-params disabledControl" ng-model="rule.param_keys[$index]"/>
                     </div>
                     <div class="col-xs-4">
-                        <input type='text' class="form-control set-params disabledControl" ng-model="rule.param_values[$index]"/>
+                      <input type='text' class="form-control set-params disabledControl" ng-model="rule.param_values[$index]"/>
                     </div>
                     <div class="col-xs-3">
                       <select class="form-control set-params disabledControl"
@@ -284,7 +285,7 @@ controller: rulesController as rc
                       </select>
                     </div>
                     <div class="col-xs-1">
-                        <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="rule.param_keys.splice([$index],1); rule.param_values.splice([$index],1); rule.param_policies.splice([$index],1);"></i></a>
+                      <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="rule.param_keys.splice([$index],1); rule.param_values.splice([$index],1); rule.param_policies.splice([$index],1);"></i></a>
                     </div>
                   </div>
                   <button type="button" class="btn btn-sm btn-default disabledControl" ng-click="rule.param_keys.push(' '); rule.param_values.push(' '); rule.param_policies.push(' ');" ng-if="rule.param_keys">Add param</button>
@@ -292,16 +293,6 @@ controller: rulesController as rc
               </form>
             </div>
             <!--<a href="javascript:void(0);" class="column-more" >&#x85;</a>-->
-          </td>
-          <td>
-            <div class="column-holder">
-              <h2 id="2"><input type="text" class="form-control disabledControl rule-name" ng-model="rule.ruleName"/></h2>
-              <p class="lead">
-                <textarea rows="3" class="form-control disabledControl"
-                          ng-model="rule.description" disabled>{{rule.description}}</textarea>
-                <a href="javascript:void(0);" class="column-more" ng-if="rule.description.length>38">&#x85;</a>
-              </p>
-            </div>
           </td>
           <td class="btn-bottom-holder">
             <div class="column-holder">
@@ -312,11 +303,11 @@ controller: rulesController as rc
                     <fieldset>
                       <div class="form-group datepicker-inline trigger-date">
                         <label for="triggerStart" class="small text-muted text-uppercase">Start</label>
-                        <adm-dtp  disable='{{disabledRuleEdit}}' id="triggerStart" ng-model='rule.viewDates[0][$index]' options="{autoClose:'true'}"></adm-dtp>
+                        <adm-dtp  disable='{{!disabledRuleEdit[rule.id]}}' id="triggerStart" ng-model='rule.viewDates[0][$index]' options="{autoClose:'true'}"></adm-dtp>
                       </div>
                       <div class="form-group datepicker-inline trigger-date date-end">
                         <label for="triggerEnd" class="small text-muted text-uppercase">End</label>
-                        <adm-dtp  disable='{{disabledRuleEdit}}' id="triggerEnd" ng-model='rule.viewDates[1][$index]' options="{autoClose:'true'}"></adm-dtp>
+                        <adm-dtp  disable='{{!disabledRuleEdit[rule.id]}}' id="triggerEnd" ng-model='rule.viewDates[1][$index]' options="{autoClose:'true'}"></adm-dtp>
                       </div>
                       <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="rule.viewDates[0].splice($index, 1); rule.viewDates[1].splice($index, 1)"></i></a>
                     </fieldset>
@@ -327,23 +318,24 @@ controller: rulesController as rc
                   <form name="editRuleForm" id="editRuleForm" action="">
                     <fieldset>
                       <div class="form-group triggerKeywords" ng-if="rule.search_terms">
-                        <label class="small text-muted text-uppercase">
+                        <!--<label class="small text-muted text-uppercase">
                           Search Terms
-                        </label>
+                        </label>-->
                         <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="rule.search_terms = ''"></i></a>
                         <select class="form-control searchTermsType disabledControl"
+                                ng-disabled="disabledRuleEdit[rule.id]"
                                 ng-model="rule.matching"
                                 ng-options="key as value for (key, value) in rulesConfig.searchTermsMatching"
                         >
                         </select>
-                        <textarea rows="1" class="form-control disabledControl" ng-model="rule.search_terms"></textarea>
+                        <textarea drag-and-drop-file rows="1" ng-disabled="disabledRuleEdit[rule.id]" class="form-control disabledControl" ng-model="rule.search_terms"></textarea>
                       </div>
                       <div class="form-group triggerFieldValue" ng-repeat="caregory in rule.viewFilters[0] track by $index">
                         <label class="small text-muted text-uppercase">Field Value</label>
-                        <select class="form-control addTriggerCategory disabledControl"  ng-model="rule.viewFilters[0][$index]">
+                        <select ng-disabled="disabledRuleEdit[rule.id]" class="form-control addTriggerCategory disabledControl"  ng-model="rule.viewFilters[0][$index]">
                           <option ng-repeat="(value, caption) in productList" value="{{value}}">{{caption}}</option>
                         </select>
-                        <input class="form-control disabledControl triggerCategory" ng-model="rule.viewFilters[1][$index]" />
+                        <input ng-disabled="disabledRuleEdit[rule.id]" class="form-control disabledControl triggerCategory" ng-model="rule.viewFilters[1][$index]" />
                         <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="rule.viewFilters[0].splice($index, 1); rule.viewFilters[1].splice($index, 1)"></i></a>
                       </div>
                       <div class="form-group triggerTags" ng-if="rule.viewTags">
@@ -387,6 +379,16 @@ controller: rulesController as rc
           </td>
           <td>
             <div class="column-holder">
+              <h2 id="2"><input type="text" ng-disabled="disabledRuleEdit[rule.id]" class="form-control disabledControl rule-name" ng-model="rule.ruleName"/></h2>
+              <p class="lead">
+                <textarea rows="3" ng-disabled="disabledRuleEdit[rule.id]" class="form-control disabledControl"
+                          ng-model="rule.description" disabled>{{rule.description}}</textarea>
+                <a href="javascript:void(0);" class="column-more" ng-if="rule.description.length>38">&#x85;</a>
+              </p>
+            </div>
+          </td>
+          <td>
+            <div class="column-holder">
               <div class="form-group">
                 <label for="rule-1-created-date" class="small text-muted text-uppercase">Date</label>
                 <div class="date-holder">
@@ -419,11 +421,11 @@ controller: rulesController as rc
           </td>
           <td class="text-nowrap inline-icons">
             <div class="column-holder">
-              <a class="text-muted" href="javascript:void(0);" ng-click="checkSession()"><i class="fa fa-pencil"></i></a>
+              <a class="text-muted" href="javascript:void(0);" ng-click="checkSession()"><i ng-click="activate(rule.id)" class="fa fa-pencil"></i></a>
               <a class="text-muted" href="javascript:void(0);" ><i class="fa fa-times" ng-click="removeRule(rule.id)"></i></a>
               <div class="edit-buttons">
-                <a href="javascript:void(0);" class="btn btn-sm btn-default btn-save" ng-click="updateRule(rule.id)"><i class="fa fa-check-circle"></i>Save</a>
-                <a href="javascript:void(0);" class="btn btn-sm btn-default btn-cancel" ng-click=""><i class="fa fa-trash"></i>Cancel</a>
+                <a href="javascript:void(0);" class="btn btn-sm btn-default btn-save" ng-click="updateRule(rule.id); activate(rule.id)"><i class="fa fa-check-circle"></i>Save</a>
+                <a href="javascript:void(0);" class="btn btn-sm btn-default btn-cancel" ng-click="activate(rule.id)"><i class="fa fa-trash"></i>Cancel</a>
               </div>
             </div>
           </td>

@@ -78,7 +78,9 @@
       }
     }
   }
-
+.btn-default {
+  border-color: #ddd;
+}
 
   // BS Showcase
 
@@ -99,7 +101,23 @@
   //     color: inherit;
   //   }
   // }
+.form-group {
+  margin-bottom: 0;
+}
 
+input[type="checkbox"]:after,
+.checkbox input[type="checkbox"]:after,
+.checkbox-inline input[type="checkbox"]:after {
+  border-radius: 0;
+}
+
+.btn-link {
+  border-radius: 0;
+}
+
+.btn-group > .btn:first-child {
+  padding: 6px 16px;
+}
 
 // Status
   .status {
@@ -107,6 +125,7 @@
     width: 10px;
     height: 10px;
     display: inline-block;
+    margin-top: 37px;
 
     &.half-circle {
       margin-right: -5px;
@@ -241,7 +260,7 @@
       input.form-control {
         width: 100%;
 
-        height: 41px;
+        height: 33px;
         border: 1px solid #ddd;
         box-shadow: none;
         padding: 0 10px;
@@ -258,7 +277,7 @@
       border: 0;
       position: absolute;
       right: 6px;
-      top: 7px;
+      top: 4px;
     }
   }
 
@@ -367,7 +386,9 @@
   .lead-btn {
     margin-bottom: 20px;
   }
-
+  a.list-group-item {
+    padding: 9px 15px;
+  }
   a.list-group-item:focus {
     outline: none;
     background: transparent;
@@ -407,19 +428,19 @@
   // }
 
   .btn-group.checkbox-inside {
-    margin-left: 12px;
+    border: 1px solid #ddd;
 
     > .btn {
       box-shadow: none;
       background: #efefef;
 
       &:first-child {
-        padding: 6px 0 6px 6px;
+        padding: 3px 0 3px 0;
       }
 
       &.dropdown-toggle {
-        padding-left: 4px;
-        padding-bottom: 7px;
+        padding: 5px 5px 2px 4px;
+
 
 
         .caret {
@@ -463,7 +484,8 @@
       vertical-align: middle;
       background: #F3F3F3;
       border-bottom-width: 1px;
-      padding: 8px 14px;
+      padding: 12px 10px;
+      font-size: 10px;
 
       &:first-child {
         border-left-color: transparent;
@@ -524,7 +546,8 @@
             // show general Rule actions
             &.inline-icons {
               a.text-muted {
-                display: inline;
+                display: inline-block;
+                margin-top: 30px;
               }
               .btn-save {
                 display: none;
@@ -533,9 +556,13 @@
 
             // Column holder
             > .column-holder {
-              height: 75px;
+              height: 85px;
               overflow: hidden;
               position: relative;
+              .rule-name {
+                font-weight: bold;
+                color: #666;
+              }
 
             }
 
@@ -548,12 +575,13 @@
 
         // expanded and in general
           > tbody > tr > td {
-            padding: 20px 14px;
+            padding: 14px 14px;
             border-left: 1px dashed #ddd;
             border-right: none;
 
             &:first-child {
               border-left-color: transparent;
+              padding: 14px 6px;
             }
 
             &:last-child {
@@ -623,7 +651,7 @@
 
       // checks
       .checkbox {
-        margin: 0 0 0 9px;
+        margin: 31px 0 0 9px;
       }
 
       // typography
@@ -647,7 +675,7 @@
   }
 
   .table-footer {
-    margin-bottom: 70px;
+    margin-bottom: 30px;
   }
 
 
@@ -819,6 +847,22 @@
       }
     }
 
+    .add-rule {
+      input[type=text], input[type=text]:hover,
+      textarea, textarea:hover,
+      select, select:hover {
+        box-shadow: none;
+        border-bottom: 1px solid #666;
+      }
+      input[type=text]:focus,
+      textarea:focus,
+      select:focus {
+        box-shadow: none;
+        border-bottom: 2px solid #2196f3;
+      }
+    }
+
+
     //simulation applicable rules sidebar
     .showrules {
       overflow-y: auto;
@@ -827,10 +871,13 @@
     #addRule {
       .ADMdtp-container {
         .masterInput {
-          input, input:focus, input:hover {
+          input, input:hover {
             border: none;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #666;
             border-radius: 0;
+          }
+          input:focus {
+            border-bottom: 2px solid #2196f3;
           }
         }
       }
@@ -1018,7 +1065,14 @@
     color: #ccc!important;
     border: none;
     box-shadow: none;
+    font-size: 10px;
   }
+}
+
+.main-rules-table {
+  border: 1px solid #ddd;
+  padding-top: 15px;
+  margin-bottom: 40px;
 }
 
 tags-input.ng-invalid .tags {
@@ -1059,8 +1113,6 @@ form.invalid-form {
     color: #e51c23;
   }
 }
-
-
 .date-error {
   display: block;
   width: 100%;
