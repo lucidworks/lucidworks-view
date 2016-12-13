@@ -107,7 +107,7 @@
 
           console.log($scope.currentRule.field_values)
 
-          setViewDates(rule, $('.add-trigger-start'), $('.add-trigger-end'));
+          /*setViewDates(rule, $('.add-trigger-start'), $('.add-trigger-end'));*/
 
           rulesService.add(rulesTransformerService.viewRuleToModel(rule), function () {
             addRuleButton.attr('data-dismiss', 'modal');
@@ -138,7 +138,7 @@
                   $scope.rules.pop();
                 }
 
-                $timeout($scope.activate(rule.id), 1);
+                $timeout(function () {$scope.disabledRuleEdit[rule.id] = true;}, 1);
               } else {
                 console.log("!!! Founded more then one rule with the same name :(");
               }
@@ -157,7 +157,7 @@
           }
         };
 
-        function setViewDates(rule, triggerStartArray, triggerEndArray) {
+        /*function setViewDates(rule, triggerStartArray, triggerEndArray) {
           if (triggerStartArray[0] && triggerStartArray[0].value) {
             for (var i = 0; i < triggerStartArray.length; i++) {
               rule.viewDates[0][i] = triggerStartArray[i].value.trim() || "*";
@@ -167,7 +167,7 @@
             }
           }
         }
-
+*/
         $scope.invalidRangeClear = function (index) {
           $scope.invalidDeteRange[index] = false;
         };

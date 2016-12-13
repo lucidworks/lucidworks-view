@@ -170,11 +170,11 @@ controller: rulesController as rc
                 <div class="btn-group btn-group-justified filter-range" role="group">
                   <div class="btn">
                     <label for="filterStart" class="small text-muted text-uppercase">Start</label>
-                    <adm-dtp  id="filterStart" ng-model='filter.values.startDate' options="{default: 'today', autoClose:'true'}"></adm-dtp>
+                    <adm-dtp  id="filterStart" ng-model='filter.values.startDate' options="{autoClose:'true'}"></adm-dtp>
                   </div>
                   <div class="btn text-left  date-end">
                     <label for="filterEnd" class="small text-muted text-uppercase" >End</label>
-                    <adm-dtp  id="filterEnd" ng-model='filter.values.endDate' options="{default: 'today', autoClose:'true'}"></adm-dtp>
+                    <adm-dtp  id="filterEnd" ng-model='filter.values.endDate' options="{autoClose:'true'}"></adm-dtp>
                   </div>
                 </div>
               </form>
@@ -222,7 +222,7 @@ controller: rulesController as rc
             <form class="form-inline" role="search" ng-submit="search()">
               <div class="form-group">
                 <input type="text" class="form-control" placeholder="Search" ng-model="filter.values.query">
-                <button type="submit" class="btn-search"><i class="fa fa-search"></i></button>
+                <button type="submit" class="btn-search" ng-click="checkUncheckAll('none')"><i class="fa fa-search"></i></button>
               </div>
             </form>
           </div>
@@ -251,7 +251,7 @@ controller: rulesController as rc
           <td>
             <div class="column-holder">
               <div class="checkbox">
-                <label><input type="checkbox" class="ruleCheckbox" checklist-model="checkedRulesIds" checklist-value="rule.id"  ng-click="getCheckedBoxesCount(); resetFocus(); changeTagsChecked('na')"></label>
+                <label><input type="checkbox" class="ruleCheckbox" checklist-model="checkedRulesIds" checklist-value="rule.id"  ng-click="resetFocus(); changeTagsChecked('na')"></label>
               </div>
             </div>
           </td>

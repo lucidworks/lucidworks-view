@@ -155,27 +155,45 @@
             }
 
             for (var i = 0; i < view.viewDates[0].length; i++) {
-              var startDate = view.viewDates[0][i].replace(/\//g, "-").replace(' ', 'T').concat(':00Z');
-              var endDate = view.viewDates[1][i].replace(/\//g, "-").replace(' ', 'T').concat(':00Z');
+              var startDate = '*';
+              var endDate = '*';
+              if (view.viewDates[0][i] != 0) {
+                startDate = view.viewDates[0][i].replace(/\//g, "-").replace(' ', 'T').concat(':00Z');
+              }
+              if (view.viewDates[1][i] != 0) {
+                endDate = view.viewDates[1][i].replace(/\//g, "-").replace(' ', 'T').concat(':00Z');
+              }
 
+              console.log(startDate);
+              console.log(endDate);
               model.effective_range[i] =
                 "[" + startDate + " TO " + endDate + "]";
+              console.log(model.effective_range[i]);
             }
           },
 
           modelToView: function (view, model) {
             view.viewDates = [[], []];
-
+            var startDate = undefined;
+            var endDate = undefined;
             if (model.effective_range) {
               for (var j = 0, k = model.effective_range.length; j < k; j++) {
                 // TODO refactor with regexp
                 var split = model.effective_range[j].split(' TO ');
-                view.viewDates[0][j] = split[0];
-                view.viewDates[0][j] = view.viewDates[0][j].replace("[", "");
-                view.viewDates[0][j] = view.viewDates[0][j].substr(0, 16).replace(/\r/g, "/").replace("T", " ");
-                view.viewDates[1][j] = split[1];
-                view.viewDates[1][j] = view.viewDates[1][j].replace("]", "");
-                view.viewDates[1][j] = view.viewDates[1][j].substr(0, 16).replace(/\r/g, "/").replace("T", " ");
+                startDate = split[0];
+                startDate = startDate.replace("[", "");
+                if (startDate != '*') {
+                  startDate = startDate.substr(0, 16).replace(/\r/g, "/").replace("T", " ");
+                } else {startDate = undefined;}
+
+                endDate = split[1];
+                endDate = endDate.replace("]", "");
+                if (endDate != '*') {
+                  endDate = endDate.substr(0, 16).replace(/\r/g, "/").replace("T", " ");
+                } else {endDate = undefined;}
+                view.viewDates[0][j] = startDate;
+                view.viewDates[1][j] = endDate;
+
               }
             }
           }

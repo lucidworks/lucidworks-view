@@ -69,7 +69,7 @@
             }
           });*/
 
-          $('.disabledControl').prop('disabled', true);
+          /*$('.disabledControl').prop('disabled', true);*/
 
           var rules = $scope.rules;
 
@@ -146,6 +146,7 @@
           if (val == "on") {
             $scope.checkedTags[tag] = 1;
           }
+          console.log($scope.checkedRulesIds);
         };
 
         function setViewDates(rule, triggerStartArray, triggerEndArray) {
