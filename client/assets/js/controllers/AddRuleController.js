@@ -105,10 +105,6 @@
             return;
           }
 
-          console.log($scope.currentRule.field_values)
-
-          /*setViewDates(rule, $('.add-trigger-start'), $('.add-trigger-end'));*/
-
           rulesService.add(rulesTransformerService.viewRuleToModel(rule), function () {
             addRuleButton.attr('data-dismiss', 'modal');
             $('#addRule').modal('hide');
@@ -131,14 +127,14 @@
               } else if (data.numFound == 1) {
                 rule.id = data.docs[0].id;
 
-                $scope.rules = [rule].concat($scope.rules);
-                $scope.rulesTotal++;
+                $scope.$parent.rules = [rule].concat($scope.$parent.rules);
+                $scope.$parent.rulesTotal++;
 
-                if ($scope.rules[$scope.rules.length - 1] == undefined) {
-                  $scope.rules.pop();
+                if ($scope.$parent.rules[$scope.$parent.rules.length - 1] == undefined) {
+                  $scope.$parent.rules.pop();
                 }
-
-                $timeout(function () {$scope.disabledRuleEdit[rule.id] = true;}, 1);
+                $timeout(function () {
+                  $scope.disabledRuleEdit[rule.id] = false}, 1);
               } else {
                 console.log("!!! Founded more then one rule with the same name :(");
               }
@@ -149,14 +145,15 @@
           });
         };
 
-        $scope.activate = function (id) {
+
+       /* $scope.activate = function (id) {
           if ($scope.disabledRuleEdit[id] == true) {
             $scope.disabledRuleEdit[id] = false;
           } else {
             $scope.disabledRuleEdit[id] = true;
           }
         };
-
+*/
         /*function setViewDates(rule, triggerStartArray, triggerEndArray) {
           if (triggerStartArray[0] && triggerStartArray[0].value) {
             for (var i = 0; i < triggerStartArray.length; i++) {
