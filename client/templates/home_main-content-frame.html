@@ -86,91 +86,6 @@
       <div class="well-holder collapse" id="rules-filters-side-panel">
         <div class="well">
           <ul class="list-unstyled with-states">
-            <!--              <li>
-                            <div class="row hor-gut-10">
-                              <div class="col-xs-6">
-                                <label for="sideFilterStart" class="small text-muted text-uppercase">Start</label>
-                                <div class="datepicker-holder">
-                                  <input type="text" class="form-control" id="rulesSideFilterStartDateVal" value="06/20/2016"/>
-                                  <input type="text" class="form-control small" id="rulesSideFilterStartTimeVal"
-                                         value="10:00 AM"/>
-                                  <input type='text' class="form-control datepicker" id="rulesSideFilterStart"
-                                         placeholder="Select start date"/>
-                                </div>
-                              </div>
-                              <div class="col-xs-6">
-                                <label for="sideFilterEnd" class="small text-muted text-uppercase">End</label>
-                                <div class="datepicker-holder">
-                                  <input type="text" class="form-control" id="rulesSideFilterEndDateVal" value="06/23/2016"/>
-                                  <input type="text" class="form-control small" id="rulesSideFilterEndTimeVal"
-                                         value="12:00 AM"/>
-                                  <input type='text' class="form-control datepicker" id="rulesSideFilterEnd"
-                                         placeholder="Select end date"/>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li class="divider"></li>
-                          <li>
-                            <label for="filterStatus" class="small text-muted text-uppercase">Staus</label>
-
-
-                            <div class="btn-group btn-group-justified" data-toggle="buttons" id="filterStatus">
-                              <label class="btn btn-link">
-                                <input type="radio" name="options" id="option1" autocomplete="off">Active
-                              </label>
-                              <label class="btn btn-link active">
-                                <input type="radio" name="options" id="option2" autocomplete="off" checked>N/A
-                              </label>
-                              <label class="btn btn-link">
-                                <input type="radio" name="options" id="option3" autocomplete="off">Inactive
-                              </label>
-                            </div>
-                          </li>
-                          <li class="divider"></li>
-                          <li>
-                            <label for="filterTags" class="small text-muted text-uppercase">Tags</label>
-                            &lt;!&ndash; <div class="btn-group btn-group-justified" role="group" id="filterActuality">
-                               <a class="btn btn-sm btn-link" href="#">Enabled</a>
-                               <a class="btn btn-sm btn-link" href="#">Disabled</a>
-                            </div> &ndash;&gt;
-                          </li>
-                          &lt;!&ndash; <ul class="with-states list-unstyled tags" id="filterTags"> &ndash;&gt;
-                          <li>
-                            <div class="checkbox checkbox-right">
-                              <label>
-                                <input type="checkbox">
-                                   <span class="text-overflow">
-                                      <i class="fa fa-tag text-muted-light"></i>
-                                      Simulation Simulation Simulation Simulation Simulation
-                                   </span>
-                              </label>
-                            </div>
-                          </li>
-                          <li>
-                            <div class="checkbox checkbox-right">
-                              <label>
-                                <input type="checkbox">
-                                   <span class="text-overflow">
-                                      <i class="fa fa-tag text-muted-light"></i>
-                                      Tag #2
-                                   </span>
-                              </label>
-                            </div>
-                          </li>
-                          <li>
-                            <div class="checkbox checkbox-right">
-                              <label>
-                                <input type="checkbox">
-                                   <span class="text-overflow">
-                                      <i class="fa fa-tag text-muted-light"></i>
-                                      Other tag
-                                   </span>
-                              </label>
-                            </div>
-                          </li>
-                          <li class="divider"></li>-->
-
             Date: <adm-dtp ng-model='date' options="{default:'today', autoClose:'true'}"></adm-dtp>
 
             Tags:
@@ -190,16 +105,6 @@
                     {{hc.fusion.applicable_rules_data.facet_counts.facet_fields.tags[$index]}}
                   </span>
             </li>
-            <!-- </ul> -->
-<!--            <li class="divider"></li>
-            <li>
-              <div class="btn-group btn-group-justified" id="apply-rules-filters-side-panel">
-                <a data-toggle="collapse" data-target="#rules-filters-side-panel" class="btn btn-sm btn-link"><i
-                  class="fa fa-times"></i>Cancel</a>
-                <a data-toggle="collapse" data-target="#rules-filters-side-panel"
-                   class="btn btn-sm btn-default"><i class="fa fa-check"></i> Apply</a>
-              </div>
-            </li>-->
           </ul>
         </div>
       </div>
@@ -210,7 +115,7 @@
           <a class="list-group-item collapse-by-icon"
              data-toggle="collapse" aria-expanded="false" data-parent="#rules-sidebar"
              data-target="#{{hc.getUIId(rule.id)}}"
-             ng-if="hc.excluded_ids.indexOf(rule.id) == -1">
+             ng-if="hc.simulation['rules.exclude'].indexOf(rule.id) == -1">
                  <span class="pull-right">
                     <i class="fa fa-angle-down"></i>
                     <i class="fa fa-angle-up"></i>
@@ -218,7 +123,7 @@
                  <span class="text-overflow">
                    <i ng-click="hc.updateRules($event, rule)"
                       ng-model="(hc.fusion.applicable_rules)"
-                      class="status mr-5" ng-class="{'bg-inactive':hc.singleExcluded_ids.indexOf(rule.id) != -1 , 'bg-active': hc.singleExcluded_ids.indexOf(rule.id) == -1}"></i>
+                      class="status mr-5" ng-class="{'bg-inactive':hc.simulation['rules.exclude'].indexOf(rule.id) != -1 , 'bg-active': hc.simulation['rules.exclude'].indexOf(rule.id) == -1}"></i>
                    <span ng-if="rule.ruleName">{{rule.ruleName.toString()}}</span>
                    <span ng-if="!rule.ruleName">{{rule.id}}</span>
                  </span>

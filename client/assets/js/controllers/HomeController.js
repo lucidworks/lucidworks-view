@@ -31,8 +31,13 @@
       hc.lastQuery = '';
       hc.sorting = {};
       hc.grouped = false;
-      hc.excluded_ids = [];
-      hc.singleExcluded_ids = [];
+
+      hc.simulation = {
+        'rules.exclude': [],
+        tags: [],
+        tags_exclude: [],
+        now: null
+      };
 
       query = URLService.getQueryFromUrl();
       //Setting the query object... also populating the the view model
@@ -74,26 +79,23 @@
         return id && id.replace(/[^\d\w]/gi, "");
       };
 
-      hc.includeRulesWithTag = function (ruleTag, include) {
-        var ids = _.chain(hc.fusion.applicable_rules)
-          .filter(function (rule) {
-            return rule.tags
-              && rule.tags.length
-              && rule.tags.indexOf(ruleTag) != -1})
-          .map(function (rule) { return rule.id; })
-          .value();
-
-        console.log("===================");
-        console.log(ids);
-        if (include) {
-          _.remove(hc.excluded_ids, function(n) {
-            return ids.indexOf(n) != -1;
-          });
-        } else {
-          hc.excluded_ids = _.union(hc.excluded_ids, ids)
+      function createAndPushOrPull(array, value) {
+        if (!array) {
+          array = [];
         }
+        var index = array.indexOf(value);
+        if (index == -1) {
+          array.push(value);
+        } else {
+          array.slice(index, 1);
+        }
+      }
 
-        console.log(hc.excluded_ids);
+      hc.includeRulesWithTag = function (ruleTag, include) {
+        console.log("======== includeRulesWithTag =========", ruleTag, include);
+
+        createAndPushOrPull(hc.simulation[include === true ? 'tags' : 'tags_exclude'], ruleTag);
+
         doSearch();
       };
 
@@ -101,17 +103,8 @@
         console.log("updateRules", rule);
         $event.stopPropagation();
 
-        var singleExcludedIds = hc.singleExcluded_ids;
-        var ruleIdIndex = singleExcludedIds.indexOf(rule.id);
-        if (ruleIdIndex != -1) {
-          singleExcludedIds.splice(ruleIdIndex, 1);
-        } else {
-          singleExcludedIds.push(rule.id);
-        }
-        hc.singleExcluded_ids = singleExcludedIds;
+        createAndPushOrPull(hc.simulation['rule.exclude'], rule.id);
 
-        console.log("singleExcluded_ids");
-        console.log(hc.singleExcluded_ids);
         doSearch();
       };
 
@@ -121,29 +114,6 @@
       $timeout(function(){
         URLService.setQuery(query);
       });
-    }
-
-    hc.simulation = {excluded_ids: []};
-
-    hc.simulationExcluded = function (ruleId) {
-      return hc.simulation && hc.simulation.excluded_ids &&
-        hc.simulation.excluded_ids.indexOf(ruleId) != -1;
-    };
-
-    function excludedRules() {
-      console.log('excludedRules: EI, SEI, simEI');
-      console.log(hc.excluded_ids);
-      console.log(hc.singleExcluded_ids);
-      console.log(hc.simulation.singleExcluded_ids);
-      hc.simulation.excluded_ids = _.union(hc.excluded_ids, hc.singleExcluded_ids);
-      console.log('excludedRules-unoin');
-      console.log(hc.simulation.excluded_ids);
-      if (!hc.simulation || !hc.simulation.excluded_ids) {
-        return;
-      }
-
-
-      return _.chain(hc.simulation.excluded_ids).compact().value();
     }
 
     function checkResultsType(data){
@@ -190,6 +160,11 @@
     }
 
 
+    function removeArray(query, name) {
+      if (!query[name] || query[name].length == 0) {
+        delete query[name]
+      }
+    }
 
     /**
      * Initializes a new search.
@@ -202,18 +177,18 @@
         start: 0,
         fq: [] // TODO better solution for turning off fq on a new query
       };
-      if (prevSearchQuery == query.q || typeof(prevSearchQuery) == "undefined") {
-        var excRules = excludedRules();
-        if (excRules) {
-          query['rules.exclude'] = excRules;
-        }
-      }
-      else {
-        query['rules.exclude'] = [];
+
+      _.extend(query, hc.simulation);
+      if (!query.now) {
+        delete query.now
       }
 
-      console.log('doSearch');
-      console.log(query);
+      removeArray(query, 'tags');
+      removeArray(query, 'tags_exclude');
+      removeArray(query, 'rules.exclude');
+      removeArray(query, 'fq');
+
+      console.log('doSearch', query);
       URLService.setQuery(query);
     }
 
