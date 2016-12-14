@@ -78,7 +78,7 @@ controller: rulesController as rc
           <div class="btn-group checkbox-inside">
             <div class="btn">
               <div class="checkbox">
-                <label><input type="checkbox" id="selectAllBoxes" ng-click="checkUncheckAll(); resetFocus();" ng-model="masterBox" ng-value="true"></label>
+                <label><input type="checkbox" id="selectAllBoxes" ng-click="checkUncheckAll(); resetFocus(); getCheckedRulesCount()" ng-model="masterBox" ng-value="true"></label>
               </div>
             </div>
             <a href="javascript:void(0);" class="btn dropdown-toggle" data-toggle="dropdown">
@@ -86,29 +86,29 @@ controller: rulesController as rc
             </a>
             <ul class="dropdown-menu with-states">
               <li>
-                <a href="javascript:void(0);" ng-click="checkUncheckAll('all')">All</a>
+                <a href="javascript:void(0);" ng-click="checkUncheckAll('all'); getCheckedRulesCount()">All</a>
               </li>
               <li class="divider"></li>
               <li>
-                <a href="javascript:void(0);" ng-click="checkUncheckAll('none')">None</a>
+                <a href="javascript:void(0);" ng-click="checkUncheckAll('none'); getCheckedRulesCount()">None</a>
               </li>
             </ul>
           </div>
-          <span class="small text-muted checkbox-inside-hint">{{checkedRulesIds.length + (checkedRulesIds.length==1 ? ' rule selected':' rules selected')}}</span>
+          <span class="small text-muted checkbox-inside-hint">{{checkedRulesCount + (checkedRulesCount==1 ? ' rule selected':' rules selected')}}</span>
           <div class="btn-group btn-group-lg">
-            <a href="javascript:void(0);" class="btn btn-link dropdown-toggle" data-toggle="dropdown" id="bulk-actions" ng-disabled="checkedRulesIds.length == 0">
+            <a href="javascript:void(0);" class="btn btn-link dropdown-toggle" data-toggle="dropdown" id="bulk-actions" ng-disabled="checkedRulesCount == 0">
               <i class="fa fa-clone"></i>
               Bulk actions
               <span class="caret"></span>
             </a>
-            <ul class="dropdown-menu with-states min-w-280" ng-class="{'hidden':checkedRulesIds.length == 0}" id="bulk-dropdown">
+            <ul class="dropdown-menu with-states min-w-280" ng-class="{'hidden':checkedRulesCount == 0}" id="bulk-dropdown">
               <li>
                 <a class="text-overflow" href="javascript:void(0);" data-toggle="modal" data-target="#singleDeleteConfirm"
                    ng-click="checkNoConfirmDelete()"
-                   ng-if="checkedRulesIds.length == 1"><i class="fa fa-times"></i>Delete selected rules</a>
+                   ng-if="checkedRulesCount == 1"><i class="fa fa-times"></i>Delete selected rules</a>
                 <a class="text-overflow" href="javascript:void(0);" data-toggle="modal" data-target="#bulkDeleteConfirm"
                    ng-click="checkNoConfirmDelete()"
-                   ng-if="checkedRulesIds.length > 1"><i class="fa fa-times"></i>Delete selected rules</a>
+                   ng-if="checkedRulesCount > 1"><i class="fa fa-times"></i>Delete selected rules</a>
               </li>
               <li class="divider"></li>
               <li>
@@ -222,7 +222,7 @@ controller: rulesController as rc
             <form class="form-inline" role="search" ng-submit="search()">
               <div class="form-group">
                 <input type="text" class="form-control" placeholder="Search" ng-model="filter.values.query">
-                <button type="submit" class="btn-search" ng-click="checkUncheckAll('none')"><i class="fa fa-search"></i></button>
+                <button type="submit" class="btn-search" ng-click="checkUncheckAll('none'); getCheckedRulesCount()"><i class="fa fa-search"></i></button>
               </div>
             </form>
           </div>
@@ -237,9 +237,8 @@ controller: rulesController as rc
           <th></th>
           <th>Enabled</th>
           <th style="width:28%">Type</th>
-          <th style="width:30%">Trigger</th>
           <th style="width:20%"><div class="column-header-holder"><span>General </span></div></th>
-          <th style="width:28%">Type</th>
+          <th style="width:30%">Trigger</th>
           <th><div class="column-header-holder">Created on<a href="javascript:void(0);" ng-click="sortBy('createdAt')" class="text-muted"><i class="fa" ng-class="{'fa-sort': filter.values.sortByCond == null || !filter.values.sortByCond.createdAt, 'fa-sort-asc': filter.values.sortByCond.createdAt === true, 'fa-sort-desc': filter.values.sortByCond.createdAt === false}"></i></a></div></th>
           <th><div class="column-header-holder">Edited on<a href="javascript:void(0);" ng-click="sortBy('updatedAt')" class="text-muted"><i class="fa" ng-class="{'fa-sort': filter.values.sortByCond == null || !filter.values.sortByCond.updatedAt, 'fa-sort-asc': filter.values.sortByCond.updatedAt === true, 'fa-sort-desc': filter.values.sortByCond.updatedAt === false}"></i></a></div></th>
           <th></th>
@@ -251,7 +250,7 @@ controller: rulesController as rc
           <td>
             <div class="column-holder">
               <div class="checkbox">
-                <label><input type="checkbox" class="ruleCheckbox" checklist-model="checkedRulesIds" checklist-value="rule.id"  ng-click="resetFocus(); changeTagsChecked('na')"></label>
+                <label><input type="checkbox" class="ruleCheckbox" ng-model="checkedRulesIds[rule.id]" value="true"  ng-click="resetFocus(); changeTagsChecked('na'); getCheckedRulesCount()"></label>
               </div>
             </div>
           </td>
@@ -294,6 +293,16 @@ controller: rulesController as rc
             </div>
             <!--<a href="javascript:void(0);" class="column-more" >&#x85;</a>-->
           </td>
+          <td>
+            <div class="column-holder">
+              <h2 id="2"><input type="text" ng-disabled="!disabledRuleEdit[rule.id]" class="form-control disabledControl rule-name" ng-model="rule.ruleName"/></h2>
+              <p class="lead">
+                <textarea rows="3" ng-disabled="!disabledRuleEdit[rule.id]" class="form-control disabledControl"
+                          ng-model="rule.description" disabled>{{rule.description}}</textarea>
+                <a href="javascript:void(0);" class="column-more" ng-if="rule.description.length>38">&#x85;</a>
+              </p>
+            </div>
+          </td>
           <td class="btn-bottom-holder">
             <div class="column-holder">
               <div class="row hor-gut-6px">
@@ -323,19 +332,19 @@ controller: rulesController as rc
                         </label>-->
                         <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="rule.search_terms = ''"></i></a>
                         <select class="form-control searchTermsType disabledControl"
-                                ng-disabled="disabledRuleEdit[rule.id]"
+                                ng-disabled="!disabledRuleEdit[rule.id]"
                                 ng-model="rule.matching"
                                 ng-options="key as value for (key, value) in rulesConfig.searchTermsMatching"
                         >
                         </select>
-                        <textarea drag-and-drop-file rows="1" ng-disabled="disabledRuleEdit[rule.id]" class="form-control disabledControl" ng-model="rule.search_terms"></textarea>
+                        <textarea drag-and-drop-file rows="1" ng-disabled="!disabledRuleEdit[rule.id]" class="form-control disabledControl" ng-model="rule.search_terms"></textarea>
                       </div>
                       <div class="form-group triggerFieldValue" ng-repeat="caregory in rule.viewFilters[0] track by $index">
                         <label class="small text-muted text-uppercase">Field Value</label>
-                        <select ng-disabled="disabledRuleEdit[rule.id]" class="form-control addTriggerCategory disabledControl"  ng-model="rule.viewFilters[0][$index]">
+                        <select ng-disabled="!disabledRuleEdit[rule.id]" class="form-control addTriggerCategory disabledControl"  ng-model="rule.viewFilters[0][$index]">
                           <option ng-repeat="(value, caption) in productList" value="{{value}}">{{caption}}</option>
                         </select>
-                        <input ng-disabled="disabledRuleEdit[rule.id]" class="form-control disabledControl triggerCategory" ng-model="rule.viewFilters[1][$index]" />
+                        <input ng-disabled="!disabledRuleEdit[rule.id]" class="form-control disabledControl triggerCategory" ng-model="rule.viewFilters[1][$index]" />
                         <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="rule.viewFilters[0].splice($index, 1); rule.viewFilters[1].splice($index, 1)"></i></a>
                       </div>
                       <div class="form-group triggerTags" ng-if="rule.viewTags">
@@ -376,16 +385,6 @@ controller: rulesController as rc
               </div>
             </div>
             <a href="javascript:void(0);" class="column-more" ng-if="rule.search_terms && rule.category_id && rule.viewTags">&#x85;</a>
-          </td>
-          <td>
-            <div class="column-holder">
-              <h2 id="2"><input type="text" ng-disabled="disabledRuleEdit[rule.id]" class="form-control disabledControl rule-name" ng-model="rule.ruleName"/></h2>
-              <p class="lead">
-                <textarea rows="3" ng-disabled="disabledRuleEdit[rule.id]" class="form-control disabledControl"
-                          ng-model="rule.description" disabled>{{rule.description}}</textarea>
-                <a href="javascript:void(0);" class="column-more" ng-if="rule.description.length>38">&#x85;</a>
-              </p>
-            </div>
           </td>
           <td>
             <div class="column-holder">
@@ -635,12 +634,12 @@ controller: rulesController as rc
   </div>
 
   <div id="singleDeleteConfirm" data-show="true" class="modal fade deleteRule"
-       ng-if="checkedRulesIds.length == 1 && !noConfirmRemove.singleRemove.activated">
+       ng-if="checkedRulesCount == 1 && !noConfirmRemove.singleRemove.activated">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <p>
           Are you sure want to delete rule:
-          <span ng-repeat="rule in rules |  filter: { id: checkedRulesIds[0] }">{{rule.ruleName.toString()}}</span>
+          <span ng-repeat="rule in rules" ng-if="checkedRulesIds[rule.id]">{{rule.ruleName.toString()}}</span>
         </p>
         <div class="modal-footer">
           <label>Remember
@@ -656,12 +655,12 @@ controller: rulesController as rc
     </div>
   </div>
   <div id="bulkDeleteConfirm" data-show="true" class="modal fade deleteRule"
-       ng-if="checkedRulesIds.length > 1 && !noConfirmRemove.bulkRemove.activated">
+       ng-if="checkedRulesCount > 1 && !noConfirmRemove.bulkRemove.activated">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <p>
           Are you sure want to delete rules:
-          <ul><li  ng-repeat="rule in rules" ng-if="checkedRulesIds.indexOf(rule.id) != -1">{{rule.ruleName.toString()}}</li></ul>
+          <ul><li  ng-repeat="rule in rules" ng-if="checkedRulesIds[rule.id]">{{rule.ruleName.toString()}}</li></ul>
         </p>
         <div class="modal-footer">
           <label>Remember

@@ -127,12 +127,17 @@
 
         $scope.getCheckedRulesCount = function () {
           $scope.checkedRulesCount = 0;
-          var checkedRules = $scope.checkedRulesIds;
-          Object.keys(checkedRules).map(function(key, index) {
-            if (checkedRules[key]) {
+          var checkedRules = {};
+          var allCheckedRules = $scope.checkedRulesIds;
+          Object.keys(allCheckedRules).map(function(key, index) {
+            if (allCheckedRules[key]) {
+              checkedRules[key] = true;
               $scope.checkedRulesCount++;
+              console.log($scope.checkedRulesIds);
             }
           });
+          $scope.checkedRulesIds = checkedRules;
+          console.log($scope.checkedRulesIds);
         };
 
         $scope.filter = rulesFilterService;
@@ -142,15 +147,12 @@
         };
 
         $scope.changeTagsChecked = function (val, tag) {
-          console.log(val);
           if (val == "na") {
             var tags = {};
             $.each( $scope.checkedTags, function( key, value ) {
               tags[key]= -1;
             });
             $scope.checkedTags = tags;
-            console.log('na');
-            console.log($scope.checkedTags)
           }
           if (val == "off") {
             $scope.checkedTags[tag] = 0;
@@ -207,24 +209,26 @@
         $scope.checkNoConfirmDelete = function () {
           var bulkRemoveNoConfirm = $scope.noConfirmRemove.bulkRemove.activated;
           var singleRemoveNoConfirm = $scope.noConfirmRemove.singleRemove.activated;
-          var checkedRules = $scope.checkedRulesIds;
+          var checkedRules = $scope.checkedRulesCount;
 
-          if (checkedRules.length == 1 && singleRemoveNoConfirm) {
-            $scope.removeRule(checkedRules[0]);
-          }
-          if (checkedRules.length > 1 && bulkRemoveNoConfirm) {
+          if ((checkedRules > 1 && bulkRemoveNoConfirm) || (checkedRules == 1 && singleRemoveNoConfirm)) {
             $scope.bulkRemoveRules();
+            console.log('noconfirm if ');
           }
+          console.log('noconfirm ');
+          console.log(singleRemoveNoConfirm);
         };
 
         $scope.bulkRemoveRules = function () {
           var checkedRules = $scope.checkedRulesIds;
 
-          var i = checkedRules.length;
-          while (i--) {
-            $scope.removeRule(checkedRules[i]);
-          }
-
+          Object.keys(checkedRules).map(function(key, index) {
+            if (checkedRules[key]) {
+              $scope.removeRule(key);
+              delete $scope.checkedRulesIds[key];
+            }
+          });
+          $scope.getCheckedRulesCount();
           $scope.masterBox = false;
           $scope.noConfirmRemove.bulkRemove.activated = $scope.noConfirmRemove.bulkRemove.checked;
           $scope.noConfirmRemove.singleRemove.activated = $scope.noConfirmRemove.singleRemove.checked;
