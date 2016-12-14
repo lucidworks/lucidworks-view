@@ -43,11 +43,12 @@
         $scope.policyList = rulesConfig.set_params.policies;
         $scope.productList = rulesConfig.documentFields;
         $scope.predefinedTags = rulesConfig.tags;
-        $scope.checkedRulesIds = [];
+        $scope.checkedRulesIds = {};
         $scope.noConfirmRemove = {bulkRemove: {checked: false, activated: false}, singleRemove: {checked: false, activated: false}};
         $scope.masterBox = false;
         $scope.checkedTags = {};
         $scope.disabledRuleEdit = {};
+        $scope.checkedRulesCount = 0;
 
 
         UserService.init();
@@ -123,6 +124,17 @@
           throw "Error: rule with '" + id + "' not found.";
         }
 
+
+        $scope.getCheckedRulesCount = function () {
+          $scope.checkedRulesCount = 0;
+          var checkedRules = $scope.checkedRulesIds;
+          Object.keys(checkedRules).map(function(key, index) {
+            if (checkedRules[key]) {
+              $scope.checkedRulesCount++;
+            }
+          });
+        };
+
         $scope.filter = rulesFilterService;
 
         $scope.checkSession = function () {
@@ -146,7 +158,6 @@
           if (val == "on") {
             $scope.checkedTags[tag] = 1;
           }
-          console.log($scope.checkedRulesIds);
         };
 
         function setViewDates(rule, triggerStartArray, triggerEndArray) {
@@ -168,11 +179,11 @@
             masterBox = false;
           }
           if (masterBox) {
-            var checkedRulesIds = $scope.rules.map(function(item, key) {if ((key >= firstOnPage) && (key <= lastOnPage)) {return item.id;}});
-            checkedRulesIds = $.grep(checkedRulesIds,function(n){ return n == 0 || n });
-            $scope.checkedRulesIds = angular.copy(checkedRulesIds, $scope.checkedRulesIds);
+            for (var i = 0, l = $scope.rules.length; i < l; i++ ) {
+              $scope.checkedRulesIds[$scope.rules[i].id] = true;
+            }
           } else {
-            $scope.checkedRulesIds.splice(0, $scope.checkedRulesIds.length);
+            $scope.checkedRulesIds = {};
             masterBox = false;
           }
           $scope.masterBox = masterBox;
@@ -180,7 +191,6 @@
 
         $scope.removeRule = function (id) {
           var ruleIndex = findIndexById(id);
-          var checkedRuleIndex = $scope.checkedRulesIds.indexOf(id);
           var rule = $scope.rules[ruleIndex];
           if (!rule) {
             console.log("delete error: rule with id '" + id + "' not found.");
@@ -188,7 +198,7 @@
           }
           console.log("delete - " + id);
           $scope.rules.splice(ruleIndex, 1);
-          $scope.checkedRulesIds.splice(checkedRuleIndex, 1);
+          delete $scope.checkedRulesIds[id];
           $scope.rulesTotal -= 1;
 
           rulesService.delete(id);
@@ -400,18 +410,6 @@
           $scope.search();
         };
 
-       /* $scope.setScrollToBottom = function(sectionNum, $scope, $element) {
-          console.log ('ToBotom');
-          setTimeout(function () {
-            var section = angular.element($('div.add-rule-section'))[sectionNum];
-            var isScrolledToBottom = section.scrollHeight - section.clientHeight <= section.scrollTop;
-            console.log(sectionNum);
-            if (!isScrolledToBottom) {
-              section.scrollTop = section.scrollHeight - section.clientHeight + 160;
-              console.log(section.scrollTop);
-            }
-          }, 0);
-        };*/
     }]);
 
 })();
