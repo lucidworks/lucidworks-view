@@ -1,7 +1,7 @@
 appConfig = { //eslint-disable-line
-  // If you don't know what you want for some configuration items,
-  // leave them as-is and see what happens in UI.
-  // You may need to clear browser history/cache before your changes take affect.
+              // If you don't know what you want for some configuration items,
+              // leave them as-is and see what happens in UI.
+              // You may need to clear browser history/cache before your changes take affect.
 
   /**
    * Styles and colors
@@ -48,15 +48,15 @@ appConfig = { //eslint-disable-line
    * to use anonymous access.
    */
   anonymous_access: {
-    username: 'search-user'
-  //  password: 'search-user-password-here'
+    username: 'search-user',
+    //  password: 'search-user-password-here'
   },
 
   // The name of your collection
-  collection: 'os_prod',
+  collection: 'BestBuy',
 
   // Please specify a pipeline or profile that you want to leverage with this UI.
-  query_pipeline_id: 'os_prod-with-rules',
+  query_pipeline_id: 'BestBuy-rules',
   query_profile_id: 'default',
   use_query_profile: false, // Force use of query-profile
 
@@ -95,14 +95,13 @@ appConfig = { //eslint-disable-line
    *   your_project_directory/client/assets/components/document/document_default/document_default.html
    */
   //In search results, for each doc, display this field as the head field
-  head_field: 'Name',
-  subhead_field: 'ProductID',
-  description_field: 'description',
+  head_field: 'name',
+  subhead_field: 'department',
+  description_field: 'longDescription',
   //In search results, for each doc, use this field to generate link value when a user clicks on head_field
   head_url_field: 'url',
   //In search results, display a image in each doc page (leave empty for no image).
   image_field: 'image',
-
 
   // ADDING ADDITIONAL FIELDS TO DEFAULT DOCUMENTS
   //
@@ -132,9 +131,11 @@ appConfig = { //eslint-disable-line
   //
   // The HTML/Angular template is located in the following directory:
   //    your_project_directory/client/assets/components/document/document.html
-  fields_to_display:['title','id','name'],
+  fields_to_display:['name','department','longDescription'],
   field_display_labels: {
-    'name': 'Document Name',
+    'name': 'Name',
+    'department': 'Department',
+    'longDescription': 'Description'
     //'id': 'Identification Number'
     // you can add as many lines of labels as you want
   },
@@ -202,10 +203,10 @@ appConfig = { //eslint-disable-line
   typeahead_requesthandler: 'select',
 
   rules: {
-    collection: 'os_prod_rules',
+    collection: 'BestBuy_rules',
 
     tags: [
-      "PROD", "TEST", "SIMULATION", "MOBILE"
+      "PROD", "TEST", "DESKTOP", "MOBILE"
     ],
 
     types: {
@@ -230,13 +231,11 @@ appConfig = { //eslint-disable-line
       }
     },
 
-
     documentFields: {
-      "CategoryID": "CategoryID",
-      "ProductID": "ProductID",
-      "ProductIDSearch": "ProductIDSearch",
-      "name": "Name",
-      "brand": "Brand"
+      "type": "Type",
+      "id": "Product Id",
+      "department": "Department",
+      "categoryIds": "Category Id"
     }
   }
 };
