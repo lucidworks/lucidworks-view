@@ -157,6 +157,9 @@ input[type="checkbox"]:after,
       background: $gray-light;
     }
   }
+  .showrules .status {
+    margin-top: 0;
+  }
   span.status {
     margin-right: 5px;
     width: 9px;

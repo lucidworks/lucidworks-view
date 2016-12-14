@@ -30,6 +30,21 @@ input.addTriggerCategory{
   width: 91.5%;
 }
 
+.add-rule .triggerFieldValue .form-control {
+  display: inline-block;
+}
+.add-rule .triggerFieldValue select.form-control  {
+  width: 30%;
+}
+.add-rule .triggerFieldValue input.form-control  {
+  width: 67%;
+  height: 20px;
+  min-height: initial;
+}
+.add-rule .triggerFieldValue.form-group a {
+  float: right;
+  margin-top: -34px;
+}
 .triggerKeywords select {
   width: 98%;
 }
