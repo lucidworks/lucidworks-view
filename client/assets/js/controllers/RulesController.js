@@ -49,6 +49,7 @@
         $scope.checkedTags = {};
         $scope.disabledRuleEdit = {};
         $scope.checkedRulesCount = 0;
+        $scope.checkedRulesArray = [];
 
 
         UserService.init();
@@ -126,18 +127,29 @@
 
 
         $scope.getCheckedRulesCount = function () {
-          $scope.checkedRulesCount = 0;
+          $scope.cleanFromUnchecked();
+          $scope.checkedRulesToArray();
+          $scope.checkedRulesCount = $scope.checkedRulesArray.length;
+        };
+
+        $scope.cleanFromUnchecked = function () {
           var checkedRules = {};
           var allCheckedRules = $scope.checkedRulesIds;
           Object.keys(allCheckedRules).map(function(key, index) {
             if (allCheckedRules[key]) {
               checkedRules[key] = true;
-              $scope.checkedRulesCount++;
-              console.log($scope.checkedRulesIds);
             }
           });
           $scope.checkedRulesIds = checkedRules;
-          console.log($scope.checkedRulesIds);
+        };
+
+        $scope.checkedRulesToArray = function () {
+          var checkedRules = $scope.checkedRulesIds;
+          var checkedRulesArray = [];
+          Object.keys(checkedRules).map(function(key, index) {
+            checkedRulesArray.push(key);
+          });
+          $scope.checkedRulesArray = checkedRulesArray;
         };
 
         $scope.filter = rulesFilterService;
@@ -201,8 +213,8 @@
           console.log("delete - " + id);
           $scope.rules.splice(ruleIndex, 1);
           delete $scope.checkedRulesIds[id];
+          $scope.getCheckedRulesCount();
           $scope.rulesTotal -= 1;
-
           rulesService.delete(id);
         };
 
@@ -213,34 +225,26 @@
 
           if ((checkedRules > 1 && bulkRemoveNoConfirm) || (checkedRules == 1 && singleRemoveNoConfirm)) {
             $scope.bulkRemoveRules();
-            console.log('noconfirm if ');
           }
-          console.log('noconfirm ');
-          console.log(singleRemoveNoConfirm);
         };
 
         $scope.bulkRemoveRules = function () {
-          var checkedRules = $scope.checkedRulesIds;
 
-          Object.keys(checkedRules).map(function(key, index) {
-            if (checkedRules[key]) {
-              $scope.removeRule(key);
-              delete $scope.checkedRulesIds[key];
-            }
-          });
-          $scope.getCheckedRulesCount();
+          var checkedRules = $scope.checkedRulesArray;
+          var l = checkedRules.length;
+          while (l--) {
+            $scope.removeRule(checkedRules[l]);
+          }
           $scope.masterBox = false;
           $scope.noConfirmRemove.bulkRemove.activated = $scope.noConfirmRemove.bulkRemove.checked;
           $scope.noConfirmRemove.singleRemove.activated = $scope.noConfirmRemove.singleRemove.checked;
         };
 
         $scope.bulkStatus = function (enabled) {
-          var ruleArray = $('.ruleCheckbox');
-          for (var i = 0, l = ruleArray.length; i < l; i++) {
-            if (ruleArray[i].checked) {
-              findRuleById(ruleArray[i].value).enabled = enabled;
-              $scope.updateRule(ruleArray[i].value);
-            }
+          var checkedRulesArray = $scope.checkedRulesArray;
+          for (var i = 0, l = checkedRulesArray.length; i < l; i++) {
+            findRuleById(checkedRulesArray[i]).enabled = enabled;
+            $scope.updateRule(checkedRulesArray[i]);
           }
         };
 
@@ -250,10 +254,9 @@
          * @param remove {Boolean} true if we want to remove tag, otherwise add them
          */
         $scope.bulkAddTag = function (tag, remove, isNewTag) {
-          var firstOnPage = rulesFilterService.rulesFrom();
-          var lastOnPage = rulesFilterService.rulesTo();
-          var ruleArray = $scope.rules.slice(firstOnPage, lastOnPage+1);
-          var checkedRuleArray = $scope.checkedRulesIds;
+          var ruleArray = $scope.rules;
+          var checkedRuleArray = $scope.checkedRulesArray;
+
           for (var i = 0, l = checkedRuleArray.length; i < l; i++) {
             var rule = findRuleById(checkedRuleArray[i]);
             if (remove) {
