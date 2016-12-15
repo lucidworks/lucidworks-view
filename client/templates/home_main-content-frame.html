@@ -93,10 +93,10 @@
                 ng-if="($index % 2) == 0">
               <div class="btn-group btn-group-sm pull-right" data-toggle="buttons"
                    ng-if="$index != (hc.fusion.applicable_rules_data.facet_counts.facet_fields.tags.length-2)">
-                <label class="btn btn-link" ng-click="hc.includeRulesWithTag(f, true)">
+                <label class="btn btn-link" ng-class="{'active': hc.simulation.tags && (hc.simulation.tags.indexOf(f) != -1)}" ng-click="hc.includeRulesWithTag(f, true)">
                   <input type="radio" name="options" id="option1" autocomplete="off">Include
                 </label>
-                <label class="btn btn-link" ng-click="hc.includeRulesWithTag(f, false)">
+                <label class="btn btn-link" ng-class="{'active': hc.simulation.tags_exclude && (hc.simulation.tags_exclude.indexOf(f) != -1)}" ng-click="hc.includeRulesWithTag(f, false)">
                   <input type="radio" name="options" id="option3" autocomplete="off">Exclude
                 </label>
               </div>
