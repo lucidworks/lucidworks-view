@@ -85,10 +85,10 @@
       <!-- side-filters-panel -->
       <div class="well-holder collapse" id="rules-filters-side-panel">
         <div class="well">
-          <ul class="list-unstyled with-states">
-            Date: <adm-dtp ng-model='hc.simulation.now' on-change="hc.doSearch();" options="{autoClose:'true', format:'YYYY-MM-DDThh:mm:00Z'}"></adm-dtp>
+          Date: <adm-dtp ng-model='hc.simulation.now' on-change="hc.doSearch();" options="{autoClose:'true', format:'YYYY-MM-DDThh:mm:00Z'}"></adm-dtp>
 
-            Tags:
+          Tags:
+          <ul class="list-unstyled with-states">
             <li ng-repeat="f in hc.fusion.applicable_rules_data.facet_counts.facet_fields.tags track by $index"
                 ng-if="($index % 2) == 0">
               <div class="btn-group btn-group-sm pull-right" data-toggle="buttons"
@@ -107,7 +107,7 @@
             </li>
           </ul>
 
-          <button class="btn btn-sm btn-link" type="button" ng-click="hc.simulation = {}; hc.doSearch();" ><i class="fa fa-undo"></i>Reset</button>
+          <button class="btn btn-sm btn-link" data-toggle="collapse" data-target="#rules-filters-side-panel" type="button" ng-click="hc.simulation = {}; hc.doSearch();" ><i class="fa fa-undo"></i>Reset</button>
         </div>
       </div>
       <!-- /.side-filters-panel -->
@@ -185,14 +185,14 @@
                       <div class="col-sm-6 form-group">
                         <label for="triggerStart" class="small text-muted text-uppercase">Start</label>
                         <div class="datepicker-holder">
-                          <input type="text" class="form-control" id="triggerStartDate" value="{{hc.parseRange(range).startDate}}" disabled="">
-                          <input type="text" class="form-control small" id="triggerStartTime" value="{{hc.parseRange(range).startTime}}" disabled="">
+                          <span type="text" class="form-control" id="triggerStartDate" >{{hc.parseRange(range).startDate}}</span>
+                          <span type="text" class="form-control small" id="triggerStartTime" >{{hc.parseRange(range).startTime}}</span>
                         </div>
                       </div>
                       <div class="col-sm-6 form-group">
                         <label for="triggerEnd" class="small text-muted text-uppercase">End</label>
-                        <input type="text" class="form-control" id="triggerEndDate" value="{{hc.parseRange(range).endDate}}" disabled="">
-                        <input type="text" class="form-control small" id="triggerEndTime" value="{{hc.parseRange(range).endTime}}" disabled="">
+                        <span type="text" class="form-control" id="triggerEndDate" >{{hc.parseRange(range).endDate}}</span>
+                        <span type="text" class="form-control small" id="triggerEndTime" >{{hc.parseRange(range).endTime}}</span>
                       </div>
                     </div>
                   </li>

@@ -184,7 +184,14 @@
      */
     function doSearch() {
       var prevSearchQuery = query.q;
+      var newSearchQuery = hc.searchQuery;
+      if (prevSearchQuery != newSearchQuery) {
+        hc.simulation = {};
+      }
+
       console.log("-- doSearch --", prevSearchQuery);
+
+
       query = {
         q: hc.searchQuery,
         start: 0,
