@@ -37,13 +37,15 @@ input.addTriggerCategory{
   width: 30%;
 }
 .add-rule .triggerFieldValue input.form-control  {
-  width: 67%;
+  width: 60%;
   height: 20px;
   min-height: initial;
 }
-.add-rule .triggerFieldValue.form-group a {
+.add-rule .form-group a {
   float: right;
-  margin-top: -34px;
+}
+.add-rule .form-group .hor-gut-10px a {
+  margin-top: 15px;
 }
 .triggerKeywords select {
   width: 98%;
@@ -55,7 +57,8 @@ table .bootstrap-tagsinput{
   width: 92%;
 }
 .datepicker-inline{
-  width: 45%;
+  width: 45% !important;
+  padding-left: 0 !important;
   display: inline-block;
 }
 
@@ -182,19 +185,3 @@ tags-input .host {
 }
 
 
-.datepicker, datepicker, [datepicker] {
-  float: none;
-}
-._720kb-datepicker-calendar-header:nth-child(odd),
-._720kb-datepicker-calendar-days-header {
-  background: #fff;
-}
-._720kb-datepicker-calendar-month,
-._720kb-datepicker-calendar-month span {
-  color: #666;
-  font-weight: bold;
-  font-size: 13px;
-}
-._720kb-datepicker-calendar._720kb-datepicker-open {
-  top: 26px;
-}

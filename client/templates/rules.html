@@ -515,13 +515,15 @@ controller: rulesController as rc
                         <textarea rows="1" class="form-control addTriggerKeywords" ng-model="currentRule.search_terms" required></textarea>
 
                       </div>
-                      <div class="form-group triggerFieldValue" ng-repeat="x in categories track by $index">
+                      <div class="form-group triggerFieldValue" ng-show="categories.length">
                         <label class="small text-muted text-uppercase">Field Value</label>
-                        <select class="form-control addTriggerCategory" ng-model="currentRule.viewFilters[0][$index]" required>
-                          <option ng-repeat="(value, caption) in productList" value="{{value}}">{{caption}}</option>
-                        </select>
-                        <input class="form-control addTriggerCategory" ng-model="currentRule.viewFilters[1][$index]" required/>
-                        <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="categories.pop(); currentRule.viewFilters[0].splice($index, 1); currentRule.viewFilters[1].splice($index, 1)" ></i></a>
+                        <div ng-repeat="x in categories track by $index">
+                          <select class="form-control addTriggerCategory" ng-model="currentRule.viewFilters[0][$index]" required>
+                            <option ng-repeat="(value, caption) in productList" value="{{value}}">{{caption}}</option>
+                          </select>
+                          <input type="text" class="form-control addTriggerCategory" ng-model="currentRule.viewFilters[1][$index]" required/>
+                          <a class="text-muted" href="javascript:void(0);"><i class="fa fa-times" ng-click="categories.pop(); currentRule.viewFilters[0].splice($index, 1); currentRule.viewFilters[1].splice($index, 1)" ></i></a>
+                        </div>
                       </div>
                       <div class="form-group triggerTags" ng-if="currentRule.tagsFlag">
                         <label class="small text-muted text-uppercase">Tags</label>

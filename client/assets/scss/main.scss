@@ -851,6 +851,10 @@ input[type="checkbox"]:after,
     }
 
     .add-rule {
+      label {
+        margin-top: 5px;
+        display: inline-block;
+      }
       input[type=text], input[type=text]:hover,
       textarea, textarea:hover,
       select, select:hover {
