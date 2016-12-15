@@ -40,6 +40,10 @@
       };
 
       query = URLService.getQueryFromUrl();
+      hc.simulation = _.pick(query, 'rules.exclude', 'tags', 'tags_exclude', 'now');
+      console.log('==== Page loaded ====');
+      console.log(hc.simulation);
+
       //Setting the query object... also populating the the view model
       hc.searchQuery = _.get(query,'q','*');
       // Use an observable to get the contents of a queryResults after it is updated.
@@ -83,28 +87,37 @@
         if (!array) {
           array = [];
         }
+
+        if (!array.length) {
+          array = _.values(array);
+        }
+
         var index = array.indexOf(value);
         if (index == -1) {
           array.push(value);
         } else {
-          array.slice(index, 1);
+          array.splice(index, 1);
         }
+
+        return array;
       }
 
       hc.includeRulesWithTag = function (ruleTag, include) {
         console.log("======== includeRulesWithTag =========", ruleTag, include);
 
-        createAndPushOrPull(hc.simulation[include === true ? 'tags' : 'tags_exclude'], ruleTag);
+        var optionName = include === true ? 'tags' : 'tags_exclude';
+        hc.simulation[optionName] = createAndPushOrPull(hc.simulation[optionName], ruleTag);
 
         doSearch();
       };
 
       hc.updateRules = function ($event, rule) {
-        console.log("updateRules", rule);
+        console.log("updateRules -1- ", rule, hc.simulation);
         $event.stopPropagation();
 
-        createAndPushOrPull(hc.simulation['rule.exclude'], rule.id);
+        hc.simulation['rules.exclude'] = createAndPushOrPull(hc.simulation['rules.exclude'], rule.id);
 
+        console.log("updateRules -2- ", hc.simulation);
         doSearch();
       };
 
@@ -171,7 +184,7 @@
      */
     function doSearch() {
       var prevSearchQuery = query.q;
-      console.log(prevSearchQuery);
+      console.log("-- doSearch --", prevSearchQuery);
       query = {
         q: hc.searchQuery,
         start: 0,
@@ -191,6 +204,7 @@
       console.log('doSearch', query);
       URLService.setQuery(query);
     }
+    hc.doSearch = doSearch;
 
     /**
      * Creates a sorting list from ConfigService

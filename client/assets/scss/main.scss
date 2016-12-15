@@ -243,10 +243,9 @@ input[type="checkbox"]:after,
   // text
     .text-overflow {
       overflow: hidden;
-      display: block;
+      display: inline-block;
       white-space: nowrap;
       text-overflow: ellipsis;
-      // max-width: 17em;
     }
 
 

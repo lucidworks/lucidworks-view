@@ -86,7 +86,7 @@
       <div class="well-holder collapse" id="rules-filters-side-panel">
         <div class="well">
           <ul class="list-unstyled with-states">
-            Date: <adm-dtp ng-model='date' options="{default:'today', autoClose:'true'}"></adm-dtp>
+            Date: <adm-dtp ng-model='hc.simulation.now' on-change="hc.doSearch();" options="{autoClose:'true', format:'YYYY-MM-DDThh:mm:00Z'}"></adm-dtp>
 
             Tags:
             <li ng-repeat="f in hc.fusion.applicable_rules_data.facet_counts.facet_fields.tags track by $index"
@@ -106,6 +106,8 @@
                   </span>
             </li>
           </ul>
+
+          <button class="btn btn-sm btn-link" type="button" ng-click="hc.simulation = {}; hc.doSearch();" ><i class="fa fa-undo"></i>Reset</button>
         </div>
       </div>
       <!-- /.side-filters-panel -->
@@ -115,7 +117,7 @@
           <a class="list-group-item collapse-by-icon"
              data-toggle="collapse" aria-expanded="false" data-parent="#rules-sidebar"
              data-target="#{{hc.getUIId(rule.id)}}"
-             ng-if="hc.simulation['rules.exclude'].indexOf(rule.id) == -1">
+             > <!-- ng-if="hc.simulation['rules.exclude'].indexOf(rule.id) == -1" -->
                  <span class="pull-right">
                     <i class="fa fa-angle-down"></i>
                     <i class="fa fa-angle-up"></i>
@@ -123,7 +125,7 @@
                  <span class="text-overflow">
                    <i ng-click="hc.updateRules($event, rule)"
                       ng-model="(hc.fusion.applicable_rules)"
-                      class="status mr-5" ng-class="{'bg-inactive':hc.simulation['rules.exclude'].indexOf(rule.id) != -1 , 'bg-active': hc.simulation['rules.exclude'].indexOf(rule.id) == -1}"></i>
+                      class="status mr-5" ng-class="{'bg-inactive':hc.simulation['rules.exclude'] && hc.simulation['rules.exclude'].indexOf(rule.id) != -1 , 'bg-active': !hc.simulation['rules.exclude'] || hc.simulation['rules.exclude'].indexOf(rule.id) == -1}"></i>
                    <span ng-if="rule.ruleName">{{rule.ruleName.toString()}}</span>
                    <span ng-if="!rule.ruleName">{{rule.id}}</span>
                  </span>
