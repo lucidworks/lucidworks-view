@@ -69,18 +69,33 @@
      */
     function encodeSlashes(queryObject){
       var newQueryObject = {};
-      _.forIn(queryObject, function(item, key){
-        if(_.isArray(item) || _.isObject(item)){
-          newQueryObject[key] = encodeSlashes(item);
-        }
-        else if(_.isString(item)){
-          newQueryObject[key] = item.replace(/\//g,'%2F');
-        }
-        else{
-          newQueryObject[key] = item;
-        }
-      });
+      if (_.isArray(queryObject)) {
+        queryObject.forEach(function (element, index) {
+          if(_.isObject(element) || _.isArray(element)){
+            newQueryObject[index] = encodeSlashes(element);
+          }
+          else if(_.isString(element)){
+            newQueryObject[index] = element.replace(/\//g,'%2F');
+          }
+          else{
+            newQueryObject[index] = element;
+          }
+        })
+      } else {
+        _.forIn(queryObject, function (item, key) {
+          if (_.isObject(item) || _.isArray(item)) {
+            newQueryObject[key] = encodeSlashes(item);
+          }
+          else if (_.isString(item)) {
+            newQueryObject[key] = item.replace(/\//g, '%2F');
+          }
+          else {
+            newQueryObject[key] = item;
+          }
+        });
+      }
       return newQueryObject;
+
     }
 
     /**
