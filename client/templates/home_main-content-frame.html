@@ -2,7 +2,7 @@
 <div class="grid-block">
 
   <!-- Left Panel -->
-  <div ng-show="hc.showFacets" class="medium-4 large-3 medium-grid-block">
+  <div ng-show="hc.showFacets" class="medium-3 large-2 medium-grid-block">
     <div
       zf-panel
       id="sidebar"
@@ -19,15 +19,15 @@
     <div class="grid-content">
       <a name="topOfMainContent"></a>
       <div class="card card-result-comment" ng-switch="hc.status">
-        <div class="card-section center card-normal" ng-switch-when="normal">
+        <!-- <div class="card-section center card-normal" ng-switch-when="normal">
           Showing Results for "{{hc.lastQuery}}".
-        </div>
+        </div> -->
         <div class="card-section center card-get-started" ng-switch-when="get-started">
           <img zf-iconic="" icon="empty_state" data-direction="top" size="medium" />
           <h2>Your results will live here</h2>
           <p class="subheader">Try searching any query above in the search box</p>
         </div>
-        
+
         <div class="card-section center card-no-results" ng-switch-when="no-results">
           <img zf-iconic="" icon="no_results" data-direction="top" size="medium" />
           <h2>There are no results for &ldquo;<span class="highlight">{{hc.lastQuery}}</span>&rdquo;</h2>
