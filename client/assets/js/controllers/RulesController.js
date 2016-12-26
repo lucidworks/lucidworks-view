@@ -50,7 +50,7 @@
         $scope.disabledRuleEdit = {};
         $scope.checkedRulesCount = 0;
         $scope.checkedRulesArray = [];
-
+        $scope.rulesCollection = ConfigService.config.rules.collection.trim();
 
         UserService.init();
 
