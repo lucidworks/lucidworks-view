@@ -230,20 +230,27 @@
           } else {
             if (singleRemoveNoConfirm) {
               $scope.removeRule(id);
+            } else {
+              $scope.ruleToDelete = id;
             }
           }
         };
 
         $scope.bulkRemoveRules = function () {
-
-          var checkedRules = $scope.checkedRulesArray;
-          var l = checkedRules.length;
-          while (l--) {
-            $scope.removeRule(checkedRules[l]);
+          if ($scope.ruleToDelete) {
+            $scope.removeRule($scope.ruleToDelete);
+            $scope.ruleToDelete = undefined;
+          } else {
+            var checkedRules = $scope.checkedRulesArray;
+            var l = checkedRules.length;
+            while (l--) {
+              $scope.removeRule(checkedRules[l]);
+            }
+            $scope.masterBox = false;
           }
-          $scope.masterBox = false;
           $scope.noConfirmRemove.bulkRemove.activated = $scope.noConfirmRemove.bulkRemove.checked;
           $scope.noConfirmRemove.singleRemove.activated = $scope.noConfirmRemove.singleRemove.checked;
+
         };
 
         $scope.bulkStatus = function (enabled) {
