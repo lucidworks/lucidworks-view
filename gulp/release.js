@@ -26,8 +26,6 @@ gulp.task('createRelease', function () {
         bodyObj.map(function (tag) {
           if (tag.name == latestTag) {
             var lastTagSha = tag.commit.sha;
-            console.log('sha-function');
-            console.log(lastTagSha);
             getLastDate(lastTagSha);
           }
         });
@@ -49,8 +47,6 @@ gulp.task('createRelease', function () {
       } else {
         var bodyObj = JSON.parse(body);
         var lastTagDate = bodyObj.commit.author.date;
-        console.log('date');
-        console.log(lastTagDate);
         getDescription (lastTagDate);
       }
     });
@@ -74,12 +70,9 @@ gulp.task('createRelease', function () {
       } else {
         var bodyObj = JSON.parse(body);
         var description = bodyObj.map(function (issue) {
-          console.log(lastTagDate);
           return '# ' + issue.number + ' ' + issue.title;
         });
-        description = description.join(', ');
-        console.log('description');
-        console.log(description);
+        description = description.join(', ')|| "Release commit";
         postRelease (description);
       }
     });
@@ -88,40 +81,40 @@ gulp.task('createRelease', function () {
   // creating new release and get upload url for assets
   function postRelease (description) {
     console.log('posting');
+    var data = {
+      tag_name: "v2.4",
+      name: "Bug fix",
+      body: description,
+      draft: true,
+      prerelease: true
+    };
     request({
-      url: 'https://api.github.com/repos/AlexKolonitsky/lucidworks-view/releases',
+      url: 'https://api.github.com/repos/AlexKolonitsky/lucidworks-view/releases?access_token=526379b0cf116515be7d14ac1d8b6e9887cc7d70',
       method: 'POST',
-      qs: {
-        access_token: "f3e1ffe2b8f012b62619bff4798285a3f6719680",
-        tag_name: "v2.4",
-        name: "Bug fix",
-        body: description || "Release commit",
-        draft: true,
-        prerelease: true
-      },
       headers: {
-        'User-Agent': 'AlexKolonitsky'
-      }
+        'User-Agent': 'AlexKolonitsky',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
     }, function (error, response, body) {
       if (error) {
         console.log(error);
       } else {
         var bodyObj = JSON.parse(body);
-        console.log('response');
-        console.log(response);
-        /*console.log('bodyObj');
-        console.log(bodyObj);*/
         var uploadUrl = bodyObj.upload_url.replace('{?name,label}', '');
-        uploadAsset (uploadUrl);
+        /*uploadAsset (uploadUrl);*/
       }
     });
   }
-  function uploadAsset (uploadUrl) {
+  /*function uploadAsset (uploadUrl) {
     // adding assets to new release
     console.log('uploading');
+    var size = fs.statSync("rules-editor.zip").size;
+    console.log('file size');
+    console.log(size);
     request({
-      url: uploadUrl + '?name=rules-editor.zip&?access_token=f3e1ffe2b8f012b62619bff4798285a3f6719680',
-       method: 'POST',
+      url: uploadUrl + '?access_token=526379b0cf116515be7d14ac1d8b6e9887cc7d70&name=rules-editor.zip&size=' + size,
+      method: 'POST',
       headers: {
         'User-Agent': 'AlexKolonitsky',
         'Content-Type': 'application/zip'
@@ -130,11 +123,13 @@ gulp.task('createRelease', function () {
       if(error) {
         console.log(error);
       } else {
+        var bodyObj = JSON.parse(body);
         console.log('uploaded');
+        console.log(response);
       }
     });
 
-  }
+  }*/
 });
 gulp.task('zipBuild', function () {
 
@@ -151,7 +146,8 @@ gulp.task('zipBuild', function () {
 
   archive.pipe(output);
 
-  archive.directory('build/');
+  archive.directory('build/', '');
 
   archive.finalize();
+
 });
