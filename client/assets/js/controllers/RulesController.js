@@ -50,7 +50,7 @@
         $scope.disabledRuleEdit = {};
         $scope.checkedRulesCount = 0;
         $scope.checkedRulesArray = [];
-        $scope.rulesCollection = ConfigService.config.rules.collection.trim().replace('_rules', "");;
+        $scope.rulesCollection = ConfigService.config.rules.collection.trim().replace('_rules', "");
 
         UserService.init();
 
@@ -218,13 +218,19 @@
           rulesService.delete(id);
         };
 
-        $scope.checkNoConfirmDelete = function () {
+        $scope.checkNoConfirmDelete = function (id) {
           var bulkRemoveNoConfirm = $scope.noConfirmRemove.bulkRemove.activated;
           var singleRemoveNoConfirm = $scope.noConfirmRemove.singleRemove.activated;
-          var checkedRules = $scope.checkedRulesCount;
+          if (!id) {
+            var checkedRules = $scope.checkedRulesCount;
 
-          if ((checkedRules > 1 && bulkRemoveNoConfirm) || (checkedRules == 1 && singleRemoveNoConfirm)) {
-            $scope.bulkRemoveRules();
+            if ((checkedRules > 1 && bulkRemoveNoConfirm) || (checkedRules == 1 && singleRemoveNoConfirm)) {
+              $scope.bulkRemoveRules();
+            }
+          } else {
+            if (singleRemoveNoConfirm) {
+              $scope.removeRule(id);
+            }
           }
         };
 

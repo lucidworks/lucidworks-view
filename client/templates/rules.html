@@ -421,7 +421,8 @@ controller: rulesController as rc
           <td class="text-nowrap inline-icons">
             <div class="column-holder">
               <a class="text-muted" href="javascript:void(0);" ng-click="checkSession()"><i ng-click="activate(rule.id)" class="fa fa-pencil"></i></a>
-              <a class="text-muted" href="javascript:void(0);" ><i class="fa fa-times" ng-click="removeRule(rule.id)"></i></a>
+              <a class="text-muted" href="javascript:void(0);" ><i class="fa fa-times" data-toggle="modal" data-target="#singleDeleteConfirm"
+                                                                   ng-click="checkNoConfirmDelete(rule.id)"></i></a>
               <div class="edit-buttons">
                 <a href="javascript:void(0);" class="btn btn-sm btn-default btn-save" ng-click="updateRule(rule.id); activate(rule.id)"><i class="fa fa-check-circle"></i>Save</a>
                 <a href="javascript:void(0);" class="btn btn-sm btn-default btn-cancel" ng-click="activate(rule.id)"><i class="fa fa-trash"></i>Cancel</a>
@@ -636,7 +637,7 @@ controller: rulesController as rc
   </div>
 
   <div id="singleDeleteConfirm" data-show="true" class="modal fade deleteRule"
-       ng-if="checkedRulesCount == 1 && !noConfirmRemove.singleRemove.activated">
+       ng-if="checkedRulesCount < 2 && !noConfirmRemove.singleRemove.activated">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <p>
