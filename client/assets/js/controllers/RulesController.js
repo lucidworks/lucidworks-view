@@ -51,6 +51,7 @@
         $scope.checkedRulesCount = 0;
         $scope.checkedRulesArray = [];
         $scope.rulesCollection = ConfigService.config.rules.collection.trim().replace('_rules', "");
+        $scope.ruleToDelete = {};
 
         UserService.init();
 
@@ -231,15 +232,20 @@
             if (singleRemoveNoConfirm) {
               $scope.removeRule(id);
             } else {
-              $scope.ruleToDelete = id;
+              $scope.ruleToDelete.id = id;
+              $scope.ruleToDelete.name = findRuleById(id).ruleName;
+              console.log($scope.ruleToDelete.name);
             }
           }
         };
 
+        $scope.clearRuleToDelete = function () {
+          $scope.ruleToDelete = {};
+        };
         $scope.bulkRemoveRules = function () {
           if ($scope.ruleToDelete) {
-            $scope.removeRule($scope.ruleToDelete);
-            $scope.ruleToDelete = undefined;
+            $scope.removeRule($scope.ruleToDelete.id);
+            $scope.ruleToDelete = {};
           } else {
             var checkedRules = $scope.checkedRulesArray;
             var l = checkedRules.length;

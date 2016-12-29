@@ -8,6 +8,7 @@
 
         $scope.configTitle = "Hello, yo!";
         //console.log(JSON.stringify(ConfigService.config, null, "  "));
+        $scope.version = ConfigService.config.version;
       }])
 
 })();

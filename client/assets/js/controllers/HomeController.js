@@ -1,5 +1,6 @@
 (function() {
   'use strict';
+
   angular
     .module('lucidworksView.controllers.home', ['lucidworksView.services', 'angucomplete-alt', 'angular-humanize'])
     .controller('HomeController', HomeController);
@@ -16,8 +17,24 @@
     hc.searchQuery = '*';
 
     activate();
-
     ////////////////
+    function loadChecking () {
+
+    var mainBlock = $('#main-hiding-block')[0];
+    var insertedBlock = $('.inserted-hiding-block')[0];
+    console.log ('----- rules block load checking ---------');
+    console.log("main filter block: " + mainBlock);
+    console.log("inserted filter block: " + insertedBlock);
+    //if main and inserted blocks not "undefined" - blocks loaded but hidden;
+      if (hc.fusion) {
+        console.log('applicable_rules: ');
+        console.log(hc.fusion.applicable_rules);
+        //if applicable_rules - "undefined", inserted block gets class hidden');
+      }
+    console.log ('----- end rules block load checking ---------');
+
+
+    }
 
     /**
      * Initializes a search from the URL object
@@ -31,7 +48,6 @@
       hc.lastQuery = '';
       hc.sorting = {};
       hc.grouped = false;
-
       hc.simulation = {
         'rules.exclude': [],
         tags: [],
@@ -42,7 +58,6 @@
       query = URLService.getQueryFromUrl();
       hc.simulation = _.pick(query, 'rules.exclude', 'tags', 'tags_exclude', 'now');
       console.log('==== Page loaded ====');
-      console.log(hc.simulation);
 
       //Setting the query object... also populating the the view model
       hc.searchQuery = _.get(query,'q','*');
@@ -58,7 +73,8 @@
         createSortList();
 
         hc.fusion = data.fusion;
-
+        console.log('---after getting fusion');
+        loadChecking();
       });
 
       /**
@@ -68,7 +84,7 @@
       hc.parseRange = function (range) {
         var res = range.match(/(\d\d\d\d-\d\d-\d\d)T([^\s]+) TO (\d\d\d\d-\d\d-\d\d)T(\d\d:\d\d)/);
         if (!res) {
-          return {}
+          return {};
         }
 
         return {
@@ -76,7 +92,7 @@
           startTime: res[2],
           endDate:   res[3],
           endTime:   res[4]
-        }
+        };
       };
 
       hc.getUIId = function (id) {
@@ -120,13 +136,19 @@
         console.log("updateRules -2- ", hc.simulation);
         doSearch();
       };
-
+      console.log('---before timeout');
+      loadChecking();
       // Force set the query object to change one digest cycle later
       // than the digest cycle of the initial load-rendering
       // The $timeout is needed or else the query to fusion is not made.
       $timeout(function(){
+
+        console.log('---before getting fusion');
+        loadChecking();
         URLService.setQuery(query);
       });
+
+
     }
 
     function checkResultsType(data){

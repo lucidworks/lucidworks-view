@@ -642,7 +642,8 @@ controller: rulesController as rc
       <div class="modal-content">
         <p>
           Are you sure want to delete rule:
-          <span ng-repeat="rule in rules" ng-if="checkedRulesIds[rule.id]">{{rule.ruleName.toString()}}</span>
+          <span ng-repeat="rule in rules" ng-if="checkedRulesIds[rule.id] && !ruleToDelete.name">{{rule.ruleName.toString()}}</span>
+          <span ng-if="ruleToDelete.name != 0">{{ruleToDelete.name.toString()}}</span>
         </p>
         <div class="modal-footer">
           <label>Remember
@@ -650,7 +651,7 @@ controller: rulesController as rc
                    ng-model="noConfirmRemove.singleRemove.checked"
                    ng-value="true">
           </label>
-          <button type="button" class="btn btn-link text-muted" data-dismiss="modal" aria-hidden="true"></i> Cancel</button>
+          <button type="button" class="btn btn-link text-muted" data-dismiss="modal" aria-hidden="true" ng-click="clearRuleToDelete()"></i> Cancel</button>
           <button type="button" class="btn btn-default" data-dismiss="modal" id="singleDeleteConfirmButton" aria-hidden="true" ng-click="bulkRemoveRules()"> Delete</button>
         </div>
       </div>
