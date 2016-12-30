@@ -4,14 +4,15 @@ var fs         = require('fs');
 var archiver   = require('archiver');
 var archive    = archiver('zip');
 
-gulp.task('release', ['zipBuild','createRelease']);
+gulp.task('release', ['createRelease','zipBuild']);
 
 gulp.task('createRelease', function () {
-
+  var latestTag = 'v2.3';
+  var newVersion = 'v2.4';
+  var releaseName = 'Bug fix';
   getLastTagSha ();
   //getting latest pre-release commit sha
   function getLastTagSha () {
-    var latestTag = 'v2.3';
     request({
       url: 'https://api.github.com/repos/AlexKolonitsky/lucidworks-view/tags',
       method: 'GET',
@@ -82,8 +83,8 @@ gulp.task('createRelease', function () {
   function postRelease (description) {
     console.log('posting');
     var data = {
-      tag_name: "v2.4",
-      name: "Bug fix",
+      tag_name: newVersion,
+      name: releaseName,
       body: description,
       draft: true,
       prerelease: true
@@ -102,6 +103,7 @@ gulp.task('createRelease', function () {
       } else {
         var bodyObj = JSON.parse(body);
         var uploadUrl = bodyObj.upload_url.replace('{?name,label}', '');
+        changeConfigVersion ();
         /*uploadAsset (uploadUrl);*/
       }
     });
@@ -130,6 +132,18 @@ gulp.task('createRelease', function () {
     });
 
   }*/
+  function changeConfigVersion () {
+    fs.readFile('FUSION_CONFIG.js', 'utf8', function (err,data) {
+      if (err) {
+        return console.log(err);
+      }
+      var result = data.replace("version: '" + latestTag + "'", "version: '" + newVersion + "'");
+
+      fs.writeFile('FUSION_CONFIG.js', result, 'utf8', function (err) {
+        if (err) return console.log(err);
+      });
+    });
+  }
 });
 gulp.task('zipBuild', function () {
 
@@ -151,3 +165,5 @@ gulp.task('zipBuild', function () {
   archive.finalize();
 
 });
+
+
