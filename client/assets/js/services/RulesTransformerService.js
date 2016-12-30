@@ -25,6 +25,7 @@
         'ruleName',
         'description',
 
+        'matching',
         'keys',
         'values',
 
@@ -41,12 +42,13 @@
 
       function modelArrToViewElement (viewElement, modelArr) {
         if (modelArr && modelArr.length) {
+
           viewElement = modelArr[0];
         } else {
           viewElement = modelArr;
         }
         return viewElement;
-      };
+      }
 
       var transformers = {
         type: {
@@ -91,9 +93,10 @@
             if (model.search_terms.length) {
               view.search_terms = model.search_terms[0];
             } else {
-              view.search_terms = model.search_terms
+              view.search_terms = model.search_terms;
             }
-            view.matching = modelArrToViewElement (view.matching, model.matching);
+            /*view.matching = modelArrToViewElement (view.matching, model.matching);*/
+
           }
         },
 
