@@ -45,7 +45,8 @@
   <div class="medium-4 large-3 medium-grid-block" id="main-hiding-block" style="padding: .75rem 20px;">
 
     <!--APPLICABLE RULES-->
-    <div class="well well-sm well-transp well-outline {{hc.fusion.applicable_rules && 'showrules' || 'hidden' }} lw-panel inserted-hiding-block"
+    <div class="well well-sm well-transp well-outline lw-panel inserted-hiding-block"
+         ng-class="{'showrules': hc.fusion.applicable_rules, 'hidden': !hc.fusion.applicable_rules}"
          id="rules-sidebar" >
       <p class="small text-nowrap text-muted mt-5 well-title">
         <span>{{hc.fusion.applicable_rules.length}}</span> of <span>{{hc.fusion.applicable_rules.length}}</span> applicable rules

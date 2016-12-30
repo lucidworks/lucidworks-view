@@ -20,20 +20,35 @@
     ////////////////
     function loadChecking () {
 
-    var mainBlock = $('#main-hiding-block')[0];
-    var insertedBlock = $('.inserted-hiding-block')[0];
-    console.log ('----- rules block load checking ---------');
-    console.log("main filter block: " + mainBlock);
-    console.log("inserted filter block: " + insertedBlock);
-    //if main and inserted blocks not "undefined" - blocks loaded but hidden;
-      if (hc.fusion) {
-        console.log('applicable_rules: ');
-        console.log(hc.fusion.applicable_rules);
-        //if applicable_rules - "undefined", inserted block gets class hidden');
+      var mainBlock = $('#main-hiding-block');
+      var insertedBlock = $('.inserted-hiding-block');
+      function isDisplayed (element) {
+        var display = element.css('display');
+          return ((display !== 'none'));
       }
-    console.log ('----- end rules block load checking ---------');
+      console.log ('----- rules block load checking ---------');
+      console.log("main filter block: " + mainBlock[0]);
+      console.log("inserted filter block: " + insertedBlock[0]);
+      //if main and inserted blocks not "undefined" - blocks loaded but hidden;
+        if (mainBlock && insertedBlock) {
+          var isVisibleMain = mainBlock.is(':visible');           //true if block has width and height > 0, and 'display' is not 'none'
+          var isVisibleInserted = insertedBlock.is(':visible');
+          console.log('main block visible: ' + isVisibleMain);
+          console.log('inserted block visible: ' + isVisibleInserted);
 
-
+          var isDisplayedMain = isDisplayed(mainBlock);           //false if 'display: none'
+          var isDisplayedInserted = isDisplayed(insertedBlock);
+          console.log('main block displayed: ' + isDisplayedMain);
+          console.log('inserted block displayed: ' + isDisplayedInserted);
+        }
+        if (hc.fusion) {
+          console.log('applicable_rules: ');
+          console.log(hc.fusion.applicable_rules);
+          //if applicable_rules - "undefined", inserted block gets class hidden');
+        } else {
+          console.log('applicable_rules not loaded');
+        }
+      console.log ('----- end rules block load checking ---------');
     }
 
     /**
@@ -136,8 +151,7 @@
         console.log("updateRules -2- ", hc.simulation);
         doSearch();
       };
-      console.log('---before timeout');
-      loadChecking();
+
       // Force set the query object to change one digest cycle later
       // than the digest cycle of the initial load-rendering
       // The $timeout is needed or else the query to fusion is not made.
