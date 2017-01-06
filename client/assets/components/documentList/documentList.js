@@ -98,12 +98,6 @@
       _.each(results, function(item){
         _.each(item.groups, function(group){ // brand-level
           processProfileFields(group.doclist.docs[0]);
-          if(_.has(group, 'groupValue') && group.groupValue !== null){
-            vm.showGroupedResults[group.groupValue] = true;
-          }
-          else{
-            vm.showGroupedResults['noGroupedValue'] = true;
-          }
         });
       });
     }
