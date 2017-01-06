@@ -14,6 +14,7 @@
     var sorting;
 
     hc.searchQuery = '*';
+    hc.queryProfile = '';
 
     activate();
 
@@ -35,6 +36,8 @@
       query = URLService.getQueryFromUrl();
       //Setting the query object... also populating the the view model
       hc.searchQuery = _.get(query,'q','*');
+      // Set the Query Profile to the default from FUSION_CONFIG.js
+      hc.queryProfile = ConfigService.getQueryProfile();
       // Use an observable to get the contents of a queryResults after it is updated.
       resultsObservable = Orwell.getObservable('queryResults');
       resultsObservable.addObserver(function(data) {
@@ -112,6 +115,10 @@
      * Initializes a new search.
      */
     function doSearch() {
+
+      // Set Query Profile from select value
+      ConfigService.setQueryProfile(hc.queryProfile);
+
       query = {
         q: hc.searchQuery,
         start: 0,
