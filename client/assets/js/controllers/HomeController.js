@@ -88,6 +88,9 @@
         createSortList();
 
         hc.fusion = data.fusion;
+        if (!hc.fusion.applicable_rules && hc.fusion.applicable_rules_data.response.docs) {
+          hc.fusion.applicable_rules = hc.fusion.applicable_rules_data.response.docs;
+        }
         console.log('---after getting fusion');
         loadChecking();
       });
