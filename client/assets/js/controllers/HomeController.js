@@ -15,6 +15,9 @@
 
     hc.searchQuery = '*';
 
+    // Set the Query Profile to the default from FUSION_CONFIG.js
+    hc.queryProfile = ConfigService.getQueryProfile();
+
     activate();
 
     ////////////////
@@ -112,6 +115,10 @@
      * Initializes a new search.
      */
     function doSearch() {
+
+      // Set Query Profile from select value
+      ConfigService.setQueryProfile(hc.queryProfile);
+
       query = {
         q: hc.searchQuery,
         start: 0,

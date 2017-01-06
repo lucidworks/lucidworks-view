@@ -93,7 +93,8 @@
         getFields: {
           all: getAllFields,
           get: getSpecificField
-        }
+        },
+        setQueryProfile: setQueryProfile,
       };
     }
 
@@ -106,6 +107,14 @@
 
       appConfig = _.assign({}, CONFIG_DEFAULT, CONFIG_OVERRIDE, localOverride);
       vm.config = appConfig;
+    }
+
+    /**
+     * Sets a query profile from a string
+     * @param  {string} profile The query profile to be used to query Fusion
+     */
+    function setQueryProfile (profile) {
+      appConfig.query_profile_id = profile;
     }
 
     function getIfQueryProfile() {
