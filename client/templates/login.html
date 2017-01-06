@@ -8,11 +8,17 @@ controller: LoginController as vm
     <!-- Top Bar -->
     <nav class="primary title-bar">
       <span class="center">
-        <span class="show-for-small-only"><a class="title"><img ng-if="::vm.logoLocation" ng-src="{{::vm.logoLocation}}" /><span ng-if="::(!vm.logoLocation)">{{::vm.appName}}</span></a></span>
+        <span class="show-for-small-only">
+          <a class="title">
+            <h2><span class="architizer-glyph">B</span></h2>
+          </a>
+        </span>
       </span>
       <ul class="left menu-bar primary condense">
         <li class="show-for-medium">
-          <a class="title"><img ng-if="::vm.logoLocation" ng-src="{{::vm.logoLocation}}" /><span ng-if="::(!vm.logoLocation)">{{::vm.appName}}</span></a>
+          <a class="title">
+            <h2><span class="architizer-glyph">B</span></h2>
+          </a>
         </li>
       </ul>
     </nav>
