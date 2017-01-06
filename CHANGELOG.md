@@ -5,10 +5,7 @@
 * Added a Windows packaged build, you can now run View on Windows
 * Improved performance by minifying builds by default and turning off page change animations
 * You can now specify which port View runs on
-* Introduced developer mode, which allows you to develop with unminified build objects, just `npm run start-dev`
-
-**Bug Fixes**
-* Fixed a bug in `npm run build` command
+* Introduced developer mode, which allows you to develop with unminified build objects, just ```npm run start-dev```
 
 ## 1.2.0 - Cersei's Iron Tiara - June 30, 2016
 **New Features**

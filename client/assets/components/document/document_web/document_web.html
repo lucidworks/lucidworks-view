@@ -1,22 +1,22 @@
 <article class="grid-block document row">
   <div class="detail vertical grid-content" >
     <!-- show head field linked with a title. -->
-    <h3 class="head-field" ng-if="::vm.doc.title">
+    <h4 class="head-field" ng-if="::vm.doc.title">
       <a ng-href="{{vm.doc.url[0]}}" ng-click="::vm.postSignal({params: {lw_url: vm.doc.url[0]}})" rel="noopener" target="_blank">
         <field value="::vm.doc.title" highlight="::vm.highlight[doc.id]" maxlength="200" hkey="title"></field>
       </a>
-    </h3>
+    </h4>
     <!-- show head field without a title. -->
-    <h3 class="head-field" ng-if="::(!vm.doc.title && !!vm.doc.url)">
+    <h4 class="head-field" ng-if="::(!vm.doc.title && !!vm.doc.url)">
       <a ng-href="{{::vm.doc.url[0]}}" ng-click="vm.postSignal({params: {lw_url: vm.doc.url[0]}})" rel="noopener" target="_blank">
         <field value="::vm.doc.url" highlight="::vm.highlight[doc.id]" maxlength="200" hkey="url"></field>
       </a>
-    </h3>
-    <h3 class="subheader" ng-if="::(!vm.doc.title && !vm.doc.url)">
+    </h4>
+    <h4 class="subheader" ng-if="::(!vm.doc.title && !vm.doc.url)">
       <a ng-href="{{::vm.doc.id}}" ng-click="vm.postSignal({params: {lw_url: vm.doc.id}})" rel="noopener" target="_blank">
         <field value="::vm.doc.id" highlight="::vm.highlight[doc.id]" khey="id" maxlength="200"></field>
       </a>
-    </h3>
+    </h4>
     <h4 class="subheader" ng-if="::vm.doc.keywords"><field value="::vm.doc.keywords" highlight="::vm.highlight[doc.id]" maxlength="200" hkey="keywords"></field></h4>
 
     <p class="large-8 xlarge-7 xx-large-6">
