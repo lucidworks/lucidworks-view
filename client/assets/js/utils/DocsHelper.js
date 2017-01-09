@@ -89,7 +89,7 @@
     function concatMultivaluedFields(document) {
       var blankDocument = {};
       _.forEach(document, function (value, key) {
-        blankDocument[key] = (value instanceof Array) ? value.join(' ') : value;
+        blankDocument[key] = (value instanceof Array) ? value.join(', ') : value;
       });
       return blankDocument;
     }
