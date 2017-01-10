@@ -20,7 +20,7 @@
 
   }
 
-  function Controller(ConfigService, Orwell, LocalParamsService, $filter) {
+  function Controller(ConfigService, Orwell, LocalParamsService, QueryService, $filter) {
     'ngInject';
     var vm = this;
     var resultsObservable = Orwell.getObservable('queryResults');
@@ -110,6 +110,5 @@
       //example: @param: facet_fields, @return: field
       return facetType.split('_')[1].slice(0,-1);
     }
-
   }
 })();

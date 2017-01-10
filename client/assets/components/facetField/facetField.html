@@ -1,7 +1,9 @@
 <section class="accordion-item" class="block-list" ng-class="{'is-active': vm.active}">
+  <div class="accordion-title" ng-if="vm.facetIndex == 0">Filters
+    <span ng-click="vm.clearAppliedFilters($event)">Clear all</span>
+  </div>
   <div class="accordion-title" ng-click="vm.active = !vm.active">
     {{vm.facetLabel ? vm.facetLabel : vm.facetName}}
-    <span ng-click="vm.clearAppliedFilters($event)">Clear all</span>
   </div>
   <div class="accordion-content">
     <ul class="block-list">
