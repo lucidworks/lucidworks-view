@@ -24,7 +24,6 @@
   function Controller($sce, $log, $anchorScroll, Orwell, ConfigService, DocsHelper) {
     'ngInject';
     var vm = this;
-    window.vm = vm;
     vm.docs = [];
     vm.highlighting = {};
     vm.getDocType = getDocType;
