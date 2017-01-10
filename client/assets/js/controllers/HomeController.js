@@ -73,7 +73,7 @@
         $log.debug(data.grouped, 'grouppeeeddd');
         var numFoundArray = [];
         _.each(data.grouped, function(group){
-          numFoundArray.push(group.matches);
+          numFoundArray.push(group.ngroups);
         });
         // For grouping, giving total number of documents found
         hc.numFound = _.sum(numFoundArray);

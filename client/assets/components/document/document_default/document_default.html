@@ -42,10 +42,18 @@
       <!-- show head field without a url. -->
       <h3 class="head-field" ng-if="::(!vm.doc.lw_url)">{{::vm.doc.lw_head}}</h3>
 
+
       <h4 class="subheader">{{::vm.doc.lw_subhead}}</h4>
+      <p class="large-8 xlarge-7 xx-large-6">
+        {{::vm.doc.response_count_d}} Responses  {{::vm.doc.connected_projects_count_d}} Projects
+      </p>
       <p class="large-8 xlarge-7 xx-large-6">
         {{::vm.doc.lw_description}}
       </p>
+      <p class="large-8 xlarge-7 xx-large-6">
+        {{::vm.doc.expert_range_s}} - {{::vm.doc.expert_product_keywords_ss}}
+      </p>
+
       <!-- Output of CONFIG BASED FIELD DISPLAY -->
       <!-- <p ng-repeat="(field, value) in vm.doc.fieldsToDisplay">
 
