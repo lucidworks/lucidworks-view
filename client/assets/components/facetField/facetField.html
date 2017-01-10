@@ -1,13 +1,15 @@
 <section class="accordion-item" class="block-list" ng-class="{'is-active': vm.active}">
+  <div class="accordion-title" ng-if="vm.facetIndex == 0">Filters
+    <span ng-click="vm.clearAppliedFilters($event)">Clear all</span>
+  </div>
   <div class="accordion-title" ng-click="vm.active = !vm.active">
     {{vm.facetLabel ? vm.facetLabel : vm.facetName}}
-    <span ng-click="vm.clearAppliedFilters($event)">Clear all</span>
   </div>
   <div class="accordion-content">
     <ul class="block-list">
-      <li>
+      <!-- <li>
         <input type="text" ng-model="vm.facetFilter" placeholder="{{vm.facetLabel ? vm.facetLabel : vm.facetName}} filter">
-      </li>
+      </li> -->
       <li ng-repeat="facet in vm.facetCounts | filter: vm.facetFilter | limitTo: vm.getLimitAmount()" ng-class="{'facet-active':facet.active}">
         <input type="checkbox" id="{{::facet.hash}}" ng-model="facet.active" ng-click="vm.toggleFacet(facet)">
         <label for="{{::facet.hash}}">{{facet.title}} <span>({{facet.amountFormatted}})</span></label>

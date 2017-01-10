@@ -15,6 +15,9 @@
 
     hc.searchQuery = '*';
 
+    // Set the Query Profile to the default from FUSION_CONFIG.js
+    hc.queryProfile = ConfigService.getQueryProfile();
+
     activate();
 
     ////////////////
@@ -70,7 +73,7 @@
         $log.debug(data.grouped, 'grouppeeeddd');
         var numFoundArray = [];
         _.each(data.grouped, function(group){
-          numFoundArray.push(group.matches);
+          numFoundArray.push(group.ngroups);
         });
         // For grouping, giving total number of documents found
         hc.numFound = _.sum(numFoundArray);
@@ -112,6 +115,10 @@
      * Initializes a new search.
      */
     function doSearch() {
+
+      // Set Query Profile from select value
+      ConfigService.setQueryProfile(hc.queryProfile);
+
       query = {
         q: hc.searchQuery,
         start: 0,

@@ -35,24 +35,32 @@
   <div class="detail vertical grid-content" ng-class="::{'small-8':vm.doc.lw_image, 'medium-10': vm.doc.lw_image, 'small-12':!vm.doc.lw_image}">
     <!-- {{vm.doc}} -->
       <!-- show head field linked with a url. -->
-      <h3 class="head-field" ng-if="::vm.doc.lw_url">
+      <h4 class="head-field" ng-if="::vm.doc.lw_url">
         <a ng-href="{{::vm.doc.lw_url}}" ng-click="vm.postSignal({params: {lw_url: vm.doc.lw_url}})" rel="noopener" target="_blank">{{::vm.doc.lw_head}}</a>
 
-      </h3>
+      </h4>
       <!-- show head field without a url. -->
       <h3 class="head-field" ng-if="::(!vm.doc.lw_url)">{{::vm.doc.lw_head}}</h3>
 
+
       <h4 class="subheader">{{::vm.doc.lw_subhead}}</h4>
+      <p class="large-8 xlarge-7 xx-large-6">
+        {{::vm.doc.response_count_d}} Responses  {{::vm.doc.connected_projects_count_d}} Projects
+      </p>
       <p class="large-8 xlarge-7 xx-large-6">
         {{::vm.doc.lw_description}}
       </p>
+      <p class="large-8 xlarge-7 xx-large-6">
+        {{::vm.doc.expert_range_s}} - {{::vm.doc.expert_product_keywords_ss}}
+      </p>
+
       <!-- Output of CONFIG BASED FIELD DISPLAY -->
-      <p ng-repeat="(field, value) in vm.doc.fieldsToDisplay">
+      <!-- <p ng-repeat="(field, value) in vm.doc.fieldsToDisplay">
 
         <span><strong>{{::field}}:	&nbsp;  </strong></span>
 
         <field value="::value" highlight="::vm.highlight[doc.id]" maxlength="200" hkey="{{field}}"></field>
 
-      </p>
+      </p> -->
   </div>
 </article>

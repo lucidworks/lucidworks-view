@@ -17,7 +17,8 @@
         facetName: '@facetName',
         facetLabel: '@facetLabel',
         facetAutoOpen: '@facetAutoOpen',
-        facetTag: '@facetTag'
+        facetTag: '@facetTag',
+        facetIndex: '@facetIndex',
       }
     };
   }
@@ -255,7 +256,8 @@
       var query = QueryService.getQueryObject();
       if(query.hasOwnProperty('fq')){
         var clearedFilter = _.remove(query.fq, function(value){
-          return checkFacetExists(value, vm.facetName);
+          return true;
+          // return checkFacetExists(value, vm.facetName);
         });
         if(clearedFilter.length){
           updateFacetQuery(query);
