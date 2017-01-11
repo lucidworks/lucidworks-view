@@ -54,7 +54,7 @@
       );
 
       doc.lw_head = getField('head', doc) ?
-        getField('head', doc) : 'Title Field Not Found';
+        getField('head', doc) : 'Brand Name Field Not Found';
 
       doc.lw_subhead = getField('subhead', doc);
 
