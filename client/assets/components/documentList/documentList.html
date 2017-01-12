@@ -1,4 +1,4 @@
-<div id="documentList">
+<div class="adk" id="documentList">
   <div ng-repeat="doc in vm.docs" ng-switch="::vm.getDocType(doc)">
     <document-default ng-switch-default doc="doc" position="vm.getDocPosition(doc,vm.docs)" highlight="vm.highlighting"></document-default>
   </div>
