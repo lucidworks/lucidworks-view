@@ -29,7 +29,7 @@
 <article class="grid-block document row">
   <div class="image small-4 medium-2 grid-content" ng-class="::{hide:!vm.doc.lw_image}">
     <div zf-interchange="">
-      <img media="small" ng-src="{{::vm.doc.lw_image}}">
+      <img media="small" ng-src="{{::vm.doc.lw_image || 'assets/img/document_placeholder.png'}}">
     </div>
   </div>
   <div class="detail vertical grid-content" ng-class="::{'small-8':vm.doc.lw_image, 'medium-10': vm.doc.lw_image, 'small-12':!vm.doc.lw_image}">
