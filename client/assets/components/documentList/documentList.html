@@ -5,7 +5,7 @@
 
   <div ng-if="vm.groupedResults" ng-repeat="(key, val) in vm.groupedResults">
     <div ng-repeat="group in val.groups">
-      <div class="small-11 column" ng-switch="::vm.getDocType(group.doclist.docs[0])">
+      <div class="small-12 column" ng-switch="::vm.getDocType(group.doclist.docs[0])">
         <document-default  ng-switch-default doc="group.doclist.docs[0]" position="vm.getDocPosition(group,val.groups)" highlight="vm.highlighting" ></document-default>
       </div>
     </div>
