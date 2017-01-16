@@ -5,10 +5,10 @@ animationIn: slideInRight
 animationOut: slideOutLeft
 controller: rulesController as rc
 ---
-<div class="navbar navbar-default navbar-fixed-top">
+<!--<div class="title-bar primary navbar navbar-default navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
-      <a href="../" class="navbar-brand">Lucidworks Rules</a>
+      <a href="../" class="navbar-brand"><img ng-if="::logoLocation" ng-src="{{::logoLocation}}" height="60px" style="display: inline; height: 60px;" /> </a>
       <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -26,7 +26,64 @@ controller: rulesController as rc
       </ul>
     </div>
   </div>
-</div>
+</div>-->
+
+<!-- Top Bar -->
+<nav class="primary title-bar">
+    <span class="center">
+      <form name="searchForm" class="show-for-medium" >
+        <span class="inline-label search-label">
+
+        </span>
+      </form>
+      <span class="show-for-small-only">
+        <a class="title"><img ng-if="::logoLocation" ng-src="{{::logoLocation}}" /><span ng-if="::(!logoLocation)">{{::appName}}</span></a>
+      </span>
+    </span>
+  <!-- Mobile Search bar -->
+  <ul class="left menu-bar primary condense">
+    <li ng-show="hc.showFacets" class="show-for-small-only">
+      <a zf-toggle="sidebar"><img
+        zf-iconic=""
+        icon="menu"
+        data-direction="top"
+        size="small"
+        class="iconic-color-secondary"></a></a>
+    </li>
+    <li class="show-for-medium">
+      <a class="title"><img ng-if="::logoLocation" ng-src="{{::logoLocation}}" /><span ng-if="::(!logoLocation)">{{::appName}}</span></a>
+    </li>
+  </ul>
+  <ul class="right menu-bar primary condense">
+    <li class="show-for-medium">
+      <a ui-sref="search">Simulation</a>
+      <a ui-sref="login" ng-click="logout()">Logout</a>
+    </li>
+  </ul>
+</nav>
+
+<!--<nav class="primary title-bar">
+  &lt;!&ndash; Mobile Search bar &ndash;&gt;
+  <ul class="left menu-bar primary condense">
+    <li ng-show="hc.showFacets" class="show-for-small-only">
+      <a zf-toggle="sidebar"><img
+        zf-iconic=""
+        icon="menu"
+        data-direction="top"
+        size="small"
+        class="iconic-color-secondary"></a></a>
+    </li>
+    <li class="show-for-medium">
+      <a class="title"><span ng-if="::(!logoLocation)">{{::appName}}</span></a>
+    </li>
+  </ul>
+  <ul class="right menu-bar primary condense">
+    <li class="show-for-medium">
+      <a ui-sref="rules">Rules</a>
+      <a ui-sref="login" ng-click="hc.logout()">Logout</a>
+    </li>
+  </ul>-->
+</nav>
 
 <div class="container">
 

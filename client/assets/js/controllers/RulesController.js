@@ -37,6 +37,7 @@
       function ($scope, $http, $timeout, rulesService, rulesTransformerService,  rulesFilterService, UserService, ConfigService, AuthService) {
 
         var rulesConfig = ConfigService.config.rules;
+        $scope.logoLocation = ConfigService.config.logo_location;
 
         $scope.rulesConfig = rulesConfig;
         $scope.types = rulesConfig.types;
