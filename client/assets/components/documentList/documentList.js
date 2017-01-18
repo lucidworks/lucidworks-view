@@ -21,7 +21,7 @@
 
   }
 
-  function Controller($sce, $log, $anchorScroll, Orwell) {
+  function Controller($sce, $log, $anchorScroll, Orwell, ConfigService, DocsHelper) {
     'ngInject';
     var vm = this;
     vm.docs = [];
@@ -95,15 +95,21 @@
 
     function parseGrouping(results){
       _.each(results, function(item){
-        _.each(item.groups, function(group){
-          if(_.has(group, 'groupValue') && group.groupValue !== null){
-            vm.showGroupedResults[group.groupValue] = false;
-          }
-          else{
-            vm.showGroupedResults['noGroupedValue'] = true;
-          };
+        _.each(item.groups, function(group){ // brand-level
+          processProfileFields(group.doclist.docs[0]);
         });
       });
+    }
+
+    function processProfileFields(doc) {
+      var fieldsToDisplay = ConfigService.getFieldsToDisplay();
+      // Parse any wildcards in the config.
+      fieldsToDisplay = DocsHelper.parseWildcards(fieldsToDisplay, doc);
+      // turn fields to display into a list of params.
+      doc.fieldsToDisplay = DocsHelper.populateFieldLabels(
+        DocsHelper.selectFields(doc, fieldsToDisplay),
+        ConfigService.getFieldLabels()
+      );
     }
 
     /**

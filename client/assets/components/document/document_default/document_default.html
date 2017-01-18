@@ -26,33 +26,39 @@
   This would create a title categories and then make a bulleted list of
   every category in that result.
  -->
-<article class="grid-block document row">
-  <div class="image small-4 medium-2 grid-content" ng-class="::{hide:!vm.doc.lw_image}">
+<article class="grid-block document expanded row">
+  <!-- Left Column: Image -->
+  <div class="image small-2 large-1 grid-content">
+    <!-- Image -->
     <div zf-interchange="">
-      <img media="small" ng-src="{{::vm.doc.lw_image}}">
+      <img media="small" ng-src="{{::vm.doc.lw_image || 'assets/img/document_placeholder.png'}}">
     </div>
   </div>
-  <div class="detail vertical grid-content" ng-class="::{'small-8':vm.doc.lw_image, 'medium-10': vm.doc.lw_image, 'small-12':!vm.doc.lw_image}">
-    <!-- {{vm.doc}} -->
-      <!-- show head field linked with a url. -->
-      <h3 class="head-field" ng-if="::vm.doc.lw_url">
-        <a ng-href="{{::vm.doc.lw_url}}" ng-click="vm.postSignal({params: {lw_url: vm.doc.lw_url}})" rel="noopener" target="_blank">{{::vm.doc.lw_head}}</a>
 
-      </h3>
-      <!-- show head field without a url. -->
-      <h3 class="head-field" ng-if="::(!vm.doc.lw_url)">{{::vm.doc.lw_head}}</h3>
+  <!-- Right Column: Content -->
+  <div class="detail vertical grid-content small-10 large-11">
 
-      <h4 class="subheader">{{::vm.doc.lw_subhead}}</h4>
-      <p class="large-8 xlarge-7 xx-large-6">
-        {{::vm.doc.lw_description}}
-      </p>
-      <!-- Output of CONFIG BASED FIELD DISPLAY -->
-      <p ng-repeat="(field, value) in vm.doc.fieldsToDisplay">
+    <!-- Head Field -->
+    <h4 class="head-field">
+      <!-- If URL -->
+      <a ng-if="::vm.doc.lw_url" ng-href="{{::vm.doc.lw_url}}" ng-click="vm.postSignal({params: {lw_url: vm.doc.lw_url}})" rel="noopener" target="_blank">{{::vm.doc.lw_head}}</a>
+      <!-- If no URL -->
+      <span ng-if="::(!vm.doc.lw_url)">{{::vm.doc.lw_head}}</span>
+      <!-- If Source Verified -->
+      <small title="Source Verified" class="source-verified" ng-if="::vm.doc.source_verified_b"><span class="architizer-glyphs">+</span><span class="pro">PRO</span></small>
+    </h4>
 
-        <span><strong>{{::field}}:	&nbsp;  </strong></span>
+    <h6 class="subheader">
+      <a href="//{{::vm.doc.lw_subhead}}">{{::vm.doc.lw_subhead}}</a>
+    </h6>
 
-        <field value="::value" highlight="::vm.highlight[doc.id]" maxlength="200" hkey="{{field}}"></field>
-
-      </p>
+    <!-- Responses / Projects Count -->
+    <p class="subhead"><strong>{{::vm.doc.response_count_d || 0 }}</strong> Responses <strong>{{::vm.doc.connected_projects_count_d || 0}}</strong> Projects</p>
+    <!-- Description -->
+    <p class="description">{{::vm.doc.lw_description}}</p>
+    <p><strong ng-if="::vm.doc.expert_range_s">{{::vm.doc.expert_range_s}}</strong><span ng-if="::vm.doc.expert_product_keywords_ss"> - {{::vm.doc.expert_product_keywords_ss}}</span></p>
   </div>
+
+  <hr>
+
 </article>

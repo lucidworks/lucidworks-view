@@ -53,16 +53,31 @@
         ConfigService.getFieldLabels()
       );
 
+      doc.lw_image = getField('image', doc);
+
+      if (doc.source_verified_b) {
+        doc.lw_url = getField('verified_url_field', doc);
+      } else {
+        doc.lw_url = getField('unverified_url_field', doc);
+      }
+
       doc.lw_head = getField('head', doc) ?
-        getField('head', doc) : 'Title Field Not Found';
+        getField('head', doc) : 'Brand Name Field Not Found';
 
       doc.lw_subhead = getField('subhead', doc);
 
       doc.lw_description = getField('description', doc);
 
-      doc.lw_image = getField('image', doc);
 
-      doc.lw_url = getField('head_url', doc);
+
+      if (doc.expert_range_s) {
+        var quality = {
+          "1": "Low Quality",
+          "2": "Mid Quality",
+          "3": "High Quality"
+        }
+        doc.expert_range_s = quality[doc.expert_range_s];
+      }
 
       doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(doc);
       doc.position = vm.position;

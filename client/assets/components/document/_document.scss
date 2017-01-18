@@ -14,4 +14,40 @@
     display: none;
   }
 
+  .source-verified {
+    color: #1ca3fc;
+    .architizer-glyphs {
+      color: inherit;
+      font-size: 36px;
+      line-height: 1;
+      position: relative;
+      top: 6px;
+    }
+    .pro {
+      color: inherit;
+      line-height: 1;
+      font-size: 14px;
+      padding-left: 4px;
+    }
+
+  }
+
+  .grid-content:not(:first-child) {
+    padding-left: 10px;
+  }
+
+  .description {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+// Add a dividing line after each document
+.document::after {
+  content: "";
+
+  height: 2px;
+  background: #eee;
+  width: 100%;
 }
