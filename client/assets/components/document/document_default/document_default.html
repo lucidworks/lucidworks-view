@@ -53,7 +53,7 @@
     </h6>
 
     <!-- Responses / Projects Count -->
-    <p class="subhead"><strong>{{::vm.doc.response_cound_d || 0 }}</strong> Responses <strong>{{::vm.doc.connected_projects_count_d || 0}}</strong> Projects</p>
+    <p class="subhead"><strong>{{::vm.doc.response_count_d || 0 }}</strong> Responses <strong>{{::vm.doc.connected_projects_count_d || 0}}</strong> Projects</p>
     <!-- Description -->
     <p class="description">{{::vm.doc.lw_description}}</p>
     <p><strong ng-if="::vm.doc.expert_range_s">{{::vm.doc.expert_range_s}}</strong><span ng-if="::vm.doc.expert_product_keywords_ss"> - {{::vm.doc.expert_product_keywords_ss}}</span></p>
@@ -62,4 +62,3 @@
   <hr>
 
 </article>
-
