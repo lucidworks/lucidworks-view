@@ -55,13 +55,13 @@ appConfig = { //eslint-disable-line
   //  password: 'search-user-password-here'
   },
 
-  // The name of your collection
-  collection: 'MyCollection',
+  // The name of your collection - defaults to Fusion 3.0 default collection
+  collection: 'default',
 
   // Please specify a pipeline or profile that you want to leverage with this UI.
   query_pipeline_id: 'default',
   query_profile_id: 'default',
-  use_query_profile: true, // Force use of query-profile
+  use_query_profile: false, // Force use of query-profile
 
   // Search UI Title
   // This title appears in a number of places in the app, including page title.
