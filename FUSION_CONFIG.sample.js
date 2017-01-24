@@ -191,7 +191,7 @@ appConfig = { //eslint-disable-line
    * Typeahead or autocomplete shows you a number of suggested queries as you
    * type in the search box.
    */
-  typeahead_use_query_profile: true,
+  typeahead_use_query_profile: false,
   typeahead_query_pipeline_id: 'default',
   typeahead_query_profile_id: 'default',
   typeahead_fields: ['id'],
