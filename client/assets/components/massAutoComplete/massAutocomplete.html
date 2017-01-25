@@ -1,0 +1,18 @@
+<span ng-transclude></span>
+<div class="ac-container" ng-show="showAutocomplete">
+  <div class="singular-result" ng-show="noResults">No Suggestions</div>
+  <div class="singular-result" ng-show="waitingForSuggestion">Searching...</div>
+  <ul class="ac-menu" ng-hide="noResults || waitingForSuggestion || results.length < 1">
+    <li ng-repeat="result in results" class="ac-menu-item" ng-class="$index == selectedIndex ? 'ac-state-focus': ''">
+      <div ng-click="applySelection($index)">
+      <div id="ac-result-{{$index-1}}" ng-bind-html="result.label"></div>
+      <div class="ac-info">
+        <span ng-bind-html="result.value.type"></span>
+        <span> | </span>
+        <span ng-bind-html="result.value.docCount">docs</span>
+        <span>docs</span>
+      </div>
+      </div>
+    </li>
+  </ul>
+</div>

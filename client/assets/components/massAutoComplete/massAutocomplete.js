@@ -1,11 +1,10 @@
 (function () {
   'use strict';
   // Initialize module.
-  angular.module('lucidworksView.components.searchbox', [
+  angular.module('lucidworksView.components.massAutocomplete', [
     'lucidworksView.services.apiBase',
     'lucidworksView.services.config',
     'lucidworksView.services.query',
     'lucidworksView.services.queryData'
-    // 'angucomplete-alt'
   ]);
 })();

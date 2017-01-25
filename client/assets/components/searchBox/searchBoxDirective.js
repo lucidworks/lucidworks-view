@@ -20,16 +20,22 @@
     };
   }
 
-  function Controller($scope, $q, ConfigService, QueryService,
-    SearchBoxDataService) {
+  function Controller($log, $q, $scope, ConfigService, QueryService, SearchBoxDataService) {
     'ngInject';
     var ta = this;
+    
     ta.typeaheadField = ConfigService.getTypeaheadField();
     ta.doTypeaheadSearch = doTypeaheadSearch;
     ta.selectedSomething = selectedSomething;
     ta.updateSearchQuery = updateSearchQuery;
     ta.initialValue = _.isArray(ta.query)?ta.query[0]:ta.query;
 
+    //ta.searchQuery
+    //NEW mass-autocomplete
+
+
+
+    //OLD ANGUCOMPLETE STUFF
     function selectedSomething(object) {
       if (object) {
         var newValue = object.originalObject[ta.typeaheadField];
@@ -42,8 +48,8 @@
     }
 
     function doTypeaheadSearch(userInputString, timeoutPromise) {
+      $log.info('tp::',timeoutPromise);
       var deferred = $q.defer();
-
       SearchBoxDataService
         .getTypeaheadResults({q: ta.query, wt: 'json'})
         .then(function (resp) {
@@ -57,7 +63,8 @@
           }
         })
         .catch(function (error) {
-          timeoutPromise.reject(error);
+          $log.info('errrrrr:',error);
+          // timeoutPromise.reject(error);
         });
 
       return deferred.promise;
