@@ -27,6 +27,7 @@
     
     ta.typeaheadField = ConfigService.getTypeaheadField();
     ta.initialValue = _.isArray(ta.query)?ta.query[0]:ta.query;
+    ta.noResults = false;
 
     //NEW mass-autocomplete
     ta.dirty = {};
@@ -47,10 +48,12 @@
     };
 
     function showNoResults(message) {
-      $log.info(message);
+      ta.noResults = true;
+      ta.noResultsMessage = message;
     }
 
     function doTypeaheadSearch(term) {
+      ta.noResults = false;
       var deferred = $q.defer();
       // set this here
       setQuery(term);
@@ -60,7 +63,7 @@
           if(resp.hasOwnProperty('response') && resp.response.docs.length) {
             deferred.resolve(suggest_results(resp.response.docs,term));
           } else {
-            return deferred.reject('No suggestions returned for '+term);
+            return deferred.reject('No suggestions for '+term);
           }
         })
         .catch(function (error) {
