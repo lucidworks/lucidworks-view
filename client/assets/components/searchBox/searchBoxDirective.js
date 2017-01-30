@@ -68,7 +68,7 @@
         })
         .catch(function (error) {
           $log.error('error:',error);
-          return deferred.reject(error);
+          return deferred.reject('An error occurred: '+error);
           //TODO something better than this
         });
 
