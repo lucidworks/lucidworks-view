@@ -15,10 +15,55 @@ $search-box-typeahead-highlight-color:     $success-color;
 $search-box-empty-content:                 '';
 
 @include exports(search-box) {
+  
   .search-box {
-    .angucomplete-input {
+
+    //mass-autocomplete
+    .query-input {
       margin-bottom: 0px;
+      color: $search-box-typeahead-text-color;
     }
+
+    .ac-container {z-index: 1000;}
+
+    .ac-menu {
+      background: $search-box-typeahead-background;
+      border: $search-box-typeahead-border;
+      color: $search-box-typeahead-text-color;
+      list-style-type: none;
+      margin: 0;
+      padding: 4px;
+      text-align:left;
+    }
+
+    .ac-menu-item a {
+      padding: .5rem 1.5rem .5rem .5rem;
+      color:inherit;
+      display: block;
+      position:relative;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      &:hover {color: $search-box-typeahead-highlight-color;}
+      &:active {background: $search-box-typeahead-selected-background;}
+      &:after {
+        content:$search-box-empty-content;
+        position:absolute;
+        right:0;
+        top:8px;
+        background-image: url('../img/iconic/expand.svg');
+        transform: scaleX(-1);
+        background-repeat: no-repeat;
+        width: 1.5rem;
+        height: 1.3rem;
+      }
+    }
+   
+
+
+
+    //OLD TO REMOVE
+    
 
     .angucomplete-holder {
       position: relative;

@@ -12,7 +12,6 @@ angular.module('lucidworksView.components', [
   'lucidworksView.components.field',
   'lucidworksView.components.landingpage',
   'lucidworksView.components.login',
-  'lucidworksView.components.massAutocomplete',
   'lucidworksView.components.paginate',
   'lucidworksView.components.searchbox',
   'lucidworksView.components.sort'

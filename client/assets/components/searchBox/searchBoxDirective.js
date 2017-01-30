@@ -20,50 +20,67 @@
     };
   }
 
-  function Controller($log, $q, $scope, ConfigService, QueryService, SearchBoxDataService) {
+  function Controller($log, $q, $sce, $scope, ConfigService, QueryService, SearchBoxDataService) {
     'ngInject';
+    //TODO change 'ta'.
     var ta = this;
     
     ta.typeaheadField = ConfigService.getTypeaheadField();
-    ta.doTypeaheadSearch = doTypeaheadSearch;
-    ta.selectedSomething = selectedSomething;
-    ta.updateSearchQuery = updateSearchQuery;
     ta.initialValue = _.isArray(ta.query)?ta.query[0]:ta.query;
 
-    //ta.searchQuery
     //NEW mass-autocomplete
+    ta.dirty = {};
+
+    function suggest_results(responseDocs,term) {
+      var results = [];
+      results = _.map(responseDocs,function(doc) {
+        $log.info(ta.typeaheadField);
+        //higlighting
+        //$sce.trustAsHtml(highlight(doc[ta.typeaheadField], term)
+        return {label:doc[ta.typeaheadField],value:doc[ta.typeaheadField]};
+      });
+      return results;
+    }
+
+    ta.autocomplete_options = {
+      suggest: doTypeaheadSearch,
+      // on_error:function () {
+
+      // },
+      debounce_suggest:300,
+      on_select: selectedSomething
+    };
 
 
+    function highlight(str, term) {
+      $log.info(str,term);
+      var highlight_regex = new RegExp('(' + term + ')', 'gi');
+      return str.replace(highlight_regex,
+        '<span class="highlight">$1</span>');
+    };
 
-    //OLD ANGUCOMPLETE STUFF
     function selectedSomething(object) {
       if (object) {
-        var newValue = object.originalObject[ta.typeaheadField];
+        var newValue = object.value;
         ta.query = _.isArray(newValue)?newValue[0]:newValue;
       }
     }
 
-    function updateSearchQuery(inputString) {
-      ta.query = inputString;
-    }
-
-    function doTypeaheadSearch(userInputString, timeoutPromise) {
-      $log.info('tp::',timeoutPromise);
+    function doTypeaheadSearch(term) {
       var deferred = $q.defer();
       SearchBoxDataService
-        .getTypeaheadResults({q: ta.query, wt: 'json'})
+        .getTypeaheadResults({q: term, wt: 'json'})
         .then(function (resp) {
           if(resp.hasOwnProperty('response')) {
-            var objectToResolve = {
-              data: resp.response.docs
-            };
-            deferred.resolve(objectToResolve);
+            deferred.resolve(suggest_results(resp.response.docs,term));
           } else {
-            deferred.reject('No response docs');
+            return deferred.reject('No response docs');
           }
         })
         .catch(function (error) {
-          $log.info('errrrrr:',error);
+          // return deferred.reject(error)
+          //TODO something better than this
+          $log.error('errrrrr:',error);
           // timeoutPromise.reject(error);
         });
 
