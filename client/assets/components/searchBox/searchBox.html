@@ -12,7 +12,8 @@
   input-class="search"
   initial-value="ta.initialValue"
   match-class="highlight" />-->
-
+<h3 style="color:cyan;">{{ta.query}}</h3>
 <div mass-autocomplete class="search-box">
-  <input type="text" class="query-input" ng-model="ta.dirty.value" mass-autocomplete-item="ta.autocomplete_options" />
+  <input type="text" class="query-input" ng-model="ta.dirty.value" 
+  mass-autocomplete-item="ta.autocomplete_options" />
 </div>

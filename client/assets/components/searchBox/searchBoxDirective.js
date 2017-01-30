@@ -34,23 +34,43 @@
     function suggest_results(responseDocs,term) {
       var results = [];
       results = _.map(responseDocs,function(doc) {
-        $log.info(ta.typeaheadField);
-        //higlighting
-        //$sce.trustAsHtml(highlight(doc[ta.typeaheadField], term)
-        return {label:doc[ta.typeaheadField],value:doc[ta.typeaheadField]};
+        // higlighting
+        return {label:$sce.trustAsHtml(highlight(doc[ta.typeaheadField][0], term)),value:doc[ta.typeaheadField]};
       });
       return results;
     }
 
     ta.autocomplete_options = {
       suggest: doTypeaheadSearch,
-      // on_error:function () {
-
-      // },
-      debounce_suggest:300,
-      on_select: selectedSomething
+      on_error: showNoResults,      
+      on_select: selectedSomething,
     };
 
+    function showNoResults(message) {
+      $log.info(message);
+    }
+
+    function doTypeaheadSearch(term) {
+      var deferred = $q.defer();
+      // set this here
+      setQuery(term);
+      SearchBoxDataService
+        .getTypeaheadResults({q: term, wt: 'json'})
+        .then(function (resp) {
+          if(resp.hasOwnProperty('response') && resp.response.docs.length) {
+            deferred.resolve(suggest_results(resp.response.docs,term));
+          } else {
+            return deferred.reject('No suggestions returned for '+term);
+          }
+        })
+        .catch(function (error) {
+          $log.error('error:',error);
+          return deferred.reject(error);
+          //TODO something better than this
+        });
+
+      return deferred.promise;
+    }
 
     function highlight(str, term) {
       $log.info(str,term);
@@ -61,31 +81,16 @@
 
     function selectedSomething(object) {
       if (object) {
-        var newValue = object.value;
-        ta.query = _.isArray(newValue)?newValue[0]:newValue;
+        var newValue = _.isArray(object.value) ? object.value[0]:object.value;
+        setQuery(newValue);
       }
     }
 
-    function doTypeaheadSearch(term) {
-      var deferred = $q.defer();
-      SearchBoxDataService
-        .getTypeaheadResults({q: term, wt: 'json'})
-        .then(function (resp) {
-          if(resp.hasOwnProperty('response')) {
-            deferred.resolve(suggest_results(resp.response.docs,term));
-          } else {
-            return deferred.reject('No response docs');
-          }
-        })
-        .catch(function (error) {
-          // return deferred.reject(error)
-          //TODO something better than this
-          $log.error('errrrrr:',error);
-          // timeoutPromise.reject(error);
-        });
-
-      return deferred.promise;
+    function setQuery (query) {
+      ta.query = query;
     }
+
+    
 
 
   }

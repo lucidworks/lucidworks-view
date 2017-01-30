@@ -35,7 +35,7 @@ $search-box-empty-content:                 '';
       padding: 4px;
       text-align:left;
     }
-
+    .ac-menu-item.ac-state-focus a {background: $search-box-typeahead-selected-background;}
     .ac-menu-item a {
       padding: .5rem 1.5rem .5rem .5rem;
       color:inherit;
@@ -44,7 +44,7 @@ $search-box-empty-content:                 '';
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      &:hover {color: $search-box-typeahead-highlight-color;}
+      &:hover {color: $search-box-typeahead-highlight-color;background: $search-box-typeahead-selected-background;}
       &:active {background: $search-box-typeahead-selected-background;}
       &:after {
         content:$search-box-empty-content;
@@ -56,6 +56,9 @@ $search-box-empty-content:                 '';
         background-repeat: no-repeat;
         width: 1.5rem;
         height: 1.3rem;
+      }
+      .highlight {
+        color: $search-box-typeahead-highlight-color;
       }
     }
    
