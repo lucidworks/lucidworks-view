@@ -14,7 +14,8 @@
       scope: true,
       controllerAs: 'ta',
       bindToController: {
-        query: '='
+        query: '=',
+        onSelect:'&'
       },
       require: '^form'
     };
@@ -29,32 +30,20 @@
     ta.initialValue = _.isArray(ta.query)?ta.query[0]:ta.query;
     ta.noResults = false;
 
-    //NEW mass-autocomplete
+    //mass-autocomplete config
     ta.dirty = {};
-
-    function suggest_results(responseDocs,term) {
-      var results = [];
-      results = _.map(responseDocs,function(doc) {
-        // higlighting
-        return {label:$sce.trustAsHtml(highlight(doc[ta.typeaheadField][0], term)),value:doc[ta.typeaheadField]};
-      });
-      return results;
-    }
-
+    
     ta.autocomplete_options = {
       suggest: doTypeaheadSearch,
       on_error: showNoResults,      
       on_select: selectedSomething,
-    };
+    };    
 
-    function showNoResults(message) {
-      ta.noResults = true;
-      ta.noResultsMessage = message;
-    }
 
+    //showAutocomplete
     function doTypeaheadSearch(term) {
-      ta.noResults = false;
       var deferred = $q.defer();
+      ta.noResults = false;
       // set this here
       setQuery(term);
       SearchBoxDataService
@@ -67,20 +56,23 @@
           }
         })
         .catch(function (error) {
-          $log.error('error:',error);
-          return deferred.reject('An error occurred: '+error);
-          //TODO something better than this
+          //TODO better error reporting
+          $log.error('typeahead search error:',error);
+          // currently don't want to surface these in the UI
+          // return deferred.reject('An error occurred: '+error);
         });
 
       return deferred.promise;
     }
 
+    function escapeRegExp(str) {
+      return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/gi, '\\$&');
+    }
+
     function highlight(str, term) {
-      $log.info(str,term);
-      var highlight_regex = new RegExp('(' + term + ')', 'gi');
-      return str.replace(highlight_regex,
-        '<span class="highlight">$1</span>');
-    };
+      var highlight_regex = new RegExp(escapeRegExp(term), 'gi');
+      return str.replace(highlight_regex, '<span class="highlight">$1</span>');
+    }
 
     function selectedSomething(object) {
       if (object) {
@@ -93,7 +85,21 @@
       ta.query = query;
     }
 
-    
+    function showNoResults(message) {
+      ta.noResults = true;
+      ta.noResultsMessage = message;
+    }
+
+    function suggest_results(responseDocs,term) {
+      var results = [];
+      results = _.map(responseDocs,function(doc) {
+        // higlighting
+        return {label:$sce.trustAsHtml(highlight(doc[ta.typeaheadField][0], term)),value:doc[ta.typeaheadField]};
+      });
+      return results;
+    }
+
+    //if there's a query && [search in progress / results] for that query && suggester list is open 
 
 
   }
