@@ -14,8 +14,7 @@
       scope: true,
       controllerAs: 'ta',
       bindToController: {
-        query: '=',
-        onSelect:'&'
+        query: '='
       },
       require: '^form'
     };
@@ -65,12 +64,9 @@
       return deferred.promise;
     }
 
-    function escapeRegExp(str) {
-      return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/gi, '\\$&');
-    }
 
     function highlight(str, term) {
-      var highlight_regex = new RegExp(escapeRegExp(term), 'gi');
+      var highlight_regex = new RegExp('('+_.escapeRegExp(term)+')', 'gi');
       return str.replace(highlight_regex, '<span class="highlight">$1</span>');
     }
 

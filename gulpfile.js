@@ -35,7 +35,6 @@ global.paths = {
   sass: [
     'client/assets/scss',
     'bower_components/foundation-apps/scss',
-    'bower_components/angucomplete-alt/angucomplete-alt.css',
     'client/assets/components/**/*.scss'
   ],
   // These files include Foundation for Apps and its dependencies
