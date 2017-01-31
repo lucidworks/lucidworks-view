@@ -55,7 +55,8 @@ appConfig = { //eslint-disable-line
   //  password: 'search-user-password-here'
   },
 
-  // The name of your collection, defaults to Fusion 'default collection'
+
+  // The name of your collection - defaults to Fusion 3.0 default collection
   collection: 'default',
 
   // Please specify a pipeline or profile that you want to leverage with this UI.
