@@ -27,7 +27,7 @@
     
     ta.typeaheadField = ConfigService.getTypeaheadField();
     ta.initialValue = _.isArray(ta.query)?ta.query[0]:ta.query;
-    ta.noResults = false;
+    ta.noResults = undefined;
 
     //mass-autocomplete config
     ta.dirty = {};
