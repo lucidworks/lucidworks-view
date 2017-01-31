@@ -41,7 +41,7 @@
       ];
 
       function modelArrToViewElement (viewElement, modelArr) {
-        if (modelArr && modelArr.length) {
+        if (modelArr && _.isArray(modelArr)) {
 
           viewElement = modelArr[0];
         } else {

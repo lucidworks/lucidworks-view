@@ -20,8 +20,8 @@ appConfig = { //eslint-disable-line
    *
    * To use https set the https server key and certificate. And set use_https to true.
    */
-  version: 'v2.3',
-  host: 'http://192.168.100.112',
+  version: 'v2.8',
+  host: 'http://localhost',
   port:'8764',
 
 

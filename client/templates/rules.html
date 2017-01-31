@@ -37,7 +37,7 @@ controller: rulesController as rc
         </span>
       </form>
       <span class="show-for-small-only">
-        <a class="title"><img ng-if="::logoLocation" ng-src="{{::logoLocation}}" /><span ng-if="::(!logoLocation)">{{::appName}}</span></a>
+        <a class="title" ui-sref="home"><img ng-if="::logoLocation" ng-src="{{::logoLocation}}" /><span ng-if="::(!logoLocation)">{{::appName}}</span></a>
       </span>
     </span>
   <!-- Mobile Search bar -->
@@ -51,7 +51,7 @@ controller: rulesController as rc
         class="iconic-color-secondary"></a></a>
     </li>
     <li class="show-for-medium">
-      <a class="title"><img ng-if="::logoLocation" ng-src="{{::logoLocation}}" /><span ng-if="::(!logoLocation)">{{::appName}}</span></a>
+      <a class="title" ui-sref="home"><img ng-if="::logoLocation" ng-src="{{::logoLocation}}" /><span ng-if="::(!logoLocation)">{{::appName}}</span></a>
     </li>
   </ul>
   <ul class="right menu-bar primary condense">

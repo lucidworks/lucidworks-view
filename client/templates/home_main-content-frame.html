@@ -127,7 +127,7 @@
                 <span class="triggerKeywords">{{rule.description.toString()}}</span>
               </li>
               <li class="form-group">
-                <label class="small text-muted text-uppercase"><span ng-if="rule.field_values"> {{rule.field_name.join(', ')}} </span>{{rule.display_type.toString()}}</label>
+                <label class="small text-muted text-uppercase"><span ng-if="rule.field_values"> {{rule.field_name}} </span>{{rule.display_type.toString()}}</label>
 
                 <span class="triggerKeywords" ng-if="rule.values">{{rule.values.join(', ')}}</span>
                 <span class="triggerKeywords" ng-if="rule.field_values">{{rule.field_values.join(', ')}}</span>
