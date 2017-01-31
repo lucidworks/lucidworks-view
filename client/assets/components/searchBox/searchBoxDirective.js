@@ -22,7 +22,6 @@
 
   function Controller($log, $q, $sce, $scope, ConfigService, QueryService, SearchBoxDataService) {
     'ngInject';
-    //TODO change 'ta'.
     var ta = this;
     
     ta.typeaheadField = ConfigService.getTypeaheadField();
@@ -89,15 +88,10 @@
     function suggest_results(responseDocs,term) {
       var results = [];
       results = _.map(responseDocs,function(doc) {
-        // higlighting
         return {label:$sce.trustAsHtml(highlight(doc[ta.typeaheadField][0], term)),value:doc[ta.typeaheadField]};
       });
       return results;
     }
-
-    //if there's a query && [search in progress / results] for that query && suggester list is open 
-
-
   }
 
 })();
