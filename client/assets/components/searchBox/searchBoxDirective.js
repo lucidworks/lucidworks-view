@@ -38,6 +38,12 @@
       on_select: selectedSomething,
     };    
 
+    activate();
+
+    function activate() {
+      ta.dirty.value = ta.query;
+    }
+
     //TODO: nasty.
     function checkSubmit($event) {
       if ($event.keyCode === 13) {
