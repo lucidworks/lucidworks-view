@@ -2,7 +2,7 @@
   <input type="text" 
   class="query-input" 
   ng-model="ta.dirty.value" 
-  mass-autocomplete-item="ta.autocomplete_options" />
+  mass-autocomplete-item="ta.autocomplete_options" ng-keydown="ta.checkSubmit($event)" />
   <div class="no-results-message" ng-show="ta.dirty.value && ta.noResults">{{ta.noResultsMessage}}</div>
 </div>
 

@@ -25,6 +25,7 @@
     var ta = this;
     
     ta.typeaheadField = ConfigService.getTypeaheadField();
+    ta.checkSubmit = checkSubmit;
     ta.initialValue = _.isArray(ta.query)?ta.query[0]:ta.query;
     ta.noResults = undefined;
 
@@ -37,9 +38,16 @@
       on_select: selectedSomething,
     };    
 
-
+    //TODO: nasty.
+    function checkSubmit($event) {
+      if ($event.keyCode === 13) {
+        suggest_results(null,null);
+      }
+    }
     //showAutocomplete
     function doTypeaheadSearch(term) {
+      $log.info('tadd:',ta.dirty);
+      $log.info('term:',term);
       var deferred = $q.defer();
       ta.noResults = false;
       // set this here
