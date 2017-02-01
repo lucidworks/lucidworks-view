@@ -24,7 +24,7 @@
 
   }
 
-  function Controller(SignalsService, PaginateService, $log, $filter) {
+  function Controller($log, DocumentService, SignalsService) {
     'ngInject';
     var vm = this;
 
@@ -33,25 +33,32 @@
     function activate() {
       vm.postSignal = postSignal;
       vm.doc = processDocument(vm.doc);
+      
     }
 
     function processDocument(doc) {
-      doc.createdAtFormatted = $filter('date')(doc.createdAt[0]);
-      doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(doc);
-      doc.position = vm.position;
-      doc.page = PaginateService.getNormalizedCurrentPage();
+      //define list of fields necessary to display the doc
+      var templateFields = ['createdAt','tweet','userLang','userScreenName'];
+
+      //set properties needed for display
+      doc._templateDisplayFields = DocumentService.setTemplateDisplayFields(doc,templateFields);
+      
+      //set properties needed for signals
+      doc._signals = DocumentService.setSignalsProperties(doc,vm.position); 
+      
+      $log.info('dd',doc);
       return doc;
     }
 
     function postSignal(options){
       var paramsObj = {
         params: {
-          position: vm.doc.position,
-          page: vm.doc.page
+          position: vm.doc._signals.position,
+          page: vm.doc._signals.page
         }
       };
       _.defaultsDeep(paramsObj, options);
-      SignalsService.postClickSignal(vm.doc.__signals_doc_id__, paramsObj);
+      SignalsService.postClickSignal(vm.doc._signals.signals_doc_id, paramsObj);
     }
   }
 })();
