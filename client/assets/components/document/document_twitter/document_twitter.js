@@ -26,27 +26,26 @@
 
   function Controller($log, DocumentService, SignalsService) {
     'ngInject';
+
     var vm = this;
+    
+    //define list of fields necessary to display the doc in the template
+    var templateFields = ['createdAt','tweet','userLang','userScreenName'];
 
     activate();
 
     function activate() {
       vm.postSignal = postSignal;
       vm.doc = processDocument(vm.doc);
-      
     }
 
     function processDocument(doc) {
-      //define list of fields necessary to display the doc
-      var templateFields = ['createdAt','tweet','userLang','userScreenName'];
-
       //set properties needed for display
       doc._templateDisplayFields = DocumentService.setTemplateDisplayFields(doc,templateFields);
       
       //set properties needed for signals
       doc._signals = DocumentService.setSignalsProperties(doc,vm.position); 
       
-      $log.info('dd',doc);
       return doc;
     }
 

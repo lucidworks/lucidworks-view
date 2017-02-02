@@ -24,7 +24,7 @@
   }
 
 
-  function Controller(SignalsService, PaginateService) {
+  function Controller(SignalsService) {
     'ngInject';
     var vm = this;
 
@@ -32,24 +32,17 @@
 
     function activate() {
       vm.postSignal = postSignal;
-      vm.doc = processDocument(vm.doc);
-    }
-
-    function processDocument(doc) {
-      doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(doc);
-      doc.page = PaginateService.getNormalizedCurrentPage();
-      return doc;
     }
 
     function postSignal(options){
       var paramsObj = {
         params: {
-          position: vm.doc.position,
-          page: vm.doc.page
+          position: vm.doc._signals.position,
+          page: vm.doc._signals.page
         }
       };
       _.defaultsDeep(paramsObj, options);
-      SignalsService.postClickSignal(vm.doc.__signals_doc_id__, paramsObj);
+      SignalsService.postClickSignal(vm.doc._signals.signals_doc_id, paramsObj);
     }
   }
 })();
