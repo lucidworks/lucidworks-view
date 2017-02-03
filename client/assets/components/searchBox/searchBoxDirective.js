@@ -14,20 +14,24 @@
       scope: true,
       controllerAs: 'ta',
       bindToController: {
+        onSelect:'&',
         query: '='
       },
       require: '^form'
     };
   }
 
-  function Controller($log, $q, $sce, $scope, ConfigService, QueryService, SearchBoxDataService) {
+  function Controller($element, $log, $q, $sce, $timeout, ConfigService, SearchBoxDataService) {
     'ngInject';
     var ta = this;
     
+    ta.checkKeyPress = checkKeyPress;
     ta.typeaheadField = ConfigService.getTypeaheadField();
-    ta.checkSubmit = checkSubmit;
     ta.initialValue = _.isArray(ta.query)?ta.query[0]:ta.query;
     ta.noResults = undefined;
+    
+    //need to get hold of the element to be able to manually close the suggestions div
+    var massAutocompleteElem = $element.find('div')[0];
 
     //mass-autocomplete config
     ta.dirty = {};
@@ -44,16 +48,22 @@
       ta.dirty.value = ta.query;
     }
 
-    //TODO: nasty.
-    function checkSubmit($event) {
+    function checkKeyPress($event) {
       if ($event.keyCode === 13) {
-        suggest_results(null,null);
+        closeSuggester();
       }
     }
-    //showAutocomplete
+
+    function closeSuggester() {
+      var massAutoElemScope = angular.element(massAutocompleteElem).isolateScope();      
+      $timeout(function() {
+        if(massAutoElemScope.show_autocomplete) {
+          massAutoElemScope.show_autocomplete = false;
+        }
+      },200);
+    }
+
     function doTypeaheadSearch(term) {
-      $log.info('tadd:',ta.dirty);
-      $log.info('term:',term);
       var deferred = $q.defer();
       ta.noResults = false;
       // set this here
@@ -87,6 +97,7 @@
       if (object) {
         var newValue = _.isArray(object.value) ? object.value[0]:object.value;
         setQuery(newValue);
+        $timeout(ta.onSelect);
       }
     }
 
