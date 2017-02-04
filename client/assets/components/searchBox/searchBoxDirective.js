@@ -111,11 +111,17 @@
     }
 
     function suggest_results(responseDocs,term) {
-      var results = [];
-      results = _.map(responseDocs,function(doc) {
-        return {label:$sce.trustAsHtml(highlight(doc[ta.typeaheadField][0], term)),value:doc[ta.typeaheadField]};
-      });
-      return results;
+      $log.info(term.length);
+      if (term.length >= 2) {
+        var results = [];
+        results = _.map(responseDocs,function(doc) {
+          $log.info(doc[ta.typeaheadField]);
+          var typeaheadValue = _.isArray(doc[ta.typeaheadField]) ? doc[ta.typeaheadField][0] : doc[ta.typeaheadField];
+          return {label:$sce.trustAsHtml(highlight(typeaheadValue, term)),value:doc[ta.typeaheadField]};
+        });
+        return results;
+      }
+      
     }
   }
 
