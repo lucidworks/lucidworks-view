@@ -24,7 +24,7 @@
     };
   }
 
-  function Controller($sanitize) {
+  function Controller($log,$sanitize) {
     'ngInject';
     var fc = this;
     fc.limit = false;
@@ -56,10 +56,12 @@
     function processField(field, highlightKey, highlight, maxlength) {
       var result = $sanitize(_.escape(field));
       var hasHighlight = false;
-
       if (highlight && Object.keys(highlight).length > 0) {
+        $log.info('highlight:',highlight);
+        $log.info('highlightKey:',highlightKey);
         if (highlight[highlightKey]) {
           result = highlight[highlightKey];
+          $log.info('result:',result);
         }
       }
       // Only shorten if not highlighting, since highlighing in solr can control
