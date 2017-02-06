@@ -49,6 +49,7 @@
     }
 
     function checkKeyPress($event) {
+      ta.query = ta.dirty.value;
       if ($event.keyCode === 13) {
         closeSuggester();
       }
