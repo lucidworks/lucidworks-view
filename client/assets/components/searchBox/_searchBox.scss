@@ -17,22 +17,14 @@ $search-box-empty-content:                 '';
 @include exports(search-box) {
   
   .search-box {
-    > span {position:relative;} 
+    > span {position:relative;display: block;} 
     .query-input {
       margin-bottom: 0px;
       color: $search-box-typeahead-text-color;
     }
-    .no-results-message {
-      position:absolute;
-      top:100%;
-      padding-top:4px;
-      text-align:left;
-      font-size:0.9rem;
-      opacity:0.6;
-    }
     .ac-container {z-index: 1000;}
 
-    .ac-menu {
+    .ac-menu,.no-results-message {
       background: $search-box-typeahead-background;
       border: $search-box-typeahead-border;
       color: $search-box-typeahead-text-color;
@@ -41,6 +33,15 @@ $search-box-empty-content:                 '';
       padding: 4px;
       text-align:left;
     }
+    .no-results-message {
+      font-size:0.9rem;
+      position:absolute;
+      top:100%;
+      width: 100%;
+      padding: 8px;
+      font-style: italic;
+    }
+
     .ac-menu-item.ac-state-focus a {background: $search-box-typeahead-selected-background;}
     .ac-menu-item a {
       padding: .5rem 1.5rem .5rem .5rem;
