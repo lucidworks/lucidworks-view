@@ -117,7 +117,7 @@
           var typeaheadValue = _.isArray(doc[ta.typeaheadField]) ? doc[ta.typeaheadField][0] : doc[ta.typeaheadField];
 
           if (typeaheadValue) {
-            results.push({label:$sce.trustAsHtml(highlight(typeaheadValue, term)),value:typeaheadValue});
+            results.push({label:$sce.trustAsHtml('<div class="title-wrapper" title="'+typeaheadValue+'">'+highlight(typeaheadValue, term)+'</div>'),value:typeaheadValue});
           }
         });
         return results;
