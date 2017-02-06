@@ -111,18 +111,18 @@
     }
 
     function suggest_results(responseDocs,term) {
-      $log.info(term.length);
       if (term.length >= 2) {
         var results = [];
-        results = _.map(responseDocs,function(doc) {
-          $log.info(doc[ta.typeaheadField]);
+        _.forEach(responseDocs,function(doc) {
           var typeaheadValue = _.isArray(doc[ta.typeaheadField]) ? doc[ta.typeaheadField][0] : doc[ta.typeaheadField];
-          return {label:$sce.trustAsHtml(highlight(typeaheadValue, term)),value:doc[ta.typeaheadField]};
+
+          if (typeaheadValue) {
+            results.push({label:$sce.trustAsHtml(highlight(typeaheadValue, term)),value:typeaheadValue});
+          }
         });
         return results;
       }
-      
     }
-  }
 
+  }
 })();
