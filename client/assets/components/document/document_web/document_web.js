@@ -33,9 +33,16 @@
 
     function activate() {
       vm.postSignal = postSignal;
-      vm.doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(vm.doc);
-      vm.doc.position = vm.position;
-      vm.doc.page = PaginateService.getNormalizedCurrentPage();
+      vm.doc = processDocument(vm.doc);
+    }
+
+    function processDocument(doc) {
+      doc._lw_id_decoded = doc.id ? decodeURIComponent(doc.id) : doc.id;
+      doc._lw_url_decoded = _.has(doc, 'url[0]') ? decodeURIComponent(doc.url) : doc.url;
+      doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(vm.doc);
+      doc.position = vm.position;
+      doc.page = PaginateService.getNormalizedCurrentPage();
+      return doc;
     }
 
     function postSignal(options){

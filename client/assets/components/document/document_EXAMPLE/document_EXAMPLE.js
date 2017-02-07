@@ -30,7 +30,13 @@
     activate();
 
     function activate() {
+      vm.doc = processDocument(vm.doc);
       vm.postSignal = SignalsService.postClickSignal;
+    }
+
+    function processDocument(doc) {
+      doc._lw_id_decoded = doc.id ? decodeURIComponent(doc.id) : doc.id;
+      return doc;
     }
   }
 })();
