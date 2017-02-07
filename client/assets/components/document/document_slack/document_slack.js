@@ -39,7 +39,8 @@
     function processDocument(doc) {
       doc.timestamp_tdtFormatted = $filter('date')(vm.doc.timestamp_tdt, 'M/d/yy h:mm:ss a');
       // For multivalued fields
-      doc.text = _.isArray(doc.text)?_.join(doc.text,' '):doc.text;
+      doc.text = _.isArray(doc.text) ? _.join(doc.text, ' ') : doc.text;
+      doc._lw_id_decoded = doc.id ? decodeURIComponent(doc.id) : doc.id;
       doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(doc);
       doc.position = vm.position;
       doc.page = PaginateService.getNormalizedCurrentPage();
