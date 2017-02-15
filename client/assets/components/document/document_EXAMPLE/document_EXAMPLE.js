@@ -23,19 +23,24 @@
 
   }
 
-  function Controller(SignalsService) {
+  function Controller(SignalsService, DocumentService) {
     'ngInject';
     var vm = this;
+    var templateFields = ['id'];
 
     activate();
 
     function activate() {
       vm.doc = processDocument(vm.doc);
-      vm.postSignal = SignalsService.postClickSignal;
     }
 
     function processDocument(doc) {
-      doc._lw_id_decoded = doc.id ? decodeURIComponent(doc.id) : doc.id;
+      //set properties needed for display
+      doc._templateDisplayFields = DocumentService.setTemplateDisplayFields(doc, templateFields);
+      doc._templateDisplayFields._lw_id_decoded = doc._templateDisplayFields.id ? decodeURIComponent(doc._templateDisplayFields.id) : doc._templateDisplayFields.id;
+
+      //set properties needed for signals
+      doc._signals = DocumentService.setSignalsProperties(doc, vm.position);
       return doc;
     }
   }
