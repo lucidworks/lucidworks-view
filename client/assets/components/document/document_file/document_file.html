@@ -6,12 +6,12 @@
         <span class="doc-label">size:</span> <field value="::vm.doc._templateDisplayFields.length | humanizeFilesize"></field>
       </div>
       <div class="mimetype" ng-if="::vm.doc._templateDisplayFields.mimeType">
-        <span class="doc-label">mimetype:</span> <field value="::vm.doc._templateDisplayFields.mimeType" highlight="::vm.highlight[_templateDisplayFields.doc.id]" maxlength="200"
-               hkey="mimeType_s"></field>
+        <span class="doc-label">mimetype:</span> <field value="::vm.doc._templateDisplayFields.mimeType" highlight="::vm.highlight[doc._templateDisplayFields.id]" maxlength="200"
+               hkey="mimeType"></field>
       </div>
       <div class="owner" ng-if="::vm.doc._templateDisplayFields.owner">
-        <span class="doc-label">owner:</span> <field value="::vm.doc._templateDisplayFields.owner" highlight="::vm.highlight[_templateDisplayFields.doc.id]" maxlength="200"
-               hkey="owner_s"></field>
+        <span class="doc-label">owner:</span> <field value="::vm.doc._templateDisplayFields.owner" highlight="::vm.highlight[doc._templateDisplayFields.id]" maxlength="200"
+               hkey="owner"></field>
       </div>
       <div class="last-modified" ng-if="::vm.doc._templateDisplayFields.lastModified">
         <span class="doc-label">last modified:</span> <field value="::vm.doc._templateDisplayFields.lastModified | date"></field> UTC
