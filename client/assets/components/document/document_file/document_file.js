@@ -24,7 +24,7 @@
 
   }
 
-  function Controller($log,DocumentService) {
+  function Controller(DocumentService) {
     'ngInject';
     var vm = this;
     var templateFields = ['id', 'length', 'mimeType', 'owner', 'lastModified'];

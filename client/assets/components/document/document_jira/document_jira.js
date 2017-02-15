@@ -25,10 +25,10 @@
   }
 
 
-  function Controller($log, DocumentService) {
+  function Controller(DocumentService) {
     'ngInject';
     var vm = this;
-    
+
     //define list of fields necessary to display the doc in the template (jira issue + jira project)
     var templateFields = ['id', 'summary', 'content', 'name', 'parent', 'jira_content_type', 'key', 'lastModified', 'assignee', 'lead'];
 

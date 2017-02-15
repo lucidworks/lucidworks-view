@@ -23,7 +23,7 @@
 
   }
 
-  function Controller(SignalsService, DocumentService) {
+  function Controller(DocumentService) {
     'ngInject';
     var vm = this;
     var templateFields = ['id'];

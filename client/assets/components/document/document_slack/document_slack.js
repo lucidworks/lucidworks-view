@@ -25,7 +25,7 @@
   }
 
 
-  function Controller(SignalsService, $filter, PaginateService, DocumentService) {
+  function Controller(SignalsService, $filter, DocumentService) {
     'ngInject';
     var vm = this;
     var templateFields = ['text', 'channel', 'user', 'timestamp', 'id'];

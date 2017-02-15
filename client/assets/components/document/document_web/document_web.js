@@ -24,7 +24,7 @@
 
   }
 
-  function Controller(SignalsService, PaginateService, DocumentService) {
+  function Controller(SignalsService, DocumentService) {
     'ngInject';
     var vm = this;
     var templateFields = ['title', 'url', 'id', 'keywords', 'description', 'og_description', 'content', 'body'];
