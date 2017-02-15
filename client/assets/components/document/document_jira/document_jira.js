@@ -25,29 +25,26 @@
   }
 
 
-  function Controller($log, DocumentService, SignalsService) {
+  function Controller($log, DocumentService) {
     'ngInject';
     var vm = this;
-
-    //define list of fields necessary to display the doc in the template (jira issue + jira project)
-    var templateFields = ['summary', 'content_txt', 'name', 'parent', 'jira_content_type', 'key', 'lastModified', 'assignee', 'lead'];
     
+    //define list of fields necessary to display the doc in the template (jira issue + jira project)
+    var templateFields = ['id', 'summary', 'content', 'name', 'parent', 'jira_content_type', 'key', 'lastModified', 'assignee', 'lead'];
+
     activate();
 
     function activate() {
       vm.doc = processDocument(vm.doc);
-      $log.info(vm.doc);
     }
 
     function processDocument(doc) {
-      // doc.lastModified_dtFormatted = $filter('date')(doc.lastModified_dt);
-
       //set properties needed for display
       doc._templateDisplayFields = DocumentService.setTemplateDisplayFields(doc,templateFields);
 
       //set properties needed for signals
       doc._signals = DocumentService.setSignalsProperties(doc,vm.position);
-      
+
       return doc;
     }
 
