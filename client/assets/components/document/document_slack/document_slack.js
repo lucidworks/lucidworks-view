@@ -25,9 +25,10 @@
   }
 
 
-  function Controller(SignalsService, $filter, PaginateService) {
+  function Controller(SignalsService, $filter, PaginateService, DocumentService) {
     'ngInject';
     var vm = this;
+    var templateFields = ['text', 'channel', 'user', 'timestamp', 'id'];
 
     activate();
 
@@ -37,25 +38,28 @@
     }
 
     function processDocument(doc) {
-      doc.timestamp_tdtFormatted = $filter('date')(vm.doc.timestamp_tdt, 'M/d/yy h:mm:ss a');
+      //set properties needed for display
+      doc._templateDisplayFields = DocumentService.setTemplateDisplayFields(doc, templateFields);
+
+      doc._templateDisplayFields.timestamp_Formatted = $filter('date')(vm.doc._templateDisplayFields.timestamp, 'M/d/yy h:mm:ss a');
       // For multivalued fields
-      doc.text = _.isArray(doc.text) ? _.join(doc.text, ' ') : doc.text;
-      doc._lw_id_decoded = doc.id ? decodeURIComponent(doc.id) : doc.id;
-      doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(doc);
-      doc.position = vm.position;
-      doc.page = PaginateService.getNormalizedCurrentPage();
+      doc._templateDisplayFields.text = _.isArray(doc._templateDisplayFields.text) ? _.join(doc._templateDisplayFields.text, ' ') : doc._templateDisplayFields.text;
+      doc._templateDisplayFields._lw_id_decoded = doc._templateDisplayFields.id ? decodeURIComponent(doc._templateDisplayFields.id) : doc._templateDisplayFields.id;
+
+      //set properties needed for signals
+      doc._signals = DocumentService.setSignalsProperties(doc, vm.position);
       return doc;
     }
 
     function postSignal(options){
       var paramsObj = {
         params: {
-          position: vm.doc.position,
-          page: vm.doc.page
+          position: vm.doc._signals.position,
+          page: vm.doc._signals.page
         }
       };
       _.defaultsDeep(paramsObj, options);
-      SignalsService.postClickSignal(vm.doc.__signals_doc_id__, paramsObj);
+      SignalsService.postClickSignal(vm.doc._signals.signals_doc_id, paramsObj);
     }
   }
 })();
