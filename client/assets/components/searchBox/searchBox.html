@@ -1,14 +1,9 @@
-<angucomplete-alt id="searchInput"
-  placeholder="Search ..."
-  pause="300"
-  class="search-box"
-  title-field="{{ta.typeaheadField}}"
-  selected-object="ta.selectedSomething"
-  input-changed="ta.updateSearchQuery"
-  input-name="searchQuery"
-  input-class="angucomplete-input"
-  remote-api-handler="ta.doTypeaheadSearch"
-  minlength="1"
-  input-class="search"
-  initial-value="ta.initialValue"
-  match-class="highlight" />
+<div mass-autocomplete class="search-box">
+  <input type="text" 
+  class="query-input" 
+  ng-model="ta.dirty.value" 
+  mass-autocomplete-item="ta.autocomplete_options" ng-keydown="ta.checkKeyPress($event)" />
+  <div class="no-results-message" ng-show="ta.dirty.value && ta.noResults">{{ta.noResultsMessage}}</div>
+</div>
+
+  

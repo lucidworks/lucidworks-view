@@ -1,7 +1,7 @@
 (function() {
   'use strict';
   angular
-    .module('lucidworksView.controllers.home', ['lucidworksView.services', 'angucomplete-alt', 'angular-humanize'])
+    .module('lucidworksView.controllers.home', ['lucidworksView.services', 'angular-humanize'])
     .controller('HomeController', HomeController);
 
 

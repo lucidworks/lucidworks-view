@@ -59,7 +59,7 @@
           queryResultsObservable.setContent({
             numFound: 0
           });
-          deferred.reject(err.data);
+          deferred.reject(err);
         }
 
         return deferred.promise;
