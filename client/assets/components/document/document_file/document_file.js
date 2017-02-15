@@ -27,8 +27,7 @@
   function Controller($log,DocumentService) {
     'ngInject';
     var vm = this;
-    // $log.info('high',vm.highlight);
-    var templateFields = ['length','mimeType','owner','lastModified'];
+    var templateFields = ['id', 'length', 'mimeType', 'owner', 'lastModified'];
 
     activate();
 
@@ -38,8 +37,7 @@
 
     function processDocument(doc) {
       //set properties needed for display
-      doc._templateDisplayFields = DocumentService.setTemplateDisplayFields(doc,templateFields);
-      // $log.info('doc',doc);
+      doc._templateDisplayFields = DocumentService.setTemplateDisplayFields(doc, templateFields);
       return doc;
     }
   }

@@ -30,7 +30,7 @@
     var vm = this;
 
     //define list of fields necessary to display the doc in the template
-    var templateFields = ['createdAt','tweet','userLang','userScreenName', 'id'];
+    var templateFields = ['id', 'createdAt', 'tweet', 'userLang', 'userScreenName'];
 
     activate();
 
