@@ -24,12 +24,12 @@
 
   }
 
-  function Controller(SignalsService, PaginateService) {
+  function Controller(SignalsService, PaginateService, DocumentService) {
     'ngInject';
     var vm = this;
+    var templateFields = ['title', 'url', 'id', 'keywords', 'description', 'og_description', 'content_txt', 'body'];
 
     activate();
-
 
     function activate() {
       vm.postSignal = postSignal;
@@ -37,23 +37,25 @@
     }
 
     function processDocument(doc) {
-      doc._lw_id_decoded = doc.id ? decodeURIComponent(doc.id) : doc.id;
-      doc._lw_url_decoded = _.has(doc, 'url[0]') ? decodeURIComponent(doc.url) : doc.url;
-      doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(vm.doc);
-      doc.position = vm.position;
-      doc.page = PaginateService.getNormalizedCurrentPage();
+      //set properties needed for display
+      doc._templateDisplayFields = DocumentService.setTemplateDisplayFields(doc, templateFields);
+      doc._templateDisplayFields._lw_id_decoded = doc._templateDisplayFields.id ? decodeURIComponent(doc._templateDisplayFields.id) : doc._templateDisplayFields.id;
+      doc._templateDisplayFields._lw_url_decoded = _.has(doc, '_templateDisplayFields.url[0]') ? decodeURIComponent(doc._templateDisplayFields.url) : doc._templateDisplayFields.url;
+
+      //set properties needed for signals
+      doc._signals = DocumentService.setSignalsProperties(doc, vm.position);
       return doc;
     }
 
     function postSignal(options){
       var paramsObj = {
         params: {
-          position: vm.doc.position,
-          page: vm.doc.page
+          position: vm.doc._signals.position,
+          page: vm.doc._signals.page
         }
       };
       _.defaultsDeep(paramsObj, options);
-      SignalsService.postClickSignal(vm.doc.__signals_doc_id__, paramsObj);
+      SignalsService.postClickSignal(vm.doc._signals.signals_doc_id, paramsObj);
     }
   }
 })();
