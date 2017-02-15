@@ -28,9 +28,9 @@
     'ngInject';
 
     var vm = this;
-    
+
     //define list of fields necessary to display the doc in the template
-    var templateFields = ['createdAt','tweet','userLang','userScreenName'];
+    var templateFields = ['createdAt','tweet','userLang','userScreenName', 'id'];
 
     activate();
 
@@ -41,11 +41,11 @@
 
     function processDocument(doc) {
       //set properties needed for display
-      doc._templateDisplayFields = DocumentService.setTemplateDisplayFields(doc,templateFields);
-      
+      doc._templateDisplayFields = DocumentService.setTemplateDisplayFields(doc, templateFields);
+
       //set properties needed for signals
-      doc._signals = DocumentService.setSignalsProperties(doc,vm.position); 
-      
+      doc._signals = DocumentService.setSignalsProperties(doc, vm.position);
+
       return doc;
     }
 
