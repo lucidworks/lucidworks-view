@@ -12,7 +12,8 @@
       setSignalsProperties: setSignalsProperties,
       setTemplateDisplayFields: setTemplateDisplayFields,
       postSignal: postSignal,
-      getTemplateDisplayFieldName: getTemplateDisplayFieldName
+      getTemplateDisplayFieldName: getTemplateDisplayFieldName,
+      decodeFieldValue: decodeFieldValue
     };
 
     function setSignalsProperties(doc,position) {
@@ -61,6 +62,13 @@
         return field + '_t';
       }
       return field;
+    }
+
+    function decodeFieldValue(doc, field){
+      if(_.isArray(field)){
+        return _.has(doc, field + '[0]') ? decodeURIComponent(doc[field]) : doc[field];
+      }
+      return doc[field] ? decodeURIComponent(doc[field]) : doc[field];
     }
   }
 })();

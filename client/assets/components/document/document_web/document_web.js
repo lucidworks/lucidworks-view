@@ -40,8 +40,9 @@
     function processDocument(doc) {
       //set properties needed for display
       doc._templateDisplayFields = DocumentService.setTemplateDisplayFields(doc, templateFields);
-      doc._templateDisplayFields._lw_id_decoded = doc._templateDisplayFields.id ? decodeURIComponent(doc._templateDisplayFields.id) : doc._templateDisplayFields.id;
-      doc._templateDisplayFields._lw_url_decoded = _.has(doc, '_templateDisplayFields.url[0]') ? decodeURIComponent(doc._templateDisplayFields.url) : doc._templateDisplayFields.url;
+
+      doc._templateDisplayFields._lw_id_decoded = DocumentService.decodeFieldValue(doc._templateDisplayFields, 'id');
+      doc._templateDisplayFields._lw_url_decoded = DocumentService.decodeFieldValue(doc._templateDisplayFields, 'url');
 
       //set properties needed for signals
       doc._signals = DocumentService.setSignalsProperties(doc, vm.position);
