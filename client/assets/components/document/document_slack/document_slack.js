@@ -25,15 +25,15 @@
   }
 
 
-  function Controller(SignalsService, $filter, DocumentService) {
+  function Controller($filter, DocumentService) {
     'ngInject';
     var vm = this;
     var templateFields = ['text', 'channel', 'user', 'timestamp', 'id'];
+    vm.postSignal = postSignal;
 
     activate();
 
     function activate() {
-      vm.postSignal = postSignal;
       vm.doc = processDocument(vm.doc);
     }
 
@@ -48,18 +48,12 @@
 
       //set properties needed for signals
       doc._signals = DocumentService.setSignalsProperties(doc, vm.position);
+      
       return doc;
     }
 
     function postSignal(options){
-      var paramsObj = {
-        params: {
-          position: vm.doc._signals.position,
-          page: vm.doc._signals.page
-        }
-      };
-      _.defaultsDeep(paramsObj, options);
-      SignalsService.postClickSignal(vm.doc._signals.signals_doc_id, paramsObj);
+      DocumentService.postSignal(vm.doc._signals, options);
     }
   }
 })();

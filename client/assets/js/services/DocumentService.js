@@ -8,13 +8,12 @@
   function DocumentService(PaginateService, SignalsService) {
     'ngInject';
 
-
-    var DocumentService = {
+    return {
       setSignalsProperties: setSignalsProperties,
-      setTemplateDisplayFields: setTemplateDisplayFields
+      setTemplateDisplayFields: setTemplateDisplayFields,
+      postSignal: postSignal
     };
 
-    return DocumentService;
     function setSignalsProperties(doc,position) {
       var signalsProperties = {};
       signalsProperties.signals_doc_id = SignalsService.getSignalsDocumentId(doc);
@@ -37,6 +36,17 @@
       });
 
       return displayFields;
+    }
+
+    function postSignal(_signals, options){
+      var paramsObj = {
+        params: {
+          position: _signals.position,
+          page: _signals.page
+        }
+      };
+      _.defaultsDeep(paramsObj, options);
+      SignalsService.postClickSignal(_signals.signals_doc_id, paramsObj);
     }
   }
 })();

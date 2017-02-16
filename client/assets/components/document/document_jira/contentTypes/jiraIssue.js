@@ -23,25 +23,13 @@
 
   }
 
-  function Controller(SignalsService) {
+  function Controller(DocumentService) {
     'ngInject';
     var vm = this;
-
-    activate();
-
-    function activate() {
-      vm.postSignal = postSignal;
-    }
+    vm.postSignal = postSignal;
 
     function postSignal(options){
-      var paramsObj = {
-        params: {
-          position: vm.doc._signals.position,
-          page: vm.doc._signals.page
-        }
-      };
-      _.defaultsDeep(paramsObj, options);
-      SignalsService.postClickSignal(vm.doc._signals.signals_doc_id, paramsObj);
+      DocumentService.postSignal(vm.doc._signals, options);
     }
 
   }

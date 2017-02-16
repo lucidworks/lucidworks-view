@@ -41,6 +41,7 @@
 
       //set properties needed for signals
       doc._signals = DocumentService.setSignalsProperties(doc, vm.position);
+      
       return doc;
     }
   }

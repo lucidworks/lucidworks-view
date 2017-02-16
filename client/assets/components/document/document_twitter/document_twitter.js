@@ -24,18 +24,15 @@
 
   }
 
-  function Controller(DocumentService, SignalsService) {
+  function Controller(DocumentService) {
     'ngInject';
-
     var vm = this;
-
-    //define list of fields necessary to display the doc in the template
     var templateFields = ['id', 'createdAt', 'tweet', 'userLang', 'userScreenName'];
+    vm.postSignal = postSignal;
 
     activate();
 
     function activate() {
-      vm.postSignal = postSignal;
       vm.doc = processDocument(vm.doc);
     }
 
@@ -50,14 +47,7 @@
     }
 
     function postSignal(options){
-      var paramsObj = {
-        params: {
-          position: vm.doc._signals.position,
-          page: vm.doc._signals.page
-        }
-      };
-      _.defaultsDeep(paramsObj, options);
-      SignalsService.postClickSignal(vm.doc._signals.signals_doc_id, paramsObj);
+      DocumentService.postSignal(vm.doc._signals, options);
     }
   }
 })();

@@ -38,6 +38,7 @@
     function processDocument(doc) {
       //set properties needed for display
       doc._templateDisplayFields = DocumentService.setTemplateDisplayFields(doc, templateFields);
+      
       return doc;
     }
   }
