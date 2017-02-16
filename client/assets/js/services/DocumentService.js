@@ -65,10 +65,12 @@
     }
 
     function decodeFieldValue(doc, field){
-      if(_.isArray(field)){
-        return _.has(doc, field + '[0]') ? decodeURIComponent(doc[field]) : doc[field];
+      if(_.has(doc, field) && _.isArray(doc[field])){
+        var x = _.has(doc, field + '[0]') ? decodeURIComponent(doc[field]) : doc[field];
+        return x;
       }
-      return doc[field] ? decodeURIComponent(doc[field]) : doc[field];
+      var y = doc[field] ? decodeURIComponent(doc[field]) : doc[field];
+      return y;
     }
   }
 })();
