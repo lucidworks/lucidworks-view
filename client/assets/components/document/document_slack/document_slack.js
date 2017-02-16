@@ -30,6 +30,7 @@
     var vm = this;
     var templateFields = ['text', 'channel', 'user', 'timestamp', 'id'];
     vm.postSignal = postSignal;
+    vm.getTemplateDisplayFieldName = getTemplateDisplayFieldName;
 
     activate();
 
@@ -48,12 +49,16 @@
 
       //set properties needed for signals
       doc._signals = DocumentService.setSignalsProperties(doc, vm.position);
-      
+
       return doc;
     }
 
     function postSignal(options){
       DocumentService.postSignal(vm.doc._signals, options);
+    }
+
+    function getTemplateDisplayFieldName(field){
+      return DocumentService.getTemplateDisplayFieldName(vm.doc, field);
     }
   }
 })();

@@ -11,7 +11,8 @@
     return {
       setSignalsProperties: setSignalsProperties,
       setTemplateDisplayFields: setTemplateDisplayFields,
-      postSignal: postSignal
+      postSignal: postSignal,
+      getTemplateDisplayFieldName: getTemplateDisplayFieldName
     };
 
     function setSignalsProperties(doc,position) {
@@ -27,10 +28,10 @@
       var displayFields = {};
       //TODO: refactor this
       _.forEach(fieldsList,function(field) {
-        var fieldValue = _.get(doc,field+'_s')
+        var fieldValue =  _.get(doc,field+'_s')
           || _.get(doc,field+'_l')
           || _.get(doc,field+'_dt')
-           || _.get(doc,field+'_t')
+          || _.get(doc,field+'_t')
           || _.get(doc,field);
         displayFields[field] = _.isArray(fieldValue) ? fieldValue[0] : fieldValue;
       });
@@ -47,6 +48,21 @@
       };
       _.defaultsDeep(paramsObj, options);
       SignalsService.postClickSignal(_signals.signals_doc_id, paramsObj);
+    }
+
+    function getTemplateDisplayFieldName(doc, field){
+      if(_.has(doc, field+'_s')){
+        return field + '_s';
+      } else if (_.has(doc, field+'_l')){
+        return field + '_l';
+      }
+      else if (_.has(doc, field+'_dt')){
+        return field + '_dt';
+      }
+      else if (_.has(doc, field+'_t')){
+        return field + '_t';
+      }
+      return field;
     }
   }
 })();

@@ -26,7 +26,8 @@
   function Controller(DocumentService) {
     'ngInject';
     var vm = this;
-    var templateFields = ['id'];
+    var templateFields = ['id', 'body'];
+    vm.getTemplateDisplayFieldName = getTemplateDisplayFieldName;
 
     activate();
 
@@ -41,8 +42,12 @@
 
       //set properties needed for signals
       doc._signals = DocumentService.setSignalsProperties(doc, vm.position);
-      
+
       return doc;
+    }
+
+    function getTemplateDisplayFieldName(field){
+      return DocumentService.getTemplateDisplayFieldName(vm.doc, field);
     }
   }
 })();

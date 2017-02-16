@@ -28,9 +28,14 @@
     'ngInject';
     var vm = this;
     vm.postSignal = postSignal;
+    vm.getTemplateDisplayFieldName = getTemplateDisplayFieldName;
 
     function postSignal(options){
       DocumentService.postSignal(vm.doc._signals, options);
+    }
+
+    function getTemplateDisplayFieldName(field){
+      return DocumentService.getTemplateDisplayFieldName(vm.doc, field);
     }
   }
 })();

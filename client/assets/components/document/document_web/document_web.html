@@ -3,33 +3,33 @@
     <!-- show head field linked with a title. -->
     <h3 class="head-field" ng-if="::vm.doc._templateDisplayFields.title">
       <a ng-href="{{vm.doc._templateDisplayFields._lw_url_decoded}}" ng-click="::vm.postSignal({params: {lw_url: vm.doc._templateDisplayFields._lw_url_decoded}})" rel="noopener" target="_blank">
-        <field value="::vm.doc._templateDisplayFields.title" highlight="::vm.highlight[doc._templateDisplayFields.id]" maxlength="200" hkey="title"></field>
+        <field value="::vm.doc._templateDisplayFields.title" highlight="::vm.highlight[doc._templateDisplayFields.id]" maxlength="200" hkey="{{::vm.getTemplateDisplayFieldName('title')}}"></field>
       </a>
     </h3>
     <!-- show head field without a title. -->
     <h3 class="head-field" ng-if="::(!vm.doc._templateDisplayFields.title && !!vm.doc._templateDisplayFields.url)">
       <a ng-href="{{::vm.doc._templateDisplayFields._lw_url_decoded}}" ng-click="vm.postSignal({params: {lw_url: vm.doc._templateDisplayFields._lw_url_decoded}})" rel="noopener" target="_blank">
-        <field value="::vm.doc._templateDisplayFields.url" highlight="::vm.highlight[doc._templateDisplayFields.id]" maxlength="200" hkey="url"></field>
+        <field value="::vm.doc._templateDisplayFields.url" highlight="::vm.highlight[doc._templateDisplayFields.id]" maxlength="200" hkey="{{::vm.getTemplateDisplayFieldName('url')}}"></field>
       </a>
     </h3>
     <h3 class="subheader" ng-if="::(!vm.doc._templateDisplayFields.title && !vm.doc._templateDisplayFields.url)">
       <a ng-href="{{::vm.doc._templateDisplayFields._lw_id_decoded}}" ng-click="vm.postSignal({params: {lw_url: vm.doc._templateDisplayFields._lw_id_decoded}})" rel="noopener" target="_blank">
-        <field value="::vm.doc._templateDisplayFields.id" highlight="::vm.highlight[doc._templateDisplayFields.id]" khey="['_templateDisplayFields']['id']" maxlength="200"></field>
+        <field value="::vm.doc._templateDisplayFields.id" highlight="::vm.highlight[doc._templateDisplayFields.id]" hkey="{{::vm.getTemplateDisplayFieldName('id')}}" maxlength="200"></field>
       </a>
     </h3>
-    <h4 class="subheader" ng-if="::vm.doc._templateDisplayFields.keywords"><field value="::vm.doc._templateDisplayFields.keywords" highlight="::vm.highlight[doc._templateDisplayFields.id]" maxlength="200" hkey="keywords"></field></h4>
+    <h4 class="subheader" ng-if="::vm.doc._templateDisplayFields.keywords"><field value="::vm.doc._templateDisplayFields.keywords" highlight="::vm.highlight[doc._templateDisplayFields.id]" maxlength="200" hkey="{{::vm.getTemplateDisplayFieldName('keywords')}}"></field></h4>
 
     <p class="large-8 xlarge-7 xx-large-6">
       <field ng-if="::vm.doc._templateDisplayFields.description" value="::vm.doc._templateDisplayFields.description" highlight="::vm.highlight[doc._templateDisplayFields.id]" maxlength="200"
-             hkey="description"></field>
+             hkey="{{::vm.getTemplateDisplayFieldName('description')}}"></field>
      <field ng-if="::(!vm.doc._templateDisplayFields.description && vm.doc._templateDisplayFields.og_description)" value="::vm.doc._templateDisplayFields.og_description" highlight="::vm.highlight[doc._templateDisplayFields.id]" maxlength="200"
-            hkey="description"></field>
+            hkey="{{::vm.getTemplateDisplayFieldName('description')}}"></field>
     <field ng-if="::vm.doc._templateDisplayFields.content" value="::vm.doc._templateDisplayFields.content" highlight="::vm.highlight[doc._templateDisplayFields.id]" maxlength="200"
-             hkey="content"></field>
+             hkey="{{::vm.getTemplateDisplayFieldName('content')}}"></field>
 
 
 
-     <field ng-if="vm.doc._templateDisplayFields.body" value="vm.doc._templateDisplayFields.body" highlight="::vm.highlight[doc._templateDisplayFields.id]" maxlength="200" hkey="body"></field>
+     <field ng-if="vm.doc._templateDisplayFields.body" value="vm.doc._templateDisplayFields.body" highlight="::vm.highlight[doc._templateDisplayFields.id]" maxlength="200" hkey="{{::vm.getTemplateDisplayFieldName('body')}}"></field>
 
              <!-- Other fields -->
 

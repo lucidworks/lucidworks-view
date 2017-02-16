@@ -29,6 +29,7 @@
     var vm = this;
     var templateFields = ['title', 'url', 'id', 'keywords', 'description', 'og_description', 'content', 'body'];
     vm.postSignal = postSignal;
+    vm.getTemplateDisplayFieldName = getTemplateDisplayFieldName;
 
     activate();
 
@@ -50,6 +51,10 @@
 
     function postSignal(options){
       DocumentService.postSignal(vm.doc._signals, options);
+    }
+
+    function getTemplateDisplayFieldName(field){
+      return DocumentService.getTemplateDisplayFieldName(vm.doc, field);
     }
   }
 })();

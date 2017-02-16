@@ -29,6 +29,7 @@
     var vm = this;
     var templateFields = ['id', 'createdAt', 'tweet', 'userLang', 'userScreenName'];
     vm.postSignal = postSignal;
+    vm.getTemplateDisplayFieldName = getTemplateDisplayFieldName;
 
     activate();
 
@@ -48,6 +49,10 @@
 
     function postSignal(options){
       DocumentService.postSignal(vm.doc._signals, options);
+    }
+
+    function getTemplateDisplayFieldName(field){
+      return DocumentService.getTemplateDisplayFieldName(vm.doc, field);
     }
   }
 })();

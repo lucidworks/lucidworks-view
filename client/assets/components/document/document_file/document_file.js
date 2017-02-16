@@ -28,6 +28,7 @@
     'ngInject';
     var vm = this;
     var templateFields = ['id', 'length', 'mimeType', 'owner', 'lastModified'];
+    vm.getTemplateDisplayFieldName = getTemplateDisplayFieldName;
 
     activate();
 
@@ -38,8 +39,12 @@
     function processDocument(doc) {
       //set properties needed for display
       doc._templateDisplayFields = DocumentService.setTemplateDisplayFields(doc, templateFields);
-      
+
       return doc;
+    }
+
+    function getTemplateDisplayFieldName(field){
+      return DocumentService.getTemplateDisplayFieldName(vm.doc, field);
     }
   }
 })();
