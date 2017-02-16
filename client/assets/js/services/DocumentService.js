@@ -55,11 +55,9 @@
         return field + '_s';
       } else if (_.has(doc, field+'_l')){
         return field + '_l';
-      }
-      else if (_.has(doc, field+'_dt')){
+      } else if (_.has(doc, field+'_dt')){
         return field + '_dt';
-      }
-      else if (_.has(doc, field+'_t')){
+      } else if (_.has(doc, field+'_t')){
         return field + '_t';
       }
       return field;

@@ -1,8 +1,8 @@
 (function () {
   angular.module('lucidworksView.components.document', ['lucidworksView.services.config',
-      'lucidworksView.utils.docs', 'lucidworksView.services.signals'
-    ])
-    .directive('documentDefault', documentDefault);
+    'lucidworksView.utils.docs', 'lucidworksView.services.signals'
+  ])
+  .directive('documentDefault', documentDefault);
 
 
   function documentDefault() {
@@ -21,7 +21,7 @@
     };
   }
 
-  function Controller($log, $scope, DocsHelper, ConfigService, SignalsService, PaginateService) {
+  function Controller($log, $scope, DocsHelper, ConfigService, SignalsService, PaginateService, DocumentService) {
     'ngInject';
     var vm = this;
     vm.postSignal = postSignal;
@@ -64,9 +64,7 @@
 
       doc.lw_url = decodeURIComponent(getField('head_url', doc));
 
-      doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(doc);
-      doc.position = vm.position;
-      doc.page = PaginateService.getNormalizedCurrentPage();
+      doc._signals = DocumentService.setSignalsProperties(doc, vm.position);
 
       return doc;
     }
@@ -86,15 +84,7 @@
     }
 
     function postSignal(options){
-      var paramsObj = {
-        params: {
-          position: vm.doc.position,
-          page: vm.doc.page
-        }
-      };
-      _.defaultsDeep(paramsObj, options);
-      SignalsService.postClickSignal(vm.doc.__signals_doc_id__, paramsObj);
+      DocumentService.postSignal(vm.doc._signals, options);
     }
-
   }
 })();
