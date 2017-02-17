@@ -123,7 +123,6 @@
           var vals = {};
           if (value) {
             _.each(Object.keys(value), function (key) {
-              $log.debug('highlight', value);
               var val = value[key];
               _.each(val, function(high){
                 vals[key] = $sce.trustAsHtml(high);
