@@ -1,12 +1,14 @@
 <article class="grid-block document document-twitter row">
   <div class="detail vertical grid-content">
-    <div class="twitter-tweet" data-lang="{{::vm.doc.userLang[0]}}">
-      <blockquote class="quote" lang="{{::vm.doc.userLang[0]}}" dir="ltr">
-        <field value="::vm.doc.tweet[0]" highlight="::vm.highlight[doc.id]" hkey="tweet[0]"></field>
+    <div class="twitter-tweet" data-lang="{{::vm.doc._templateDisplayFields.userLang}}">
+
+      <blockquote class="quote" lang="{{::vm.doc._templateDisplayFields.userLang}}" dir="ltr">
+        <field value="::vm.doc._templateDisplayFields.tweet" highlight="::vm.highlight[doc._templateDisplayFields.id]" hkey="{{::vm.getTemplateDisplayFieldName('tweet')}}[0]"></field>
       </blockquote>
       <div class="link">
-        <a class="author" ng-href="http://twitter.com/{{::vm.doc.userScreenName}}" ng-click="::vm.postSignal({params: {lw_url:'http://twitter.com/' + vm.doc.userScreenName}})" rel="noopener" target="_blank">@<field value="vm.doc.userScreenName" highlight="::vm.highlight" maxlength="200" hkey="{{::userScreenName}}"></field></a>
-        <a class="timestamp" ng-href="https://twitter.com/{{::vm.doc.userScreenName}}/status/{{::vm.doc.id}}" ng-click="vm.postSignal({params: {lw_url:'https://twitter.com/' + vm.doc.userScreenName + '/status/' + vm.doc.id}})" rel="noopener" target="_blank"><field value="::vm.doc.createdAtFormatted"></field> UTC</a>
+
+        <a class="author" ng-href="http://twitter.com/{{::vm.doc._templateDisplayFields.userScreenName}}" ng-click="::vm.postSignal({params: {lw_url:'http://twitter.com/' + vm.doc._templateDisplayFields.userScreenName}})" rel="noopener" target="_blank">@<field value="vm.doc._templateDisplayFields.userScreenName" highlight="::vm.highlight" maxlength="200" hkey="{{::vm.getTemplateDisplayFieldName('userScreenName')}}"></field></a>
+        <a class="timestamp" ng-href="https://twitter.com/{{::vm.doc._templateDisplayFields.userScreenName}}/status/{{::vm.doc._templateDisplayFields.id}}" ng-click="vm.postSignal({params: {lw_url:'https://twitter.com/' + vm.doc._templateDisplayFields.userScreenName + '/status/' + vm.doc._templateDisplayFields.id}})" rel="noopener" target="_blank"><field value="::vm.doc._templateDisplayFields.createdAt | date"></field> UTC</a>
       </div>
     </div>
   </div>

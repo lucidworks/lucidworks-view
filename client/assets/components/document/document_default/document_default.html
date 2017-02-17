@@ -27,24 +27,23 @@
   every category in that result.
  -->
 <article class="grid-block document row">
-  <div class="image small-4 medium-2 grid-content" ng-class="::{hide:!vm.doc.lw_image}">
+  <div class="image small-4 medium-2 grid-content" ng-class="::{hide:!vm.doc.lw_image.value}">
     <div zf-interchange="">
-      <img media="small" ng-src="{{::vm.doc.lw_image}}">
+      <img media="small" ng-src="{{::vm.doc.lw_image.value}}">
     </div>
   </div>
-  <div class="detail vertical grid-content" ng-class="::{'small-8':vm.doc.lw_image, 'medium-10': vm.doc.lw_image, 'small-12':!vm.doc.lw_image}">
+  <div class="detail vertical grid-content" ng-class="::{'small-8':vm.doc.lw_image.value, 'medium-10': vm.doc.lw_image.value, 'small-12':!vm.doc.lw_image.value}">
     <!-- {{vm.doc}} -->
       <!-- show head field linked with a url. -->
-      <h3 class="head-field" ng-if="::vm.doc.lw_url">
-        <a ng-href="{{::vm.doc.lw_url}}" ng-click="vm.postSignal({params: {lw_url: vm.doc.lw_url}})" rel="noopener" target="_blank">{{::vm.doc.lw_head}}</a>
-
+      <h3 class="head-field" ng-if="::vm.doc.lw_url.value">
+        <a ng-href="{{::vm.doc.lw_url.value}}" ng-click="vm.postSignal({params: {lw_url: vm.doc.lw_url.value}})" rel="noopener" target="_blank"><field value="::vm.doc.lw_head.value" hkey="{{::vm.doc.lw_head.key}}"></field></a>
       </h3>
       <!-- show head field without a url. -->
-      <h3 class="head-field" ng-if="::(!vm.doc.lw_url)">{{::vm.doc.lw_head}}</h3>
+      <h3 class="head-field" ng-if="::(!vm.doc.lw_url.value)"><field value="::vm.doc.lw_head.value" hkey="{{::vm.doc.lw_head.key}}"></field></h3>
 
-      <h4 class="subheader">{{::vm.doc.lw_subhead}}</h4>
+      <h4 class="subheader"><field value="::vm.doc.lw_subhead.value" hkey="{{::vm.doc.lw_subhead.key}}"></field></h4>
       <p class="large-8 xlarge-7 xx-large-6">
-        {{::vm.doc.lw_description}}
+        <field value="::vm.doc.lw_description.value" highlight="::vm.highlight[doc.id]" maxlength="450" hkey="{{::vm.doc.lw_description.key}}"></field>
       </p>
       <!-- Output of CONFIG BASED FIELD DISPLAY -->
       <p ng-repeat="(field, value) in vm.doc.fieldsToDisplay">
