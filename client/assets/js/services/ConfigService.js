@@ -112,7 +112,7 @@
       var localOverride = (arguments.length > 0) ? arguments[0] : {};
 
       appConfig = _.assign({}, CONFIG_DEFAULT, CONFIG_OVERRIDE, localOverride);
-      initQueryDefault(appConfig);
+      initQueryDefault();
       vm.config = appConfig;
     }
 
