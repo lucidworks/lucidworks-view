@@ -72,7 +72,6 @@
         key: getTemplateDisplayFieldName(ConfigService.getFields.get('description')),
         value: getField('description', doc)
       };
-      debugger;
 
       doc.lw_image = {
         key: getTemplateDisplayFieldName(ConfigService.getFields.get('image')),

@@ -9,10 +9,11 @@
 
   var blankQuery = {
     q: '*',
-    start: 0
+    start: 0,
+    wt: 'json'
   };
 
-  function URLService($log, $rison, $state, $location, QueryService, BLANK_QUERY,
+  function URLService($log, $rison, $state, $location, BLANK_QUERY,
     QUERY_PARAM) {
     'ngInject';
     return {
@@ -30,8 +31,7 @@
      * @param {object} queryObject The query object
      */
     function setQuery(queryObject) {
-      QueryService.setQuery(queryObject);
-      var queryObjectToBeStringed = _.clone(QueryService.getQueryObject(),true);
+      var queryObjectToBeStringed = _.clone(queryObject,true);
       //Only need the slashes to get encoded, so that app state doesn't change
       queryObjectToBeStringed = encodeSlashes(queryObjectToBeStringed);
       var queryObjectString = $rison.stringify(queryObjectToBeStringed);

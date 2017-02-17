@@ -3,12 +3,6 @@
       'lucidworksView.services.queryData'
     ])
     .config(Config)
-    .constant('QUERY_OBJECT_DEFAULT', {
-      q: '*',
-      start: 0,
-      // Do not override the return of JSON
-      wt: 'json'
-    })
     .provider('QueryService', QueryService);
 
   function Config(OrwellProvider) {
@@ -22,16 +16,15 @@
 
     /////////////
 
-    function $get($log, ConfigService, Orwell, QUERY_OBJECT_DEFAULT, QueryDataService) {
+    function $get($log, ConfigService, Orwell, QueryDataService, URLService) {
       'ngInject';
       var queryObservable = Orwell.getObservable('query'),
-        queryObject = QUERY_OBJECT_DEFAULT;
+        queryObject = ConfigService.config.default_query;
 
       activate();
 
       queryObservable.addObserver(function (query) {
         QueryDataService.getQueryResults(query);
-
       });
 
       return {
@@ -41,7 +34,7 @@
       };
 
       function activate() {
-        queryObservable.setContent(queryObject);
+        queryObservable.setContent(ConfigService.config.default_query);
       }
 
       function getQueryObservable() {
@@ -58,7 +51,7 @@
         }
         queryObject = _.assign({}, queryObject, query, {rows: ConfigService.config.docs_per_page});
         queryObservable.setContent(queryObject);
-
+        URLService.setQuery(queryObject);
       }
 
     }
