@@ -19,7 +19,7 @@
 
   }
 
-  function Controller(ConfigService, Orwell, AuthService, $state) {
+  function Controller(ConfigService, Orwell, AuthService, $state, $stateParams) {
     'ngInject';
     var vm = this;
     vm.username = '';
@@ -38,7 +38,11 @@
 
       function success() {
         vm.submitting = false;
-        $state.go('home');
+        var params = {};
+        if ($stateParams.previousUrl) {
+          params = {query:$stateParams.previousUrl};
+        }
+        $state.go('home', params);
       }
 
       function failure(err) {
