@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 1.4.0 - Zenobia's Topaz Tiara
+## 1.4.0 - Ra Ra Rasputin Tiara
 **New Features**
 * Now works out of the box with Fusion 3
 * Add support for changing the default query via FUSION_CONFIG.js
@@ -12,10 +12,11 @@
 * When redirected through a login, your inital page query will no longer be cleared
 * Link URLS with parameters now click through correctly
 * Only show pagination arrows when pagination is possible
+* Fixed Typeahead autocomplete user entry race condition
 
 **Package Updates**
 * Updated ESLint to version 3.3.1.
-* Updated angular-ui-router to version 4.2.0
+* Updated angular-ui-router to version 0.4.2
 
 **Deprecated API functions**
 * URLService.setQuery()
