@@ -19,10 +19,21 @@
     return {
       setQueryToURLAndGo: setQueryToURLAndGo,
       convertQueryToStateObject: convertQueryToStateObject,
-      getQueryFromUrl: getQueryFromUrl
+      getQueryFromUrl: getQueryFromUrl,
+
+      /// deprecated
+      setQuery:setQuery
     };
 
     //////////
+
+    /**
+     * setQuery
+     * DEPRECATED in 1.4 use QueryService.setQuery() instead
+     **/
+    function setQuery() {
+      $log.error('The function URLService.setQuery() was deprecated in Lucidworks View 1.4 use QueryService.setQuery() instead.');
+    }
 
     /**
      * Sets the URL bar
