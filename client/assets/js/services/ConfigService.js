@@ -39,10 +39,17 @@
       typeahead_query_profile_id: 'default',
       typeahead_fields: ['id'],
       typeahead_requesthandler: 'select',
-      landing_page_redirect: true
+      landing_page_redirect: true,
+      default_query: {q:'*'}
     })
     /** Config overrides from FUSION_CONFIG.js **/
     .constant('CONFIG_OVERRIDE', window.appConfig) //eslint-disable-line
+    .constant('QUERY_OBJECT_INTERNAL_DEFAULT', {
+      q: '*',
+      start: 0,
+      // Do not override the return of JSON
+      wt: 'json'
+    })
 
     .provider('ConfigService', ConfigService);
 
@@ -53,7 +60,7 @@
    * @param {object} CONFIG_DEFAULT  [description]
    * @param {object} CONFIG_OVERRIDE [description]
    */
-  function ConfigService(CONFIG_DEFAULT, CONFIG_OVERRIDE) {
+  function ConfigService(CONFIG_DEFAULT, CONFIG_OVERRIDE, QUERY_OBJECT_INTERNAL_DEFAULT) {
     'ngInject';
     var appConfig,
       vm = this;
@@ -105,6 +112,7 @@
       var localOverride = (arguments.length > 0) ? arguments[0] : {};
 
       appConfig = _.assign({}, CONFIG_DEFAULT, CONFIG_OVERRIDE, localOverride);
+      initQueryDefault();
       vm.config = appConfig;
     }
 
@@ -210,6 +218,9 @@
 
     function getFieldLabels() {
       return appConfig.field_display_labels;
+    }
+    function initQueryDefault() {
+      appConfig.default_query = _.assign({}, QUERY_OBJECT_INTERNAL_DEFAULT, appConfig.default_query);
     }
   }
 })();
