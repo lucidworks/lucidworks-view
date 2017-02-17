@@ -26,7 +26,7 @@
   function Controller(DocumentService) {
     'ngInject';
     var vm = this;
-    var templateFields = ['id', 'body'];
+    var templateFields = Object.keys(vm.doc);
     vm.getTemplateDisplayFieldName = getTemplateDisplayFieldName;
 
     activate();
