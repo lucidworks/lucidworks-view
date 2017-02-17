@@ -201,6 +201,12 @@ appConfig = { //eslint-disable-line
   // @see https://lucidworks.com/blog/2016/02/04/fusion-plus-solr-suggesters-search-less-typing/
 
   //typeahead_requesthandler: 'suggest', // recommended (requires configuration)
-  typeahead_requesthandler: 'select'
+  typeahead_requesthandler: 'select',
 
+  /**
+   * Default query
+   *
+   * If there is no query provided in the URL this query will be used. It is in object form.
+   */
+  default_query: {q:'*'}
 };

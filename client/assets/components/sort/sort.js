@@ -21,7 +21,7 @@
 
   }
 
-  function Controller($scope, ConfigService, QueryService, URLService) {
+  function Controller($scope, ConfigService, QueryService) {
     'ngInject';
     var vm = this;
     vm.switchSort = switchSort;
@@ -58,12 +58,12 @@
       case 'text':
         if(angular.isUndefined(query.sort)){
           query.sort = sort.label+'%20'+sort.order;
-          URLService.setQuery(query);
+          QueryService.setQuery(query);
         }
         break;
       default:
         delete query.sort;
-        URLService.setQuery(query);
+        QueryService.setQuery(query);
       }
     }
   }

@@ -6,7 +6,7 @@
     .factory('AuthInterceptor', AuthInterceptor);
 
 
-  function AuthInterceptor($q, $log, $rootScope, $injector) {
+  function AuthInterceptor(URLService, $q, $log, $rootScope, $injector) {
     'ngInject';
     var tryingAnon = false;
     return {
@@ -28,19 +28,19 @@
               //CASE: If anonymous session creation is successful, go home
               $log.info('Created anonymous session');
               deferred.reject();
-              $state.go('home',{query:'(q:\'*\')'});
+              $state.go('home', prepareQueryForRedirect());
             },function(err){
               // TODO: Investigate why 201 is going to error handler...
               // If it's the expected behaviour, figure out a better solution
               //CASE: If anonymous login succeeded with a 201 response, go to `home`
               if(err.status === 201){
                 $log.info('Created anonymous session');
-                $state.go('home',{query:'(q:\'*\')'});
+                $state.go('home', prepareQueryForRedirect());
               }
               //CASE: If anonymous login failed, then go to login
               else{
                 $log.info('Failed to create anonymous session');
-                $state.go('login');
+                $state.go('login', prepareQueryForRedirect());
               }
               deferred.reject(err);
             });
@@ -48,7 +48,7 @@
           else{
             //CASE: If anonymous login creds are unusable then go to login
             deferred.reject();
-            $state.go('login');
+            $state.go('login', prepareQueryForRedirect());
           }
         }
         //CASE: If trying anon login, then that promise chain will take care of stuff
@@ -66,6 +66,11 @@
         deferred.reject(resp);
       }
       // In all cases reject the promise chain
+
+      function prepareQueryForRedirect() {
+        var queryObject = URLService.getQueryFromUrl();
+        return URLService.convertQueryToStateObject(queryObject);
+      }
 
       return deferred.promise;
     }

@@ -45,7 +45,7 @@
     }
 
     function localParamWrapperTransformer(data) {
-      return JSON.stringify(data);
+      return angular.toJson(data);
     }
   }
 
