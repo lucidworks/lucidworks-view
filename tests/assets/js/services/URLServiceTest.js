@@ -32,7 +32,7 @@ ngDescribe({
     });
 
     it('setQuery should make the right calls as well', function(){
-      deps.URLService.setQuery({});
+      deps.QueryService.setQuery({});
       expect(deps.$state.go).toHaveBeenCalledWith('home', {query:'(q:\'*\',start:0,wt:json)'}, {notify: false, reloadOnSearch: false});
       expect(deps.$rison.stringify).toHaveBeenCalledWith({
         q:'*',
