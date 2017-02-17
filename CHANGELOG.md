@@ -1,11 +1,11 @@
 # CHANGELOG
 
-## 1.4.0 - Ra Ra Rasputin Tiara
+## 1.4.0 - Ra Ra Rasputin's Disco Tiara
 **New Features**
 * Now works out of the box with Fusion 3
-* Add support for changing the default query via FUSION_CONFIG.js
-* Add support for date range facets type
-* Add support for simple grouped results
+* Added support for changing the default query via FUSION_CONFIG.js
+* Added support for date range facets type
+* Added support for simple grouped results
 * New loading state for range facets to prevent multiple selections while page is loading
 
 **Bug Fixes**
@@ -36,8 +36,8 @@
 ## 1.2.0 - Cersei's Iron Tiara - June 30, 2016
 **New Features**
 * Now support range facet type
-* Add multi select faceting, meaning you can facet on multiple items within a single query
-* Add 'clear all' button to facet lists, clearing all selected facets
+* Added multi select faceting, meaning you can facet on multiple items within a single query
+* Added 'clear all' button to facet lists, clearing all selected facets
 * Improved signals now pass in more information including position, language, and platform
 * Enhanced signals service, adding additional functionality
 * Improved field display in templates by setting set max-length
