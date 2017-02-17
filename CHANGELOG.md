@@ -2,16 +2,25 @@
 
 ## 1.4.0 - Zenobia's Topaz Tiara
 **New Features**
-* Add support for date range facets types
+* Now works out of the box with Fusion 3
+* Add support for changing the default query via FUSION_CONFIG.js
+* Add support for date range facets type
 * Add support for simple grouped results
 * New loading state for range facets to prevent multiple and invalid selections while page is loading
 
 **Bug Fixes**
+* When redirected through a login, your inital page query will no longer be cleared
+* Link URLS with parameters now click through correctly
 * Only show pagination arrows when pagination is possible
 
 **Package Updates**
 * Updated ESLint to version 3.3.1.
+* Updated angular-ui-router to version 4.2.0
 
+**Deprecated API functions**
+* URLService.setQuery()
+
+  Instead of using `URLService.setQuery()` use `QueryService.setQuery()`
 
 ## 1.3.0 - Pikachu's Invisible Tiara - August 5, 2016
 **New Features**
