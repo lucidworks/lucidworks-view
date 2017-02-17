@@ -24,7 +24,7 @@
     };
   }
 
-  function Controller($log,$sanitize) {
+  function Controller($log, $sanitize) {
     'ngInject';
     var fc = this;
     fc.limit = false;

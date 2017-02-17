@@ -7,7 +7,7 @@
       </blockquote>
       <div class="link">
 
-        <a class="author" ng-href="http://twitter.com/{{::vm.doc._templateDisplayFields.userScreenName}}" ng-click="::vm.postSignal({params: {lw_url:'http://twitter.com/' + vm.doc._templateDisplayFields.userScreenName}})" rel="noopener" target="_blank">@<field value="vm.doc._templateDisplayFields.userScreenName" highlight="::vm.highlight" maxlength="200" hkey="{{::vm.getTemplateDisplayFieldName('userScreenName')}} "></field></a>
+        <a class="author" ng-href="http://twitter.com/{{::vm.doc._templateDisplayFields.userScreenName}}" ng-click="::vm.postSignal({params: {lw_url:'http://twitter.com/' + vm.doc._templateDisplayFields.userScreenName}})" rel="noopener" target="_blank">@<field value="vm.doc._templateDisplayFields.userScreenName" highlight="::vm.highlight" maxlength="200" hkey="{{::vm.getTemplateDisplayFieldName('userScreenName')}}"></field></a>
         <a class="timestamp" ng-href="https://twitter.com/{{::vm.doc._templateDisplayFields.userScreenName}}/status/{{::vm.doc._templateDisplayFields.id}}" ng-click="vm.postSignal({params: {lw_url:'https://twitter.com/' + vm.doc._templateDisplayFields.userScreenName + '/status/' + vm.doc._templateDisplayFields.id}})" rel="noopener" target="_blank"><field value="::vm.doc._templateDisplayFields.createdAt | date"></field> UTC</a>
       </div>
     </div>
