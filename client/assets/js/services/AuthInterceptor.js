@@ -40,7 +40,7 @@
               //CASE: If anonymous login failed, then go to login
               else{
                 $log.info('Failed to create anonymous session');
-                $state.go('login',prepareQueryForRedirect());
+                $state.go('login', prepareQueryForRedirect());
               }
               deferred.reject(err);
             });
