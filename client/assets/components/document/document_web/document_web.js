@@ -24,29 +24,38 @@
 
   }
 
-  function Controller(SignalsService, PaginateService) {
+  function Controller(DocumentService) {
     'ngInject';
     var vm = this;
+    var templateFields = ['title', 'url', 'id', 'keywords', 'description', 'og_description', 'content', 'body'];
+    vm.postSignal = postSignal;
+    vm.getTemplateDisplayFieldName = getTemplateDisplayFieldName;
 
     activate();
 
-
     function activate() {
-      vm.postSignal = postSignal;
-      vm.doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(vm.doc);
-      vm.doc.position = vm.position;
-      vm.doc.page = PaginateService.getNormalizedCurrentPage();
+      vm.doc = processDocument(vm.doc);
+    }
+
+    function processDocument(doc) {
+      //set properties needed for display
+      doc._templateDisplayFields = DocumentService.setTemplateDisplayFields(doc, templateFields);
+
+      doc._templateDisplayFields._lw_id_decoded = DocumentService.decodeFieldValue(doc._templateDisplayFields, 'id');
+      doc._templateDisplayFields._lw_url_decoded = DocumentService.decodeFieldValue(doc._templateDisplayFields, 'url');
+
+      //set properties needed for signals
+      doc._signals = DocumentService.setSignalsProperties(doc, vm.position);
+
+      return doc;
     }
 
     function postSignal(options){
-      var paramsObj = {
-        params: {
-          position: vm.doc.position,
-          page: vm.doc.page
-        }
-      };
-      _.defaultsDeep(paramsObj, options);
-      SignalsService.postClickSignal(vm.doc.__signals_doc_id__, paramsObj);
+      DocumentService.postSignal(vm.doc._signals, options);
+    }
+
+    function getTemplateDisplayFieldName(field){
+      return DocumentService.getTemplateDisplayFieldName(vm.doc, field);
     }
   }
 })();

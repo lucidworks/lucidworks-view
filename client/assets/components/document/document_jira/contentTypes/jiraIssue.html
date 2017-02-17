@@ -1,28 +1,28 @@
 <div class="detail jira-issue vertical grid-content">
 
   <h3 class="subheader">
-    <a ng-href="{{::vm.doc.id}}" ng-click="vm.postSignal({params: {lw_url: vm.doc.id}})" rel="noopener" target="_blank">
-      <field value="::vm.doc.summary_s" highlight="::vm.highlight[doc.id]" maxlength="200" hkey="summary_s"></field>
+    <a ng-href="{{::vm.doc._templateDisplayFields.id}}" ng-click="vm.postSignal({params: {lw_url: vm.doc._templateDisplayFields.id}})" rel="noopener" target="_blank">
+      <field value="::vm.doc._templateDisplayFields.summary" highlight="::vm.highlight[doc._templateDisplayFields.id]" maxlength="200" hkey="{{::vm.getTemplateDisplayFieldName('summary')}}"></field>
     </a>
   </h3>
 
   <div class="large-8 xlarge-7 xx-large-6">
-    <p ng-if="::vm.doc.content_txt">
-      <field ng-if="::vm.doc.content_txt" value="vm.doc.content_txt" highlight="::vm.highlight[doc.id]" maxlength="200" hkey="content_txt" ></field>
+    <p ng-if="::vm.doc._templateDisplayFields.content">
+      <field ng-if="::vm.doc._templateDisplayFields.content" value="vm.doc._templateDisplayFields.content" highlight="::vm.highlight[doc._templateDisplayFields.id]" maxlength="200" hkey="{{::vm.getTemplateDisplayFieldName('content')}}" ></field>
     </p>
 
     <div class="detail-row">
-      <div class="type" ng-if="::vm.doc.jira_content_type_s">
-        <field value="::vm.doc.jira_content_type_s" highlight="::vm.highlight[doc.id]" maxlength="200"
-             hkey="jira_content_type_s"></field>
+      <div class="type" ng-if="::vm.doc._templateDisplayFields.jira_content_type">
+        <field value="::vm.doc._templateDisplayFields.jira_content_type" highlight="::vm.highlight[doc._templateDisplayFields.id]" maxlength="200"
+             hkey="{{::vm.getTemplateDisplayFieldName('jira_content_type')}}"></field>
       </div>
-      <div class="key" ng-if="::vm.doc.parent_s">
-        <a ng-href="{{::vm.doc.id}}" ng-click="vm.postSignal({params: {lw_url: vm.doc.id}})" rel="noopener" target="_blank">
-          <field value="::vm.doc.key_s" highlight="::vm.highlight[doc.id]" maxlength="200" hkey="key_s"></field>
+      <div class="key" ng-if="::vm.doc._templateDisplayFields.parent">
+        <a ng-href="{{::vm.doc._templateDisplayFields.id}}" ng-click="vm.postSignal({params: {lw_url: vm.doc._templateDisplayFields.id}})" rel="noopener" target="_blank">
+          <field value="::vm.doc._templateDisplayFields.key" highlight="::vm.highlight[doc._templateDisplayFields.id]" maxlength="200" hkey="{{::vm.getTemplateDisplayFieldName('key')}}"></field>
         </a>
       </div>
-      <div class="last-modified" ng-if="::vm.doc.lastModified_dt"><span class="doc-label">Last Modified:</span> <field value="::vm.doc.lastModified_dtFormatted"></field></div>
-      <div class="assignee" ng-if="::vm.doc.assignee_s"><span class="doc-label">Assigned to:</span> <field value="::vm.doc.assignee_s" maxlength="200"></field></div>
+      <div class="last-modified" ng-if="::vm.doc._templateDisplayFields.lastModified"><span class="doc-label">Last Modified:</span> <field value="::vm.doc._templateDisplayFields.lastModified | date"></field></div>
+      <div class="assignee" ng-if="::vm.doc._templateDisplayFields.assignee"><span class="doc-label">Assigned to:</span> <field value="::vm.doc._templateDisplayFields.assignee" maxlength="200"></field></div>
     </div>
   </div>
 </div>

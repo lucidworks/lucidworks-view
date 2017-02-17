@@ -23,7 +23,7 @@
   margin-top: .75rem;
   .card-get-started,
   .card-no-results {
-    text-align: center;   
+    text-align: center;
   }
 }
 
@@ -35,4 +35,18 @@
 .sort-button svg.iconic-sm {
   height: 16px;
   width: 16px;
+}
+
+@include breakpoint(medium) {
+  .title-bar .right .action-sheet {
+    width:250px;
+    left:auto;
+    right:0;
+    top:100%;
+    bottom:auto;
+    transform:translateX(0) translateY(0);
+    -webkit-transform:translateX(0) translateY(0);
+    transition:none;
+    &:before, &:after {left:auto;right:25px;}
+  }
 }
