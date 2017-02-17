@@ -45,13 +45,16 @@
         return queryObservable.getContent();
       }
 
+      /**
+       * Sets the query and sets off a new search via observable;
+       */
       function setQuery(query) {
         if (ConfigService.config.query_debug) {
           $log.debug('query', query);
         }
         queryObject = _.assign({}, queryObject, query, {rows: ConfigService.config.docs_per_page});
         queryObservable.setContent(queryObject);
-        URLService.setQuery(queryObject);
+        URLService.setQueryToURLAndGo(queryObject);
       }
 
     }
