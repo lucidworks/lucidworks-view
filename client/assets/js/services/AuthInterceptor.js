@@ -6,7 +6,7 @@
     .factory('AuthInterceptor', AuthInterceptor);
 
 
-  function AuthInterceptor($location, $q, $log, $rootScope, $injector) {
+  function AuthInterceptor(URLService, $q, $log, $rootScope, $injector) {
     'ngInject';
     var tryingAnon = false;
     return {
@@ -16,7 +16,6 @@
     function responseError(resp) {
       var deferred = $q.defer();
       var $state = $injector.get('$state');
-      var flatQuery = $location.search()['query'] || '(q:\'*\')';
       // CASE: If the app is on login page, the code is 401 and the request wasn't a api/session POST, then only attempt anon login
       // The reason for this check so that not all the response errors are intercepted
       if (!$state.is('login') && (resp.status === 401) && !isLoginRequest(resp.config)) {
@@ -29,19 +28,19 @@
               //CASE: If anonymous session creation is successful, go home
               $log.info('Created anonymous session');
               deferred.reject();
-              $state.go('home',{query:flatQuery});
+              $state.go('home', prepareQueryForRedirect());
             },function(err){
               // TODO: Investigate why 201 is going to error handler...
               // If it's the expected behaviour, figure out a better solution
               //CASE: If anonymous login succeeded with a 201 response, go to `home`
               if(err.status === 201){
                 $log.info('Created anonymous session');
-                $state.go('home',{query:flatQuery});
+                $state.go('home', prepareQueryForRedirect());
               }
               //CASE: If anonymous login failed, then go to login
               else{
                 $log.info('Failed to create anonymous session');
-                $state.go('login',{previousUrl:flatQuery});
+                $state.go('login',prepareQueryForRedirect());
               }
               deferred.reject(err);
             });
@@ -49,7 +48,7 @@
           else{
             //CASE: If anonymous login creds are unusable then go to login
             deferred.reject();
-            $state.go('login');
+            $state.go('login', prepareQueryForRedirect());
           }
         }
         //CASE: If trying anon login, then that promise chain will take care of stuff
@@ -67,6 +66,11 @@
         deferred.reject(resp);
       }
       // In all cases reject the promise chain
+
+      function prepareQueryForRedirect() {
+        var queryObject = URLService.getQueryFromUrl();
+        return URLService.convertQueryToStateObject(queryObject);
+      }
 
       return deferred.promise;
     }
