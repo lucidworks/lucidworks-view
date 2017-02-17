@@ -102,7 +102,7 @@
             }
             else{
               vm.showGroupedResults['noGroupedValue'] = true;
-            };
+            }
           });
         }
         else{
