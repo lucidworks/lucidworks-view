@@ -6,13 +6,13 @@
 * Add support for changing the default query via FUSION_CONFIG.js
 * Add support for date range facets type
 * Add support for simple grouped results
-* New loading state for range facets to prevent multiple and invalid selections while page is loading
+* New loading state for range facets to prevent multiple selections while page is loading
 
 **Bug Fixes**
-* When redirected through a login, your inital page query will no longer be cleared
-* Link URLS with parameters now click through correctly
+* When redirected through login, inital page query will no longer be cleared
+* Linked URLS with parameters now click through correctly
 * Only show pagination arrows when pagination is possible
-* Fixed Typeahead autocomplete user entry race condition
+* Fixed typeahead autocomplete user entry race condition
 
 **Package Updates**
 * Updated ESLint to version 3.3.1.
