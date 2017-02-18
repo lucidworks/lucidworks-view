@@ -62,7 +62,7 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^1.2.0",
     "gulp-webserver": "^0.9.1",
-    "http-proxy-middleware": "^0.9.1",
+    "http-proxy-middleware": "^0.17.3",
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.19",
     "karma-chrome-launcher": "^0.2.2",
