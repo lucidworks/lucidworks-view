@@ -31,8 +31,10 @@
      * setQuery
      * DEPRECATED in 1.4 use QueryService.setQuery() instead
      **/
-    function setQuery() {
-      $log.error('The function URLService.setQuery() was deprecated in Lucidworks View 1.4 use QueryService.setQuery() instead.');
+    function setQuery(query) {
+      $log.error('The function URLService.setQuery() was deprecated in Lucidworks View 1.4 use QueryService.setQuery() instead. Will be removed in version 1.5 release.');
+      var QueryService = $injector.get('QueryService');
+      QueryService.setQuery(query);
     }
 
     /**
