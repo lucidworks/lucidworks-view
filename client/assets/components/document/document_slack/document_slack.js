@@ -25,36 +25,40 @@
   }
 
 
-  function Controller(SignalsService, $filter, PaginateService) {
+  function Controller($filter, DocumentService) {
     'ngInject';
     var vm = this;
+    var templateFields = ['text', 'channel', 'user', 'timestamp', 'id'];
+    vm.postSignal = postSignal;
+    vm.getTemplateDisplayFieldName = getTemplateDisplayFieldName;
 
     activate();
 
     function activate() {
-      vm.postSignal = postSignal;
       vm.doc = processDocument(vm.doc);
     }
 
     function processDocument(doc) {
-      doc.timestamp_tdtFormatted = $filter('date')(vm.doc.timestamp_tdt, 'M/d/yy h:mm:ss a');
+      //set properties needed for display
+      doc._templateDisplayFields = DocumentService.setTemplateDisplayFields(doc, templateFields);
+
+      doc._templateDisplayFields.timestamp_Formatted = $filter('date')(vm.doc._templateDisplayFields.timestamp, 'M/d/yy h:mm:ss a');
       // For multivalued fields
-      doc.text = _.isArray(doc.text)?_.join(doc.text,' '):doc.text;
-      doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(doc);
-      doc.position = vm.position;
-      doc.page = PaginateService.getNormalizedCurrentPage();
+      doc._templateDisplayFields.text = _.isArray(doc._templateDisplayFields.text) ? _.join(doc._templateDisplayFields.text, ' ') : doc._templateDisplayFields.text;
+      doc._templateDisplayFields._lw_id_decoded = DocumentService.decodeFieldValue(doc._templateDisplayFields, 'id');
+
+      //set properties needed for signals
+      doc._signals = DocumentService.setSignalsProperties(doc, vm.position);
+
       return doc;
     }
 
     function postSignal(options){
-      var paramsObj = {
-        params: {
-          position: vm.doc.position,
-          page: vm.doc.page
-        }
-      };
-      _.defaultsDeep(paramsObj, options);
-      SignalsService.postClickSignal(vm.doc.__signals_doc_id__, paramsObj);
+      DocumentService.postSignal(vm.doc._signals, options);
+    }
+
+    function getTemplateDisplayFieldName(field){
+      return DocumentService.getTemplateDisplayFieldName(vm.doc, field);
     }
   }
 })();

@@ -25,7 +25,7 @@ var fileLocations = {
   win64: ['win64/**/*'],
   main_components: [
     '.bowerrc',
-    '.eslintrc',
+    '.eslintrc.js',
     '.gitignore',
     '.sass-lint.yml',
     'bower.json',

@@ -1,6 +1,30 @@
 # CHANGELOG
 
-## 1.3.0 - Pikachu's Invisible Tiara
+## 1.4.0 - Ra Ra Rasputin's Disco Tiara
+**New Features**
+* Now works out of the box with Fusion 3
+* Added support for changing the default query via FUSION_CONFIG.js
+* Added support for date range facets type
+* Added support for simple grouped results
+* New loading state for range facets to prevent multiple selections while page is loading
+
+**Bug Fixes**
+* When redirected through login, inital page query will no longer be cleared
+* Linked URLS with parameters now click through correctly
+* Only show pagination arrows when pagination is possible
+* Fixed typeahead autocomplete user entry race condition
+
+**Package Updates**
+* Updated ESLint to version 3.3.1.
+* Updated angular-ui-router to version 0.4.2
+
+**Deprecated API functions**
+* URLService.setQuery()
+
+  Instead of using `URLService.setQuery()` use `QueryService.setQuery()`
+  > `URLService.setQuery()` will be removed in View 1.5.0.
+
+## 1.3.0 - Pikachu's Invisible Tiara - August 5, 2016
 **New Features**
 * Added a Windows packaged build, you can now run View on Windows
 * Improved performance by minifying builds by default and turning off page change animations
@@ -13,8 +37,8 @@
 ## 1.2.0 - Cersei's Iron Tiara - June 30, 2016
 **New Features**
 * Now support range facet type
-* Add multi select faceting, meaning you can facet on multiple items within a single query
-* Add 'clear all' button to facet lists, clearing all selected facets
+* Added multi select faceting, meaning you can facet on multiple items within a single query
+* Added 'clear all' button to facet lists, clearing all selected facets
 * Improved signals now pass in more information including position, language, and platform
 * Enhanced signals service, adding additional functionality
 * Improved field display in templates by setting set max-length

@@ -20,7 +20,7 @@
 
   }
 
-  function Controller(Orwell, PaginateService, URLService, $filter) {
+  function Controller(Orwell, PaginateService, QueryService, $filter) {
     'ngInject';
     var vm = this;
     vm.page = 0;
@@ -102,7 +102,7 @@
       if (page > PaginateService.getTotalPages()) return;
       if (page === PaginateService.getCurrentPage()) return;
       // This will change the query and cause the interface to make an http call.
-      URLService.setQuery({
+      QueryService.setQuery({
         start: PaginateService.pageToStartRow(page)
       });
     }

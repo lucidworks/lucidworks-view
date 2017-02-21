@@ -5,6 +5,7 @@
     .module('lucidworksView.components.login', ['lucidworksView.services.auth',
       'ui.router'
     ])
+    .constant('QUERY_PARAM', 'query')
     .directive('login', login);
 
   function login() {
@@ -19,7 +20,7 @@
 
   }
 
-  function Controller(ConfigService, Orwell, AuthService, $state) {
+  function Controller(ConfigService, Orwell, AuthService, $state, QUERY_PARAM) {
     'ngInject';
     var vm = this;
     vm.username = '';
@@ -38,7 +39,11 @@
 
       function success() {
         vm.submitting = false;
-        $state.go('home');
+        var params = {};
+        if ($state.params[QUERY_PARAM]) {
+          params[QUERY_PARAM] = $state.params[QUERY_PARAM];
+        }
+        $state.go('home', params);
       }
 
       function failure(err) {

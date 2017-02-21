@@ -9,34 +9,51 @@
 
   var blankQuery = {
     q: '*',
-    start: 0
+    start: 0,
+    wt: 'json'
   };
 
-  function URLService($log, $rison, $state, $location, QueryService, BLANK_QUERY,
+  function URLService(ConfigService, $log, $rison, $injector, $location,
     QUERY_PARAM) {
     'ngInject';
     return {
-      setQuery: setQuery,
-      getQueryFromUrl: getQueryFromUrl
+      setQueryToURLAndGo: setQueryToURLAndGo,
+      convertQueryToStateObject: convertQueryToStateObject,
+      getQueryFromUrl: getQueryFromUrl,
+
+      /// deprecated
+      setQuery:setQuery
     };
 
     //////////
 
     /**
-     * Sets the query object that will be updated
-     * on the URL bar and get passed
-     * on to QueryService
-     * for a search
+     * setQuery
+     * DEPRECATED in 1.4 use QueryService.setQuery() instead
+     **/
+    function setQuery(query) {
+      $log.error('The function URLService.setQuery() was deprecated in Lucidworks View 1.4 use QueryService.setQuery() instead. Will be removed in version 1.5 release.');
+      var QueryService = $injector.get('QueryService');
+      QueryService.setQuery(query);
+    }
+
+    /**
+     * Sets the URL bar
      * @param {object} queryObject The query object
      */
-    function setQuery(queryObject) {
-      QueryService.setQuery(queryObject);
-      var queryObjectToBeStringed = _.clone(QueryService.getQueryObject(),true);
+    function convertQueryToStateObject(queryObject) {
+      var queryObjectToBeStringed = _.clone(queryObject,true);
       //Only need the slashes to get encoded, so that app state doesn't change
       queryObjectToBeStringed = encodeSlashes(queryObjectToBeStringed);
       var queryObjectString = $rison.stringify(queryObjectToBeStringed);
       var newStateObject = {};
       newStateObject[QUERY_PARAM] = queryObjectString;
+      return newStateObject;
+    }
+
+    function setQueryToURLAndGo(queryObject) {
+      var newStateObject = convertQueryToStateObject(queryObject);
+      var $state = $injector.get('$state');
       // Adding reloadOnSearch:false for now fixes the double reload bug SU-60
       // @see http://stackoverflow.com/a/22863315
       $state.go('home', newStateObject, {notify: false, reloadOnSearch: false});
@@ -49,11 +66,11 @@
       var queryString = $location.search()[QUERY_PARAM];
       var queryObject;
       try{
-        queryObject = queryString ? $rison.parse(decodeURIComponent(queryString)):BLANK_QUERY;
+        queryObject = queryString ? $rison.parse(decodeURIComponent(queryString)):ConfigService.config.default_query;
       }
       catch(e){
         $log.error('Cannot parse query URL');
-        queryObject = BLANK_QUERY;
+        queryObject = ConfigService.config.default_query;
       }
       var temp = convertTreeArrays(queryObject);
       return temp;

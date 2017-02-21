@@ -1,8 +1,8 @@
 (function () {
   angular.module('lucidworksView.components.document', ['lucidworksView.services.config',
-      'lucidworksView.utils.docs', 'lucidworksView.services.signals'
-    ])
-    .directive('documentDefault', documentDefault);
+    'lucidworksView.utils.docs', 'lucidworksView.services.signals'
+  ])
+  .directive('documentDefault', documentDefault);
 
 
   function documentDefault() {
@@ -21,10 +21,12 @@
     };
   }
 
-  function Controller($log, $scope, DocsHelper, ConfigService, SignalsService, PaginateService) {
+  function Controller($log, $scope, DocsHelper, ConfigService, SignalsService, PaginateService, DocumentService) {
     'ngInject';
     var vm = this;
     vm.postSignal = postSignal;
+    var templateFields = [];
+    var specialFields = ['head', 'subhead', 'description', 'image', 'head_url'];
 
     activate();
 
@@ -32,6 +34,9 @@
 
     function activate() {
       vm.doc = processDocument(DocsHelper.concatMultivaluedFields(vm.doc));
+      _.forEach(specialFields, function(fieldType) {
+        templateFields.push(ConfigService.getFields.get(fieldType));
+      });
     }
 
     /**
@@ -53,20 +58,32 @@
         ConfigService.getFieldLabels()
       );
 
-      doc.lw_head = getField('head', doc) ?
-        getField('head', doc) : 'Title Field Not Found';
+      doc.lw_head = {
+        key: getTemplateDisplayFieldName(ConfigService.getFields.get('head')),
+        value: getField('head', doc) ? getField('head', doc) : 'Title Field Not Found'
+      };
 
-      doc.lw_subhead = getField('subhead', doc);
+      doc.lw_subhead = {
+        key: getTemplateDisplayFieldName(ConfigService.getFields.get('subhead')),
+        value: getField('subhead', doc)
+      };
 
-      doc.lw_description = getField('description', doc);
+      doc.lw_description = {
+        key: getTemplateDisplayFieldName(ConfigService.getFields.get('description')),
+        value: getField('description', doc)
+      };
 
-      doc.lw_image = getField('image', doc);
+      doc.lw_image = {
+        key: getTemplateDisplayFieldName(ConfigService.getFields.get('image')),
+        value: getField('image', doc) ? DocumentService.decodeFieldValue(doc, ConfigService.getFields.get('image')) : null
+      };
 
-      doc.lw_url = getField('head_url', doc);
+      doc.lw_url = {
+        key: getTemplateDisplayFieldName(ConfigService.getFields.get('head_url')),
+        value: getField('head_url', doc) ? DocumentService.decodeFieldValue(doc, ConfigService.getFields.get('head_url')) : null
+      };
 
-      doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(doc);
-      doc.position = vm.position;
-      doc.page = PaginateService.getNormalizedCurrentPage();
+      doc._signals = DocumentService.setSignalsProperties(doc, vm.position);
 
       return doc;
     }
@@ -86,15 +103,11 @@
     }
 
     function postSignal(options){
-      var paramsObj = {
-        params: {
-          position: vm.doc.position,
-          page: vm.doc.page
-        }
-      };
-      _.defaultsDeep(paramsObj, options);
-      SignalsService.postClickSignal(vm.doc.__signals_doc_id__, paramsObj);
+      DocumentService.postSignal(vm.doc._signals, options);
     }
 
+    function getTemplateDisplayFieldName(field){
+      return DocumentService.getTemplateDisplayFieldName(vm.doc, field);
+    }
   }
 })();

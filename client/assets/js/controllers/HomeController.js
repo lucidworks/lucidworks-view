@@ -1,7 +1,7 @@
 (function() {
   'use strict';
   angular
-    .module('lucidworksView.controllers.home', ['lucidworksView.services', 'angucomplete-alt', 'angular-humanize'])
+    .module('lucidworksView.controllers.home', ['lucidworksView.services', 'angular-humanize'])
     .controller('HomeController', HomeController);
 
 
@@ -13,7 +13,7 @@
     var query;
     var sorting;
 
-    hc.searchQuery = '*';
+    hc.searchQuery = ConfigService.config.default_query.q;
 
     activate();
 
@@ -31,13 +31,16 @@
       hc.lastQuery = '';
       hc.sorting = {};
       hc.grouped = false;
+      hc.isLoading = false;
 
       query = URLService.getQueryFromUrl();
       //Setting the query object... also populating the the view model
-      hc.searchQuery = _.get(query,'q','*');
+      hc.searchQuery = _.get(query,'q',ConfigService.config.default_query.q);
       // Use an observable to get the contents of a queryResults after it is updated.
       resultsObservable = Orwell.getObservable('queryResults');
       resultsObservable.addObserver(function(data) {
+        // Locking the service to prevent multiple queries currently this only works for facet ranges (since it is very slow) but could add an ng-disabled to other areas and toggle on or off a disabled class
+        startLoading();
         // updateStatus();
         checkResultsType(data);
         updateStatus();
@@ -45,15 +48,24 @@
         sorting = hc.sorting;
         sorting.switchSort = switchSort;
         createSortList();
-
+        endLoading();
       });
 
       // Force set the query object to change one digest cycle later
       // than the digest cycle of the initial load-rendering
       // The $timeout is needed or else the query to fusion is not made.
       $timeout(function(){
-        URLService.setQuery(query);
+        QueryService.setQuery(query);
       });
+    }
+
+    function startLoading(){
+      hc.isLoading = true;
+    }
+
+
+    function endLoading(){
+      hc.isLoading = false;
     }
 
     function checkResultsType(data){
@@ -119,7 +131,7 @@
         fq: []
       };
 
-      URLService.setQuery(query);
+      QueryService.setQuery(query);
     }
 
     /**
@@ -144,11 +156,11 @@
       switch(sort.type) {
       case 'text':
         query.sort = sort.label+' '+sort.order;
-        URLService.setQuery(query);
+        QueryService.setQuery(query);
         break;
       default:
         delete query.sort;
-        URLService.setQuery(query);
+        QueryService.setQuery(query);
       }
     }
 

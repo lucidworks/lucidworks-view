@@ -55,13 +55,13 @@ appConfig = { //eslint-disable-line
   //  password: 'search-user-password-here'
   },
 
-  // The name of your collection
-  collection: 'MyCollection',
+  // The name of your collection - defaults to Fusion 3.0 default collection
+  collection: 'default',
 
   // Please specify a pipeline or profile that you want to leverage with this UI.
   query_pipeline_id: 'default',
   query_profile_id: 'default',
-  use_query_profile: true, // Force use of query-profile
+  use_query_profile: false, // Force use of query-profile
 
   // Search UI Title
   // This title appears in a number of places in the app, including page title.
@@ -191,7 +191,7 @@ appConfig = { //eslint-disable-line
    * Typeahead or autocomplete shows you a number of suggested queries as you
    * type in the search box.
    */
-  typeahead_use_query_profile: true,
+  typeahead_use_query_profile: false,
   typeahead_query_pipeline_id: 'default',
   typeahead_query_profile_id: 'default',
   typeahead_fields: ['id'],
@@ -201,6 +201,12 @@ appConfig = { //eslint-disable-line
   // @see https://lucidworks.com/blog/2016/02/04/fusion-plus-solr-suggesters-search-less-typing/
 
   //typeahead_requesthandler: 'suggest', // recommended (requires configuration)
-  typeahead_requesthandler: 'select'
+  typeahead_requesthandler: 'select',
 
+  /**
+   * Default query
+   *
+   * If there is no query provided in the URL this query will be used. It is in object form.
+   */
+  default_query: {q:'*'}
 };

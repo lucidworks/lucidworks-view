@@ -95,14 +95,20 @@
 
     function parseGrouping(results){
       _.each(results, function(item){
-        _.each(item.groups, function(group){
-          if(_.has(group, 'groupValue') && group.groupValue !== null){
-            vm.showGroupedResults[group.groupValue] = false;
-          }
-          else{
-            vm.showGroupedResults['noGroupedValue'] = true;
-          };
-        });
+        if (_.has(item, 'groups')){
+          _.each(item.groups, function(group){
+            if(_.has(group, 'groupValue') && group.groupValue !== null){
+              vm.showGroupedResults[group.groupValue] = false;
+            }
+            else{
+              vm.showGroupedResults['noGroupedValue'] = true;
+            }
+          });
+        }
+        else{
+          vm.groupedDocs = item.doclist.docs;
+          vm.showGroupedResults['simpleGrouped'] = true;
+        }
       });
     }
 
@@ -117,7 +123,6 @@
           var vals = {};
           if (value) {
             _.each(Object.keys(value), function (key) {
-              $log.debug('highlight', value);
               var val = value[key];
               _.each(val, function(high){
                 vals[key] = $sce.trustAsHtml(high);

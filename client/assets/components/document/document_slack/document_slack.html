@@ -2,20 +2,20 @@
   <div class="detail vertical grid-content">
     <div class="large-8 xlarge-7 xx-large-6">
       <blockquote class="text">
-          <field value="::vm.doc.text_t" highlight="vm.highlight[doc.id]" maxlength="200" hkey="text_t"></field>
-          <!-- <p>{{::vm.doc.text | limitTo:200}}...</p> -->
+          <field value="::vm.doc._templateDisplayFields.text" highlight="vm.highlight[doc._templateDisplayFields.id]" maxlength="200" hkey="{{::vm.getTemplateDisplayFieldName('text')}}"></field>
+          <!-- <p>{{::vm.doc._templateDisplayFields.text | limitTo:200}}...</p> -->
       </blockquote>
       <div class="detail-row">
-        <div class="channel label secondary" ng-if="::vm.doc.channel_s">
-          <field value="::vm.doc.channel_s" highlight="::vm.highlight[doc.id]" maxlength="200"
-                 hkey="channel_s"></field>
+        <div class="channel label secondary" ng-if="::vm.doc._templateDisplayFields.channel">
+          <field value="::vm.doc._templateDisplayFields.channel" highlight="::vm.highlight[doc._templateDisplayFields.id]" maxlength="200"
+                 hkey="{{::vm.getTemplateDisplayFieldName('channel')}}"></field>
         </div>
-        <div class="user" ng-if="::vm.doc.user_s">
-        @<field value="::vm.doc.user_s" highlight="::vm.highlight[doc.id]" maxlength="200" hkey="user_s"></field>
+        <div class="user" ng-if="::vm.doc._templateDisplayFields.user">
+        @<field value="::vm.doc._templateDisplayFields.user" highlight="::vm.highlight[doc._templateDisplayFields.id]" maxlength="200" hkey="{{::vm.getTemplateDisplayFieldName('user')}}"></field>
         </div>
-        <div class="timestamp" ng-if="::vm.doc.timestamp_tdt">
-          <a ng-href="{{::vm.doc.id}}" ng-click="vm.postSignal({params: {lw_url: vm.doc.id}})" rel="noopener" target="_blank">
-            <field value="::vm.doc.timestamp_tdtFormatted"></field> UTC
+        <div class="timestamp" ng-if="::vm.doc._templateDisplayFields.timestamp">
+          <a ng-href="{{::vm.doc._templateDisplayFields._lw_id_decoded}}" ng-click="vm.postSignal({params: {lw_url: vm.doc._templateDisplayFields._lw_id_decoded}})" rel="noopener" target="_blank">
+            <field value="::vm.doc._templateDisplayFields.timestamp_Formatted"></field> UTC
           </a>
         </div>
       </div>

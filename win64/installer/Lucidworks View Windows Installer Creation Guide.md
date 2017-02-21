@@ -8,6 +8,8 @@ Do the following steps from a windows box
 
 2. Move the tar build on Linux and Untar on Windows to a directory we will refer to as **VIEW_HOME**.
 
+    **Note:** Run your extraction utility as an administrator in order to properly keep the symlinks intact. You can do this by opening the extraction utility (7zip) by right clicking on the menu icon in programs and selecting run as administrator.
+
 3. Get latest version of **inno setup** installed <http://www.jrsoftware.org/isdl.php#stable>
 
 4. Launch **VIEW_HOME**\installer\create-installer.cmd

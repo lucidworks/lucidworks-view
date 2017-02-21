@@ -13,7 +13,9 @@
       scope: true,
       controller: Controller,
       controllerAs: 'vm',
-      bindToController: {}
+      bindToController: {
+        isLoading: '='
+      }
     };
 
     return directive;
@@ -41,10 +43,10 @@
       //check to see if it looks like a date first, since Solr will likely send back as an ISO date
       //2016-02-14T00:00:00Z - 2016-03-14T00:00:00Z
       var result;
-      if (typeof toFormat.indexOf === 'function' && toFormat.indexOf("Z") != -1 && toFormat.indexOf("T") != -1){
+      if (angular.isFunction(toFormat.indexOf) && toFormat.indexOf('Z') != -1 && toFormat.indexOf('T') != -1){
         result = Date.parse(toFormat);
         //most range facet displays don't need time info, so just do angular filter by default to day/month/year
-        result = $filter('date')(result, 'mediumDate')
+        result = $filter('date')(result, 'mediumDate');
       } else {
         result = toFormat;
       }

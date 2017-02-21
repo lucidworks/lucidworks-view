@@ -24,34 +24,35 @@
 
   }
 
-  function Controller(SignalsService, PaginateService, $log, $filter) {
+  function Controller(DocumentService) {
     'ngInject';
     var vm = this;
+    var templateFields = ['id', 'createdAt', 'tweet', 'userLang', 'userScreenName'];
+    vm.postSignal = postSignal;
+    vm.getTemplateDisplayFieldName = getTemplateDisplayFieldName;
 
     activate();
 
     function activate() {
-      vm.postSignal = postSignal;
       vm.doc = processDocument(vm.doc);
     }
 
     function processDocument(doc) {
-      doc.createdAtFormatted = $filter('date')(doc.createdAt[0]);
-      doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(doc);
-      doc.position = vm.position;
-      doc.page = PaginateService.getNormalizedCurrentPage();
+      //set properties needed for display
+      doc._templateDisplayFields = DocumentService.setTemplateDisplayFields(doc, templateFields);
+
+      //set properties needed for signals
+      doc._signals = DocumentService.setSignalsProperties(doc, vm.position);
+
       return doc;
     }
 
     function postSignal(options){
-      var paramsObj = {
-        params: {
-          position: vm.doc.position,
-          page: vm.doc.page
-        }
-      };
-      _.defaultsDeep(paramsObj, options);
-      SignalsService.postClickSignal(vm.doc.__signals_doc_id__, paramsObj);
+      DocumentService.postSignal(vm.doc._signals, options);
+    }
+
+    function getTemplateDisplayFieldName(field){
+      return DocumentService.getTemplateDisplayFieldName(vm.doc, field);
     }
   }
 })();

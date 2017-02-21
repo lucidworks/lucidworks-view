@@ -15,48 +15,62 @@ $search-box-typeahead-highlight-color:     $success-color;
 $search-box-empty-content:                 '';
 
 @include exports(search-box) {
+  
   .search-box {
-    .angucomplete-input {
+    > span {position:relative;display: block;} 
+    .query-input {
       margin-bottom: 0px;
+      color: $search-box-typeahead-text-color;
     }
+    .ac-container {z-index: 1000;backface-visibility: hidden;transform: translate3d(0, 0, 0);}
 
-    .angucomplete-holder {
-      position: relative;
-    }
-
-    .angucomplete-dropdown {
+    .ac-menu,.no-results-message {
       background: $search-box-typeahead-background;
       border: $search-box-typeahead-border;
       color: $search-box-typeahead-text-color;
-      left: 0px;
+      list-style-type: none;
+      margin: 0;
       padding: 4px;
-      position: absolute;
-      text-align: left;
-      z-index: 1000;
+      text-align:left;
+    }
+    .no-results-message {
+      font-size:0.9rem;
+      position:absolute;
+      top:100%;
+      width: 100%;
+      padding: 8px;
+      font-style: italic;
+    }
 
-      .angucomplete-selected-row {
-        background: $search-box-typeahead-selected-background;
+    .ac-menu-item.ac-state-focus a {background: $search-box-typeahead-selected-background;}
+    .ac-menu-item a {
+      padding: .5rem 0 .5rem .5rem;
+      color:inherit;
+      display: block;
+      position:relative;
+      //extra element for title tag
+      .title-wrapper {
+        padding-right:1.5rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
-
+      &:hover {color: $search-box-typeahead-highlight-color;background: $search-box-typeahead-selected-background;}
+      &:active {background: $search-box-typeahead-selected-background;}
+      &:after {
+        content:$search-box-empty-content;
+        position:absolute;
+        right:0;
+        top:8px;
+        background-image: url('../img/iconic/expand.svg');
+        transform: scaleX(-1);
+        background-repeat: no-repeat;
+        width: 1.5rem;
+        height: 1.3rem;
+      }
       .highlight {
         color: $search-box-typeahead-highlight-color;
       }
-
-      .angucomplete-title{
-        padding: .5rem 1.5rem .5rem .5rem;
-        &:after {
-          content:$search-box-empty-content;
-          float: right;
-          background-image: url('../img/iconic/expand.svg');
-          transform: scaleX(-1);
-          background-repeat: no-repeat;
-          width: 1.5rem;
-          height: 1.3rem;
-          margin-top: -.2rem;
-          margin-right: -1.5rem;
-        }
-      }
     }
   }
-
 }

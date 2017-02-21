@@ -15,6 +15,7 @@
       // Libraries
       'ngOrwell',
       'rison',
+      'MassAutoComplete',
 
       // Fusion Seed App
       'lucidworksView.components',

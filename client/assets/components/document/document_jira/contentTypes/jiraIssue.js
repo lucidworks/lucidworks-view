@@ -23,29 +23,18 @@
 
   }
 
-
-  function Controller(SignalsService, PaginateService) {
+  function Controller(DocumentService) {
     'ngInject';
     var vm = this;
-
-    activate();
-
-    function activate() {
-      vm.postSignal = postSignal;
-      vm.doc.__signals_doc_id__ = SignalsService.getSignalsDocumentId(vm.doc);
-      vm.doc.page = PaginateService.getNormalizedCurrentPage();
-    }
+    vm.postSignal = postSignal;
+    vm.getTemplateDisplayFieldName = getTemplateDisplayFieldName;
 
     function postSignal(options){
-      var paramsObj = {
-        params: {
-          position: vm.doc.position,
-          page: vm.doc.page
-        }
-      };
-      _.defaultsDeep(paramsObj, options);
-      SignalsService.postClickSignal(vm.doc.__signals_doc_id__, paramsObj);
+      DocumentService.postSignal(vm.doc._signals, options);
     }
 
+    function getTemplateDisplayFieldName(field){
+      return DocumentService.getTemplateDisplayFieldName(vm.doc, field);
+    }
   }
 })();

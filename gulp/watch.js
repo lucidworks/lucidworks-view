@@ -13,7 +13,7 @@ gulp.task('watch', function(){
   gulp.watch(['./client/assets/components/**/*'], ['components']);
 
   // Watch static files
-  gulp.watch(['./client/**/*.*', '!./client/templates/**/*.*', '!./client/assets/{scss,js,components}/**/*.*'], ['staticfiles']);
+  gulp.watch(global.paths.assets, ['staticfiles']);
 
   // Watch app templates
   gulp.watch(['./client/templates/**/*.html'], ['template:sequence']);
