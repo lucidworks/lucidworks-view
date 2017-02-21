@@ -22,6 +22,7 @@
 * URLService.setQuery()
 
   Instead of using `URLService.setQuery()` use `QueryService.setQuery()`
+  > `URLService.setQuery()` will be removed in View 1.5.0.
 
 ## 1.3.0 - Pikachu's Invisible Tiara - August 5, 2016
 **New Features**
