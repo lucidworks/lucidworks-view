@@ -112,7 +112,7 @@ Search results from different document types can use different templates.  The `
 
 ## View on Windows
 
-  Download the latest view installer from <https://lucidworks.com/products/view> and run it **as an administrator**.
+  Download the latest view installer from <https://github.com/lucidworks/lucidworks-view/releases> and run it **as an administrator**.
 
 ## What's Next
 
