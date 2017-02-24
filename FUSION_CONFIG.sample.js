@@ -48,10 +48,11 @@ appConfig = { //eslint-disable-line
    *
    * SECURITY WARNING
    * It is recommended you use an account with the 'search' role
-   * to use anonymous access.
+   * to use anonymous access. The search role api permissions will have
+   * to be configured if you are not using the default pipeline.
    */
   anonymous_access: {
-    username: 'search-user',
+  //  username: 'search-user',
   //  password: 'search-user-password-here'
   },
 
