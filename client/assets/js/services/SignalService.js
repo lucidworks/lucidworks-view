@@ -26,22 +26,22 @@
      * @return {promise}
      */
     function postClickSignal(docId, options) {
-      var date = new Date(),
-        userName = UserService.getUser() ? UserService.getUser().username : null,
-        data = {
-          params: {
-            docId: docId,
-            head_field: ConfigService.config.head_field,
-            language: ClientStatsService.getBrowserLanguage(),
-            platform: ClientStatsService.getBrowserPlatform(),
-            user_agent: ClientStatsService.getBrowserUserAgent(),
-            user_name: userName || ConfigService.config.anonymous_access.username,
-            query: QueryService.getQueryObject().q
-          },
-          pipeline: ConfigService.config.signals_pipeline,
-          timestamp: date.toISOString(),
-          type: ConfigService.config.signal_type
-        };
+      var date = new Date();
+      var userName = UserService.getUser() ? UserService.getUser().username : null;
+      var data = {
+        params: {
+          docId: docId,
+          head_field: ConfigService.config.head_field,
+          language: ClientStatsService.getBrowserLanguage(),
+          platform: ClientStatsService.getBrowserPlatform(),
+          user_agent: ClientStatsService.getBrowserUserAgent(),
+          user_name: userName || ConfigService.config.anonymous_access.username,
+          query: QueryService.getQueryObject().q
+        },
+        pipeline: ConfigService.config.signals_pipeline,
+        timestamp: date.toISOString(),
+        type: ConfigService.config.signal_type
+      };
 
       _.defaultsDeep(data, options);
 

@@ -29,7 +29,7 @@
           password: password
         })
         .then(function (resp) {
-          UserService.setUser(resp.user);
+          UserService.setUser(resp.data.user);
           deferred.resolve(resp);
         }, function (err) {
           deferred.reject(err);
@@ -43,7 +43,7 @@
       $http
         .get(ApiBase.getEndpoint() + 'api/session?realmName=' + realmName)
         .then(function (resp) {
-          UserService.setUser(resp.user);
+          UserService.setUser(resp.data.user);
           deferred.resolve(resp);
         }, function (err) {
           deferred.reject(err);
