@@ -27,6 +27,7 @@
      */
     function postClickSignal(docId, options) {
       var date = new Date(),
+        userName = UserService.getUser() ? UserService.getUser().username : null,
         data = {
           params: {
             docId: docId,
@@ -34,7 +35,7 @@
             language: ClientStatsService.getBrowserLanguage(),
             platform: ClientStatsService.getBrowserPlatform(),
             user_agent: ClientStatsService.getBrowserUserAgent(),
-            user_name: UserService.getUser().username || ConfigService.config.anonymous_access.username,
+            user_name: userName || ConfigService.config.anonymous_access.username,
             query: QueryService.getQueryObject().q
           },
           pipeline: ConfigService.config.signals_pipeline,
