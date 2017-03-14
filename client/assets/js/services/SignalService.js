@@ -3,11 +3,11 @@
 
   angular
     .module('lucidworksView.services.signals', ['lucidworksView.services.apiBase',
-      'lucidworksView.services.config'
+      'lucidworksView.services.config', 'lucidworksView.services.user'
     ])
     .factory('SignalsService', SignalsService);
 
-  function SignalsService(ApiBase, ConfigService, $http, $q, QueryService, ClientStatsService) {
+  function SignalsService(ApiBase, ConfigService, $http, $q, QueryService, ClientStatsService, UserService) {
     'ngInject';
     var service = {
       postClickSignal: postClickSignal,
@@ -34,7 +34,7 @@
             language: ClientStatsService.getBrowserLanguage(),
             platform: ClientStatsService.getBrowserPlatform(),
             user_agent: ClientStatsService.getBrowserUserAgent(),
-            user_name: ConfigService.getLoginCredentials().username || ConfigService.config.anonymous_access.username,
+            user_name: UserService.getUser().username || ConfigService.config.anonymous_access.username,
             query: QueryService.getQueryObject().q
           },
           pipeline: ConfigService.config.signals_pipeline,
