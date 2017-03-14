@@ -6,7 +6,7 @@
     .factory('UserService', UserService);
 
   function UserService(){
-    let user;
+    var user;
     return {
       getUser:getUser,
       setUser:setUser
