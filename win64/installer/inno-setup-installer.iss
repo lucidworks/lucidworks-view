@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Lucidworks View"
-#define MyAppVersion "1.3.0"
+#define MyAppVersion "1.4.0"
 #define MyAppPublisher "Lucidworks"
 #define MyAppURL "https://www.lucidworks.com/products/view"
 #define MyAppExeName "view.cmd"
