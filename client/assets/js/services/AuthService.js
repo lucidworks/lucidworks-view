@@ -27,7 +27,7 @@
     }
 
     function authBySaml() {
-      $window.location = `api/saml/${realmName}`; 
+      $window.location = 'api/saml/' + realmName; 
     }
 
     function createSession(username, password) {

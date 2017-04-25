@@ -1,0 +1,14 @@
+.login-form:not(.has-input-fields) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+
+  label {
+    display: none;
+  }
+
+  .button {
+    width: 100px;
+  }
+}

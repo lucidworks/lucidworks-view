@@ -27,18 +27,19 @@
     vm.password = '';
     vm.error = null;
     vm.submitting = false;
+    vm.useSamlAuth = AuthService.hasSamlRealm();
 
     vm.submit = submit;
 
-    init();
-
-    function init() {
-      if (AuthService.hasSamlRealm()) {
-        AuthService.getSession().catch(AuthService.authBySaml);
+    function submit() {
+      if (vm.useSamlAuth) {
+        AuthService.authBySaml();
+      } else {
+        createSession();
       }
     }
 
-    function submit() {
+    function createSession() {
       vm.error = null;
       vm.submitting = true;
       AuthService
@@ -58,7 +59,6 @@
         vm.submitting = false;
         vm.error = err;
       }
-
     }
   }
 })();

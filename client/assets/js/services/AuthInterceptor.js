@@ -89,22 +89,15 @@
 
       tryingAnon = true;
       var def = $q.defer();
-      let hasSamlRealm = AuthService.hasSamlRealm();
-
-      if (hasSamlRealm) {
-        AuthService.authBySaml();
-      } else {
-        AuthService.createSession(ConfigService.config.anonymous_access.username, ConfigService.config.anonymous_access.password)
-          .then(function(resp){
-            tryingAnon = false;
-            def.reject(resp);
-          }).catch(function(error){
-            tryingAnon = false;
-            def.reject(error);
-          });
-      }
-
-      return hasSamlRealm ? $q.when(true) : def.promise;
+      AuthService.createSession(ConfigService.config.anonymous_access.username, ConfigService.config.anonymous_access.password)
+        .then(function(resp){
+          tryingAnon = false;
+          def.reject(resp);
+        }).catch(function(error){
+          tryingAnon = false;
+          def.reject(error);
+        });
+      return def.promise;
     }
 
     /**
