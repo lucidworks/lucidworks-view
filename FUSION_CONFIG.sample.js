@@ -38,6 +38,9 @@ appConfig = { //eslint-disable-line
   /**
    * The name of the realm to connect with
    *   default: 'native'
+   *
+   * SAML auth is also supported via config as
+   *   { type: 'saml', name: 'saml_realm_name' }
    */
   connection_realm: 'native',
 

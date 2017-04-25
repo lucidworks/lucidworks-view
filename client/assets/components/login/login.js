@@ -30,6 +30,14 @@
 
     vm.submit = submit;
 
+    init();
+
+    function init() {
+      if (AuthService.hasSamlRealm()) {
+        AuthService.getSession().catch(AuthService.authBySaml);
+      }
+    }
+
     function submit() {
       vm.error = null;
       vm.submitting = true;
