@@ -7,7 +7,6 @@
     ])
     .factory('AuthService', AuthService);
 
-
   function AuthService($q, $log, $http, $rootScope, $window, ApiBase, ConfigService, UserService) {
     'ngInject';
     var config = ConfigService.config;
