@@ -1,4 +1,6 @@
-<form class="content-block" ng-submit="vm.submit()">
+<form class="content-block login-form" ng-submit="vm.submit()" ng-class="{ 'has-input-fields': !vm.useSamlAuth }">
+  <h1>{{ vm.useSamlAuth ? 'Click below to log in' : 'Please login' }}</h1>
+
   <label>
     Username
     <input type="text" ng-model="vm.username" />

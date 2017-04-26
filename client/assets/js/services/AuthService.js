@@ -7,19 +7,29 @@
     ])
     .factory('AuthService', AuthService);
 
-  function AuthService($q, $log, $http, $rootScope, ApiBase, ConfigService, UserService) {
+
+  function AuthService($q, $log, $http, $rootScope, $window, ApiBase, ConfigService, UserService) {
     'ngInject';
     var config = ConfigService.config;
-    var realmName = config.connection_realm;
+    var realmName = _.get(config.connection_realm, 'name') || config.connection_realm;
 
     return {
       createSession: createSession,
       getSession: getSession,
-      destroySession: destroySession
+      destroySession: destroySession,
+      hasSamlRealm: hasSamlRealm,
+      authBySaml: authBySaml
     };
 
     //////////////
 
+    function hasSamlRealm() {
+      return _.get(config.connection_realm, 'type') === 'saml';
+    }
+
+    function authBySaml() {
+      $window.location = 'api/saml/' + realmName; 
+    }
 
     function createSession(username, password) {
       var deferred = $q.defer();

@@ -36,10 +36,16 @@ appConfig = { //eslint-disable-line
   // },
 
   /**
-   * The name of the realm to connect with
-   *   default: 'native'
+   * The name of the realm to connect with, and the authentication type if SAML is used.
+   * The default is:
+   * connection_realm: { name: 'native' }
    */
-  connection_realm: 'native',
+  connection_realm: {
+    name: 'native',
+
+    // If you are using SAML authentication, uncomment the following line:
+    // type: 'saml'
+  },
 
   /**
    * Anonymous access
