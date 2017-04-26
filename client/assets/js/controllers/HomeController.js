@@ -56,6 +56,7 @@
       // The $timeout is needed or else the query to fusion is not made.
       $timeout(function(){
         QueryService.setQuery(query);
+        AuthService.getSession();
       });
     }
 

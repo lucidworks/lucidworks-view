@@ -3,11 +3,11 @@
 
   angular
     .module('lucidworksView.services.auth', ['lucidworksView.services.apiBase',
-      'lucidworksView.services.config'
+      'lucidworksView.services.config', 'lucidworksView.services.user'
     ])
     .factory('AuthService', AuthService);
 
-  function AuthService($q, $log, $http, $rootScope, $window, ApiBase, ConfigService) {
+  function AuthService($q, $log, $http, $rootScope, $window, ApiBase, ConfigService, UserService) {
     'ngInject';
     var config = ConfigService.config;
     var realmName = _.get(config.connection_realm, 'name') || config.connection_realm;
@@ -38,6 +38,7 @@
           password: password
         })
         .then(function (resp) {
+          UserService.setUser(resp.data.user);
           deferred.resolve(resp);
         }, function (err) {
           deferred.reject(err);
@@ -51,6 +52,7 @@
       $http
         .get(ApiBase.getEndpoint() + 'api/session?realmName=' + realmName)
         .then(function (resp) {
+          UserService.setUser(resp.data.user);
           deferred.resolve(resp);
         }, function (err) {
           deferred.reject(err);
@@ -63,6 +65,7 @@
       $http
         .delete(ApiBase.getEndpoint() + 'api/session?realmName=' + realmName)
         .then(function (resp) {
+          UserService.setUser(null);
           deferred.resolve(resp);
         });
 
