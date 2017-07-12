@@ -4,7 +4,8 @@
       'lucidworksView.services.config',
       'lucidworksView.services.apiBase',
       'lucidworksView.utils.queryBuilder',
-      'ngOrwell'
+      'ngOrwell',
+      'lucidworksView.services.user'
     ])
     .config(Config)
     .provider('QueryDataService', QueryDataService);
@@ -21,7 +22,7 @@
 
     /////////////
 
-    function $get($q, $http, ConfigService, ApiBase, Orwell, QueryBuilder) {
+    function $get($q, $http, ConfigService, ApiBase, Orwell, QueryBuilder, UserService) {
       'ngInject';
       var queryResultsObservable = Orwell.getObservable('queryResults');
       return {
@@ -42,7 +43,8 @@
 
         var queryString = QueryBuilder.objectToURLString(query);
 
-        var fullUrl = getQueryUrl(ConfigService.getIfQueryProfile()) + '?' + queryString;
+        var userName = UserService.getUser() ? UserService.getUser().username : ConfigService.config.anonymous_access.username
+        var fullUrl = getQueryUrl(ConfigService.getIfQueryProfile()) + '?' + queryString + '&user_id=' + userName;
 
         $http
           .get(fullUrl)

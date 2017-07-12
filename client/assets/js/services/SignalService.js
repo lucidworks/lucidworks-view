@@ -35,7 +35,7 @@
           language: ClientStatsService.getBrowserLanguage(),
           platform: ClientStatsService.getBrowserPlatform(),
           user_agent: ClientStatsService.getBrowserUserAgent(),
-          user_name: userName || ConfigService.config.anonymous_access.username,
+          userId: userName || ConfigService.config.anonymous_access.username,
           query: QueryService.getQueryObject().q
         },
         pipeline: ConfigService.config.signals_pipeline,
