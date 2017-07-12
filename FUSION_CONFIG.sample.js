@@ -70,6 +70,15 @@ appConfig = { //eslint-disable-line
   query_profile_id: 'default',
   use_query_profile: false, // Force use of query-profile
 
+  // The name of the recommender pipeline you want to use
+  recommender_pipeline_id: 'related_items',
+
+  // The field you want to recommend on 
+  recommender_field: 'body',
+
+  // The Name of the Field you will be using to supply your ids
+  recommender_id_field: 'id',
+
   // Search UI Title
   // This title appears in a number of places in the app, including page title.
   // In the header it is replaced by the logo if one is provided.

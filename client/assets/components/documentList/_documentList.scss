@@ -1,3 +1,11 @@
 #documentList{
   em{ background-color:$highlight-color;}
 }
+
+.moreLikeThisText {
+     visibility: visible;
+     zoom: 1;
+     border: 1px solid black;
+     overflow-x:auto;
+     overflow-y:auto;
+}
