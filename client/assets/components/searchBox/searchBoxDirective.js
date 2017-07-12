@@ -49,6 +49,7 @@
     function checkKeyPress($event) {
       ta.query = ta.dirty.value;
       bypassAutoComplete = ($event.keyCode === 13);
+      ta.noResults = ta.noResults && !bypassAutoComplete;
     }
 
     function doTypeaheadSearch(term) {
@@ -62,10 +63,12 @@
         SearchBoxDataService
           .getTypeaheadResults({q: term, wt: 'json'})
           .then(function (resp) {
-            if(resp.hasOwnProperty('response') && resp.response.docs.length) {
-              deferred.resolve(suggest_results(resp.response.docs,term));
-            } else {
-              return deferred.reject('No suggestions for '+term);
+            if (!bypassAutoComplete) {
+              if(resp.hasOwnProperty('response') && resp.response.docs.length) {
+                deferred.resolve(suggest_results(resp.response.docs,term));
+              } else {
+                return deferred.reject('No suggestions for '+term);
+              }
             }
           })
           .catch(function (error) {
