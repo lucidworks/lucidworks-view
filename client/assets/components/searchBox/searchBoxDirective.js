@@ -24,15 +24,13 @@
   function Controller($element, $log, $q, $sce, $timeout, ConfigService, SearchBoxDataService) {
     'ngInject';
     var ta = this;
+    var bypassAutoComplete = false;
     
     ta.checkKeyPress = checkKeyPress;
     ta.typeaheadField = ConfigService.getTypeaheadField();
     ta.initialValue = _.isArray(ta.query)?ta.query[0]:ta.query;
     ta.noResults = undefined;
     
-    //need to get hold of the element to be able to manually close the suggestions div
-    var massAutocompleteElem = $element.find('div')[0];
-
     //mass-autocomplete config
     ta.dirty = {};
     
@@ -50,40 +48,38 @@
 
     function checkKeyPress($event) {
       ta.query = ta.dirty.value;
-      if ($event.keyCode === 13) {
-        closeSuggester();
-      }
-    }
-
-    function closeSuggester() {
-      var massAutoElemScope = angular.element(massAutocompleteElem).isolateScope();      
-      $timeout(function() {
-        if(massAutoElemScope.show_autocomplete) {
-          massAutoElemScope.show_autocomplete = false;
-        }
-      },200);
+      bypassAutoComplete = ($event.keyCode === 13);
+      ta.noResults = ta.noResults && !bypassAutoComplete;
     }
 
     function doTypeaheadSearch(term) {
       var deferred = $q.defer();
+
       ta.noResults = false;
-      // set this here
-      setQuery(term);
-      SearchBoxDataService
-        .getTypeaheadResults({q: term, wt: 'json'})
-        .then(function (resp) {
-          if(resp.hasOwnProperty('response') && resp.response.docs.length) {
-            deferred.resolve(suggest_results(resp.response.docs,term));
-          } else {
-            return deferred.reject('No suggestions for '+term);
-          }
-        })
-        .catch(function (error) {
-          //TODO better error reporting
-          $log.error('typeahead search error:',error);
-          // currently don't want to surface these in the UI
-          // return deferred.reject('An error occurred: '+error);
-        });
+
+      if (!bypassAutoComplete) {
+        // set this here
+        setQuery(term);
+        SearchBoxDataService
+          .getTypeaheadResults({q: term, wt: 'json'})
+          .then(function (resp) {
+            if (!bypassAutoComplete) {
+              if(resp.hasOwnProperty('response') && resp.response.docs.length) {
+                deferred.resolve(suggest_results(resp.response.docs,term));
+              } else {
+                return deferred.reject('No suggestions for '+term);
+              }
+            }
+          })
+          .catch(function (error) {
+            //TODO better error reporting
+            $log.error('typeahead search error:',error);
+            // currently don't want to surface these in the UI
+            // return deferred.reject('An error occurred: '+error);
+          });
+      }
+
+      bypassAutoComplete = false;
 
       return deferred.promise;
     }
@@ -107,7 +103,7 @@
     }
 
     function showNoResults(message) {
-      ta.noResults = true;
+      ta.noResults = !bypassAutoComplete;
       ta.noResultsMessage = message;
     }
 
