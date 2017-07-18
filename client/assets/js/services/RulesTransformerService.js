@@ -40,7 +40,7 @@
         'enabled'
       ];
 
-      function modelArrToViewElement (viewElement, modelArr) {
+      function modelArrToViewElement(viewElement, modelArr) {
         if (modelArr && _.isArray(modelArr)) {
 
           viewElement = modelArr[0];
@@ -52,7 +52,7 @@
 
       var transformers = {
         type: {
-          viewToModel : function (view, model) {
+          viewToModel: function (view, model) {
             model.type = types[view.display_type];
 
             if (model.type == 'response_value') {
@@ -61,23 +61,23 @@
             }
           },
 
-          modelToView : function (view, model) {
+          modelToView: function (view, model) {
             if (model.type == 'response_value') {
               view.values = (model.values && model.values.length && model.values[0]) || model.values;
             }
           }
         },
         field_name: {
-          viewToModel : function (view, model) {
+          viewToModel: function (view, model) {
             model.field_name = view.field_name;
           },
 
-          modelToView : function (view, model) {
-            view.field_name = modelArrToViewElement (view.field_name, model.field_name);
+          modelToView: function (view, model) {
+            view.field_name = modelArrToViewElement(view.field_name, model.field_name);
           }
         },
 
-        search_terms : {
+        search_terms: {
           viewToModel: function (view, model) {
             if (view.search_terms && view.search_terms.trim().length > 0) {
               model.search_terms = view.search_terms;
@@ -118,30 +118,27 @@
 
         filters: {
           viewToModel: function (view, model) {
-            model.filters = "";
+            model.filters = [];
             if (view.viewFilters && view.viewFilters[0]) {
               for (var i = 0, l = view.viewFilters[0].length; i < l; i++) {
-                model.filters += view.viewFilters[0][i] + ':' + view.viewFilters[1][i] + ' ';
+                model.filters.push(view.viewFilters[0][i] + ':' + view.viewFilters[1][i]);
               }
-              model.filters = model.filters.trim();
             }
 
-            if (model.filters == ":") {
+            if (model.filters.length) {
               delete model.filters;
             }
           },
 
           modelToView: function (view, model) {
-            if (model && model.filters) {
-              if (model.filters.length) {
-                model.filters = model.filters[0];
+            var viewFilters = [[], []];
+            if (model && model.filters && model.filters.length) {
+              for (var j = 0; j < model.filters.length; j++) {
+                var filter = model.filters[j].split(':');
+                viewFilters[0].push(filter[0]);
+                viewFilters[1].push(filter[1]);
               }
-              var filtersArray = model.filters.split(/[ ,:]+/);
-              var actualFiltersArray = [[], []];
-              for (var j = 0, k = filtersArray.length; j < k; j++) {
-                actualFiltersArray[j % 2].push(filtersArray[j]);
-              }
-              view.viewFilters = actualFiltersArray;
+              view.viewFilters = viewFilters;
             }
           }
         },
@@ -187,13 +184,17 @@
                 startDate = startDate.replace("[", "");
                 if (startDate != '*') {
                   startDate = startDate.substr(0, 16).replace(/\r/g, "/").replace("T", " ");
-                } else {startDate = undefined;}
+                } else {
+                  startDate = undefined;
+                }
 
                 endDate = split[1];
                 endDate = endDate.replace("]", "");
                 if (endDate != '*') {
                   endDate = endDate.substr(0, 16).replace(/\r/g, "/").replace("T", " ");
-                } else {endDate = undefined;}
+                } else {
+                  endDate = undefined;
+                }
                 view.viewDates[0][j] = startDate;
                 view.viewDates[1][j] = endDate;
 
