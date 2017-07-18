@@ -87,6 +87,7 @@
             }
           }
           setTagsCheck ();
+
         }
 
         $scope.activate = function (id) {
@@ -95,7 +96,10 @@
           } else {
             $scope.disabledRuleEdit[id] = true;
           }
-
+          /*console.log('matching');
+          console.log($scope.rules);
+          console.log($scope.rules[3]);
+          console.log($scope.rules[3].matching);*/
         };
 
 

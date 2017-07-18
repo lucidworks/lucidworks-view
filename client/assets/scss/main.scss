@@ -1126,3 +1126,11 @@ form.invalid-form {
   padding-top: 30px;
   color: #e51c23;
 }
+
+.deleteRule {
+  .modal-footer {
+    input::after {
+      border: 1px solid #999;
+    }
+  }
+}

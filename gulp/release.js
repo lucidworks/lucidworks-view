@@ -10,6 +10,7 @@ gulp.task('createRelease', function () {
   var latestTag = 'v2.3';
   var newVersion = 'v2.4';
   var releaseName = 'Bug fix';
+  changeConfigVersion ();
   getLastTagSha ();
   //getting latest pre-release commit sha
   function getLastTagSha () {
@@ -90,7 +91,7 @@ gulp.task('createRelease', function () {
       prerelease: true
     };
     request({
-      url: 'https://api.github.com/repos/AlexKolonitsky/lucidworks-view/releases?access_token=526379b0cf116515be7d14ac1d8b6e9887cc7d70',
+      url: 'https://api.github.com/repos/AlexKolonitsky/lucidworks-view/releases?access_token=70b3de185ac6b3730f6777537016382a71c35808',
       method: 'POST',
       headers: {
         'User-Agent': 'AlexKolonitsky',
@@ -101,9 +102,11 @@ gulp.task('createRelease', function () {
       if (error) {
         console.log(error);
       } else {
+
         var bodyObj = JSON.parse(body);
-        var uploadUrl = bodyObj.upload_url.replace('{?name,label}', '');
-        changeConfigVersion ();
+        console.log(bodyObj);
+        /*var uploadUrl = bodyObj.upload_url.replace('{?name,label}', '');*/
+
         /*uploadAsset (uploadUrl);*/
       }
     });
@@ -115,7 +118,7 @@ gulp.task('createRelease', function () {
     console.log('file size');
     console.log(size);
     request({
-      url: uploadUrl + '?access_token=526379b0cf116515be7d14ac1d8b6e9887cc7d70&name=rules-editor.zip&size=' + size,
+      url: uploadUrl + '?access_token=70b3de185ac6b3730f6777537016382a71c35808&name=rules-editor.zip&size=' + size,
       method: 'POST',
       headers: {
         'User-Agent': 'AlexKolonitsky',
