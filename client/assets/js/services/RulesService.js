@@ -23,6 +23,10 @@
           var url = appHost + "api/apollo/query-pipelines/" + rulesCollection + "-default/collections/" + rulesCollection + "/select?" +
             "wt=json&fl=*&json.nl=arrarr&rows=10&q=ruleName:\"" + name + "\"";
 
+          if (ConfigService.config.rules.debug === true) {
+            url += "&rules.debug=true";
+          }
+
           $http.get(url).then(callback);
         },
 
@@ -89,6 +93,10 @@
         search: function (filter, callback) {
           var url = appHost + "api/apollo/query-pipelines/" + rulesCollection + "-default/collections/" + rulesCollection + "/select?" +
             "wt=json&fl=*&json.nl=arrarr" + filter.toUrlString();
+
+          if (ConfigService.config.rules.debug === true) {
+            url += "&rules.debug=true";
+          }
 
           $http.get(url).then(callback);
         }

@@ -205,6 +205,7 @@ appConfig = { //eslint-disable-line
   typeahead_requesthandler: 'select',
 
   rules: {
+    debug: true,
     collection: 'BestBuy_rules',
 
     tags: [
