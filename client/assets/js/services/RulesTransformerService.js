@@ -118,6 +118,7 @@
 
         filters: {
           viewToModel: function (view, model) {
+            console.log("filters.viewToModel -1- : ", view, model);
             model.filters = [];
             if (view.viewFilters && view.viewFilters[0]) {
               for (var i = 0, l = view.viewFilters[0].length; i < l; i++) {
@@ -128,18 +129,24 @@
             if (model.filters.length) {
               delete model.filters;
             }
+
+            console.log("filters.viewToModel -2- : ", view, model);
           },
 
           modelToView: function (view, model) {
-            var viewFilters = [[], []];
-            if (model && model.filters && model.filters.length) {
-              for (var j = 0; j < model.filters.length; j++) {
-                var filter = model.filters[j].split(':');
-                viewFilters[0].push(filter[0]);
-                viewFilters[1].push(filter[1]);
+            console.log("filters.modelToView -1- : ", view, model);
+            if (model && model.filters) {
+              if (!model.filters.length) {
+                console.log("Filter is not an array!", model.filters)
               }
-              view.viewFilters = viewFilters;
+              var filtersArray = model.filters.join(" ").split(/[ ,:]+/);
+              var actualFiltersArray = [[], []];
+              for (var j = 0, k = filtersArray.length; j < k; j++) {
+                actualFiltersArray[j % 2].push(filtersArray[j]);
+              }
+              view.viewFilters = actualFiltersArray;
             }
+            console.log("filters.modelToView -2- : ", view, model);
           }
         },
 
