@@ -126,7 +126,7 @@
               }
             }
 
-            if (model.filters.length) {
+            if (!model.filters.length) {
               delete model.filters;
             }
 
