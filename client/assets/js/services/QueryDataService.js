@@ -85,11 +85,18 @@
       }
 
       function getPipelineEndpoint(pipeline, requestHandler){
-        return ApiBase.getEndpoint() + 'api/apollo/query-pipelines/' +
+        return ApiBase.getEndpoint() + 'api/apollo/' + getApp() + 'query-pipelines/' +
           pipeline + '/collections/' + ConfigService.getCollectionName() +
           '/' + requestHandler;
       }
 
+      function getApp(){
+	  var FusionApp = ConfigService.getAppName() ;
+	  if( FusionApp !== '') {
+	      FusionApp = 'apps/' +  FusionApp + '/'
+	  }
+	  return FusionApp;
+      }
     }
   }
 })();

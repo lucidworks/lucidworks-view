@@ -58,6 +58,11 @@ appConfig = { //eslint-disable-line
   // The name of your collection - defaults to Fusion 3.0 default collection
   collection: 'default',
 
+  // Please specify an app that you want to leverage with this UI (Fusion 4 only)
+  // query_app_id: '',  for Fusion 3
+  // query_app_id: 'appname', for Fusion 4
+  query_app_id: 'default',
+
   // Please specify a pipeline or profile that you want to leverage with this UI.
   query_pipeline_id: 'default',
   query_profile_id: 'default',
