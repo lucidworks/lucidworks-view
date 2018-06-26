@@ -25,20 +25,20 @@ If you start by cloning the repository, you'll need the following software:
   git clone https://github.com/lucidworks/lucidworks-view app
   ```
 
-1. Change into the directory:
+2. Change into the directory:
 
   ```bash
   cd app
   ```
 
-1. Install the dependencies:
+3. Install the dependencies:
 
   ```bash
   npm install
   bower install
   ```
 
-1. While you're working on your project, run:
+4. While you're working on your project, run:
 
   * If you downloaded a tar package:
 
@@ -64,7 +64,7 @@ If you start by cloning the repository, you'll need the following software:
 
    The default is port 3000, but if that port is already in use then the app selects the next highest available port.
 
-1. **Now go to `http://localhost:<port>` in your browser to see it in action.**
+5. **Now go to `http://localhost:<port>` in your browser to see it in action.**
 
   The first time you browse to the app, you'll see a login page.  Use your Fusion username and password.  To enable anonymous access, edit the `anonymous_access` keys in FUSION_CONFIG.js.
 
