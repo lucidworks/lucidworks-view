@@ -1,17 +1,17 @@
 (function () {
   'use strict';
 
-  angular
-    .module('lucidworksView.services.url', ['rison'])
-    .constant('BLANK_QUERY', blankQuery)
-    .constant('QUERY_PARAM', 'query')
-    .factory('URLService', URLService);
-
   var blankQuery = {
     q: '*',
     start: 0,
     wt: 'json'
   };
+
+  angular
+    .module('lucidworksView.services.url', ['rison'])
+    .constant('BLANK_QUERY', blankQuery)
+    .constant('QUERY_PARAM', 'query')
+    .factory('URLService', URLService);
 
   function URLService(ConfigService, $log, $rison, $injector, $location,
     QUERY_PARAM) {
