@@ -84,6 +84,9 @@
         config: appConfig,
         getFusionUrl: getFusionUrl,
         getQueryProfile: getQueryProfile,
+        getRecommenderPipeline: getRecommenderPipeline, 
+        getRecommenderField: getRecommenderField,
+        getRecommenderIdField: getRecommenderIdField,
         getCollectionName: getCollectionName,
         getQueryPipeline: getQueryPipeline,
         getLoginCredentials: getLoginCredentials,
@@ -129,6 +132,18 @@
 
     function getQueryPipeline() {
       return appConfig.query_pipeline_id;
+    }
+
+    function getRecommenderPipeline() {
+      return appConfig.recommender_pipeline_id;
+    }
+
+    function getRecommenderField(){
+      return appConfig.recommender_field;
+    }
+
+    function getRecommenderIdField(){
+      return appConfig.recommender_id_field;
     }
 
     function getQueryProfile() {
