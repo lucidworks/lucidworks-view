@@ -17,6 +17,7 @@
       collection: 'default',
       logo_location: 'assets/img/logo/lucidworks-white.svg',
       query_debug: false,
+      query_app_id: 'default',
       query_pipeline_id: 'default',
       query_profile_id: 'default',
       use_query_profile: false,
@@ -85,6 +86,7 @@
         getFusionUrl: getFusionUrl,
         getQueryProfile: getQueryProfile,
         getCollectionName: getCollectionName,
+        getAppName: getAppName,
         getQueryPipeline: getQueryPipeline,
         getLoginCredentials: getLoginCredentials,
         getIfQueryProfile: getIfQueryProfile,
@@ -125,6 +127,10 @@
      */
     function getFusionUrl() {
       return appConfig.host + ':' + appConfig.port + '/';
+    }
+
+    function getAppName() {
+      return appConfig.query_app_id;
     }
 
     function getQueryPipeline() {
